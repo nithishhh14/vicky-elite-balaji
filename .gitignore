@@ -11,3 +11,11 @@ __pycache__/
 .venv/
 venv/
 *.tmp
+
+# Website (Astro) — and stray root-level caches from `astro --root website`
+website/node_modules/
+website/dist/
+website/.astro/
+website/npm-debug.log*
+/node_modules/
+/.astro/

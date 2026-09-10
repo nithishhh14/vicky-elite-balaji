@@ -1,0 +1,13 @@
+{
+  "name": "Tiles",
+  "order": 1,
+  "tagline": "Floor, wall and heritage lines",
+  "intro": "From heritage Athangudi patterns to large-format polished slabs, we stock floor and wall tiles across finishes, sizes and price points for both homes and live sites.",
+  "heroImage": "/media/tiles/athangudi-series/lifestyle-petal-red.jpg",
+  "heroAlt": "Athangudi Series patterned red floor tiles in a traditional Chettinad-style veranda",
+  "hasRealContent": true,
+  "materialColor": "#a8402c",
+  "materialTexture": "ceramic",
+  "applications": ["Living & dining floors", "Bathroom & kitchen walls", "Verandas & courtyards", "Commercial floors"],
+  "enquiryNote": "Ask for trade rate — box pricing and site quantities on request."
+}

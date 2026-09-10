@@ -23,9 +23,12 @@ website is the public virtual showroom.
   - `marketing_agent.py` — **stub**, blocked until website ships
   - `email_agent.py` — **stub**, blocked until Marketing is live; drafts only,
     never auto-sends
-- `website/` — the virtual showroom (static HTML/CSS). `index.html` +
-  `css/showroom.css` + `halls/` (one page per product category) +
-  `catalogue_extract/` (images pulled from PDF catalogs).
+- `website/` — the virtual showroom: **Astro 5 + TypeScript + Tailwind CSS v4**
+  (rebuilt from the original static HTML/CSS shell). Content-driven via two
+  content collections (`halls`, `tileProducts`) instead of hand-written markup
+  per page. See `docs/WEBSITE_ARCHITECTURE.md` for the full architecture,
+  content model, and how to add hall photos or tile series. Requires Node.js
+  (installed via winget during the rebuild) — `cd website && npm run dev`.
 
 ## Do NOT use
 
@@ -45,6 +48,12 @@ website is the public virtual showroom.
   run). Never commit it, never zip it into a deliverable.
 - Marketing and Email agents stay blocked until the website is actually
   live and reachable — that gate is intentional, not a bug.
+- Never present a supplier's catalogue photo, or any photo, as an Elite
+  Balaji product shot unless it genuinely is one — see the "Real product
+  data rule" in `docs/WEBSITE_ARCHITECTURE.md` §3. Only the Tiles hall
+  currently has verified real catalogue content; the other seven halls use
+  the `MaterialField` colour/texture placeholder, not stock photography,
+  until real photos exist.
 
 ## Conventions
 

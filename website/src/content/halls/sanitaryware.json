@@ -1,0 +1,13 @@
+{
+  "name": "Sanitaryware",
+  "order": 5,
+  "tagline": "Sinks, fittings & partner brands",
+  "intro": "Sanitaryware and sinks from established partner brands, supplied and fitted alongside your tile and stone order so plumbing and flooring stay on one timeline.",
+  "heroImage": "",
+  "heroAlt": "",
+  "hasRealContent": false,
+  "materialColor": "#e8e4dc",
+  "materialTexture": "porcelain",
+  "applications": ["Bathrooms", "Kitchen sinks", "Commercial washrooms"],
+  "enquiryNote": "Ask for trade rate — partner brand pricing on request."
+}

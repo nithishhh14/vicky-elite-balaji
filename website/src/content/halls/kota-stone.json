@@ -1,0 +1,13 @@
+{
+  "name": "Kota Stone",
+  "order": 3,
+  "tagline": "Durable natural flooring stone",
+  "intro": "Kota stone for durable, low-maintenance flooring — a standard choice for godowns, parking, utility areas and budget-conscious civil work across our Coimbatore and Nilgiris project sites.",
+  "heroImage": "",
+  "heroAlt": "",
+  "hasRealContent": false,
+  "materialColor": "#5c6b5f",
+  "materialTexture": "stone",
+  "applications": ["Godowns & utility floors", "Parking & driveways", "Budget civil projects", "Outdoor pathways"],
+  "enquiryNote": "Ask for trade rate — quoted by slab thickness and finish."
+}

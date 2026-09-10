@@ -1,0 +1,13 @@
+{
+  "name": "Laying Works",
+  "order": 8,
+  "tagline": "Site measurement, laying & finishing",
+  "intro": "Site measurement and estimation, then laying by our own specialist crews — precision tile and stone laying aimed at a clean, bubble-free finish, sized to keep your project timeline moving.",
+  "heroImage": "",
+  "heroAlt": "",
+  "hasRealContent": false,
+  "materialColor": "#6b5a45",
+  "materialTexture": "cement",
+  "applications": ["Site measurement & estimate", "Tile & stone laying", "Bedding & levelling", "Finish & grouting"],
+  "enquiryNote": "Ask for a laying estimate — site measurement first, quote after."
+}

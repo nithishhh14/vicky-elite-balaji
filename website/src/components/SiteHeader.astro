@@ -1,0 +1,109 @@
+---
+import { business, telLink } from "../lib/business";
+
+const { pathname } = Astro.url;
+const halls = [
+  { href: "/halls/tiles/", label: "Tiles" },
+  { href: "/halls/granite-marbles/", label: "Granite & Marbles" },
+  { href: "/halls/kota-stone/", label: "Kota Stone" },
+  { href: "/halls/kadappa/", label: "Kadappa" },
+  { href: "/halls/sanitaryware/", label: "Sanitaryware" },
+  { href: "/halls/adhesive/", label: "Adhesive & Accessories" },
+  { href: "/halls/quartz/", label: "Quartz" },
+  { href: "/halls/laying-works/", label: "Laying Works" },
+];
+const primaryHalls = ["/halls/tiles/", "/halls/granite-marbles/", "/halls/sanitaryware/", "/halls/laying-works/"];
+---
+
+<header class="sticky top-0 z-40 border-b border-line/70 bg-paper/95 backdrop-blur">
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-3 px-5 py-3">
+    <a href="/" class="flex flex-shrink-0 flex-col leading-none">
+      <span class="font-display text-lg font-semibold tracking-wide text-ink whitespace-nowrap">Elite Balaji</span>
+      <span class="text-[0.6rem] uppercase tracking-[0.25em] text-terracotta whitespace-nowrap">Stones &amp; Ceramics</span>
+    </a>
+
+    <nav aria-label="Primary" class="hidden items-center gap-4 text-sm lg:flex">
+      {halls.filter((h) => primaryHalls.includes(h.href)).map((h) => (
+        <a
+          href={h.href}
+          class:list={[
+            "whitespace-nowrap uppercase tracking-wide text-xs font-medium hover:text-terracotta transition-colors",
+            pathname.startsWith(h.href) ? "text-terracotta" : "text-ink-soft",
+          ]}
+        >
+          {h.label}
+        </a>
+      ))}
+      <a href="/halls/" class="whitespace-nowrap text-xs font-medium uppercase tracking-wide text-ink-soft hover:text-terracotta transition-colors">
+        All halls
+      </a>
+      <a href="/about/" class="whitespace-nowrap text-xs font-medium uppercase tracking-wide text-ink-soft hover:text-terracotta transition-colors">
+        About
+      </a>
+    </nav>
+
+    <div class="flex flex-shrink-0 items-center gap-2">
+      <a
+        href={telLink()}
+        class="hidden whitespace-nowrap rounded-full border border-terracotta/60 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-terracotta hover:bg-terracotta hover:text-paper transition-colors sm:inline-block"
+      >
+        Call {business.phoneDisplay}
+      </a>
+      <a
+        href={telLink()}
+        class="inline-flex items-center justify-center rounded-full border border-terracotta/60 p-2.5 text-terracotta sm:hidden"
+        aria-label={`Call ${business.phoneDisplay}`}
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+          <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8Z"/>
+        </svg>
+      </a>
+      <button
+        id="menu-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        class="inline-flex items-center justify-center rounded-full border border-line p-2.5 text-ink lg:hidden"
+      >
+        <span class="sr-only">Open menu</span>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <nav id="mobile-nav" aria-label="Mobile" hidden class="border-t border-line/60 bg-paper px-5 py-4 lg:hidden">
+    <ul class="flex flex-col gap-3 text-sm">
+      {halls.map((h) => (
+        <li>
+          <a href={h.href} class="block py-1 uppercase tracking-wide text-xs font-medium text-ink-soft hover:text-terracotta">
+            {h.label}
+          </a>
+        </li>
+      ))}
+      <li class="mt-1 border-t border-line/60 pt-3">
+        <a href="/halls/" class="block py-1 text-xs font-medium uppercase tracking-wide text-ink-soft hover:text-terracotta">All halls</a>
+      </li>
+      <li>
+        <a href="/about/" class="block py-1 text-xs font-medium uppercase tracking-wide text-ink-soft hover:text-terracotta">About</a>
+      </li>
+      <li>
+        <a href="/contact/" class="block py-1 text-xs font-medium uppercase tracking-wide text-ink-soft hover:text-terracotta">Contact</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<script is:inline>
+  (function () {
+    const toggle = document.getElementById("menu-toggle");
+    const nav = document.getElementById("mobile-nav");
+    if (!toggle || !nav) return;
+    toggle.addEventListener("click", () => {
+      const isOpen = !nav.hidden;
+      nav.hidden = isOpen;
+      toggle.setAttribute("aria-expanded", String(!isOpen));
+    });
+  })();
+</script>

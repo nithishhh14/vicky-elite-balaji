@@ -1,0 +1,219 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { business, waLink, telLink, defaultEnquiryMessage } from "../lib/business";
+
+const halls = (await getCollection("halls")).sort((a, b) => a.data.order - b.data.order);
+const featured = ["tiles", "granite-marbles", "laying-works"];
+const featuredHalls = featured.map((id) => halls.find((h) => h.id === id)!).filter(Boolean);
+const restHalls = halls.filter((h) => !featured.includes(h.id));
+---
+
+<BaseLayout
+  title="Elite Balaji Stones & Ceramics — Virtual Showroom | Karamadai, Coimbatore"
+  description="Granite, marble, tiles, sanitaryware and laying works — wholesale trade supply from Karamadai since 2012. Walk the virtual showroom, then ask for a trade rate."
+>
+  <!-- 01 — Entrance -->
+  <section class="relative isolate flex min-h-[88vh] items-end overflow-hidden">
+    <img
+      src="/media/tiles/athangudi-series/hero-crop.jpg"
+      alt="Patterned red Athangudi-style floor tile in a traditional veranda — the tile tradition this showroom's design borrows from"
+      class="absolute inset-0 h-full w-full object-cover"
+      fetchpriority="high"
+    />
+    <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-ink/15" aria-hidden="true"></div>
+
+    <div class="relative mx-auto w-full max-w-6xl px-5 pb-16 pt-32 text-paper">
+      <p class="text-xs uppercase tracking-[0.35em] text-mustard">Virtual showroom · since {business.since}</p>
+      <h1 class="mt-4 max-w-2xl font-display text-5xl font-semibold leading-[0.95] sm:text-7xl">
+        Elite Balaji
+      </h1>
+      <p class="mt-2 text-sm uppercase tracking-[0.3em] text-paper/80">Stones &amp; Ceramics</p>
+      <p class="mt-6 max-w-xl text-base leading-relaxed text-paper/85 sm:text-lg">
+        {business.tagline} from Karamadai. Granite, marble, tiles, sanitaryware, adhesives and laying
+        works — for contractors, builders and homes across Coimbatore and the Nilgiris.
+      </p>
+      <div id="hero-cta" class="mt-8 flex flex-wrap gap-3">
+        <a href="#halls" class="rounded-full bg-mustard px-6 py-3 text-sm font-semibold uppercase tracking-wide text-ink hover:bg-mustard-dark transition-colors">
+          Enter showroom
+        </a>
+        <a href={waLink(defaultEnquiryMessage)} target="_blank" rel="noopener" class="rounded-full border border-paper/50 px-6 py-3 text-sm font-semibold uppercase tracking-wide hover:bg-paper/10 transition-colors">
+          Ask for trade rate
+        </a>
+        <a href={telLink()} class="rounded-full border border-paper/50 px-6 py-3 text-sm font-semibold uppercase tracking-wide hover:bg-paper/10 transition-colors">
+          Call {business.phoneDisplay}
+        </a>
+      </div>
+      <p class="mt-10 text-[0.65rem] uppercase tracking-[0.2em] text-paper/50">
+        Photo: Athangudi Series, BEJ Ceramic catalogue
+      </p>
+    </div>
+  </section>
+
+  <div class="quatrefoil-divider" aria-hidden="true"></div>
+
+  <!-- 02 — Brand story -->
+  <section class="mx-auto max-w-6xl px-5 py-20">
+    <div class="grid gap-12 md:grid-cols-[1.1fr_0.9fr] md:items-center">
+      <div>
+        <p class="text-xs uppercase tracking-[0.3em] text-terracotta">Since {business.since} · Karamadai</p>
+        <h2 class="mt-3 text-3xl sm:text-4xl">Materials and laying, from one address</h2>
+        <p class="mt-5 max-w-xl text-ink-soft leading-relaxed">
+          Elite Balaji Stones &amp; Ceramics has supplied granite, marble, tiles and sanitaryware to
+          contractors and homes from Karamadai since {business.since}. We also lay what we sell — our
+          own crews handle site measurement, precision tile and stone laying, and finishing, so
+          material and workmanship stay on one timeline.
+        </p>
+        <p class="mt-4 max-w-xl text-ink-soft leading-relaxed">
+          Everything on this site is browse-first: walk the halls for materials, sizes and finishes,
+          then ask us directly for trade rates and current stock — pricing on wholesale material moves
+          with supply, so we keep it a conversation rather than a fixed list.
+        </p>
+      </div>
+      <div class="relative overflow-hidden rounded-sm shadow-card">
+        <img
+          src="/media/brand/business-card.jpg"
+          alt="Elite Balaji Stones and Ceramics business card"
+          class="w-full object-cover"
+          loading="lazy"
+          width="1000"
+          height="630"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 — Explore showroom -->
+  <section id="halls" class="border-y border-line/60 bg-card py-20">
+    <div class="mx-auto max-w-6xl px-5">
+      <div class="max-w-xl">
+        <p class="text-xs uppercase tracking-[0.3em] text-terracotta">Explore the showroom</p>
+        <h2 class="mt-3 text-3xl sm:text-4xl">Eight halls, one enquiry</h2>
+      </div>
+
+      <div class="mt-14 flex flex-col gap-16">
+        {featuredHalls.map((hall, i) => (
+          <a
+            href={`/halls/${hall.id}/`}
+            class:list={["group grid gap-6 md:grid-cols-2 md:items-center md:gap-12", i % 2 === 1 && "md:[&>*:first-child]:order-2"]}
+          >
+            <div class="aspect-[4/3] overflow-hidden rounded-sm shadow-card">
+              {hall.data.hasRealContent ? (
+                <img
+                  src={hall.data.heroImage}
+                  alt={hall.data.heroAlt}
+                  class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                  loading="lazy"
+                />
+              ) : (
+                <div class="h-full w-full" style={{ backgroundColor: hall.data.materialColor }}></div>
+              )}
+            </div>
+            <div>
+              <span class="text-xs uppercase tracking-[0.25em] text-terracotta">
+                {String(hall.data.order).padStart(2, "0")} · {hall.data.tagline}
+              </span>
+              <h3 class="mt-2 text-3xl group-hover:text-terracotta transition-colors">{hall.data.name}</h3>
+              <p class="mt-3 max-w-md text-ink-soft leading-relaxed">{hall.data.intro}</p>
+              <span class="mt-4 inline-block text-sm font-semibold uppercase tracking-wide text-terracotta">
+                Walk this hall &rarr;
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+
+      <div class="mt-16 border-t border-line/60 pt-8">
+        <p class="text-xs uppercase tracking-[0.25em] text-ink-soft">Also in the showroom</p>
+        <nav class="mt-4 flex flex-wrap gap-x-8 gap-y-3">
+          {restHalls.map((hall) => (
+            <a href={`/halls/${hall.id}/`} class="text-lg text-ink hover:text-terracotta transition-colors">
+              {hall.data.name}
+            </a>
+          ))}
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 — Athangudi visual note -->
+  <section class="relative isolate overflow-hidden">
+    <img
+      src="/media/tiles/athangudi-series/lifestyle-bottle-green.jpg"
+      alt="Athangudi-style bottle green tile with cross motif on a courtyard floor"
+      class="h-[60vh] w-full object-cover"
+      loading="lazy"
+    />
+    <div class="absolute inset-0 bg-ink/55" aria-hidden="true"></div>
+    <div class="absolute inset-0 flex items-center justify-center px-5 text-center">
+      <p class="max-w-2xl font-display text-2xl italic text-paper sm:text-3xl">
+        This site borrows its colour and pattern language from Athangudi tile craft —
+        the same handcrafted geometry we stock in our Tiles hall.
+      </p>
+    </div>
+  </section>
+
+  <!-- 05 — Why Elite Balaji -->
+  <section class="mx-auto max-w-6xl px-5 py-20">
+    <p class="text-xs uppercase tracking-[0.3em] text-terracotta">Why contractors choose us</p>
+    <h2 class="mt-3 max-w-lg text-3xl sm:text-4xl">Trusted since {business.since}, from Karamadai</h2>
+    <ol class="mt-12 divide-y divide-line/60 border-y border-line/60">
+      {business.usps.map((usp, i) => (
+        <li class="grid grid-cols-[3rem_1fr] gap-6 py-6 sm:grid-cols-[4rem_1fr_2fr]">
+          <span class="font-display text-2xl text-terracotta">{String(i + 1).padStart(2, "0")}</span>
+          <span class="font-semibold uppercase tracking-wide text-sm self-center">{usp.title}</span>
+          <span class="text-ink-soft self-center">{usp.detail}</span>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <!-- 06 — Trusted brands -->
+  <section class="border-y border-line/60 bg-card py-14">
+    <div class="mx-auto max-w-6xl px-5 text-center">
+      <p class="text-xs uppercase tracking-[0.3em] text-terracotta">Partner brands</p>
+      <p class="mt-4 text-lg leading-loose text-ink-soft">
+        {business.partnerBrands.join(" · ")}
+      </p>
+    </div>
+  </section>
+
+  <!-- 07 — Service area -->
+  <section class="mx-auto max-w-6xl px-5 py-20">
+    <div class="grid gap-10 md:grid-cols-2">
+      <div>
+        <p class="text-xs uppercase tracking-[0.3em] text-terracotta">Service area</p>
+        <h2 class="mt-3 text-3xl sm:text-4xl">Coimbatore &amp; the Nilgiris</h2>
+        <p class="mt-5 text-ink-soft leading-relaxed">
+          We supply and lay across Coimbatore city and the surrounding hubs — deliveries and site
+          visits run regularly through {business.serviceHubs.slice(0, 6).join(", ")} and the wider
+          Nilgiris belt.
+        </p>
+      </div>
+      <div class="flex flex-wrap content-start gap-2">
+        {business.serviceHubs.map((hub) => (
+          <span class="rounded-full border border-line px-4 py-1.5 text-sm text-ink-soft">{hub}</span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 — Final CTA -->
+  <section class="bg-bottle py-20 text-paper">
+    <div class="mx-auto max-w-3xl px-5 text-center">
+      <h2 class="text-3xl sm:text-4xl">Have a site measurement ready?</h2>
+      <p class="mt-4 text-paper/80">
+        Send us the material, size and quantity — we'll come back with trade pricing and what's
+        available in stock today.
+      </p>
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <a href={waLink(defaultEnquiryMessage)} target="_blank" rel="noopener" class="rounded-full bg-mustard px-6 py-3 text-sm font-semibold uppercase tracking-wide text-ink hover:bg-mustard-dark transition-colors">
+          WhatsApp us
+        </a>
+        <a href={telLink()} class="rounded-full border border-paper/50 px-6 py-3 text-sm font-semibold uppercase tracking-wide hover:bg-paper/10 transition-colors">
+          Call {business.phoneDisplay}
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

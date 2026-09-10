@@ -1,0 +1,13 @@
+{
+  "name": "Kadappa",
+  "order": 4,
+  "tagline": "Black stone for counters & borders",
+  "intro": "Kadappa black limestone, used for kitchen platforms, borders and detailing where a dense, dark natural stone is called for.",
+  "heroImage": "",
+  "heroAlt": "",
+  "hasRealContent": false,
+  "materialColor": "#1c1c1c",
+  "materialTexture": "stone",
+  "applications": ["Kitchen platforms", "Borders & detailing", "Steps & thresholds"],
+  "enquiryNote": "Ask for trade rate — sizes cut to your site measurement."
+}

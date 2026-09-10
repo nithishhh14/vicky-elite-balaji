@@ -1,0 +1,54 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { business, telLink, waLink, defaultEnquiryMessage } from "../lib/business";
+---
+
+<BaseLayout
+  title="About Elite Balaji Stones & Ceramics — Karamadai, Coimbatore"
+  description="Elite Balaji Stones & Ceramics has supplied granite, marble, tiles and sanitaryware, and laid them on site, from Karamadai since 2012."
+>
+  <section class="mx-auto max-w-3xl px-5 py-20">
+    <p class="text-xs uppercase tracking-[0.3em] text-terracotta">About</p>
+    <h1 class="mt-3 text-4xl sm:text-5xl">Elite Balaji Stones &amp; Ceramics</h1>
+
+    <p class="mt-8 text-lg leading-relaxed text-ink-soft">
+      Since {business.since}, Elite Balaji Stones &amp; Ceramics has run from Karamadai, on the
+      Mettupalayam Main Road, supplying granite, marble, tiles, sanitaryware and laying materials
+      to contractors, builders and homes across Coimbatore and the Nilgiris.
+    </p>
+    <p class="mt-5 text-lg leading-relaxed text-ink-soft">
+      We supply and lay — site measurement, precision tile and stone laying by our own crews, and
+      the adhesives, epoxy and accessories the job needs, so material and workmanship come from one
+      place and one timeline.
+    </p>
+
+    <div class="mt-12 rounded-sm border border-line bg-card p-8">
+      <p class="text-xs uppercase tracking-[0.2em] text-terracotta">Visit or call</p>
+      <p class="mt-3 text-ink">{business.contactPerson}</p>
+      <p class="text-ink-soft">{business.address}</p>
+      <div class="mt-5 flex flex-wrap gap-3">
+        <a href={telLink()} class="rounded-full bg-terracotta px-5 py-2.5 text-sm font-semibold uppercase tracking-wide text-paper hover:bg-terracotta-dark transition-colors">
+          Call {business.phoneDisplay}
+        </a>
+        <a href={waLink(defaultEnquiryMessage)} target="_blank" rel="noopener" class="rounded-full border border-terracotta/60 px-5 py-2.5 text-sm font-semibold uppercase tracking-wide text-terracotta hover:bg-terracotta hover:text-paper transition-colors">
+          WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <h2 class="mt-16 text-2xl">What we supply</h2>
+    <ul class="mt-4 grid gap-x-8 gap-y-2 text-ink-soft sm:grid-cols-2">
+      <li>All types of granite</li>
+      <li>Marble</li>
+      <li>All tile ranges</li>
+      <li>Sanitaryware &amp; sinks</li>
+      <li>Tile adhesive &amp; epoxy</li>
+      <li>Tile accessories</li>
+      <li>Granite engraving &amp; sculptures</li>
+      <li>Granite name boards</li>
+    </ul>
+
+    <h2 class="mt-16 text-2xl">Service area</h2>
+    <p class="mt-4 text-ink-soft leading-relaxed">{business.serviceHubs.join(" · ")}</p>
+  </section>
+</BaseLayout>

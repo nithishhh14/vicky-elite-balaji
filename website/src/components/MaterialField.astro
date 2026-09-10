@@ -1,0 +1,43 @@
+---
+// A textile-like material identity panel for halls that don't have real
+// product photography yet. Deliberately not a stock photo — see
+// docs/WEBSITE_ARCHITECTURE.md "Image priority ladder".
+interface Props {
+  color: string;
+  texture: "stone" | "ceramic" | "cement" | "porcelain";
+  label: string;
+  class?: string;
+}
+
+const { color, texture, label, class: className = "" } = Astro.props;
+
+const patterns: Record<Props["texture"], string> = {
+  stone:
+    "repeating-linear-gradient(115deg, rgba(255,255,255,0.05) 0 2px, transparent 2px 26px), repeating-linear-gradient(25deg, rgba(0,0,0,0.08) 0 1px, transparent 1px 34px)",
+  ceramic:
+    "repeating-linear-gradient(0deg, rgba(255,255,255,0.08) 0 1px, transparent 1px 48px), repeating-linear-gradient(90deg, rgba(255,255,255,0.08) 0 1px, transparent 1px 48px)",
+  cement:
+    "radial-gradient(rgba(0,0,0,0.10) 1px, transparent 1.4px)",
+  porcelain:
+    "repeating-linear-gradient(70deg, rgba(255,255,255,0.14) 0 3px, transparent 3px 40px)",
+};
+
+// Explicit background-size per layer — without it, some browsers mis-tile
+// a repeating-linear-gradient at an angle and wash out large fills.
+const sizeFor: Record<Props["texture"], string> = {
+  stone: "52px 52px, 68px 68px",
+  ceramic: "48px 48px, 48px 48px",
+  cement: "10px 10px",
+  porcelain: "80px 80px",
+};
+---
+
+<div
+  class:list={["relative isolate overflow-hidden", className]}
+  style={{ backgroundColor: color, backgroundImage: patterns[texture], backgroundSize: sizeFor[texture] }}
+>
+  <div class="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent" aria-hidden="true"></div>
+  <div class="relative flex h-full flex-col justify-end p-6 text-paper">
+    {label && <span class="text-xs uppercase tracking-[0.3em] text-paper/70">{label}</span>}
+  </div>
+</div>

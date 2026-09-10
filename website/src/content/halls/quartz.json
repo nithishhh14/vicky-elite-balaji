@@ -1,0 +1,13 @@
+{
+  "name": "Quartz",
+  "order": 7,
+  "tagline": "Engineered surfaces for counters",
+  "intro": "Engineered quartz surfaces for kitchen counters and heavy-use tops where a consistent, low-porosity finish matters more than natural veining.",
+  "heroImage": "",
+  "heroAlt": "",
+  "hasRealContent": false,
+  "materialColor": "#cfcac0",
+  "materialTexture": "porcelain",
+  "applications": ["Kitchen counters", "Reception & retail counters", "Heavy-use worktops"],
+  "enquiryNote": "Ask for trade rate — slab availability varies by colourway."
+}

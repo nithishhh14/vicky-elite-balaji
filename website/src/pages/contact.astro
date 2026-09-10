@@ -1,0 +1,80 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { business, telLink, waLink } from "../lib/business";
+---
+
+<BaseLayout
+  title="Contact Elite Balaji Stones & Ceramics — Karamadai, Coimbatore"
+  description="Call, WhatsApp or send an enquiry to Elite Balaji Stones & Ceramics, Karamadai, Coimbatore. Ask for trade rate and current stock."
+>
+  <section class="mx-auto grid max-w-5xl gap-14 px-5 py-20 md:grid-cols-2">
+    <div>
+      <p class="text-xs uppercase tracking-[0.3em] text-terracotta">Contact</p>
+      <h1 class="mt-3 text-4xl">Ask for a trade rate</h1>
+      <p class="mt-5 text-ink-soft leading-relaxed">
+        Fastest reply is WhatsApp or a call. Tell us the material, size and quantity, or your site
+        address for a laying estimate.
+      </p>
+
+      <dl class="mt-8 space-y-4 text-sm">
+        <div>
+          <dt class="uppercase tracking-wide text-ink-soft/70">Phone</dt>
+          <dd><a href={telLink()} class="text-lg text-ink hover:text-terracotta">{business.phoneDisplay}</a></dd>
+        </div>
+        <div>
+          <dt class="uppercase tracking-wide text-ink-soft/70">Address</dt>
+          <dd class="text-ink">{business.address}</dd>
+        </div>
+        <div>
+          <dt class="uppercase tracking-wide text-ink-soft/70">Contact person</dt>
+          <dd class="text-ink">{business.contactPerson}</dd>
+        </div>
+      </dl>
+
+      <a href={waLink("Hi Elite Balaji, ")} target="_blank" rel="noopener" class="mt-8 inline-block rounded-full bg-whatsapp px-6 py-3 text-sm font-semibold uppercase tracking-wide text-paper hover:opacity-90 transition-opacity">
+        Open WhatsApp
+      </a>
+    </div>
+
+    <form id="enquiry-form" class="rounded-sm border border-line bg-card p-6" aria-label="WhatsApp enquiry form">
+      <p class="text-xs uppercase tracking-[0.2em] text-terracotta">Send an enquiry</p>
+      <p class="mt-2 text-xs text-ink-soft">
+        This opens WhatsApp with your message pre-filled — nothing is submitted to a server.
+      </p>
+
+      <label class="mt-5 block text-sm">
+        Your name
+        <input name="name" type="text" required class="mt-1 w-full rounded border border-line bg-paper px-3 py-2 text-sm focus-visible:outline-2 focus-visible:outline-terracotta" />
+      </label>
+      <label class="mt-4 block text-sm">
+        Material / product
+        <input name="material" type="text" placeholder="e.g. Granite for kitchen counter" required class="mt-1 w-full rounded border border-line bg-paper px-3 py-2 text-sm focus-visible:outline-2 focus-visible:outline-terracotta" />
+      </label>
+      <label class="mt-4 block text-sm">
+        Message
+        <textarea name="message" rows="3" placeholder="Quantity, size, site location..." class="mt-1 w-full rounded border border-line bg-paper px-3 py-2 text-sm focus-visible:outline-2 focus-visible:outline-terracotta"></textarea>
+      </label>
+
+      <button type="submit" class="mt-5 w-full rounded-full bg-mustard px-5 py-3 text-sm font-semibold uppercase tracking-wide text-ink hover:bg-mustard-dark transition-colors">
+        Continue on WhatsApp
+      </button>
+    </form>
+  </section>
+
+  <script define:vars={{ phoneWa: business.phoneWa }} is:inline>
+    const form = document.getElementById("enquiry-form");
+    form?.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const name = (data.get("name") || "").toString().trim();
+      const material = (data.get("material") || "").toString().trim();
+      const message = (data.get("message") || "").toString().trim();
+      const text = [
+        `Hi Elite Balaji, I'm ${name}.`,
+        `I'm interested in: ${material}.`,
+        message,
+      ].filter(Boolean).join(" ");
+      window.open(`https://wa.me/${phoneWa}?text=${encodeURIComponent(text)}`, "_blank", "noopener");
+    });
+  </script>
+</BaseLayout>

@@ -1,0 +1,51 @@
+---
+import { business } from "../lib/business";
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  image?: string;
+}
+
+const { title, description, path, image = "/media/brand/business-card.jpg" } = Astro.props;
+const canonical = new URL(path, Astro.site).toString();
+const imageUrl = new URL(image, Astro.site).toString();
+
+const localBusinessLd = {
+  "@context": "https://schema.org",
+  "@type": "HomeAndConstructionBusiness",
+  name: business.name,
+  description: "Granite, marble, tiles, sanitaryware and laying works — wholesale and trade supply since 2012.",
+  foundingDate: String(business.since),
+  telephone: business.phoneTel,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "12-B, Gandhi Nagar, Mettupalayam Main Road",
+    addressLocality: "Karamadai, Coimbatore",
+    postalCode: "641104",
+    addressRegion: "Tamil Nadu",
+    addressCountry: "IN",
+  },
+  areaServed: business.serviceHubs,
+  url: Astro.site?.toString(),
+};
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={imageUrl} />
+<meta property="og:locale" content="en_IN" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageUrl} />
+
+<script type="application/ld+json" set:html={JSON.stringify(localBusinessLd)} is:inline />
