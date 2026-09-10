@@ -30,6 +30,40 @@ website is the public virtual showroom.
   content model, and how to add hall photos or tile series. Requires Node.js
   (installed via winget during the rebuild) — `cd website && npm run dev`.
 
+## Session continuity rule
+
+Never rely on conversation history as the sole source of project state — a
+new session has none of it. At the start of every session, before making
+significant changes, read in this order:
+
+1. `CLAUDE.md` (this file)
+2. `docs/PROJECT_STATE.md` — what's actually built, verified, and next
+3. `docs/CLIENT_PREFERENCES.md` — client design/content preferences (or PENDING)
+4. `docs/DECISIONS.md` — architectural decisions already made; don't re-litigate them
+5. `docs/NEXT_SESSION.md` — the last session's practical handoff
+6. `docs/WEBSITE_ARCHITECTURE.md` — website technical architecture
+
+Before ending a substantial session, update: `docs/PROJECT_STATE.md`,
+`docs/CLIENT_PREFERENCES.md` (if client feedback came in),
+`docs/DECISIONS.md` (if a new architectural call was made), `docs/NEXT_SESSION.md`,
+and `WORKPLAN.md`. Confirm git status is understood before stopping, and
+explicitly document any unfinished work rather than leaving it implicit.
+Never claim something is complete unless it was actually implemented and
+verified (build/typecheck/browser-QA as appropriate).
+
+## Client feedback override rule
+
+Client feedback has the highest priority for visual/design decisions. When
+new client feedback conflicts with an existing entry in `docs/DECISIONS.md`:
+
+1. Keep the old decision recorded in `docs/DECISIONS.md` (mark it superseded,
+   don't delete it).
+2. Record the new feedback in `docs/CLIENT_PREFERENCES.md`.
+3. Add a new entry to `docs/DECISIONS.md` for the new direction.
+4. Implement the new direction.
+5. Do not silently revert to the previous design later — if it comes up
+   again, the decision log is the tiebreaker.
+
 ## Do NOT use
 
 - `archive/elite_balaji_scraper.py` — superseded by `lead_agent.py`. Dead
@@ -65,4 +99,5 @@ website is the public virtual showroom.
   filtered by `lead_agent.local_ok()`.
 - One-off debug/probe scripts live in `scripts/`, not the project root.
 
-See `WORKPLAN.md` for current phase and next steps.
+See `WORKPLAN.md` for current phase and next steps, and `docs/NEXT_SESSION.md`
+for the practical, dated handoff from the last working session.
