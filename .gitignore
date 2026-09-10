@@ -1,0 +1,13 @@
+# Local Chrome profile for WhatsApp Web / Google sessions (created at runtime)
+chrome_profile/
+
+# Secrets
+.env
+google_creds.json
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.tmp

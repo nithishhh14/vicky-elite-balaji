@@ -1,0 +1,25 @@
+---
+description: Elite Balaji Multi-Agent Council core spec for Vicky
+alwaysApply: true
+---
+
+# Elite Balaji Multi-Agent Council — Vicky
+
+Follow `.cursorrules` master plan.
+
+## Locked build order
+1. **Scraper** — Maps + Google Search + public IG cards + buyer ads (no login)
+2. **Website** — Elite Balaji public brand site
+3. **Marketing + SEO** (+ Email drafts late, human-approve)
+4. **Vicky Executive personality** — JARVIS/FRIDAY tone
+5. **Final interface** — JARVIS layout × black/gold marble (replace blue/cyan); voice+text; all devices
+
+Current Streamlit UI = temporary workbench only. Final UI is Phase 5.
+
+## Shared memory
+`.cursorrules` + `shared_memory.py` + Google Sheets (+ website after Phase 2).
+
+## Lead / scrape rules
+- Never invent phones. Coimbatore hubs only.
+- Instagram: SERP/public preview only — no login.
+- No pitch on Sheet1.

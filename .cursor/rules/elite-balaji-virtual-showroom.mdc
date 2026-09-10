@@ -1,0 +1,74 @@
+---
+description: Elite Balaji virtual showroom website design + content rules (from business card)
+globs: website/**
+alwaysApply: false
+---
+
+# Elite Balaji Virtual Showroom — Website Rules
+
+**Visual theme (client lock):** **Athangudi tile catalogue** designs — Chettinad handcrafted geometric / floral cement-tile language (patterned fields, heritage colourways, artisan tile craft).
+Source PDFs/images: `website/catalogues/athangudi/`
+
+**Brand identity (from business card):** name, logo, halls, contact, partners — `website/assets/business-card.jpg`
+Council business facts still come from root `.cursorrules`.
+
+Do not mix in cyan JARVIS / black-gold sci-fi for the public showroom. Athangudi catalogue = look. Card = who they are.
+
+## Brand lock (from business card)
+- Name: **ELITE BALAJI STONES & CERAMICS**
+- Since: **2012**
+- Taglines: **COMPLETE FLOORING SOLUTION** · **BUILD BETTER SPACES**
+- Contact person (card): **VIGNESH YADAV A**
+- Phone: **9159056767** / **+91 91590 56767**
+- Office: 12-B, Gandhi Nagar, Mettupalayam Main Road, Karamadai, Coimbatore (Dist - 641104)
+
+## Visual framework
+### Theme — Athangudi catalogues (primary)
+- Patterned tile language: geometric / floral Athangudi motifs as backgrounds, hall frames, dividers.
+- Colour from the actual PDFs once dropped (typical: terracotta, mustard, cream, deep green, indigo, oxide red — **match the file, don’t guess**).
+- Surfaces should feel like walking a Chettinad tile floor, not a generic marble SaaS site.
+- Until Athangudi PDFs are in `website/catalogues/athangudi/`, keep current shell but treat it as temporary.
+
+### Identity — business card (keep)
+- Logo motif: handshake + gold gear/star seal when asset is available.
+- Hall list and partner strip from the card.
+- Contact: Vignesh Yadav A · 91590 56767 · Karamadai office.
+- Avoid: cyan JARVIS UI, purple SaaS gradients, cream terracotta “AI default” *unless* that terracotta is sampled from the Athangudi catalogue.
+
+## Virtual showroom halls (card reverse = navigation)
+1. Tiles  
+2. Granite & Marbles  
+3. Kota Stone  
+4. Kadappa  
+5. Sanitaryware  
+6. Adhesive  
+7. Quartz  
+8. Laying Works  
+
+Plus: Entrance (Home), Projects (when photos exist), Visit/Contact.
+
+## Pricing policy (default until client overrides)
+- **Do not publish a public price list** for slabs/tiles/sanitary (rates move; wholesale is negotiated).
+- Default CTA copy: **“Contractor / trade pricing on enquiry”** or **“Ask for trade rate”**.
+- Optional later (only if client supplies): “Starting from” bands, or “Laying with Materials — estimate after measure”.
+- Catalogue upload = visuals + names + finishes; prices stay enquiry-gated unless client explicitly provides numbers.
+
+## Image / catalogue policy
+- **Drop zone (chat uploads fail):** `website/catalogues/` — see `DROP_HERE.md`.
+- Athangudi PDFs/images → `website/catalogues/athangudi/` (theme + tile SKUs).
+- Other PDFs → `website/catalogues/other-catalogues/`.
+- Real stock photos → `website/catalogues/product-photos/<hall>/`.
+- Free Unsplash/Pexels only as **mood**, labelled **Mood · not stock SKU**, until Athangudi/product files replace them.
+- Never present random web photos as Elite Balaji inventory.
+- Do not scrape competitor catalogues as “our products”.
+- Stack default is **free**; ask before any paid domain, hosting upgrade, or photo shoot.
+
+## UX rules
+- Brand name is hero-level on the entrance — not only in a nav.
+- First viewport: brand + COMPLETE FLOORING SOLUTION + one CTA + Athangudi-patterned showroom plane (once catalogue is in).
+- One job per hall: browse materials → enquire.
+- Mobile + desktop; enquire (call / WhatsApp) always reachable.
+- No contractor pitch spam on the public site — that belongs to Marketing Agent later.
+
+## Shared memory handoff
+After launch, register public hall URLs into council shared memory for Marketing / SEO / Email agents.

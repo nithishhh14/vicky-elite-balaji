@@ -1,0 +1,229 @@
+# =====================================================================
+# ELITE BALAJI MULTI-AGENT COUNCIL - GLOBAL CORE SPECIFICATION RULES
+# =====================================================================
+
+# 1. PERMANENT SYSTEM BUSINESS FACTUAL FILES (THE MEMORY BASELINE)
+SYSTEM_NAME="Vicky"
+BUSINESS_NAME="Elite Balaji Stones and Ceramics"
+ESTABLISHED_SINCE="2012"
+PRIMARY_OFFICE_ADDRESS="12-B, Gandhi Nagar, Mettupalayam Main Road, Karamadai, Coimbatore (Dist - 641104)"
+CONTACT_PHONE="+91 91590 56767"
+
+CORE_PRODUCTS=[
+  "All type of Granite", "All type tiles", "Sanitaryware", "Granite engraving",
+  "Sink", "Tile adhesive", "Tile epoxy", "Tile accessories",
+  "Granite sculptures", "Granite Name board"
+]
+
+UNIQUE_SELLING_POINTS=[
+  "Faster structural project timelines",
+  "Zero-bubble precision tile laying technique",
+  "Highly experienced specialized workforce",
+  "Wholesale material pricing factory bundle"
+]
+
+# 2. HARDLOCKED GEOGRAPHIC VELOCITY TARGET HUB CODES
+COIMBATORE_COORDINATES={"latitude": 11.0168, "longitude": 76.9558}
+STRICT_TARGET_LOCATIONS=[
+  "Ooty", "Kotagiri", "Nilgiris", "Kallar", "Mettupalayam", "Karamadai",
+  "Sirumugai", "Annur", "Velingaadu", "Periyanaickenpalayam", "Kovilpalayam",
+  "Saravanampatti", "Thudiyalur", "Koundampalayam", "Coimbatore Central", "RS Puram"
+]
+ALLOWED_CITY_HINTS=[
+  "coimbatore", "ooty", "kotagiri", "nilgiri", "kallar", "mettupalayam", "karamadai",
+  "sirumugai", "annur", "velingaadu", "periyanaickenpalayam", "kovilpalayam",
+  "saravanampatti", "thudiyalur", "koundampalayam", "rs puram", "ramanathapuram"
+]
+REJECT_CITY_HINTS=[
+  "noida", "delhi", "chandigarh", "hyderabad", "gurgaon", "baraut", "ghaziabad",
+  "chennai", "bengaluru", "bangalore", "mumbai", "pune", "tirupur", "kumbakonam",
+  "kanchipuram", "maduravoyal", "secunderabad"
+]
+
+# 3. SHARED MEMORY + INTEGRATIONS (ALL AGENTS READ/WRITE HERE)
+GOOGLE_SPREADSHEET_ID="10-5n2epVeVhn9_ecRGd9xHpvmHkJ5qdwlGoHdMumwKg"
+GOOGLE_CREDENTIALS_FILE="google_creds.json"
+SERVICE_ACCOUNT_EMAIL="vicky-bot@elite-balaji-automation.iam.gserviceaccount.com"
+GEMINI_MODEL="gemini-3.6-flash"
+SHARED_MEMORY_MODULES=[".cursorrules", "shared_memory.py", "Google Sheets", "assets/black_gold_marble.jpg"]
+# Sheet tabs:
+#   Sheet1 / SEO_Audits / Content_Logs / Email_Logs / Council_Log
+
+LEAD_SHEET_COLUMNS=[
+  "Contractor Name", "Phone Number", "City Hub", "Source Platform",
+  "Source Website", "Client Details", "Sourced At"
+]
+DEFERRED_COLUMNS=["Custom Pitch Summary", "Lead Status", "Last Contacted"]
+
+HARVEST_SOURCES=[
+  "Google Maps place search (civil/builders/tile contractors across Coimbatore hubs)",
+  "Google Search (firm contacts + buyer/demand ads and intent queries for local hubs)",
+  "Instagram discovery via Google/public SERP cards only (local engineers/builders — no Instagram login)"
+]
+RETIRED_SOURCES=["Justdial", "OLX", "TradeIndia-as-primary"]
+JUSTDIAL_POLICY="Not required. Retired as primary because category pages leak electronics/irrelevant shops. Google Maps + Google Search already return cleaner contractor phones. Re-enable only with iron civil/builder filters if client insists."
+OUTREACH_TARGET_POLICY="Email/outreach targets = contractors, builders, civil engineers, laying crews. EXCLUDE peer retail showrooms/tile stores/granite suppliers (same trade as Elite Balaji)."
+BUYER_SIGNAL_QUERIES=[
+  "need tiles contractor Coimbatore",
+  "looking for granite flooring Coimbatore",
+  "civil contractor required Karamadai",
+  "tile laying work wanted Mettupalayam"
+]
+INSTAGRAM_DISCOVERY_RULE="Only capture handle/bio/URL visible in Google or public preview cards without logging in or opening gated Instagram pages."
+
+# =====================================================================
+# 3b. MASTER PLAN — LOCKED BUILD ORDER
+# =====================================================================
+# Correct order (your proposal, refined):
+#   Phase 1 SCRAPER     — leads + buyer ads + public IG cards (workbench UI only)
+#   Phase 2 WEBSITE     — Elite Balaji public brand site
+#   Phase 3 MARKETING+SEO (+ Email drafts late) — needs website + ledger
+#   Phase 4 EXECUTIVE   — full Vicky personality (JARVIS/FRIDAY tone) + orchestration polish
+#   Phase 5 INTERFACE   — FINAL interactive desk: JARVIS layout density + black/gold marble
+#                         replacing all blue/cyan zones; voice+text; phone+desktop
+# NOTE: Thin router/workbench may exist during Phase 1 for testing. Final UI is Phase 5 only.
+#       Do NOT polish the marble×JARVIS interface before Phases 1–4 are solid.
+
+MASTER_PLAN_PHASES=[
+  {
+    "phase": 1,
+    "name": "Scraper Agent",
+    "status": "IN_PROGRESS",
+    "deliverables": [
+      "Google Maps + Google Search harvest",
+      "Buyer/demand ad signals from public SERP",
+      "Local Instagram builder/engineer discovery without login",
+      "Clean Sheet1 (+ optional Buyer_Signals tab)",
+      "Minimal workbench only — not final UI"
+    ]
+  },
+  {
+    "phase": 2,
+    "name": "Company Website — Virtual Showroom",
+    "status": "NEXT",
+    "deliverables": [
+      "Elite Balaji VIRTUAL SHOWROOM (not a flat brochure): entrance + product halls + enquire",
+      "Halls: Granite, Tiles, Sanitary/Sinks, Art/Engraving, Laying Studio, Projects, Contact",
+      "Brand: black/gold marble atmosphere; since 2012; Karamadai office; Coimbatore+Nilgiris hubs",
+      "Enquire: call/WhatsApp +91 91590 56767 + simple form; optional Sheet enquiry log",
+      "Public URLs registered into shared memory for Marketing/SEO/Email agents"
+    ]
+  },
+  {
+    "phase": 3,
+    "name": "Marketing Agent + SEO Agent",
+    "status": "AFTER_WEBSITE",
+    "deliverables": [
+      "SEO_Audits from site + local keywords",
+      "Content_Logs campaigns from leads + buyer signals + site",
+      "Email_Logs drafts only (human approve) late in phase"
+    ]
+  },
+  {
+    "phase": 4,
+    "name": "Vicky Executive personality",
+    "status": "AFTER_AGENTS",
+    "deliverables": [
+      "JARVIS/FRIDAY-like personality (precise, calm, dry wit, loyal to Elite Balaji facts)",
+      "Full orchestration across scraper/SEO/marketing/email",
+      "Voice+text command brain mature"
+    ]
+  },
+  {
+    "phase": 5,
+    "name": "Final interactive interface",
+    "status": "LAST",
+    "deliverables": [
+      "JARVIS structural layout (core, side modules, telemetry, command bar)",
+      "Black/gold marble on all former blue/cyan surfaces",
+      "Fully interactive + functional agent controls",
+      "Phone + desktop; temporary Streamlit workbench replaced/wrapped"
+    ]
+  }
+]
+
+INTERFACE_FINAL_SPEC={
+  "layout_reference": "JARVIS command desk density",
+  "surface_reference": "assets/black_gold_marble.jpg + user JARVIS screenshot",
+  "rule": "Replace cyan/blue glow zones with black marble + gold veins; keep modular interactivity",
+  "personality": "Vicky speaks like a refined local ops AI — JARVIS/FRIDAY energy, Elite Balaji facts only",
+  "timing": "Phase 5 only — after scraper, website, marketing/SEO, executive personality"
+}
+
+# Phase 2 website game plan (virtual showroom)
+WEBSITE_CONCEPT="Virtual Showroom — Athangudi catalogue designs as visual theme; business card for brand/halls/contact; browse then enquire for trade rates"
+WEBSITE_THEME_SOURCE="Athangudi tile catalogues in website/catalogues/athangudi/"
+WEBSITE_IDENTITY_SOURCE="website/assets/business-card.jpg"
+WEBSITE_CATALOGUE_DROP="website/catalogues/ (see DROP_HERE.md — chat uploads often fail)"
+WEBSITE_RULES_FILE=".cursor/rules/elite-balaji-virtual-showroom.mdc"
+WEBSITE_HALLS=[
+  "Tiles", "Granite & Marbles", "Kota Stone", "Kadappa",
+  "Sanitaryware", "Adhesive", "Quartz", "Laying Works"
+]
+WEBSITE_PRICING_DEFAULT="No public price list. CTAs: Ask for trade rate / Laying estimate after measure. Catalogue = visuals until client supplies rates."
+WEBSITE_STAGES=[
+  "W1 Brand spine + drop folder (DONE)",
+  "W2 Showroom shell (DONE — restyle to Athangudi after PDFs land)",
+  "W3 Product halls from Athangudi + other catalogues (NEXT)",
+  "W4 Trust + hubs + projects + partner logo art",
+  "W5 Enquire engine polish",
+  "W6 Launch + register URLs in shared memory for Marketing/SEO"
+]
+WEBSITE_CLIENT_ASSETS_NEEDED=[
+  "Athangudi catalogue PDFs in website/catalogues/athangudi/pdfs/",
+  "Other catalogues in website/catalogues/other-catalogues/pdfs/",
+  "Product photos in website/catalogues/product-photos/",
+  "Logo export", "Price policy confirm", "Domain"
+]
+
+COUNCIL_AGENTS=[
+  {"id": "vicky_executive", "module": "agents/vicky_executive.py", "status": "THIN_NOW_FULL_PHASE_4", "role": "Orchestrator + personality"},
+  {"id": "scraper_agent", "module": "agents/scraper_agent.py + lead_agent.py", "status": "PHASE_1_FOCUS", "role": "Maps+Search+IG cards+buyer ads"},
+  {"id": "seo_agent", "module": "agents/seo_agent.py", "status": "PHASE_3", "role": "Keyword/demand → SEO_Audits"},
+  {"id": "marketing_agent", "module": "agents/marketing_agent.py", "status": "PHASE_3", "role": "Campaigns after website"},
+  {"id": "email_agent", "module": "agents/email_agent.py", "status": "PHASE_3_LATE", "role": "Drafts only, human-approve"}
+]
+
+SHARED_CONTEXT_RULES=[
+  "Every agent loads business facts + geo from .cursorrules via shared_memory.py",
+  "Google Sheet is live shared ops memory (read before write; dedupe)",
+  "Scraper is the only writer of new contractor identity rows on Sheet1",
+  "Buyer ads/signals may use a separate Buyer_Signals tab — still no invented phones",
+  "Instagram: no login; SERP/public card fields only",
+  "Marketing / Email / SEO may READ leads; never fabricate phones or cities",
+  "Vicky Executive orchestrates; full persona is Phase 4; final UI is Phase 5",
+  "No Custom Pitch Summary on Sheet1"
+]
+
+PITCH_POLICY="Do not generate or store Custom Pitch Summary on leads. Pitches/emails are Marketing + Email Agent work after the website exists."
+
+ARCHITECTURE_MODULES=[
+  "Phase1: lead_agent.py + agents/scraper_agent.py (+ IG/buyer search expansion)",
+  "Phase2: website/ Elite Balaji public site",
+  "Phase3: agents/seo_agent.py + marketing_agent.py + email_agent.py",
+  "Phase4: agents/vicky_executive.py personality + orchestration polish",
+  "Phase5: final command interface (JARVIS layout × black/gold marble)",
+  "shared_memory.py + Google Sheets + .cursorrules = always-on shared memory",
+  "app.py = temporary workbench until Phase 5"
+]
+
+# 4. MANDATORY IMPLEMENTATION RULES (STRICT)
+- Follow MASTER_PLAN_PHASES order. Final marble×JARVIS interface is Phase 5 only.
+- NEVER invent contractor names, phone numbers, or placeholder leads for demos or handovers.
+- NEVER seed Google Sheets with fabricated fallback arrays. An empty ledger is preferred over fake data.
+- PRIMARY harvest: Google Maps + Google Search (+ public Instagram SERP cards) for Coimbatore / STRICT_TARGET_LOCATIONS.
+- Also harvest public buyer/demand ad signals (BUYER_SIGNAL_QUERIES) without inventing contacts.
+- Instagram: NO login; only fields visible in Google/public preview cards (INSTAGRAM_DISCOVERY_RULE).
+- Do NOT use Justdial/OLX as primary sources.
+- EVERY saved contractor row MUST include Source Platform and Source Website.
+- Lead rows store LEAD_SHEET_COLUMNS only — no pitch column.
+- ALWAYS optimize Sheet1: dedupe on phone then name; phone-first ordering.
+- DISCARD REJECT_CITY_HINTS; KEEP ALLOWED_CITY_HINTS / STRICT_TARGET_LOCATIONS / Coimbatore.
+- Prefer rows WITH phone numbers; never invent digits.
+- BROWSER scrape: chromium.launch(channel="chrome", headless=False) + fresh new_context; no launch_persistent_context ./chrome_profile.
+- Geolocation auto-grant COIMBATORE_COORDINATES.
+- Keep agents as SEPARATE modules; Vicky orchestrates.
+- Phase 5 UI: JARVIS layout density + black/gold marble replacing blue/cyan zones; voice+text; phone+desktop; Vicky personality like JARVIS/FRIDAY.
+- Email Agent drafts only — human approval required before any send.
+- Do not ship Marketing/Email until Phase 2 website exists.
+- Do not treat the current Streamlit workbench as the final product.
