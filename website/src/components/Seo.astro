@@ -19,6 +19,8 @@ const localBusinessLd = {
   description: "Granite, marble, tiles, sanitaryware and laying works — wholesale and trade supply since 2012.",
   foundingDate: String(business.since),
   telephone: business.phoneTel,
+  email: business.email,
+  image: new URL("/media/brand/business-card.jpg", Astro.site).toString(),
   address: {
     "@type": "PostalAddress",
     streetAddress: "12-B, Gandhi Nagar, Mettupalayam Main Road",

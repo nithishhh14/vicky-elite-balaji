@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { business, telLink, waLink } from "../lib/business";
+import { business, telLink, waLink, emailQuoteLink } from "../lib/business";
 ---
 
 <BaseLayout
@@ -9,7 +9,7 @@ import { business, telLink, waLink } from "../lib/business";
 >
   <section class="mx-auto grid max-w-5xl gap-14 px-5 py-20 md:grid-cols-2">
     <div>
-      <p class="text-xs uppercase tracking-[0.3em] text-terracotta">Contact</p>
+      <p class="text-xs uppercase tracking-[0.3em] text-bottle">Contact</p>
       <h1 class="mt-3 text-4xl">Ask for a trade rate</h1>
       <p class="mt-5 text-ink-soft leading-relaxed">
         Fastest reply is WhatsApp or a call. Tell us the material, size and quantity, or your site
@@ -19,7 +19,11 @@ import { business, telLink, waLink } from "../lib/business";
       <dl class="mt-8 space-y-4 text-sm">
         <div>
           <dt class="uppercase tracking-wide text-ink-soft/70">Phone</dt>
-          <dd><a href={telLink()} class="text-lg text-ink hover:text-terracotta">{business.phoneDisplay}</a></dd>
+          <dd><a href={telLink()} class="text-lg text-ink hover:text-bottle">{business.phoneDisplay}</a></dd>
+        </div>
+        <div>
+          <dt class="uppercase tracking-wide text-ink-soft/70">Email</dt>
+          <dd><a href={`mailto:${business.email}`} class="text-ink hover:text-bottle">{business.email}</a></dd>
         </div>
         <div>
           <dt class="uppercase tracking-wide text-ink-soft/70">Address</dt>
@@ -31,44 +35,75 @@ import { business, telLink, waLink } from "../lib/business";
         </div>
       </dl>
 
-      <a href={waLink("Hi Elite Balaji, ")} target="_blank" rel="noopener" class="mt-8 inline-block rounded-full bg-whatsapp px-6 py-3 text-sm font-semibold uppercase tracking-wide text-paper hover:opacity-90 transition-opacity">
-        Open WhatsApp
-      </a>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href={waLink("Hi Elite Balaji, ")} target="_blank" rel="noopener" aria-label="Open WhatsApp to enquire" class="inline-block rounded-full bg-whatsapp px-6 py-3 text-sm font-semibold uppercase tracking-wide text-paper hover:opacity-90 transition-opacity">
+          Open WhatsApp
+        </a>
+        <a href={emailQuoteLink()} aria-label="Request an email quote" class="inline-block rounded-full border border-line px-6 py-3 text-sm font-semibold uppercase tracking-wide text-ink-soft hover:border-bottle hover:text-bottle transition-colors">
+          Request Email Quote
+        </a>
+      </div>
+
+      <div class="mt-8 overflow-hidden rounded-sm border border-line shadow-card">
+        <iframe
+          src={business.mapEmbedSrc}
+          title="Elite Balaji Stones & Ceramics location on Google Maps"
+          class="h-64 w-full"
+          style="border:0"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
     </div>
 
-    <form id="enquiry-form" class="rounded-sm border border-line bg-card p-6" aria-label="WhatsApp enquiry form">
-      <p class="text-xs uppercase tracking-[0.2em] text-terracotta">Send an enquiry</p>
+    <form id="enquiry-form" class="rounded-sm border border-line bg-card p-6" aria-label="Enquiry form">
+      <p class="text-xs uppercase tracking-[0.2em] text-bottle">Send an enquiry</p>
       <p class="mt-2 text-xs text-ink-soft">
-        This opens WhatsApp with your message pre-filled — nothing is submitted to a server.
+        This opens WhatsApp or your email app with your message pre-filled — nothing is submitted to a server.
       </p>
 
       <label class="mt-5 block text-sm">
         Your name
-        <input name="name" type="text" required class="mt-1 w-full rounded border border-line bg-paper px-3 py-2 text-sm focus-visible:outline-2 focus-visible:outline-terracotta" />
+        <input name="name" type="text" required class="mt-1 w-full rounded border border-line bg-paper px-3 py-2 text-sm focus-visible:outline-2 focus-visible:outline-bottle" />
       </label>
       <label class="mt-4 block text-sm">
         Material / product
-        <input name="material" type="text" placeholder="e.g. Granite for kitchen counter" required class="mt-1 w-full rounded border border-line bg-paper px-3 py-2 text-sm focus-visible:outline-2 focus-visible:outline-terracotta" />
+        <input name="material" type="text" placeholder="e.g. Granite for kitchen counter" required class="mt-1 w-full rounded border border-line bg-paper px-3 py-2 text-sm focus-visible:outline-2 focus-visible:outline-bottle" />
       </label>
       <label class="mt-4 block text-sm">
         Message
-        <textarea name="message" rows="3" placeholder="Quantity, size, site location..." class="mt-1 w-full rounded border border-line bg-paper px-3 py-2 text-sm focus-visible:outline-2 focus-visible:outline-terracotta"></textarea>
+        <textarea name="message" rows="3" placeholder="Quantity, size, site location..." class="mt-1 w-full rounded border border-line bg-paper px-3 py-2 text-sm focus-visible:outline-2 focus-visible:outline-bottle"></textarea>
       </label>
 
-      <button type="submit" class="mt-5 w-full rounded-full bg-mustard px-5 py-3 text-sm font-semibold uppercase tracking-wide text-ink hover:bg-mustard-dark transition-colors">
-        Continue on WhatsApp
-      </button>
+      <div class="mt-5 flex flex-col gap-2">
+        <button type="submit" name="via" value="whatsapp" class="w-full rounded-full bg-bottle px-5 py-3 text-sm font-semibold uppercase tracking-wide text-paper hover:bg-bottle-dark transition-colors">
+          Continue on WhatsApp
+        </button>
+        <button type="submit" name="via" value="email" class="w-full rounded-full border border-line px-5 py-3 text-sm font-semibold uppercase tracking-wide text-ink-soft hover:border-bottle hover:text-bottle transition-colors">
+          Continue by Email
+        </button>
+      </div>
     </form>
   </section>
 
-  <script define:vars={{ phoneWa: business.phoneWa }} is:inline>
+  <script define:vars={{ phoneWa: business.phoneWa, email: business.email }} is:inline>
     const form = document.getElementById("enquiry-form");
     form?.addEventListener("submit", (e) => {
       e.preventDefault();
+      const submitter = e.submitter;
+      const via = submitter && submitter.value === "email" ? "email" : "whatsapp";
       const data = new FormData(form);
       const name = (data.get("name") || "").toString().trim();
       const material = (data.get("material") || "").toString().trim();
       const message = (data.get("message") || "").toString().trim();
+      if (via === "email") {
+        const subject = `Trade rate enquiry — ${material || "general"}`;
+        const body = [`Hi Elite Balaji, I'm ${name}.`, `I'm interested in: ${material}.`, message]
+          .filter(Boolean)
+          .join("\n");
+        window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        return;
+      }
       const text = [
         `Hi Elite Balaji, I'm ${name}.`,
         `I'm interested in: ${material}.`,

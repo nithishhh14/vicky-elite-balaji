@@ -1,18 +1,23 @@
 @import "tailwindcss";
 
 @theme {
-  /* Athangudi-derived palette: terracotta, mustard, bottle green, warm ivory ground */
+  /* Athangudi-derived palette, rebalanced green-dominant per 2026-09-11 client
+     brief (docs/DECISIONS.md): deep emerald/moss/sage now primary, terracotta
+     and mustard demoted to secondary/tertiary accents only. */
   --color-ink: #2b241d;
   --color-ink-soft: #55493c;
   --color-paper: #f6efe1;
   --color-paper-deep: #ece0c9;
   --color-card: #fbf6ec;
+  --color-bottle: #1f3d33;
+  --color-bottle-dark: #142823;
+  --color-moss: #55703f;
+  --color-moss-dark: #435830;
+  --color-sage: #a9b48f;
   --color-terracotta: #a3402a;
   --color-terracotta-dark: #7a2e1e;
   --color-mustard: #c48f2e;
   --color-mustard-dark: #9c6f1f;
-  --color-bottle: #1f3d33;
-  --color-bottle-dark: #142823;
   --color-brass: #a3822f;
   --color-line: #d9c6a0;
   --color-whatsapp: #1f8a5b;
@@ -45,12 +50,12 @@
   }
 
   ::selection {
-    background: var(--color-terracotta);
+    background: var(--color-bottle);
     color: var(--color-paper);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-terracotta);
+    outline: 2px solid var(--color-bottle);
     outline-offset: 3px;
   }
 
@@ -66,7 +71,7 @@
 
 @layer components {
   .quatrefoil-divider {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath d='M14 3c1.6 0 2 1.7 2 3.4 0 1.2-.4 2.4-1 3.4 1-.6 2.2-1 3.4-1C20.3 8.8 22 9.2 22 10.8s-1.7 2-3.4 2c-1.2 0-2.4-.4-3.4-1 .6 1 1 2.2 1 3.4 0 1.6-.4 3.4-2 3.4s-2-1.8-2-3.4c0-1.2.4-2.4 1-3.4-1 .6-2.2 1-3.4 1C8.3 12.8 6 12.4 6 10.8s2.3-2 3.8-2c1.2 0 2.4.4 3.4 1-.6-1-1-2.2-1-3.4C12.2 4.7 12.4 3 14 3z' fill='%23a3402a' fill-opacity='0.35'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath d='M14 3c1.6 0 2 1.7 2 3.4 0 1.2-.4 2.4-1 3.4 1-.6 2.2-1 3.4-1C20.3 8.8 22 9.2 22 10.8s-1.7 2-3.4 2c-1.2 0-2.4-.4-3.4-1 .6 1 1 2.2 1 3.4 0 1.6-.4 3.4-2 3.4s-2-1.8-2-3.4c0-1.2.4-2.4 1-3.4-1 .6-2.2 1-3.4 1C8.3 12.8 6 12.4 6 10.8s2.3-2 3.8-2c1.2 0 2.4.4 3.4 1-.6-1-1-2.2-1-3.4C12.2 4.7 12.4 3 14 3z' fill='%2355703f' fill-opacity='0.35'/%3E%3C/svg%3E");
     background-repeat: repeat-x;
     background-size: 28px 28px;
     height: 1.75rem;

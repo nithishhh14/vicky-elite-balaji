@@ -1,0 +1,11 @@
+{
+  "hallId": "sanitaryware",
+  "name": "Wall-Mounted Wash Basin",
+  "category": "Sanitaryware",
+  "finish": "Ceramic, gloss white",
+  "order": 1,
+  "applications": ["Bathrooms"],
+  "image": "https://images.unsplash.com/photo-1576698483491-8c43f0862543?auto=format&fit=crop&w=1200&q=80",
+  "imageAlt": "Wall-mounted ceramic wash basin in a bathroom",
+  "note": "Representative style — partner brand pricing and availability on request."
+}

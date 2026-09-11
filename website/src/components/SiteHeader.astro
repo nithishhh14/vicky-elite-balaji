@@ -27,17 +27,17 @@ const primaryHalls = ["/halls/tiles/", "/halls/granite-marbles/", "/halls/sanita
         <a
           href={h.href}
           class:list={[
-            "whitespace-nowrap uppercase tracking-wide text-xs font-medium hover:text-terracotta transition-colors",
-            pathname.startsWith(h.href) ? "text-terracotta" : "text-ink-soft",
+            "whitespace-nowrap uppercase tracking-wide text-xs font-medium hover:text-bottle transition-colors",
+            pathname.startsWith(h.href) ? "text-bottle" : "text-ink-soft",
           ]}
         >
           {h.label}
         </a>
       ))}
-      <a href="/halls/" class="whitespace-nowrap text-xs font-medium uppercase tracking-wide text-ink-soft hover:text-terracotta transition-colors">
+      <a href="/halls/" class="whitespace-nowrap text-xs font-medium uppercase tracking-wide text-ink-soft hover:text-bottle transition-colors">
         All halls
       </a>
-      <a href="/about/" class="whitespace-nowrap text-xs font-medium uppercase tracking-wide text-ink-soft hover:text-terracotta transition-colors">
+      <a href="/about/" class="whitespace-nowrap text-xs font-medium uppercase tracking-wide text-ink-soft hover:text-bottle transition-colors">
         About
       </a>
     </nav>
@@ -45,13 +45,13 @@ const primaryHalls = ["/halls/tiles/", "/halls/granite-marbles/", "/halls/sanita
     <div class="flex flex-shrink-0 items-center gap-2">
       <a
         href={telLink()}
-        class="hidden whitespace-nowrap rounded-full border border-terracotta/60 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-terracotta hover:bg-terracotta hover:text-paper transition-colors sm:inline-block"
+        class="hidden whitespace-nowrap rounded-full border border-bottle/60 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-bottle hover:bg-bottle hover:text-paper transition-colors sm:inline-block"
       >
         Call {business.phoneDisplay}
       </a>
       <a
         href={telLink()}
-        class="inline-flex items-center justify-center rounded-full border border-terracotta/60 p-2.5 text-terracotta sm:hidden"
+        class="inline-flex items-center justify-center rounded-full border border-bottle/60 p-2.5 text-bottle sm:hidden"
         aria-label={`Call ${business.phoneDisplay}`}
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
@@ -77,19 +77,19 @@ const primaryHalls = ["/halls/tiles/", "/halls/granite-marbles/", "/halls/sanita
     <ul class="flex flex-col gap-3 text-sm">
       {halls.map((h) => (
         <li>
-          <a href={h.href} class="block py-1 uppercase tracking-wide text-xs font-medium text-ink-soft hover:text-terracotta">
+          <a href={h.href} class="block py-1 uppercase tracking-wide text-xs font-medium text-ink-soft hover:text-bottle">
             {h.label}
           </a>
         </li>
       ))}
       <li class="mt-1 border-t border-line/60 pt-3">
-        <a href="/halls/" class="block py-1 text-xs font-medium uppercase tracking-wide text-ink-soft hover:text-terracotta">All halls</a>
+        <a href="/halls/" class="block py-1 text-xs font-medium uppercase tracking-wide text-ink-soft hover:text-bottle">All halls</a>
       </li>
       <li>
-        <a href="/about/" class="block py-1 text-xs font-medium uppercase tracking-wide text-ink-soft hover:text-terracotta">About</a>
+        <a href="/about/" class="block py-1 text-xs font-medium uppercase tracking-wide text-ink-soft hover:text-bottle">About</a>
       </li>
       <li>
-        <a href="/contact/" class="block py-1 text-xs font-medium uppercase tracking-wide text-ink-soft hover:text-terracotta">Contact</a>
+        <a href="/contact/" class="block py-1 text-xs font-medium uppercase tracking-wide text-ink-soft hover:text-bottle">Contact</a>
       </li>
     </ul>
   </nav>

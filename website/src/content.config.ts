@@ -35,4 +35,19 @@ const tileProducts = defineCollection({
   }),
 });
 
-export const collections = { halls, tileProducts };
+const materialProducts = defineCollection({
+  loader: glob({ pattern: "**/*.json", base: "./src/content/material-products" }),
+  schema: z.object({
+    hallId: z.string(),
+    name: z.string(),
+    category: z.string(),
+    finish: z.string(),
+    order: z.number(),
+    applications: z.array(z.string()),
+    image: z.string(),
+    imageAlt: z.string(),
+    note: z.string(),
+  }),
+});
+
+export const collections = { halls, tileProducts, materialProducts };

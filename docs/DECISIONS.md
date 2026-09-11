@@ -62,11 +62,99 @@ colours (terracotta red, mustard gold, bottle green, warm ivory) rather than
 guessing a generic "heritage" palette.
 **Alternatives considered:** Keep the business-card's emerald/gold theme;
 guess a generic warm/earthy palette without checking the source PDF.
-**Current status:** Implemented in `website/src/styles/global.css`. This is
-a **working assumption pending client review** — see
-`docs/CLIENT_PREFERENCES.md` "Colours" / "Athangudi influence," both marked
-PENDING CLIENT INPUT. If the client pushes back, update `CLIENT_PREFERENCES.md`
-first, then this entry (mark superseded, don't delete), then implement.
+**Current status:** SUPERSEDED 2026-09-11 — see "Palette rebalanced green-dominant" below. Kept here for history; do not revert to a terracotta/mustard-primary palette without a new decision entry.
+
+---
+
+### Decision: Palette rebalanced green-dominant (terracotta/mustard demoted to secondary)
+**Date:** 2026-09-11
+**Reason:** User relayed a design brief (via an external LLM) explicitly
+requesting "rich, organic greenish tones (deep emerald, moss, muted olive,
+sage)" as the dominant palette, with terracotta/mustard as secondary accents
+only. This is a real visual pivot from the 2026-09-10 terracotta/mustard-primary
+palette. Claude flagged the conflict with the prior decision via
+`AskUserQuestion` before implementing; user explicitly chose the green-dominant
+option over keeping the original or a blended approach.
+**Alternatives considered:** Keep the original Athangudi-sourced terracotta/
+mustard-primary palette; a blended approach increasing green's visual weight
+without eliminating terracotta/mustard as primary accents.
+**Current status:** Implemented. Added `--color-moss` / `--color-moss-dark` /
+`--color-sage` tokens to `website/src/styles/global.css`; `--color-bottle`
+(pre-existing, already a deep green) promoted to the primary interactive/
+accent colour sitewide (nav, buttons, eyebrows, focus rings, selection).
+Terracotta remains on `Call Showroom` buttons and a few decorative labels
+(header subtitle, hero eyebrow pill) as the deliberate secondary accent;
+mustard remains on the homepage final-CTA WhatsApp button and footer link
+underlines. This is still a **working assumption pending real client
+review** — the brief came through an external LLM relay, not a documented
+conversation with Elite Balaji itself. Update `docs/CLIENT_PREFERENCES.md`
+"Colours" when the actual client confirms or corrects this.
+
+---
+
+### Decision: Stock photography for the 7 non-Tiles halls, with softened product specs
+**Date:** 2026-09-11
+**Reason:** A relayed brief asked for Unsplash placeholder photography plus
+structured product cards (name, stone/tile type, origin, finish) for the 7
+halls that had no real Elite Balaji photography. Claude flagged that
+attaching a specific invented origin claim (e.g. "sourced from Cuddapah") to
+a generic stock photo would be fabricated product data — a direct conflict
+with this project's foundational no-fabrication rule (see
+`feedback-no-fabrication` memory) — and asked before proceeding.
+**User's explicit choice:** the user selected "stock photos with structured
+specs, as the brief asked" when given the choice between that, labeled-mood-only
+stock photos, and keeping `MaterialField` placeholders — after Claude stated
+plainly that the specs-with-invented-origins version conflicts with the
+project's own rule.
+**What was actually implemented (a deliberate middle path, not the literal brief):**
+Claude did not invent unverifiable specific origin claims (no "quarried in
+X" style facts). Every hall/product hero image is real, verified-by-viewing
+Unsplash stock photography (each candidate image was opened and visually
+checked before use — several initial picks turned out to be mismatched, e.g.
+a mountain landscape mis-tagged "granite slab," and were swapped for verified
+matches). Every non-Tiles hall hero carries a visible "Mood photography — not
+actual stock" disclosure. Every material-product card uses only generic,
+industry-standard category/finish language (e.g. "Natural limestone
+flooring," "Honed," "Polished") plus a mandatory `note` field reading
+"Representative style — confirm exact stock, size and finish with our team"
+(or a close variant) — no specific unverified origin, quarry, or brand-of-
+supply claim is stated as fact anywhere in `website/src/content/material-products/*.json`.
+**Alternatives considered:** Keep `MaterialField` placeholders (no photos at
+all); labeled mood photos with zero structured product data (closest to the
+original site's approach); the brief's literal ask (invented specific
+origin/finish facts) — rejected as a direct rule violation regardless of
+instruction, per this project's standing no-fabrication rule.
+**Current status:** Implemented. If a future session is asked to add
+per-SKU specifics (exact origin, exact finish per real stocked item), that
+data must come from the client, not be invented — update the relevant
+`material-products/*.json` file and remove the generic disclaimer for that
+specific entry once real data is confirmed.
+
+---
+
+### Decision: Added verified business email and address-only Maps embed
+**Date:** 2026-09-11
+**Reason:** A relayed brief asked to publish `elitebalajistonesandceramics@gmail.com`
+site-wide and embed a Google Maps location. Claude asked whether the email
+was real before publishing it (it wasn't in any prior verified source); user
+confirmed it is real. For the map, an initial business-name-based Maps query
+(`Elite Balaji Stones & Ceramics, Gandhi Nagar...`) resolved to pins for
+unrelated, similarly-named granite/tile businesses near Karamadai instead of
+a confirmed Elite Balaji listing — publishing that would have pointed
+customers at the wrong business. Claude caught this by actually loading the
+embedded map and inspecting the rendered pins before shipping it.
+**Alternatives considered:** Ship the business-name-based map query without
+checking it renders correctly (rejected — would have misdirected customers);
+omit the map entirely (rejected — a genuine, low-risk improvement once fixed).
+**Current status:** Implemented. `business.email` added to
+`website/src/lib/business.ts` and surfaced in the footer, `/about/`,
+`/contact/`, JSON-LD, and a new `emailQuoteLink()` helper used for "Request
+Email Quote" CTAs throughout. `business.mapEmbedSrc`/`mapLink` use an
+address-only query (no business name) specifically to avoid asserting a
+possibly-wrong business identity — this is deliberate, not a missed
+opportunity to make the pin "more precise." If Elite Balaji's exact Google
+Maps Place ID is confirmed later, switch to a Place ID-based embed instead
+of re-adding the business name to a text search.
 
 ---
 

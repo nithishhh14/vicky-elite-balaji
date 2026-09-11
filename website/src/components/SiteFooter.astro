@@ -1,5 +1,5 @@
 ---
-import { business, telLink, waLink, defaultEnquiryMessage } from "../lib/business";
+import { business, telLink, waLink, emailQuoteLink, defaultEnquiryMessage } from "../lib/business";
 ---
 
 <footer class="mt-24 border-t border-line/70 bg-bottle text-paper">
@@ -17,7 +17,16 @@ import { business, telLink, waLink, defaultEnquiryMessage } from "../lib/busines
         <a href={telLink()} class="underline decoration-mustard/60 underline-offset-4 hover:text-mustard">{business.phoneDisplay}</a>
       </p>
       <p class="mt-1">
+        <a href={`mailto:${business.email}`} class="underline decoration-mustard/60 underline-offset-4 hover:text-mustard">{business.email}</a>
+      </p>
+      <p class="mt-1">
         <a href={waLink(defaultEnquiryMessage)} class="underline decoration-mustard/60 underline-offset-4 hover:text-mustard">WhatsApp enquiry</a>
+      </p>
+      <p class="mt-1">
+        <a href={emailQuoteLink()} class="underline decoration-mustard/60 underline-offset-4 hover:text-mustard">Request email quote</a>
+      </p>
+      <p class="mt-1">
+        <a href={business.mapLink} target="_blank" rel="noopener" class="underline decoration-mustard/60 underline-offset-4 hover:text-mustard">Get directions</a>
       </p>
     </div>
 

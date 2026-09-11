@@ -12,11 +12,19 @@ labeled as a **working assumption**, not a preference, and lives in
 PENDING CLIENT INPUT
 
 ## Preferred visual style
-PENDING CLIENT INPUT
-(Working assumption in place — see `docs/DECISIONS.md` "Design system palette")
+PENDING CLIENT INPUT — a design brief was relayed by the user on 2026-09-11
+(sourced from an external LLM session, not a documented conversation with
+Elite Balaji itself) requesting a flat, editorial, no-3D, premium-trading-
+business aesthetic. Treated as a working assumption, not confirmed client
+preference — see `docs/DECISIONS.md`.
 
 ## Colours
-PENDING CLIENT INPUT
+PENDING CLIENT INPUT — the 2026-09-11 relayed brief requested green-dominant
+tones (deep emerald/moss/sage), which was implemented (see
+`docs/DECISIONS.md` "Palette rebalanced green-dominant"). This is still not
+confirmed as the real client's preference — it's what the user asked Claude
+to implement based on a brief they brought in, not feedback attributed to
+Elite Balaji directly. Flag clearly if/when the actual client reacts to it.
 
 ## Typography
 PENDING CLIENT INPUT
@@ -37,8 +45,12 @@ PENDING CLIENT INPUT
 PENDING CLIENT INPUT
 
 ## Product photography
-PENDING CLIENT INPUT
-(Known gap: no real photography for 7 of 8 halls — see `docs/PROJECT_STATE.md` "Blocked items")
+PENDING CLIENT INPUT — real photography for 7 of 8 halls is still an open
+gap (see `docs/PROJECT_STATE.md` "Blocked items"). As of 2026-09-11, those
+7 halls now show verified, clearly-labeled stock photography ("Mood
+photography — not actual stock") instead of the earlier colour/texture
+placeholders — see `docs/DECISIONS.md` "Stock photography for the 7
+non-Tiles halls." This is a stand-in, not a client-approved final look.
 
 ## Catalogue usage
 PENDING CLIENT INPUT

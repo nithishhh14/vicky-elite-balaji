@@ -1,6 +1,52 @@
 # Vicky / Elite Balaji — Current Project State
 
-_Last updated: 2026-09-10, end of Phase 2 website rebuild session._
+_Last updated: 2026-09-11 — website optimization pass (green-dominant palette, verified stock photography for 7 halls, email + Maps, no-price CTA set) plus the expanded cross-device "JARVIS brain" vision (planning only, not yet architected or built)._
+
+## Website optimization pass (2026-09-11)
+
+Following a design/technical brief the user relayed (sourced from an
+external LLM, not a documented Elite Balaji conversation), Claude made
+targeted changes to the existing Astro site — no rewrite. See
+`docs/DECISIONS.md` for full reasoning on each; summary:
+
+- Palette rebalanced green-dominant (terracotta/mustard demoted to secondary
+  accents). Still a working assumption, not confirmed client preference.
+- `business.email` added (user-confirmed real) and surfaced in the footer,
+  About, Contact, JSON-LD, and new "Request Email Quote" `mailto:` CTAs
+  alongside every WhatsApp/Call CTA (the brief's "no prices, always an
+  enquiry trigger" rule).
+- All 7 non-Tiles halls now show verified stock photography (each image was
+  opened and visually checked, not trusted from search-result order —
+  several initial picks were wrong, e.g. a mountain landscape mistagged
+  "granite," and were caught and replaced) with a visible "Mood photography
+  — not actual stock" disclosure, plus 2 structured product cards per hall
+  using only generic category/finish language and a mandatory
+  "representative style, confirm with our team" disclaimer — no invented
+  specific origin/provenance claims, per this project's no-fabrication rule.
+- Google Maps embedded on About + Contact, deliberately as an address-only
+  query rather than a business-name search, after a business-name query was
+  found (by actually loading it) to resolve to unrelated nearby businesses.
+- Minor real fixes: anchor-scroll landing under the sticky header on the
+  homepage "Enter showroom" link, nav wrapping at in-between viewport widths.
+- No dropdown nav or product-gallery tabs exist in this codebase (the relayed
+  brief assumed they did) — nothing to fix there; noted to the user rather
+  than fabricating features to match the brief's assumptions.
+
+## Expanded vision (stated 2026-09-11 — planning stage only)
+
+The user has stated a larger ambition beyond the original phased plan: Vicky
+should eventually run as a JARVIS-style assistant reachable across the
+client's (the business owner's) own devices, automating his requirements and
+preferences, with an auto-updating shared "brain" in the backend (context/
+preferences that update themselves over time rather than being manually
+re-entered). This is a **stated goal, not a decision** — no architecture for
+it exists yet. The user asked for a comprehensive planning prompt to run
+through an external LLM before any of this is built; see
+`docs/EXTERNAL_PLANNING_PROMPT.md` for the prompt itself. When the user
+brings back a plan from that external session, treat it as input to review
+and reconcile with `docs/DECISIONS.md`, not as something to implement blind.
+Do not start building cross-device/always-on infrastructure until that
+review happens.
 
 ## Project objective
 
@@ -138,8 +184,17 @@ We are inside Phase 2 (Website).
   `scripts/extract_catalogues.py` (the source of the images copied into
   `public/media/`). Kept as the extraction cache, not itself served.
 - No real photography exists yet for granite, marble, kota stone, kadappa,
-  sanitaryware, adhesive/accessories, quartz, or laying works — those halls
-  render a `MaterialField` placeholder instead.
+  sanitaryware, adhesive/accessories, quartz, or laying works. As of
+  2026-09-11 those halls show verified, individually-checked Unsplash stock
+  photography (hotlinked, not downloaded) with a visible "Mood photography —
+  not actual stock" disclosure, instead of the earlier `MaterialField`
+  colour/texture placeholder. `MaterialField` itself is untouched and still
+  used as a fallback if a hall's `heroImage` is ever cleared.
+- `website/src/content/material-products/*.json` — 15 generic product-style
+  entries across the 7 non-Tiles halls, each with a mandatory disclaimer
+  ("Representative style — confirm exact stock, size and finish with our
+  team") and no invented specific origin/provenance claims. See
+  `docs/DECISIONS.md` "Stock photography for the 7 non-Tiles halls."
 
 ## Current agents
 
@@ -161,10 +216,12 @@ started.
 
 ## Temporary decisions
 
-- The 7 non-tile halls intentionally show a `MaterialField` placeholder
-  instead of any photograph — this is a deliberate stand-in, not a bug, and
-  should be replaced hall-by-hall as real photos arrive (see
-  `docs/WEBSITE_ARCHITECTURE.md` §3 for the exact steps).
+- The 7 non-tile halls intentionally show verified stock photography plus
+  generic-only product cards, clearly disclosed as mood imagery — this is a
+  deliberate stand-in, not a bug, and should be replaced hall-by-hall with
+  real photography and real product data as it arrives (see
+  `docs/WEBSITE_ARCHITECTURE.md` §3 and `docs/DECISIONS.md` "Stock
+  photography for the 7 non-Tiles halls" for the exact steps and rationale).
 - The contact form has no backend — it only builds a `wa.me` link
   client-side. This was a deliberate zero-budget, zero-backend choice, not
   an oversight.

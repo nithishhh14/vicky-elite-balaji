@@ -34,7 +34,7 @@ const restHalls = halls.filter((h) => !featured.includes(h.id));
         works — for contractors, builders and homes across Coimbatore and the Nilgiris.
       </p>
       <div id="hero-cta" class="mt-8 flex flex-wrap gap-3">
-        <a href="#halls" class="rounded-full bg-mustard px-6 py-3 text-sm font-semibold uppercase tracking-wide text-ink hover:bg-mustard-dark transition-colors">
+        <a href="#halls" class="rounded-full bg-bottle px-6 py-3 text-sm font-semibold uppercase tracking-wide text-paper hover:bg-bottle-dark transition-colors">
           Enter showroom
         </a>
         <a href={waLink(defaultEnquiryMessage)} target="_blank" rel="noopener" class="rounded-full border border-paper/50 px-6 py-3 text-sm font-semibold uppercase tracking-wide hover:bg-paper/10 transition-colors">
@@ -56,7 +56,7 @@ const restHalls = halls.filter((h) => !featured.includes(h.id));
   <section class="mx-auto max-w-6xl px-5 py-20">
     <div class="grid gap-12 md:grid-cols-[1.1fr_0.9fr] md:items-center">
       <div>
-        <p class="text-xs uppercase tracking-[0.3em] text-terracotta">Since {business.since} · Karamadai</p>
+        <p class="text-xs uppercase tracking-[0.3em] text-bottle">Since {business.since} · Karamadai</p>
         <h2 class="mt-3 text-3xl sm:text-4xl">Materials and laying, from one address</h2>
         <p class="mt-5 max-w-xl text-ink-soft leading-relaxed">
           Elite Balaji Stones &amp; Ceramics has supplied granite, marble, tiles and sanitaryware to
@@ -84,10 +84,10 @@ const restHalls = halls.filter((h) => !featured.includes(h.id));
   </section>
 
   <!-- 03 — Explore showroom -->
-  <section id="halls" class="border-y border-line/60 bg-card py-20">
+  <section id="halls" class="scroll-mt-20 border-y border-line/60 bg-card py-20">
     <div class="mx-auto max-w-6xl px-5">
       <div class="max-w-xl">
-        <p class="text-xs uppercase tracking-[0.3em] text-terracotta">Explore the showroom</p>
+        <p class="text-xs uppercase tracking-[0.3em] text-bottle">Explore the showroom</p>
         <h2 class="mt-3 text-3xl sm:text-4xl">Eight halls, one enquiry</h2>
       </div>
 
@@ -98,7 +98,7 @@ const restHalls = halls.filter((h) => !featured.includes(h.id));
             class:list={["group grid gap-6 md:grid-cols-2 md:items-center md:gap-12", i % 2 === 1 && "md:[&>*:first-child]:order-2"]}
           >
             <div class="aspect-[4/3] overflow-hidden rounded-sm shadow-card">
-              {hall.data.hasRealContent ? (
+              {hall.data.heroImage ? (
                 <img
                   src={hall.data.heroImage}
                   alt={hall.data.heroAlt}
@@ -110,12 +110,12 @@ const restHalls = halls.filter((h) => !featured.includes(h.id));
               )}
             </div>
             <div>
-              <span class="text-xs uppercase tracking-[0.25em] text-terracotta">
+              <span class="text-xs uppercase tracking-[0.25em] text-bottle">
                 {String(hall.data.order).padStart(2, "0")} · {hall.data.tagline}
               </span>
-              <h3 class="mt-2 text-3xl group-hover:text-terracotta transition-colors">{hall.data.name}</h3>
+              <h3 class="mt-2 text-3xl group-hover:text-bottle transition-colors">{hall.data.name}</h3>
               <p class="mt-3 max-w-md text-ink-soft leading-relaxed">{hall.data.intro}</p>
-              <span class="mt-4 inline-block text-sm font-semibold uppercase tracking-wide text-terracotta">
+              <span class="mt-4 inline-block text-sm font-semibold uppercase tracking-wide text-bottle">
                 Walk this hall &rarr;
               </span>
             </div>
@@ -127,7 +127,7 @@ const restHalls = halls.filter((h) => !featured.includes(h.id));
         <p class="text-xs uppercase tracking-[0.25em] text-ink-soft">Also in the showroom</p>
         <nav class="mt-4 flex flex-wrap gap-x-8 gap-y-3">
           {restHalls.map((hall) => (
-            <a href={`/halls/${hall.id}/`} class="text-lg text-ink hover:text-terracotta transition-colors">
+            <a href={`/halls/${hall.id}/`} class="text-lg text-ink hover:text-bottle transition-colors">
               {hall.data.name}
             </a>
           ))}
@@ -155,12 +155,12 @@ const restHalls = halls.filter((h) => !featured.includes(h.id));
 
   <!-- 05 — Why Elite Balaji -->
   <section class="mx-auto max-w-6xl px-5 py-20">
-    <p class="text-xs uppercase tracking-[0.3em] text-terracotta">Why contractors choose us</p>
+    <p class="text-xs uppercase tracking-[0.3em] text-bottle">Why contractors choose us</p>
     <h2 class="mt-3 max-w-lg text-3xl sm:text-4xl">Trusted since {business.since}, from Karamadai</h2>
     <ol class="mt-12 divide-y divide-line/60 border-y border-line/60">
       {business.usps.map((usp, i) => (
         <li class="grid grid-cols-[3rem_1fr] gap-6 py-6 sm:grid-cols-[4rem_1fr_2fr]">
-          <span class="font-display text-2xl text-terracotta">{String(i + 1).padStart(2, "0")}</span>
+          <span class="font-display text-2xl text-bottle">{String(i + 1).padStart(2, "0")}</span>
           <span class="font-semibold uppercase tracking-wide text-sm self-center">{usp.title}</span>
           <span class="text-ink-soft self-center">{usp.detail}</span>
         </li>
@@ -171,7 +171,7 @@ const restHalls = halls.filter((h) => !featured.includes(h.id));
   <!-- 06 — Trusted brands -->
   <section class="border-y border-line/60 bg-card py-14">
     <div class="mx-auto max-w-6xl px-5 text-center">
-      <p class="text-xs uppercase tracking-[0.3em] text-terracotta">Partner brands</p>
+      <p class="text-xs uppercase tracking-[0.3em] text-bottle">Partner brands</p>
       <p class="mt-4 text-lg leading-loose text-ink-soft">
         {business.partnerBrands.join(" · ")}
       </p>
@@ -182,7 +182,7 @@ const restHalls = halls.filter((h) => !featured.includes(h.id));
   <section class="mx-auto max-w-6xl px-5 py-20">
     <div class="grid gap-10 md:grid-cols-2">
       <div>
-        <p class="text-xs uppercase tracking-[0.3em] text-terracotta">Service area</p>
+        <p class="text-xs uppercase tracking-[0.3em] text-bottle">Service area</p>
         <h2 class="mt-3 text-3xl sm:text-4xl">Coimbatore &amp; the Nilgiris</h2>
         <p class="mt-5 text-ink-soft leading-relaxed">
           We supply and lay across Coimbatore city and the surrounding hubs — deliveries and site

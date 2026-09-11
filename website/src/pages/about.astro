@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { business, telLink, waLink, defaultEnquiryMessage } from "../lib/business";
+import { business, telLink, waLink, emailQuoteLink, defaultEnquiryMessage } from "../lib/business";
 ---
 
 <BaseLayout
@@ -8,7 +8,7 @@ import { business, telLink, waLink, defaultEnquiryMessage } from "../lib/busines
   description="Elite Balaji Stones & Ceramics has supplied granite, marble, tiles and sanitaryware, and laid them on site, from Karamadai since 2012."
 >
   <section class="mx-auto max-w-3xl px-5 py-20">
-    <p class="text-xs uppercase tracking-[0.3em] text-terracotta">About</p>
+    <p class="text-xs uppercase tracking-[0.3em] text-bottle">About</p>
     <h1 class="mt-3 text-4xl sm:text-5xl">Elite Balaji Stones &amp; Ceramics</h1>
 
     <p class="mt-8 text-lg leading-relaxed text-ink-soft">
@@ -23,17 +23,34 @@ import { business, telLink, waLink, defaultEnquiryMessage } from "../lib/busines
     </p>
 
     <div class="mt-12 rounded-sm border border-line bg-card p-8">
-      <p class="text-xs uppercase tracking-[0.2em] text-terracotta">Visit or call</p>
+      <p class="text-xs uppercase tracking-[0.2em] text-bottle">Visit or call</p>
       <p class="mt-3 text-ink">{business.contactPerson}</p>
       <p class="text-ink-soft">{business.address}</p>
+      <p class="mt-1 text-ink-soft">
+        <a href={`mailto:${business.email}`} class="hover:text-bottle">{business.email}</a>
+      </p>
       <div class="mt-5 flex flex-wrap gap-3">
-        <a href={telLink()} class="rounded-full bg-terracotta px-5 py-2.5 text-sm font-semibold uppercase tracking-wide text-paper hover:bg-terracotta-dark transition-colors">
-          Call {business.phoneDisplay}
+        <a href={telLink()} aria-label="Call our showroom" class="rounded-full bg-bottle px-5 py-2.5 text-sm font-semibold uppercase tracking-wide text-paper hover:bg-bottle-dark transition-colors">
+          Call Showroom
         </a>
-        <a href={waLink(defaultEnquiryMessage)} target="_blank" rel="noopener" class="rounded-full border border-terracotta/60 px-5 py-2.5 text-sm font-semibold uppercase tracking-wide text-terracotta hover:bg-terracotta hover:text-paper transition-colors">
-          WhatsApp
+        <a href={waLink(defaultEnquiryMessage)} target="_blank" rel="noopener" aria-label="Enquire via WhatsApp" class="rounded-full border border-terracotta/60 px-5 py-2.5 text-sm font-semibold uppercase tracking-wide text-terracotta hover:bg-terracotta hover:text-paper transition-colors">
+          Enquire via WhatsApp
+        </a>
+        <a href={emailQuoteLink()} aria-label="Request an email quote" class="rounded-full border border-line px-5 py-2.5 text-sm font-semibold uppercase tracking-wide text-ink-soft hover:border-bottle hover:text-bottle transition-colors">
+          Request Email Quote
         </a>
       </div>
+    </div>
+
+    <div class="mt-8 overflow-hidden rounded-sm border border-line shadow-card">
+      <iframe
+        src={business.mapEmbedSrc}
+        title="Elite Balaji Stones & Ceramics location on Google Maps"
+        class="h-72 w-full"
+        style="border:0"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+      ></iframe>
     </div>
 
     <h2 class="mt-16 text-2xl">What we supply</h2>

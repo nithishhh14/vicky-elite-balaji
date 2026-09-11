@@ -4,6 +4,14 @@ Locked build order (from `.cursor/rules/vicky-council.mdc`): ship working
 agents + shared memory first, then the website, then marketing/SEO, then
 executive personality, then the final interface. Do not skip ahead.
 
+## PENDING CLIENT/PLANNING — expanded cross-device vision (2026-09-11)
+User wants Vicky to eventually run as a JARVIS-style assistant across their
+own devices with an auto-updating preference/context "brain" in the backend.
+A planning prompt was written (`docs/EXTERNAL_PLANNING_PROMPT.md`) for the
+user to run through an external LLM. Nothing here is architected or started —
+do not build cross-device/always-on infrastructure until the user brings back
+a reviewed plan. See `docs/PROJECT_STATE.md` "Expanded vision" section.
+
 ## Phase 1 — Scraper & shared memory: LIVE
 - `lead_agent.py` harvests from Google Maps + Search, `shared_memory.py`
   cleans/dedupes into the shared Google Sheet.
