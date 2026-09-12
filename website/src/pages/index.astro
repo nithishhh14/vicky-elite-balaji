@@ -3,6 +3,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import { business, waLink, telLink, defaultEnquiryMessage } from "../lib/business";
 import { materialWorlds as materialWorldsConfig } from "../lib/material-worlds";
+import Magnet from "../components/react-bits/Magnet";
+import SpotlightCard from "../components/react-bits/SpotlightCard";
 
 const halls = (await getCollection("halls")).sort((a, b) => a.data.order - b.data.order);
 const fabricationServices = (await getCollection("services")).sort((a, b) => a.data.order - b.data.order).slice(0, 4);
@@ -48,9 +50,11 @@ const discoveryTerms = ["Grey", "White", "Polished", "Glossy", "Flooring", "Kitc
         Granite, marble, natural stone, tiles and surfaces — sourced, supplied and laid from one yard.
       </p>
       <div id="hero-cta" class="mt-8">
-        <a href="#materials" data-gsap-magnetic class="inline-block rounded-full bg-terracotta px-7 py-3.5 text-sm font-semibold uppercase tracking-wide text-paper hover:bg-terracotta-dark transition-colors">
-          Explore Materials
-        </a>
+        <Magnet client:load padding={80} magnetStrength={3}>
+          <a href="#materials" class="inline-block rounded-full bg-terracotta px-7 py-3.5 text-sm font-semibold uppercase tracking-wide text-paper hover:bg-terracotta-dark transition-colors">
+            Explore Materials
+          </a>
+        </Magnet>
       </div>
       <p class="mt-10 text-[0.65rem] uppercase tracking-[0.2em] text-paper/50">
         Photo: Athangudi Series, BEJ Ceramic catalogue
@@ -71,7 +75,11 @@ const discoveryTerms = ["Grey", "White", "Polished", "Glossy", "Flooring", "Kitc
     </div>
     <div data-gsap-stagger class="mt-12 grid gap-1 px-1 md:grid-cols-3">
       {materialWorlds.map((world) => (
-        <a href={`/materials/${world.slug}/`} data-gsap-tilt class="group relative isolate flex aspect-[3/4] flex-col justify-end overflow-hidden md:aspect-[2/3]">
+        <SpotlightCard
+          client:visible
+          className="group relative isolate flex aspect-[3/4] flex-col justify-end md:aspect-[2/3]"
+          spotlightColor="rgba(196, 143, 46, 0.35)"
+        >
           {world.flagship.data.heroImage ? (
             <img
               src={world.flagship.data.heroImage}
@@ -89,7 +97,8 @@ const discoveryTerms = ["Grey", "White", "Polished", "Glossy", "Flooring", "Kitc
               {[world.flagship, ...world.also].map((h) => h.data.name).join(" · ")}
             </p>
           </div>
-        </a>
+          <a href={`/materials/${world.slug}/`} class="absolute inset-0" aria-label={`Explore ${world.label}`}></a>
+        </SpotlightCard>
       ))}
     </div>
   </section>
