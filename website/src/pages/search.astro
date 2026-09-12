@@ -207,18 +207,29 @@ import { waLink } from "../lib/business";
       runSearch();
     });
 
+// Deep-link support: /search/?material=Tiles&colour=white lets other pages
+// (hall pages' "explore by colour", the homepage discovery pills) land here
+// with facets already active, without duplicating the filter UI elsewhere.
+const URL_PARAM_TO_FACET: Record<string, FacetKey> = {
+  material: "hall",
+  colour: "colours",
+  look: "character",
+  application: "applicationTags",
+};
+
     fetch("/search-index.json")
       .then((r) => r.json())
       .then((data: Item[]) => {
         items = data;
-        renderFacets();
-        render(items);
         const params = new URLSearchParams(location.search);
-        const q = params.get("q");
-        if (q) {
-          input.value = q;
-          runSearch();
+        for (const [param, key] of Object.entries(URL_PARAM_TO_FACET)) {
+          const value = params.get(param);
+          if (value) activeFacets[key].add(value);
         }
+        renderFacets();
+        const q = params.get("q");
+        if (q) input.value = q;
+        runSearch();
       })
       .catch(() => {
         status.textContent = "Could not load the catalogue right now. WhatsApp us instead.";

@@ -4,10 +4,33 @@ import { getCollection } from "astro:content";
 import { business, waLink, telLink, defaultEnquiryMessage } from "../lib/business";
 
 const halls = (await getCollection("halls")).sort((a, b) => a.data.order - b.data.order);
-const featured = ["tiles", "granite-marbles", "laying-works"];
-const featuredHalls = featured.map((id) => halls.find((h) => h.id === id)!).filter(Boolean);
-const restHalls = halls.filter((h) => !featured.includes(h.id));
 const fabricationServices = halls.flatMap((hall) => hall.data.additionalServices ?? []).slice(0, 4);
+const hallByI = (id: string) => halls.find((h) => h.id === id)!;
+
+// Material worlds: the real halls grouped by what a customer is actually
+// looking for (matches the header's "Materials" menu), each led by a real
+// or honestly-disclosed photo, not a stock-photo grid of unrelated products.
+const materialWorlds = [
+  {
+    label: "Natural Stone",
+    flagship: hallByI("granite-marbles"),
+    also: [hallByI("kota-stone"), hallByI("kadappa")],
+  },
+  {
+    label: "Tiles & Ceramics",
+    flagship: hallByI("tiles"),
+    also: [],
+  },
+  {
+    label: "Surfaces",
+    flagship: hallByI("quartz"),
+    also: [],
+  },
+];
+
+// Real, already-derived facet values (see src/lib/facets.ts / search-index.json.ts)
+// used only as clickable text-search shortcuts into /search/ -- not fabricated categories.
+const discoveryTerms = ["Grey", "White", "Polished", "Glossy", "Flooring", "Kitchen"];
 ---
 
 <BaseLayout
@@ -43,72 +66,69 @@ const fabricationServices = halls.flatMap((hall) => hall.data.additionalServices
 
   <div class="quatrefoil-divider" aria-hidden="true"></div>
 
-  <!-- 02 — Material introduction -->
-  <section id="materials" class="scroll-mt-20 bg-charcoal py-16">
+  <!-- 02 — Explore: material worlds -->
+  <section id="materials" class="scroll-mt-20 bg-charcoal py-20">
     <div class="mx-auto max-w-6xl px-5 reveal">
-      <p class="text-xs uppercase tracking-[0.3em] text-stone-light">The Materials</p>
-      <h2 class="mt-2 max-w-md font-display text-3xl text-paper sm:text-4xl">Four surfaces, one yard</h2>
+      <p class="text-xs uppercase tracking-[0.3em] text-mustard">Explore</p>
+      <h2 class="mt-2 max-w-lg font-display text-3xl text-paper sm:text-4xl">Three material worlds, one yard</h2>
+      <p class="mt-3 max-w-xl text-paper/70">
+        Everything we stock and lay, grouped the way you'd actually go looking for it.
+      </p>
     </div>
-    <div data-gsap-stagger class="mt-10 grid grid-cols-2 gap-1 px-1 md:grid-cols-4">
-      {[
-        { href: "/halls/tiles/", src: "/media/tiles/grace-series/lifestyle-ns9613.jpg", alt: "Mustard patterned tile floor, cross-petal motif", label: "Tile" },
-        { href: "/halls/granite-marbles/", src: "https://images.unsplash.com/photo-1604762537333-e60adda0acdc?auto=format&fit=crop&w=900&q=80", alt: "Polished granite slab surface", label: "Granite" },
-        { href: "/halls/granite-marbles/", src: "https://images.unsplash.com/photo-1566041510394-cf7c8fe21800?auto=format&fit=crop&w=900&q=80", alt: "White marble surface with veining", label: "Marble" },
-        { href: "/halls/kadappa/", src: "https://images.unsplash.com/photo-1585314062340-f1a5a7c9328d?auto=format&fit=crop&w=900&q=80", alt: "Dark honed stone texture", label: "Kadappa" },
-      ].map((m) => (
-        <a href={m.href} data-gsap-tilt class="group relative aspect-[3/4] overflow-hidden block" aria-label={`Browse ${m.label}`}>
-          <img src={m.src} alt={m.alt} class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" loading="lazy" />
-          <div class="absolute inset-0 bg-gradient-to-t from-charcoal-deep/80 via-transparent to-transparent"></div>
-          <span class="absolute bottom-4 left-4 text-xs uppercase tracking-[0.25em] text-paper/90">{m.label}</span>
+    <div data-gsap-stagger class="mt-12 grid gap-1 px-1 md:grid-cols-3">
+      {materialWorlds.map((world) => (
+        <a href={`/halls/${world.flagship.id}/`} data-gsap-tilt class="group relative isolate flex aspect-[3/4] flex-col justify-end overflow-hidden md:aspect-[2/3]">
+          {world.flagship.data.heroImage ? (
+            <img
+              src={world.flagship.data.heroImage}
+              alt={world.flagship.data.heroAlt}
+              class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              loading="lazy"
+            />
+          ) : (
+            <div class="absolute inset-0 h-full w-full" style={{ backgroundColor: world.flagship.data.materialColor }}></div>
+          )}
+          <div class="absolute inset-0 bg-gradient-to-t from-charcoal-deep/90 via-charcoal-deep/10 to-transparent"></div>
+          <div class="relative p-6">
+            <h3 class="font-display text-2xl text-paper sm:text-3xl">{world.label}</h3>
+            <p class="mt-2 text-sm uppercase tracking-[0.2em] text-paper/70">
+              {[world.flagship, ...world.also].map((h) => h.data.name).join(" · ")}
+            </p>
+          </div>
         </a>
       ))}
     </div>
   </section>
 
-  <!-- 03 — Explore showroom -->
-  <section id="halls" class="scroll-mt-20 border-y border-line/60 bg-card py-20">
+  <!-- 03 — Filter: catalogue discovery -->
+  <section class="border-y border-line/60 bg-card py-20">
     <div class="mx-auto max-w-6xl px-5">
-      <div class="max-w-xl">
-        <p class="text-xs uppercase tracking-[0.3em] text-terracotta">What we stock</p>
-        <h2 class="mt-3 text-3xl sm:text-4xl">Eight product halls</h2>
+      <div class="max-w-xl reveal">
+        <p class="text-xs uppercase tracking-[0.3em] text-terracotta">Filter</p>
+        <h2 class="mt-3 text-3xl sm:text-4xl">Search the full catalogue</h2>
+        <p class="mt-4 text-ink-soft leading-relaxed">
+          Filter by material, colour, look or application across every hall at once, or jump
+          straight to a real result below.
+        </p>
       </div>
-
-      <div class="mt-14 flex flex-col gap-16">
-        {featuredHalls.map((hall, i) => (
+      <div class="mt-8 flex flex-wrap gap-3">
+        {discoveryTerms.map((term) => (
           <a
-            href={`/halls/${hall.id}/`}
-            class:list={["group grid gap-6 md:grid-cols-2 md:items-center md:gap-12", i % 2 === 1 && "md:[&>*:first-child]:order-2"]}
+            href={`/search/?q=${encodeURIComponent(term.toLowerCase())}`}
+            class="rounded-full border border-line bg-paper px-5 py-2.5 text-sm text-ink-soft hover:border-terracotta hover:text-terracotta transition-colors"
           >
-            <div class="aspect-[4/3] overflow-hidden rounded-sm shadow-card">
-              {hall.data.heroImage ? (
-                <img
-                  src={hall.data.heroImage}
-                  alt={hall.data.heroAlt}
-                  class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                  loading="lazy"
-                />
-              ) : (
-                <div class="h-full w-full" style={{ backgroundColor: hall.data.materialColor }}></div>
-              )}
-            </div>
-            <div>
-              <span class="text-xs uppercase tracking-[0.25em] text-terracotta">
-                {String(hall.data.order).padStart(2, "0")} · {hall.data.tagline}
-              </span>
-              <h3 class="mt-2 text-3xl group-hover:text-terracotta transition-colors">{hall.data.name}</h3>
-              <p class="mt-3 max-w-md text-ink-soft leading-relaxed">{hall.data.intro}</p>
-              <span class="mt-4 inline-block text-sm font-semibold uppercase tracking-wide text-terracotta">
-                See what's in stock &rarr;
-              </span>
-            </div>
+            {term}
           </a>
         ))}
       </div>
+      <a href="/search/" class="mt-8 inline-block rounded-full bg-terracotta px-6 py-3 text-sm font-semibold uppercase tracking-wide text-paper hover:bg-terracotta-dark transition-colors">
+        Open the full catalogue
+      </a>
 
       <div class="mt-16 border-t border-line/60 pt-8">
-        <p class="text-xs uppercase tracking-[0.25em] text-ink-soft">Also in the showroom</p>
+        <p class="text-xs uppercase tracking-[0.25em] text-ink-soft">All halls</p>
         <nav class="mt-4 flex flex-wrap gap-x-8 gap-y-3">
-          {restHalls.map((hall) => (
+          {halls.map((hall) => (
             <a href={`/halls/${hall.id}/`} class="text-lg text-ink hover:text-terracotta transition-colors">
               {hall.data.name}
             </a>

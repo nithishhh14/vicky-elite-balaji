@@ -2,17 +2,40 @@
 import { business, telLink } from "../lib/business";
 
 const { pathname } = Astro.url;
-const halls = [
-  { href: "/halls/tiles/", label: "Tiles" },
-  { href: "/halls/granite-marbles/", label: "Granite & Marbles" },
-  { href: "/halls/kota-stone/", label: "Kota Stone" },
-  { href: "/halls/kadappa/", label: "Kadappa" },
+
+// Material-first grouping of the real halls (not a flat business-category
+// list) -- grouped by what a customer is actually shopping for, using only
+// halls that genuinely exist. Sanitaryware/Adhesive are real stock but not
+// "materials" in the discovery sense, so they sit in a lighter second group.
+const materialGroups = [
+  {
+    label: "Natural Stone",
+    items: [
+      { href: "/halls/granite-marbles/", label: "Granite & Marbles" },
+      { href: "/halls/kota-stone/", label: "Kota Stone" },
+      { href: "/halls/kadappa/", label: "Kadappa" },
+    ],
+  },
+  {
+    label: "Tiles & Ceramics",
+    items: [{ href: "/halls/tiles/", label: "Tiles" }],
+  },
+  {
+    label: "Surfaces",
+    items: [{ href: "/halls/quartz/", label: "Quartz" }],
+  },
+];
+const alsoStocked = [
   { href: "/halls/sanitaryware/", label: "Sanitaryware" },
   { href: "/halls/adhesive/", label: "Adhesive & Accessories" },
-  { href: "/halls/quartz/", label: "Quartz" },
+];
+
+const allHalls = [
+  ...materialGroups.flatMap((g) => g.items),
+  ...alsoStocked,
   { href: "/halls/laying-works/", label: "Laying Works" },
 ];
-const primaryHalls = ["/halls/tiles/", "/halls/granite-marbles/", "/halls/sanitaryware/", "/halls/laying-works/"];
+const materialsActive = allHalls.some((h) => pathname.startsWith(h.href)) || pathname === "/halls/";
 ---
 
 <header class="sticky top-0 z-40 border-b border-line/70 bg-paper/95 backdrop-blur">
@@ -22,22 +45,69 @@ const primaryHalls = ["/halls/tiles/", "/halls/granite-marbles/", "/halls/sanita
       <span class="text-[0.6rem] uppercase tracking-[0.25em] text-terracotta whitespace-nowrap">Stones &amp; Ceramics</span>
     </a>
 
-    <nav aria-label="Primary" class="hidden items-center gap-4 text-sm lg:flex">
-      {halls.filter((h) => primaryHalls.includes(h.href)).map((h) => (
-        <a
-          href={h.href}
+    <nav aria-label="Primary" class="relative hidden items-center gap-5 text-sm lg:flex">
+      <div class="relative">
+        <button
+          id="materials-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="materials-menu"
           class:list={[
-            "whitespace-nowrap uppercase tracking-wide text-xs font-medium hover:text-terracotta transition-colors",
-            pathname.startsWith(h.href) ? "text-terracotta" : "text-ink-soft",
+            "flex items-center gap-1.5 whitespace-nowrap text-xs font-medium uppercase tracking-wide hover:text-terracotta transition-colors",
+            materialsActive ? "text-terracotta" : "text-ink-soft",
           ]}
         >
-          {h.label}
-        </a>
-      ))}
-      <a href="/halls/" class="whitespace-nowrap text-xs font-medium uppercase tracking-wide text-ink-soft hover:text-terracotta transition-colors">
-        All halls
+          Materials
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+        <div
+          id="materials-menu"
+          hidden
+          class="absolute left-1/2 top-full z-40 mt-4 w-[560px] -translate-x-1/2 rounded-sm border border-line bg-paper p-8 shadow-lift"
+        >
+          <div class="grid grid-cols-3 gap-8">
+            {materialGroups.map((group) => (
+              <div>
+                <p class="text-[0.65rem] uppercase tracking-[0.2em] text-terracotta">{group.label}</p>
+                <ul class="mt-3 space-y-2">
+                  {group.items.map((item) => (
+                    <li><a href={item.href} class="text-sm text-ink hover:text-terracotta transition-colors">{item.label}</a></li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          <div class="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-line/60 pt-5">
+            <div class="flex flex-wrap gap-x-5 gap-y-1">
+              <span class="text-[0.65rem] uppercase tracking-[0.2em] text-ink-soft/60">Also stocked:</span>
+              {alsoStocked.map((item) => (
+                <a href={item.href} class="text-xs text-ink-soft hover:text-terracotta transition-colors">{item.label}</a>
+              ))}
+            </div>
+            <a href="/halls/" class="text-xs font-semibold uppercase tracking-wide text-terracotta hover:text-terracotta-dark whitespace-nowrap">
+              View all halls &rarr;
+            </a>
+          </div>
+        </div>
+      </div>
+      <a
+        href="/halls/laying-works/"
+        class:list={[
+          "whitespace-nowrap text-xs font-medium uppercase tracking-wide hover:text-terracotta transition-colors",
+          pathname.startsWith("/halls/laying-works/") ? "text-terracotta" : "text-ink-soft",
+        ]}
+      >
+        Laying Works
       </a>
-      <a href="/custom/" class="whitespace-nowrap text-xs font-medium uppercase tracking-wide text-ink-soft hover:text-terracotta transition-colors">
+      <a
+        href="/custom/"
+        class:list={[
+          "whitespace-nowrap text-xs font-medium uppercase tracking-wide hover:text-terracotta transition-colors",
+          pathname.startsWith("/custom/") ? "text-terracotta" : "text-ink-soft",
+        ]}
+      >
         Custom
       </a>
       <a href="/about/" class="whitespace-nowrap text-xs font-medium uppercase tracking-wide text-ink-soft hover:text-terracotta transition-colors">
@@ -87,19 +157,34 @@ const primaryHalls = ["/halls/tiles/", "/halls/granite-marbles/", "/halls/sanita
   </div>
 
   <nav id="mobile-nav" aria-label="Mobile" hidden class="border-t border-line/60 bg-paper px-5 py-4 lg:hidden">
-    <ul class="flex flex-col gap-3 text-sm">
-      {halls.map((h) => (
+    <ul class="flex flex-col gap-4 text-sm">
+      {materialGroups.map((group) => (
         <li>
-          <a href={h.href} class="block py-1 uppercase tracking-wide text-xs font-medium text-ink-soft hover:text-terracotta">
-            {h.label}
-          </a>
+          <p class="text-[0.65rem] uppercase tracking-[0.2em] text-terracotta">{group.label}</p>
+          <ul class="mt-2 flex flex-col gap-2 pl-1">
+            {group.items.map((item) => (
+              <li><a href={item.href} class="block text-sm text-ink hover:text-terracotta">{item.label}</a></li>
+            ))}
+          </ul>
         </li>
       ))}
-      <li class="mt-1 border-t border-line/60 pt-3">
+      <li class="border-t border-line/60 pt-3">
+        <p class="text-[0.65rem] uppercase tracking-[0.2em] text-ink-soft/60">Also stocked</p>
+        <ul class="mt-2 flex flex-col gap-2 pl-1">
+          {alsoStocked.map((item) => (
+            <li><a href={item.href} class="block text-sm text-ink hover:text-terracotta">{item.label}</a></li>
+          ))}
+          <li><a href="/halls/laying-works/" class="block text-sm text-ink hover:text-terracotta">Laying Works</a></li>
+        </ul>
+      </li>
+      <li class="border-t border-line/60 pt-3">
         <a href="/halls/" class="block py-1 text-xs font-medium uppercase tracking-wide text-ink-soft hover:text-terracotta">All halls</a>
       </li>
       <li>
         <a href="/custom/" class="block py-1 text-xs font-medium uppercase tracking-wide text-ink-soft hover:text-terracotta">Custom &amp; Fabrication</a>
+      </li>
+      <li>
+        <a href="/search/" class="block py-1 text-xs font-medium uppercase tracking-wide text-ink-soft hover:text-terracotta">Explore &amp; Filter</a>
       </li>
       <li>
         <a href="/about/" class="block py-1 text-xs font-medium uppercase tracking-wide text-ink-soft hover:text-terracotta">About</a>
@@ -120,6 +205,32 @@ const primaryHalls = ["/halls/tiles/", "/halls/granite-marbles/", "/halls/sanita
       const isOpen = !nav.hidden;
       nav.hidden = isOpen;
       toggle.setAttribute("aria-expanded", String(!isOpen));
+    });
+  })();
+
+  (function () {
+    const toggle = document.getElementById("materials-toggle");
+    const menu = document.getElementById("materials-menu");
+    if (!toggle || !menu) return;
+
+    function close() {
+      menu.hidden = true;
+      toggle.setAttribute("aria-expanded", "false");
+    }
+    function open() {
+      menu.hidden = false;
+      toggle.setAttribute("aria-expanded", "true");
+    }
+
+    toggle.addEventListener("click", () => {
+      if (menu.hidden) open();
+      else close();
+    });
+    document.addEventListener("click", (e) => {
+      if (!menu.hidden && !menu.contains(e.target) && e.target !== toggle) close();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !menu.hidden) close();
     });
   })();
 </script>

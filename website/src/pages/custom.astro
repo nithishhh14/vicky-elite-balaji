@@ -40,6 +40,27 @@ const icons: Record<string, string> = {
     </div>
   </section>
 
+  <section class="border-b border-line/60 bg-paper py-16">
+    <div class="mx-auto max-w-6xl px-5">
+      <p class="text-center text-xs uppercase tracking-[0.3em] text-terracotta">How a custom piece happens</p>
+      <div data-gsap-stagger class="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
+        {[
+          { step: "01", label: "Material", detail: "Pick the stone or tile, from our stock or sourced for you." },
+          { step: "02", label: "Design", detail: "Send us the image, pattern or drawing you have in mind." },
+          { step: "03", label: "Fabrication", detail: "Printing, CNC engraving or inlay work, cut to your size." },
+          { step: "04", label: "Finish", detail: "Polished, honed or matte, finished to match the rest of the job." },
+          { step: "05", label: "Installation", detail: "Our own crews fit it on site, same as any other laying job." },
+        ].map((s) => (
+          <div>
+            <span class="font-display text-2xl text-terracotta">{s.step}</span>
+            <h3 class="mt-2 text-sm font-semibold uppercase tracking-wide">{s.label}</h3>
+            <p class="mt-2 text-sm text-ink-soft leading-relaxed">{s.detail}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
   <section class="bg-card">
     <div class="mx-auto max-w-6xl px-5 py-16">
       {services.length > 0 ? (

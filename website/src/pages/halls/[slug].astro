@@ -4,6 +4,7 @@ import MaterialField from "../../components/MaterialField.astro";
 import MaterialViewer3D from "../../components/MaterialViewer3D.astro";
 import { getCollection } from "astro:content";
 import { waLink, telLink, emailQuoteLink, productEnquiryMessage } from "../../lib/business";
+import { deriveColours } from "../../lib/facets";
 
 export async function getStaticPaths() {
   const halls = await getCollection("halls");
@@ -16,6 +17,21 @@ const { name, tagline, intro, hasRealContent, heroImage, heroAlt, materialColor,
 const products = hall.id === "tiles"
   ? (await getCollection("tileProducts")).sort((a, b) => a.data.order - b.data.order)
   : (await getCollection("materialProducts")).filter((p) => p.data.hallId === hall.id).sort((a, b) => a.data.order - b.data.order);
+
+// Explore-by-colour: derived from the same real fields as the search index
+// (see src/lib/facets.ts), scoped to this hall's own products only.
+const COLOUR_SWATCH: Record<string, string> = {
+  white: "#f4f1ea", black: "#1c1a17", grey: "#8a8580", beige: "#cdbfa0",
+  brown: "#6b4a34", red: "#8c2f22", mustard: "#c48f2e", green: "#3f5c46",
+};
+const hallColours = Array.from(
+  new Set(
+    products.flatMap((p) => {
+      const n = "brand" in p.data ? `${p.data.series}${p.data.code ? ` ${p.data.code}` : ""}` : p.data.name;
+      return deriveColours(n, p.data.finish, p.data.imageAlt);
+    })
+  )
+).sort();
 ---
 
 <BaseLayout
@@ -78,6 +94,25 @@ const products = hall.id === "tiles"
       </div>
     </div>
   </section>
+
+  {hallColours.length > 1 && (
+    <section class="border-t border-line/60 bg-card">
+      <div class="mx-auto max-w-6xl px-5 py-10">
+        <p class="text-xs uppercase tracking-[0.25em] text-terracotta">Explore by colour</p>
+        <div class="mt-4 flex flex-wrap gap-3">
+          {hallColours.map((colour) => (
+            <a
+              href={`/search/?material=${encodeURIComponent(name)}&colour=${encodeURIComponent(colour)}`}
+              class="group flex items-center gap-2 rounded-full border border-line bg-paper py-1.5 pl-1.5 pr-4 hover:border-terracotta transition-colors"
+            >
+              <span class="h-6 w-6 rounded-full border border-line/60" style={{ backgroundColor: COLOUR_SWATCH[colour] ?? "#ccc" }} aria-hidden="true"></span>
+              <span class="text-sm capitalize text-ink-soft group-hover:text-terracotta transition-colors">{colour}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
 
   {hall.id === "tiles" && (
     <section class="border-t border-line/60 bg-card">
@@ -211,4 +246,22 @@ const products = hall.id === "tiles"
       </div>
     </section>
   )}
+
+  <section class="border-t border-line/60 bg-charcoal py-14 text-paper">
+    <div class="mx-auto max-w-3xl px-5 text-center">
+      <p class="text-lg">Looking for something not shown here in {name}?</p>
+      <p class="mt-2 text-sm text-paper/70">
+        Tell us the material, colour, size or finish you need. We can help source it beyond what's
+        listed in this hall today.
+      </p>
+      <a
+        href={waLink(`Hi Elite Balaji, I'm looking for something in ${name} that isn't shown on the website. Here's what I need:`)}
+        target="_blank"
+        rel="noopener"
+        class="mt-5 inline-block rounded-full bg-mustard px-6 py-3 text-sm font-semibold uppercase tracking-wide text-ink hover:bg-mustard-dark transition-colors"
+      >
+        Ask us to source it
+      </a>
+    </div>
+  </section>
 </BaseLayout>
