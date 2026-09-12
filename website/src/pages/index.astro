@@ -117,16 +117,16 @@ const restHalls = halls.filter((h) => !featured.includes(h.id));
     </div>
   </section>
 
-  <!-- 04 — Athangudi spotlight -->
-  <section class="relative isolate overflow-hidden">
+  <!-- 04 — Athangudi spotlight (parallax) -->
+  <section class="parallax-section relative isolate h-[65vh] min-h-[420px] overflow-hidden">
     <img
       src="/media/tiles/athangudi-series/lifestyle-bottle-green.jpg"
       alt="Athangudi tile with cross motif on a courtyard floor"
-      class="h-[60vh] w-full object-cover"
+      class="parallax-layer absolute inset-x-0 -top-[12%] h-[124%] w-full object-cover"
       loading="lazy"
     />
     <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-ink/10" aria-hidden="true"></div>
-    <div class="absolute inset-0 flex flex-col items-start justify-end gap-3 px-5 pb-14 sm:px-12">
+    <div class="reveal absolute inset-0 flex flex-col items-start justify-end gap-3 px-5 pb-14 sm:px-12">
       <p class="text-xs uppercase tracking-[0.3em] text-mustard">In the Tiles hall</p>
       <h2 class="max-w-lg font-display text-3xl text-paper sm:text-4xl">Athangudi Series</h2>
       <p class="max-w-md text-paper/80">

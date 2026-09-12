@@ -60,5 +60,47 @@ const { title, description, enquiryMessage } = Astro.props;
         els.forEach(function (el) { io.observe(el); });
       })();
     </script>
+    <script is:inline>
+      // Lightweight scroll parallax: translateY only (GPU-composited),
+      // capped offset, rAF-throttled, and only runs while a
+      // .parallax-section is actually near the viewport. Skips entirely
+      // under prefers-reduced-motion -- the image just sits static, which
+      // is the correct fallback, not a broken state.
+      (function () {
+        var sections = document.querySelectorAll(".parallax-section");
+        if (!sections.length) return;
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+        var targets = Array.prototype.map.call(sections, function (section) {
+          return { section: section, layer: section.querySelector(".parallax-layer") };
+        }).filter(function (t) { return t.layer; });
+
+        var ticking = false;
+        var MAX_OFFSET = 40;
+
+        function update() {
+          var vh = window.innerHeight;
+          targets.forEach(function (t) {
+            var rect = t.section.getBoundingClientRect();
+            if (rect.bottom < 0 || rect.top > vh) return;
+            var progress = (rect.top + rect.height / 2 - vh / 2) / vh;
+            var offset = Math.max(-1, Math.min(1, progress)) * MAX_OFFSET;
+            t.layer.style.transform = "translate3d(0, " + offset.toFixed(1) + "px, 0)";
+          });
+          ticking = false;
+        }
+
+        function onScroll() {
+          if (!ticking) {
+            requestAnimationFrame(update);
+            ticking = true;
+          }
+        }
+
+        update();
+        window.addEventListener("scroll", onScroll, { passive: true });
+        window.addEventListener("resize", onScroll);
+      })();
+    </script>
   </body>
 </html>
