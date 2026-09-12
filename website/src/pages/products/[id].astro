@@ -2,6 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import { waLink, telLink, emailQuoteLink, productEnquiryMessage } from "../../lib/business";
+import { deriveColours, deriveCharacterTags, deriveApplicationTags } from "../../lib/facets";
 
 export async function getStaticPaths() {
   const tileProducts = await getCollection("tileProducts");
@@ -37,12 +38,35 @@ const hallNames: Record<string, string> = {
 const hallName = hallNames[hallId] ?? hallId;
 
 // Related: other real products from the same hall (tile products only relate
-// to other tile products; material products relate within the same hallId).
+// to other tile products; material products relate within the same hallId),
+// ranked by shared derived facets (colour/character/application) so "related"
+// means genuinely similar, not just "next in the list" -- still entirely
+// computed from real fields, nothing invented.
+function facetSetFor(p: typeof product): Set<string> {
+  const name = "brand" in p.data ? `${p.data.series}${p.data.code ? ` ${p.data.code}` : ""}` : p.data.name;
+  return new Set([
+    ...deriveColours(name, p.data.finish, p.data.imageAlt),
+    ...deriveCharacterTags(name, p.data.finish, p.data.imageAlt),
+    ...deriveApplicationTags(p.data.applications),
+  ]);
+}
+
+const productFacets = facetSetFor(product);
+function overlapScore(p: typeof product): number {
+  const other = facetSetFor(p);
+  let score = 0;
+  other.forEach((tag) => { if (productFacets.has(tag)) score += 1; });
+  return score;
+}
+
 const allTile = kind === "tile" ? (await getCollection("tileProducts")).sort((a, b) => a.data.order - b.data.order) : [];
 const allMaterial = kind === "material" ? (await getCollection("materialProducts")).filter((p) => p.data.hallId === hallId).sort((a, b) => a.data.order - b.data.order) : [];
-const related = kind === "tile"
-  ? allTile.filter((p) => p.id !== product.id).slice(0, 3)
-  : allMaterial.filter((p) => p.id !== product.id).slice(0, 3);
+const candidates = (kind === "tile" ? allTile : allMaterial).filter((p) => p.id !== product.id);
+const related = candidates
+  .map((p) => ({ p, score: overlapScore(p) }))
+  .sort((a, b) => b.score - a.score)
+  .slice(0, 3)
+  .map(({ p }) => p);
 ---
 
 <BaseLayout

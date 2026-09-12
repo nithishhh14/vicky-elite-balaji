@@ -7,6 +7,7 @@ const halls = (await getCollection("halls")).sort((a, b) => a.data.order - b.dat
 const featured = ["tiles", "granite-marbles", "laying-works"];
 const featuredHalls = featured.map((id) => halls.find((h) => h.id === id)!).filter(Boolean);
 const restHalls = halls.filter((h) => !featured.includes(h.id));
+const fabricationServices = halls.flatMap((hall) => hall.data.additionalServices ?? []).slice(0, 4);
 ---
 
 <BaseLayout
@@ -151,7 +152,32 @@ const restHalls = halls.filter((h) => !featured.includes(h.id));
     </div>
   </section>
 
-  <!-- 05 — Why Elite Balaji -->
+  <!-- 05 — Custom & Fabrication -->
+  <section class="border-y border-line/60 bg-charcoal py-20 text-paper">
+    <div class="mx-auto max-w-6xl px-5">
+      <div class="max-w-xl reveal">
+        <p class="text-xs uppercase tracking-[0.3em] text-mustard">Beyond standard stock</p>
+        <h2 class="mt-3 text-3xl sm:text-4xl">Custom &amp; fabrication</h2>
+        <p class="mt-4 text-paper/75 leading-relaxed">
+          Photo-printing on tiles, CNC granite engraving, hand-inlaid slabs, sculptures and name
+          boards, all cut and finished to order. Real capabilities, not catalogue photos.
+        </p>
+      </div>
+      <div data-gsap-stagger class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {fabricationServices.map((service) => (
+          <div class="rounded-sm border border-paper/15 bg-paper/5 p-5">
+            <h3 class="text-base">{service.name}</h3>
+            <p class="mt-2 text-sm text-paper/70 leading-relaxed">{service.description}</p>
+          </div>
+        ))}
+      </div>
+      <a href="/custom/" class="mt-8 inline-block text-sm font-semibold uppercase tracking-wide text-mustard hover:text-mustard-dark">
+        See all custom &amp; fabrication work &rarr;
+      </a>
+    </div>
+  </section>
+
+  <!-- 06 — Why Elite Balaji -->
   <section class="mx-auto max-w-6xl px-5 py-20">
     <p class="text-xs uppercase tracking-[0.3em] text-terracotta">Why contractors choose us</p>
     <h2 class="mt-3 max-w-lg text-3xl sm:text-4xl">Trusted since {business.since}, from Karamadai</h2>
@@ -172,7 +198,7 @@ const restHalls = halls.filter((h) => !featured.includes(h.id));
     </ol>
   </section>
 
-  <!-- 06 — Trusted brands -->
+  <!-- 07 — Trusted brands -->
   <section class="border-y border-line/60 bg-card py-14">
     <div class="mx-auto max-w-6xl px-5 text-center">
       <p class="text-xs uppercase tracking-[0.3em] text-terracotta">Partner brands</p>
@@ -182,7 +208,7 @@ const restHalls = halls.filter((h) => !featured.includes(h.id));
     </div>
   </section>
 
-  <!-- 07 — Service area -->
+  <!-- 08 — Service area -->
   <section class="mx-auto max-w-6xl px-5 py-20">
     <div class="grid gap-10 md:grid-cols-2">
       <div>
@@ -202,7 +228,7 @@ const restHalls = halls.filter((h) => !featured.includes(h.id));
     </div>
   </section>
 
-  <!-- 08 — Final CTA -->
+  <!-- 09 — Final CTA -->
   <section class="bg-charcoal py-20 text-paper">
     <div class="mx-auto max-w-3xl px-5 text-center">
       <h2 class="text-3xl sm:text-4xl">Have a site measurement ready?</h2>

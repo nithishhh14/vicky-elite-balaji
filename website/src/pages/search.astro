@@ -1,15 +1,19 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { waLink } from "../lib/business";
 ---
 
 <BaseLayout
-  title="Search | Elite Balaji Stones & Ceramics"
-  description="Search Elite Balaji's real product catalogue by material, finish, size or application."
+  title="Explore the Catalogue | Elite Balaji Stones & Ceramics"
+  description="Browse Elite Balaji's real product catalogue by material, colour, look and application, or search directly."
 >
-  <section class="mx-auto max-w-3xl px-5 py-16">
-    <p class="text-xs uppercase tracking-[0.3em] text-terracotta">Catalogue search</p>
+  <section class="mx-auto max-w-6xl px-5 py-16">
+    <p class="text-xs uppercase tracking-[0.3em] text-terracotta">Catalogue discovery</p>
     <h1 class="mt-3 font-display text-4xl">Find a material</h1>
-    <p class="mt-3 text-ink-soft">Try "white marble", "black granite", "bathroom", or a finish like "polished".</p>
+    <p class="mt-3 max-w-xl text-ink-soft">
+      Filter by material, colour, look or application, or search directly. Every item here is real
+      stock or a genuine catalogue line, never invented.
+    </p>
 
     <input
       id="search-input"
@@ -19,8 +23,37 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       autocomplete="off"
     />
 
-    <p id="search-status" class="mt-4 text-sm text-ink-soft" aria-live="polite"></p>
+    <div id="facet-groups" class="mt-6 flex flex-col gap-4"></div>
+
+    <div class="mt-4 flex items-center gap-4">
+      <p id="search-status" class="text-sm text-ink-soft" aria-live="polite"></p>
+      <button
+        id="clear-filters"
+        type="button"
+        hidden
+        class="text-xs font-semibold uppercase tracking-wide text-terracotta hover:text-terracotta-dark"
+      >
+        Clear filters
+      </button>
+    </div>
+
     <div id="search-results" class="mt-2 grid gap-4 sm:grid-cols-2"></div>
+
+    <div id="no-results" hidden class="mt-8 rounded-sm border border-line bg-card p-8 text-center">
+      <p class="text-lg">Can't find what you're looking for?</p>
+      <p class="mt-2 max-w-md mx-auto text-sm text-ink-soft">
+        Tell us the material, colour, size or finish you need. Our team can help source the right
+        material beyond what's shown in this catalogue today.
+      </p>
+      <a
+        href={waLink("Hi Elite Balaji, I'm looking for a material that isn't in the online catalogue. Here's what I need:")}
+        target="_blank"
+        rel="noopener"
+        class="mt-4 inline-block rounded-full bg-terracotta px-6 py-3 text-sm font-semibold uppercase tracking-wide text-paper hover:bg-terracotta-dark transition-colors"
+      >
+        Ask us to source it
+      </a>
+    </div>
   </section>
 
   <script>
@@ -34,12 +67,33 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       size: string;
       applications: string[];
       image: string;
+      colours: string[];
+      character: string[];
+      applicationTags: string[];
     };
+
+    type FacetKey = "hall" | "colours" | "character" | "applicationTags";
+    const FACET_GROUPS: { key: FacetKey; label: string }[] = [
+      { key: "hall", label: "Material" },
+      { key: "colours", label: "Colour" },
+      { key: "character", label: "Look" },
+      { key: "applicationTags", label: "Application" },
+    ];
 
     const input = document.getElementById("search-input") as HTMLInputElement;
     const status = document.getElementById("search-status")!;
     const results = document.getElementById("search-results")!;
+    const noResults = document.getElementById("no-results")!;
+    const facetGroupsEl = document.getElementById("facet-groups")!;
+    const clearBtn = document.getElementById("clear-filters") as HTMLButtonElement;
+
     let items: Item[] = [];
+    const activeFacets: Record<FacetKey, Set<string>> = {
+      hall: new Set(),
+      colours: new Set(),
+      character: new Set(),
+      applicationTags: new Set(),
+    };
 
     function haystack(item: Item): string {
       return [item.name, item.hall, item.category, item.finish, item.size, ...item.applications]
@@ -47,57 +101,129 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         .toLowerCase();
     }
 
-    function render(list: Item[], query: string) {
+    function itemValue(item: Item, key: FacetKey): string[] {
+      return key === "hall" ? [item.hall] : (item[key] as string[]);
+    }
+
+    function matchesFacets(item: Item): boolean {
+      return FACET_GROUPS.every(({ key }) => {
+        const active = activeFacets[key];
+        if (active.size === 0) return true;
+        const values = itemValue(item, key);
+        return values.some((v) => active.has(v));
+      });
+    }
+
+    function anyFacetActive(): boolean {
+      return FACET_GROUPS.some(({ key }) => activeFacets[key].size > 0);
+    }
+
+    function renderFacets() {
+      facetGroupsEl.innerHTML = "";
+      for (const { key, label } of FACET_GROUPS) {
+        const values = new Set<string>();
+        items.forEach((item) => itemValue(item, key).forEach((v) => v && values.add(v)));
+        if (!values.size) continue;
+
+        const wrap = document.createElement("div");
+        const title = document.createElement("p");
+        title.className = "text-[0.65rem] uppercase tracking-[0.2em] text-ink-soft/70";
+        title.textContent = label;
+        wrap.appendChild(title);
+
+        const pills = document.createElement("div");
+        pills.className = "mt-1.5 flex flex-wrap gap-2";
+        Array.from(values)
+          .sort()
+          .forEach((value) => {
+            const pill = document.createElement("button");
+            pill.type = "button";
+            pill.textContent = value;
+            const isActive = activeFacets[key].has(value);
+            pill.className = isActive
+              ? "rounded-full bg-terracotta px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wide text-paper"
+              : "rounded-full border border-line px-3.5 py-1.5 text-xs uppercase tracking-wide text-ink-soft hover:border-terracotta hover:text-terracotta transition-colors";
+            pill.addEventListener("click", () => {
+              if (activeFacets[key].has(value)) activeFacets[key].delete(value);
+              else activeFacets[key].add(value);
+              renderFacets();
+              runSearch();
+            });
+            pills.appendChild(pill);
+          });
+        wrap.appendChild(pills);
+        facetGroupsEl.appendChild(wrap);
+      }
+      clearBtn.hidden = !anyFacetActive();
+    }
+
+    function render(list: Item[]) {
       results.innerHTML = "";
-      if (!query) {
-        status.textContent = `${items.length} items in the catalogue. Start typing to search.`;
+      const query = input.value.trim();
+      const filtering = anyFacetActive() || query.length > 0;
+
+      if (!filtering) {
+        status.textContent = `${items.length} items in the catalogue. Search or filter to narrow it down.`;
+        noResults.hidden = true;
+        list.forEach(appendCard);
         return;
       }
-      status.textContent = `${list.length} result${list.length === 1 ? "" : "s"} for "${query}"`;
-      for (const item of list) {
-        const a = document.createElement("a");
-        a.href = item.url;
-        a.className = "flex gap-4 rounded-sm border border-line bg-card p-4 hover:border-terracotta transition-colors";
-        a.innerHTML = `
-          ${item.image ? `<img src="${item.image}" alt="" loading="lazy" class="h-16 w-16 flex-shrink-0 rounded object-cover" />` : ""}
-          <div>
-            <p class="text-xs uppercase tracking-wide text-terracotta">${item.hall}</p>
-            <p class="text-sm font-medium">${item.name}</p>
-            <p class="text-xs text-ink-soft">${[item.category, item.finish, item.size].filter(Boolean).join(" · ")}</p>
-          </div>
-        `;
-        results.appendChild(a);
-      }
+
+      status.textContent = `${list.length} result${list.length === 1 ? "" : "s"} found`;
+      noResults.hidden = list.length > 0;
+      list.forEach(appendCard);
     }
+
+    function appendCard(item: Item) {
+      const a = document.createElement("a");
+      a.href = item.url;
+      a.className = "flex gap-4 rounded-sm border border-line bg-card p-4 hover:border-terracotta transition-colors";
+      a.innerHTML = `
+        ${item.image ? `<img src="${item.image}" alt="" loading="lazy" class="h-16 w-16 flex-shrink-0 rounded object-cover" />` : ""}
+        <div>
+          <p class="text-xs uppercase tracking-wide text-terracotta">${item.hall}</p>
+          <p class="text-sm font-medium">${item.name}</p>
+          <p class="text-xs text-ink-soft">${[item.category, item.finish, item.size].filter(Boolean).join(" · ")}</p>
+        </div>
+      `;
+      results.appendChild(a);
+    }
+
+    function runSearch() {
+      const query = input.value.trim().toLowerCase();
+      const terms = query.split(/\s+/).filter(Boolean);
+      const filtered = items.filter((item) => {
+        if (!matchesFacets(item)) return false;
+        if (!terms.length) return true;
+        const h = haystack(item);
+        return terms.every((t) => h.includes(t));
+      });
+      render(filtered);
+    }
+
+    clearBtn.addEventListener("click", () => {
+      FACET_GROUPS.forEach(({ key }) => activeFacets[key].clear());
+      renderFacets();
+      runSearch();
+    });
 
     fetch("/search-index.json")
       .then((r) => r.json())
       .then((data: Item[]) => {
         items = data;
-        render([], "");
+        renderFacets();
+        render(items);
         const params = new URLSearchParams(location.search);
         const q = params.get("q");
         if (q) {
           input.value = q;
-          input.dispatchEvent(new Event("input"));
+          runSearch();
         }
       })
       .catch(() => {
         status.textContent = "Could not load the catalogue right now. WhatsApp us instead.";
       });
 
-    input.addEventListener("input", () => {
-      const query = input.value.trim().toLowerCase();
-      if (!query) {
-        render([], "");
-        return;
-      }
-      const terms = query.split(/\s+/).filter(Boolean);
-      const matches = items.filter((item) => {
-        const h = haystack(item);
-        return terms.every((t) => h.includes(t));
-      });
-      render(matches, query);
-    });
+    input.addEventListener("input", runSearch);
   </script>
 </BaseLayout>
