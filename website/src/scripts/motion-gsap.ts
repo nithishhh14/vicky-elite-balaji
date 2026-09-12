@@ -96,6 +96,36 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
         gsap.to(img, { x: 0, y: 0, scale: 1, duration: 0.5, ease: "power2.out" });
       });
     });
+
+    // Magnetic buttons: the element eases toward the cursor within a small
+    // radius, then springs back on leave. Applied to primary CTAs only --
+    // this is a "the button noticed you" flourish, not something every
+    // link should do.
+    document.querySelectorAll<HTMLElement>("[data-gsap-magnetic]").forEach((btn) => {
+      const xTo = gsap.quickTo(btn, "x", { duration: 0.5, ease: "power3" });
+      const yTo = gsap.quickTo(btn, "y", { duration: 0.5, ease: "power3" });
+
+      btn.addEventListener("mousemove", (e) => {
+        const rect = btn.getBoundingClientRect();
+        xTo((e.clientX - rect.left - rect.width / 2) * 0.35);
+        yTo((e.clientY - rect.top - rect.height / 2) * 0.35);
+      });
+      btn.addEventListener("mouseleave", () => {
+        xTo(0);
+        yTo(0);
+      });
+    });
+
+    // Spotlight cards: a soft terracotta glow follows the cursor across the
+    // card on hover (CSS radial-gradient driven by --spot-x/--spot-y, see
+    // global.css). Pure cursor-tracking, no GSAP tween needed here.
+    document.querySelectorAll<HTMLElement>("[data-gsap-spotlight]").forEach((card) => {
+      card.addEventListener("mousemove", (e) => {
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty("--spot-x", `${((e.clientX - rect.left) / rect.width) * 100}%`);
+        card.style.setProperty("--spot-y", `${((e.clientY - rect.top) / rect.height) * 100}%`);
+      });
+    });
   }
 
   return () => {
