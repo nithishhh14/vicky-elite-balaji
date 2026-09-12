@@ -47,34 +47,23 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
     );
   });
 
-  // Living Athangudi heritage treatment: the real tile photo and a
-  // decorative quatrefoil pattern layer (the same motif already used
-  // sitewide, sampled from the real Athangudi-Series catalogue) drift at
-  // different rates so the pattern surfaces behind the content as you
-  // scroll, instead of the section being a static photo with text on top.
-  document.querySelectorAll<HTMLElement>("[data-gsap-heritage]").forEach((section) => {
-    const photo = section.querySelector<HTMLElement>("[data-heritage-photo]");
-    const pattern = section.querySelector<HTMLElement>("[data-heritage-pattern]");
-    const content = section.querySelector<HTMLElement>("[data-heritage-content]");
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: section,
-        start: "top bottom",
-        end: "bottom top",
-        scrub: 0.6,
-      },
-    });
-
-    if (photo) {
-      tl.fromTo(photo, { yPercent: -12, scale: 1.1 }, { yPercent: 12, scale: 1.16, ease: "none" }, 0);
-    }
-    if (pattern) {
-      tl.fromTo(pattern, { xPercent: -6, yPercent: 8, opacity: 0.16 }, { xPercent: 6, yPercent: -8, opacity: 0.3, ease: "none" }, 0);
-    }
-    if (content) {
-      tl.fromTo(content, { yPercent: 8 }, { yPercent: -8, ease: "none" }, 0);
-    }
+  // Generic layered-parallax treatment: any section with data-gsap-parallax
+  // gets its data-parallax-photo layer scrubbed against scroll position.
+  // Not tied to any one piece of content -- reusable wherever a section
+  // wants a photo to drift rather than sit static.
+  document.querySelectorAll<HTMLElement>("[data-gsap-parallax]").forEach((section) => {
+    const photo = section.querySelector<HTMLElement>("[data-parallax-photo]");
+    if (!photo) return;
+    gsap.fromTo(
+      photo,
+      { yPercent: -12, scale: 1.1 },
+      {
+        yPercent: 12,
+        scale: 1.16,
+        ease: "none",
+        scrollTrigger: { trigger: section, start: "top bottom", end: "bottom top", scrub: 0.6 },
+      }
+    );
   });
 
   // Subtle pointer-driven depth on the material grid panels, desktop only
