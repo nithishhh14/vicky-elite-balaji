@@ -36,10 +36,10 @@ export const business = {
   ],
   partnerBrands: ["Kajaria", "Somany", "Johnson", "Orientbell", "Simpolo", "Varmora", "AGL", "Parryware", "Jaquar"],
   usps: [
-    { title: "Faster timelines", detail: "Structural project speed without cutting finish quality." },
-    { title: "Zero-bubble laying", detail: "Precision tile laying technique with experienced crews." },
+    { title: "Faster timelines", detail: "We move fast on structural work without cutting corners on finish." },
+    { title: "Zero-bubble laying", detail: "Our crews lay tile so it doesn't bubble or lift later." },
     { title: "Specialist workforce", detail: "Hands that know granite, marble, kota and sanitary installs." },
-    { title: "Wholesale bundles", detail: "Factory-style material bundles — trade rates on enquiry." },
+    { title: "Wholesale bundles", detail: "Buy material in bulk at factory-style rates — ask for the trade price." },
   ],
 } as const;
 

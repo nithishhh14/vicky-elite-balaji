@@ -37,6 +37,11 @@ import { business, telLink, waLink, emailQuoteLink, defaultEnquiryMessage } from
   </div>
 
   <div class="border-t border-paper/10 py-5 text-center text-xs text-paper/50">
-    <p>&copy; {new Date().getFullYear()} {business.name}. {business.subTagline}.</p>
+    <p>&copy; {business.since}–{new Date().getFullYear()} {business.name}. All rights reserved.</p>
+    <p class="mt-1">
+      <a href="/privacy/" class="underline decoration-paper/30 underline-offset-4 hover:text-mustard">Privacy</a>
+      <span class="mx-2">·</span>
+      <a href="/terms/" class="underline decoration-paper/30 underline-offset-4 hover:text-mustard">Terms</a>
+    </p>
   </div>
 </footer>

@@ -57,17 +57,15 @@ const restHalls = halls.filter((h) => !featured.includes(h.id));
     <div class="grid gap-12 md:grid-cols-[1.1fr_0.9fr] md:items-center">
       <div>
         <p class="text-xs uppercase tracking-[0.3em] text-bottle">Since {business.since} · Karamadai</p>
-        <h2 class="mt-3 text-3xl sm:text-4xl">Materials and laying, from one address</h2>
+        <h2 class="mt-3 text-3xl sm:text-4xl">Material and labour, one call</h2>
         <p class="mt-5 max-w-xl text-ink-soft leading-relaxed">
-          Elite Balaji Stones &amp; Ceramics has supplied granite, marble, tiles and sanitaryware to
-          contractors and homes from Karamadai since {business.since}. We also lay what we sell — our
-          own crews handle site measurement, precision tile and stone laying, and finishing, so
-          material and workmanship stay on one timeline.
+          We've supplied granite, marble, tiles and sanitaryware to contractors and homes from
+          Karamadai since {business.since}. We also lay it — our own crews do the site measurement,
+          the laying and the finishing, so you're not coordinating two separate people.
         </p>
         <p class="mt-4 max-w-xl text-ink-soft leading-relaxed">
-          Everything on this site is browse-first: walk the halls for materials, sizes and finishes,
-          then ask us directly for trade rates and current stock — pricing on wholesale material moves
-          with supply, so we keep it a conversation rather than a fixed list.
+          Browse what's below for materials, sizes and finishes. Trade rates move with supply, so
+          we quote by WhatsApp or call rather than posting a price list here.
         </p>
       </div>
       <div class="relative overflow-hidden rounded-sm shadow-card">
@@ -87,8 +85,8 @@ const restHalls = halls.filter((h) => !featured.includes(h.id));
   <section id="halls" class="scroll-mt-20 border-y border-line/60 bg-card py-20">
     <div class="mx-auto max-w-6xl px-5">
       <div class="max-w-xl">
-        <p class="text-xs uppercase tracking-[0.3em] text-bottle">Explore the showroom</p>
-        <h2 class="mt-3 text-3xl sm:text-4xl">Eight halls, one enquiry</h2>
+        <p class="text-xs uppercase tracking-[0.3em] text-bottle">What we stock</p>
+        <h2 class="mt-3 text-3xl sm:text-4xl">Eight product halls</h2>
       </div>
 
       <div class="mt-14 flex flex-col gap-16">
@@ -116,7 +114,7 @@ const restHalls = halls.filter((h) => !featured.includes(h.id));
               <h3 class="mt-2 text-3xl group-hover:text-bottle transition-colors">{hall.data.name}</h3>
               <p class="mt-3 max-w-md text-ink-soft leading-relaxed">{hall.data.intro}</p>
               <span class="mt-4 inline-block text-sm font-semibold uppercase tracking-wide text-bottle">
-                Walk this hall &rarr;
+                See what's in stock &rarr;
               </span>
             </div>
           </a>
@@ -136,20 +134,24 @@ const restHalls = halls.filter((h) => !featured.includes(h.id));
     </div>
   </section>
 
-  <!-- 04 — Athangudi visual note -->
+  <!-- 04 — Athangudi spotlight -->
   <section class="relative isolate overflow-hidden">
     <img
       src="/media/tiles/athangudi-series/lifestyle-bottle-green.jpg"
-      alt="Athangudi-style bottle green tile with cross motif on a courtyard floor"
+      alt="Athangudi tile with cross motif on a courtyard floor"
       class="h-[60vh] w-full object-cover"
       loading="lazy"
     />
-    <div class="absolute inset-0 bg-ink/55" aria-hidden="true"></div>
-    <div class="absolute inset-0 flex items-center justify-center px-5 text-center">
-      <p class="max-w-2xl font-display text-2xl italic text-paper sm:text-3xl">
-        This site borrows its colour and pattern language from Athangudi tile craft —
-        the same handcrafted geometry we stock in our Tiles hall.
+    <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-ink/10" aria-hidden="true"></div>
+    <div class="absolute inset-0 flex flex-col items-start justify-end gap-3 px-5 pb-14 sm:px-12">
+      <p class="text-xs uppercase tracking-[0.3em] text-mustard">In the Tiles hall</p>
+      <h2 class="max-w-lg font-display text-3xl text-paper sm:text-4xl">Athangudi Series</h2>
+      <p class="max-w-md text-paper/80">
+        Handmade cement tiles in the old Chettinad pattern — the line we get asked about most.
       </p>
+      <a href="/halls/tiles/" class="mt-2 inline-block rounded-full bg-mustard px-6 py-3 text-sm font-semibold uppercase tracking-wide text-ink hover:bg-mustard-dark transition-colors">
+        View the range
+      </a>
     </div>
   </section>
 
