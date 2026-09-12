@@ -47,7 +47,7 @@ const related = kind === "tile"
 
 <BaseLayout
   title={`${name} | ${hallName} | Elite Balaji Stones & Ceramics`}
-  description={kind === "tile" ? `${name} — ${product.data.size}, ${product.data.finish}. Ask for trade rate.` : `${product.data.name} — ${product.data.category}, ${product.data.finish}. Ask for trade rate.`}
+  description={kind === "tile" ? `${name}: ${product.data.size}, ${product.data.finish}. Ask for trade rate.` : `${product.data.name}: ${product.data.category}, ${product.data.finish}. Ask for trade rate.`}
   enquiryMessage={productEnquiryMessage(name)}
 >
   <nav aria-label="Breadcrumb" class="mx-auto max-w-6xl px-5 pt-6 text-xs uppercase tracking-wide text-ink-soft">
