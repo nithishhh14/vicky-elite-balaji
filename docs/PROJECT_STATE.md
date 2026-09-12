@@ -2,6 +2,36 @@
 
 _Last updated: 2026-09-12 — functional-fix pass, motion/3D pass (GSAP + Three.js), catalogue-discovery pass (real facet filtering), UI/UX redesign pass (material-first navigation, discovery-led homepage), then a data-architecture pass (canonical product/service schema, agent-ready structure, Three.js removed, material-world landing pages). See `docs/DECISIONS.md` for each._
 
+## 2026-09-12 — stone-variety reference layer + Athangudi de-emphasis (commit `7150b40`)
+
+Client feedback: category pages feel empty, "entire product list isn't
+there," and the site over-indexes on the Athangudi tile line as its visual
+identity. A large "MASTER PRODUCT LIST" (hundreds of generic Indian stone-
+industry trade names) was supplied to fix the first — treated as a taxonomy/
+demand-research input, **not** as confirmed stock (see `docs/DECISIONS.md`
+for the fabrication-risk reasoning). Real market research (sources below)
+prioritized a curated subset into `website/src/lib/stone-varieties.ts`,
+rendered on `/materials/natural-stone/` as an honest "commonly sourced —
+ask us to confirm" layer, clearly separated from confirmed real stock.
+Granite/Marble/Limestone show real stock first (Limestone already has 4
+real products — Kota + Kadappa); Quartzite/Onyx/Travertine/Sandstone/Slate
+are labeled "Sourced on request," zero real photography, no invented
+products. Tiles & Ceramics world page got an equivalent sizes/finishes
+reference strip.
+
+Homepage: the full-viewport Athangudi section was reduced to a compact
+one-line mention; hero subcopy broadened to the full material range.
+
+**Also surfaced:** this site has never been deployed anywhere — no domain,
+no hosting connected (same blocked item since project start). Client
+complaints of "no animation, boring font" are almost certainly about
+something other than this actual build (verified extensively working,
+GSAP motion + Cormorant Garamond/Outfit type confirmed live) — most likely
+they've never seen the real site. **This should be resolved before more
+design feedback is acted on** — see "Next actions."
+
+Research sources: [Stone Galleria — popular granite colors](https://www.stonegalleria.in/10-most-popular-granite-colors/), [Quality Marble India — top granite countertops](https://qualitymarbleindia.com/blog/top-15-granite-countertops-colors-in-india/), [Stonevault — Indian granite export colors](https://www.stonevault.in/top-10-indian-granite-colors-that-are-dominating-the-export-market/), [Moglix — marble companies/types](https://business.moglix.com/blogs/top-10-best-marble-companies-in-india-2026-types-applications-and-prices), [Mordor Intelligence — India ceramic tiles market](https://www.mordorintelligence.com/industry-reports/india-ceramic-tiles-market), [MarkWide Research — India ceramic tiles 2026-2036](https://markwideresearch.com/india-ceramic-tiles-market).
+
 ## 2026-09-12 — data architecture: canonical schema, agent-ready structure (commit `ce20076`)
 
 Prompted by an explicit "this website is part of a larger AI business
@@ -398,6 +428,15 @@ started.
 ## Next actions
 
 **P0 — must do first**
+- **Deploy this build somewhere the client can actually open it** (even a
+  free `*.pages.dev`/`*.netlify.app` subdomain is enough for now — see §8 of
+  `WEBSITE_ARCHITECTURE.md`). As of 2026-09-12 this site has never been
+  deployed anywhere; every round of "client feedback" so far has arrived
+  without the client having a live link. That makes feedback like "boring,
+  no animation" impossible to act on reliably — the actual build has
+  working GSAP motion and a deliberate serif/sans type pairing, verified
+  repeatedly in-browser. Get a real URL in front of the client before
+  reworking visual direction again on secondhand description.
 - Get client sign-off/feedback on the current design direction (colours,
   layout, tone) before investing further polish — see `CLIENT_PREFERENCES.md`.
 - Decide whether to proceed with a domain/hosting purchase or stay on a free
