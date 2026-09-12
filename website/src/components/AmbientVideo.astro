@@ -1,0 +1,47 @@
+---
+// Reusable ambient background video slot. Not used on any page yet.
+//
+// Drop a real video file (a phone recording of an actual install, a real
+// yard walkthrough, etc.) into public/media/video/ and pass its path as
+// `src` to activate it. Until then, or if `src` is omitted, this renders
+// only the poster image, so it is safe to leave unused indefinitely.
+//
+// Deliberately does not fetch or generate synthetic "installation footage" --
+// see docs/DECISIONS.md. Real footage only.
+interface Props {
+  poster: string;
+  posterAlt: string;
+  src?: string;
+  aspectClass?: string;
+  class?: string;
+}
+
+const { poster, posterAlt, src, aspectClass = "aspect-video", class: className = "" } = Astro.props;
+---
+
+<div class:list={["relative isolate overflow-hidden", aspectClass, className]}>
+  <img src={poster} alt={posterAlt} class="absolute inset-0 h-full w-full object-cover" loading="lazy" />
+  {src && (
+    <video
+      class="ambient-video absolute inset-0 h-full w-full object-cover"
+      poster={poster}
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="none"
+      aria-hidden="true"
+    >
+      <source src={src} type="video/mp4" />
+    </video>
+  )}
+</div>
+
+<style>
+  /* Respect reduced-motion: freeze on the poster frame instead of playing. */
+  @media (prefers-reduced-motion: reduce) {
+    .ambient-video {
+      display: none;
+    }
+  }
+</style>
