@@ -66,6 +66,19 @@ list will be supplied separately — **do not fabricate products/categories to
 make the catalogue look bigger in the meantime.** See `docs/DECISIONS.md`
 for the plan itself and what is/isn't blocked on that product list.
 
+**Phase 1 implemented same day (commit `410b78e`)** — the parts that don't
+need the master list: `website/src/lib/facets.ts` derives colour/character/
+application tags from already-real fields (pure function, nothing invented,
+nothing hand-tagged); `/search/` rebuilt into a real faceted discovery page
+(Material/Colour/Look/Application pills + text search, all combinable)
+against the current real ~30-item catalogue; product "related items" ranked
+by shared derived facets; a "can't find it? we can source it" WhatsApp CTA
+on the zero-results state; Custom & Fabrication elevated to a real homepage
+section. All build-verified and browser-QA'd (desktop, facet combinations,
+zero-results state, click-through). **Still blocked:** the actual 500-product
+catalogue content, and the exact colour/look taxonomy at scale — both need
+the master product list, not more code.
+
 ## Website optimization pass (2026-09-11)
 
 Following a design/technical brief the user relayed (sourced from an
