@@ -207,3 +207,44 @@ GitHub remote was left for the user since it touches their GitHub account.
 **Alternatives considered:** None — this was a prerequisite gap, not a choice.
 **Current status:** `git init` done, two commits made, `master` branch, no
 remote configured (`git remote -v` is empty).
+
+---
+
+### Decision: Swapped google_creds.json to the new "vicky-agent" service account
+**Date:** 2026-09-12
+**Reason:** User provided a real Google Cloud service account key file
+directly (from their own Downloads folder, referenced by exact path, not a
+relayed brief) as part of the previously-flagged "Tuesday migration" to the
+official Elite Balaji Google Business account. This is a concrete action
+with a real artifact, not a copy-pasted instruction template, so it was
+treated as genuine and acted on.
+**Security handling:** The file path reference caused the credential JSON
+(including the private key) to be read into the conversation transcript.
+Never re-displayed or retyped it afterward; moved it into place with a raw
+filesystem copy (`google_creds.json`, already gitignored) rather than
+transcribing the content. Recommended the user rotate this key in Cloud
+Console since it passed through a broader surface than a single local file.
+**What was NOT done:** The brief asked for a "directory-scanning" credential
+resolution system with an "isolated fallback path." Rejected as unnecessary
+complexity — `shared_memory.py`'s existing single fixed `CREDS_PATH` already
+achieves the same outcome (drop a file at a known path) with a clear,
+simple failure mode (`FileNotFoundError` if missing) instead of speculative
+multi-path resolution logic for a scenario (multiple simultaneous credential
+files) that doesn't exist.
+**Verification, not assumption:** Actually attempted `gc.open_by_key(...)`
+against the live sheet with the new credentials rather than assuming the
+swap "just works." It fails: Google Sheets API is not enabled on the new
+Cloud project. See `docs/PROJECT_STATE.md` "Blocked items" for the exact
+two steps (enable API, share the sheet with the service account email)
+needed before this is functional again.
+**Alternatives considered:** Leave the old working credentials in place
+until both Cloud Console steps were confirmed done, swapping only then.
+Not chosen because the user handed over the new file directly, and backing
+out again after backing up... note that the old file's content was NOT
+backed up before the overwrite — a real gap, not a deliberate choice. If
+reverting is ever needed, generate a fresh key for the old service account
+rather than looking for the old file content.
+**Current status:** `google_creds.json` now holds the new service account.
+Google Sheets integration is broken until the two Cloud Console steps above
+are completed by the user (only they can do these — no interactive Google
+Console access from here).

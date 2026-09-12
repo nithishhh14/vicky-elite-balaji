@@ -241,6 +241,24 @@ started.
   environment or the user creating a repo and giving the remote URL.
 - **Client design/content feedback** — none has been given yet. See
   `docs/CLIENT_PREFERENCES.md` (created this session, all sections pending).
+- **Google Sheets integration is currently BROKEN (regression, 2026-09-12).**
+  `google_creds.json` was swapped to a new service account
+  (`vicky-agent@vicky-agent-508408.iam.gserviceaccount.com`) as part of the
+  planned account migration. Verified by actually attempting
+  `gc.open_by_key(...)` against the live sheet: it fails with a 403 because
+  the Google Sheets API is not enabled on the new Cloud project
+  (`vicky-agent-508408` / project number `529561488217`). Two things must
+  happen before the scraper/shared_memory Sheets integration works again:
+  1. Enable the Google Sheets API (and Drive API) for project
+     `vicky-agent-508408` in Google Cloud Console.
+  2. Share the target spreadsheet with
+     `vicky-agent@vicky-agent-508408.iam.gserviceaccount.com` as an Editor
+     (exactly like sharing a Google Doc with another person) — not yet
+     verified, since the API-enablement error blocked testing this.
+  The previous working service account's key content was not backed up
+  before the overwrite — if you need to revert, generate a fresh key for
+  the old service account in Cloud Console rather than looking for the old
+  `google_creds.json` here.
 
 ## Next actions
 
