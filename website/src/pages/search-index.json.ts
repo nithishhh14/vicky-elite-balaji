@@ -10,32 +10,14 @@ export const GET: APIRoute = async () => {
   const halls = await getCollection("halls");
   const hallName = (id: string) => halls.find((h) => h.id === id)?.data.name ?? id;
 
-  const tileProducts = (await getCollection("tileProducts")).map((p) => {
-    const name = `${p.data.series}${p.data.code ? ` ${p.data.code}` : ""}`;
-    return {
-      id: p.id,
-      url: `/products/${p.id}/`,
-      name,
-      hall: hallName("tiles"),
-      category: p.data.brand,
-      finish: p.data.finish,
-      size: p.data.size,
-      applications: p.data.applications,
-      image: p.data.image,
-      colours: deriveColours(name, p.data.finish, p.data.imageAlt),
-      character: deriveCharacterTags(name, p.data.finish, p.data.imageAlt),
-      applicationTags: deriveApplicationTags(p.data.applications),
-    };
-  });
-
-  const materialProducts = (await getCollection("materialProducts")).map((p) => ({
+  const products = (await getCollection("products")).map((p) => ({
     id: p.id,
     url: `/products/${p.id}/`,
     name: p.data.name,
     hall: hallName(p.data.hallId),
-    category: p.data.category,
+    category: p.data.brand ?? p.data.category ?? "",
     finish: p.data.finish,
-    size: "",
+    size: p.data.size ?? "",
     applications: p.data.applications,
     image: p.data.image,
     colours: deriveColours(p.data.name, p.data.finish, p.data.imageAlt),
@@ -58,6 +40,6 @@ export const GET: APIRoute = async () => {
     applicationTags: deriveApplicationTags(h.data.applications),
   }));
 
-  const items = [...tileProducts, ...materialProducts, ...hallEntries];
+  const items = [...products, ...hallEntries];
   return new Response(JSON.stringify(items), { headers: { "Content-Type": "application/json" } });
 };

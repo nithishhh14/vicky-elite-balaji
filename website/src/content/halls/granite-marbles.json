@@ -9,19 +9,5 @@
   "materialColor": "#2e2e30",
   "materialTexture": "stone",
   "applications": ["Flooring & staircases", "Kitchen counters", "Cladding & facades", "Engraving, sculptures & name boards"],
-  "enquiryNote": "Ask for trade rate. Slab availability changes with each yard delivery.",
-  "additionalServices": [
-    {
-      "name": "CNC Granite Engraving",
-      "description": "Precision CNC-cut engraving on granite for signage, memorial and decorative work. Send us the design and size for a quote."
-    },
-    {
-      "name": "Handcrafted Inlay Slabs",
-      "description": "Hand-inlaid stone slabs combining granite or marble with contrasting materials for feature floors and walls."
-    },
-    {
-      "name": "Sculptures & Name Boards",
-      "description": "Granite sculptures and name boards cut and finished to order."
-    }
-  ]
+  "enquiryNote": "Ask for trade rate. Slab availability changes with each yard delivery."
 }

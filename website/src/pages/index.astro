@@ -2,31 +2,23 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import { business, waLink, telLink, defaultEnquiryMessage } from "../lib/business";
+import { materialWorlds as materialWorldsConfig } from "../lib/material-worlds";
 
 const halls = (await getCollection("halls")).sort((a, b) => a.data.order - b.data.order);
-const fabricationServices = halls.flatMap((hall) => hall.data.additionalServices ?? []).slice(0, 4);
+const fabricationServices = (await getCollection("services")).sort((a, b) => a.data.order - b.data.order).slice(0, 4);
 const hallByI = (id: string) => halls.find((h) => h.id === id)!;
 
 // Material worlds: the real halls grouped by what a customer is actually
-// looking for (matches the header's "Materials" menu), each led by a real
-// or honestly-disclosed photo, not a stock-photo grid of unrelated products.
-const materialWorlds = [
-  {
-    label: "Natural Stone",
-    flagship: hallByI("granite-marbles"),
-    also: [hallByI("kota-stone"), hallByI("kadappa")],
-  },
-  {
-    label: "Tiles & Ceramics",
-    flagship: hallByI("tiles"),
-    also: [],
-  },
-  {
-    label: "Surfaces",
-    flagship: hallByI("quartz"),
-    also: [],
-  },
-];
+// looking for (single source of truth in lib/material-worlds.ts, shared
+// with SiteHeader's "Materials" menu and the /materials/[world]/ landing
+// pages), each led by a real or honestly-disclosed photo, not a stock-photo
+// grid of unrelated products.
+const materialWorlds = materialWorldsConfig.map((world) => ({
+  slug: world.slug,
+  label: world.label,
+  flagship: hallByI(world.hallIds[0]),
+  also: world.hallIds.slice(1).map(hallByI),
+}));
 
 // Real, already-derived facet values (see src/lib/facets.ts / search-index.json.ts)
 // used only as clickable text-search shortcuts into /search/ -- not fabricated categories.
@@ -77,7 +69,7 @@ const discoveryTerms = ["Grey", "White", "Polished", "Glossy", "Flooring", "Kitc
     </div>
     <div data-gsap-stagger class="mt-12 grid gap-1 px-1 md:grid-cols-3">
       {materialWorlds.map((world) => (
-        <a href={`/halls/${world.flagship.id}/`} data-gsap-tilt class="group relative isolate flex aspect-[3/4] flex-col justify-end overflow-hidden md:aspect-[2/3]">
+        <a href={`/materials/${world.slug}/`} data-gsap-tilt class="group relative isolate flex aspect-[3/4] flex-col justify-end overflow-hidden md:aspect-[2/3]">
           {world.flagship.data.heroImage ? (
             <img
               src={world.flagship.data.heroImage}
@@ -186,8 +178,8 @@ const discoveryTerms = ["Grey", "White", "Polished", "Glossy", "Flooring", "Kitc
       <div data-gsap-stagger class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {fabricationServices.map((service) => (
           <div class="rounded-sm border border-paper/15 bg-paper/5 p-5">
-            <h3 class="text-base">{service.name}</h3>
-            <p class="mt-2 text-sm text-paper/70 leading-relaxed">{service.description}</p>
+            <h3 class="text-base">{service.data.name}</h3>
+            <p class="mt-2 text-sm text-paper/70 leading-relaxed">{service.data.description}</p>
           </div>
         ))}
       </div>

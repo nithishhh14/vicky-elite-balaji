@@ -15,42 +15,52 @@ const halls = defineCollection({
     materialTexture: z.enum(["stone", "ceramic", "cement", "porcelain"]),
     applications: z.array(z.string()),
     enquiryNote: z.string(),
-    additionalServices: z
-      .array(z.object({ name: z.string(), description: z.string() }))
-      .optional(),
   }),
 });
 
-const tileProducts = defineCollection({
-  loader: glob({ pattern: "**/*.json", base: "./src/content/tile-products" }),
+// Canonical product record. One shape for every real product across every
+// hall (tile or material), so one record powers the catalogue card, search/
+// filters, the product detail page, related-product ranking, structured
+// data, and any future marketing/agent consumer -- instead of maintaining
+// two differently-shaped collections that had to be branched on everywhere
+// they were used.
+const products = defineCollection({
+  loader: glob({ pattern: "**/*.json", base: "./src/content/products" }),
   schema: z.object({
-    brand: z.string(),
-    series: z.string(),
+    kind: z.enum(["tile", "material"]),
+    hallId: z.string(),
+    name: z.string(),
+    brand: z.string().optional(),
+    series: z.string().optional(),
     code: z.string().optional(),
-    size: z.string(),
+    category: z.string().optional(),
+    size: z.string().optional(),
     finish: z.string(),
     order: z.number(),
     applications: z.array(z.string()),
     image: z.string(),
     imageAlt: z.string(),
-    sourceCatalogue: z.string(),
+    sourceCatalogue: z.string().optional(),
     note: z.string().optional(),
   }),
 });
 
-const materialProducts = defineCollection({
-  loader: glob({ pattern: "**/*.json", base: "./src/content/material-products" }),
+// Bespoke/made-to-order capabilities (CNC engraving, tile printing, inlay,
+// sculptures...). Previously an inline array on each hall's JSON, which
+// forced every consumer to flatMap across all halls just to find them. A
+// dedicated collection makes each capability directly addressable and
+// leaves room for real, verified sub-capabilities later without another
+// data migration -- see "capabilities" below, left empty until confirmed.
+const services = defineCollection({
+  loader: glob({ pattern: "**/*.json", base: "./src/content/services" }),
   schema: z.object({
     hallId: z.string(),
     name: z.string(),
     category: z.string(),
-    finish: z.string(),
+    description: z.string(),
+    capabilities: z.array(z.string()).optional(),
     order: z.number(),
-    applications: z.array(z.string()),
-    image: z.string(),
-    imageAlt: z.string(),
-    note: z.string(),
   }),
 });
 
-export const collections = { halls, tileProducts, materialProducts };
+export const collections = { halls, products, services };

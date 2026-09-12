@@ -5,48 +5,25 @@ import { waLink, telLink, emailQuoteLink, productEnquiryMessage } from "../../li
 import { deriveColours, deriveCharacterTags, deriveApplicationTags } from "../../lib/facets";
 
 export async function getStaticPaths() {
-  const tileProducts = await getCollection("tileProducts");
-  const materialProducts = await getCollection("materialProducts");
-
-  const tilePaths = tileProducts.map((p) => ({
-    params: { id: p.id },
-    props: { kind: "tile" as const, product: p, hallId: "tiles" },
-  }));
-  const materialPaths = materialProducts.map((p) => ({
-    params: { id: p.id },
-    props: { kind: "material" as const, product: p, hallId: p.data.hallId },
-  }));
-  return [...tilePaths, ...materialPaths];
+  const products = await getCollection("products");
+  return products.map((product) => ({ params: { id: product.id }, props: { product } }));
 }
 
-const { kind, product, hallId } = Astro.props;
+const { product } = Astro.props;
+const { name, image, imageAlt, hallId } = product.data;
 
-const name = kind === "tile" ? `${product.data.series}${"code" in product.data && product.data.code ? ` ${product.data.code}` : ""}` : product.data.name;
-const image = product.data.image;
-const imageAlt = product.data.imageAlt;
+const halls = await getCollection("halls");
+const hall = halls.find((h) => h.id === hallId);
+const hallName = hall?.data.name ?? hallId;
 
-const hallNames: Record<string, string> = {
-  tiles: "Tiles",
-  "granite-marbles": "Granite & Marbles",
-  "kota-stone": "Kota Stone",
-  kadappa: "Kadappa",
-  sanitaryware: "Sanitaryware",
-  adhesive: "Adhesive & Accessories",
-  quartz: "Quartz",
-  "laying-works": "Laying Works",
-};
-const hallName = hallNames[hallId] ?? hallId;
-
-// Related: other real products from the same hall (tile products only relate
-// to other tile products; material products relate within the same hallId),
-// ranked by shared derived facets (colour/character/application) so "related"
-// means genuinely similar, not just "next in the list" -- still entirely
-// computed from real fields, nothing invented.
+// Related: other real products in the same hall, ranked by shared derived
+// facets (colour/character/application) so "related" means genuinely
+// similar, not just "next in the list" -- still entirely computed from
+// real fields, nothing invented.
 function facetSetFor(p: typeof product): Set<string> {
-  const name = "brand" in p.data ? `${p.data.series}${p.data.code ? ` ${p.data.code}` : ""}` : p.data.name;
   return new Set([
-    ...deriveColours(name, p.data.finish, p.data.imageAlt),
-    ...deriveCharacterTags(name, p.data.finish, p.data.imageAlt),
+    ...deriveColours(p.data.name, p.data.finish, p.data.imageAlt),
+    ...deriveCharacterTags(p.data.name, p.data.finish, p.data.imageAlt),
     ...deriveApplicationTags(p.data.applications),
   ]);
 }
@@ -59,21 +36,48 @@ function overlapScore(p: typeof product): number {
   return score;
 }
 
-const allTile = kind === "tile" ? (await getCollection("tileProducts")).sort((a, b) => a.data.order - b.data.order) : [];
-const allMaterial = kind === "material" ? (await getCollection("materialProducts")).filter((p) => p.data.hallId === hallId).sort((a, b) => a.data.order - b.data.order) : [];
-const candidates = (kind === "tile" ? allTile : allMaterial).filter((p) => p.id !== product.id);
+const allProducts = await getCollection("products");
+const candidates = allProducts.filter((p) => p.data.hallId === hallId && p.id !== product.id);
 const related = candidates
   .map((p) => ({ p, score: overlapScore(p) }))
   .sort((a, b) => b.score - a.score)
   .slice(0, 3)
   .map(({ p }) => p);
+
+// No "offers" block: this site never publishes prices (trade rates are
+// quoted by WhatsApp/call), and Offer structured data without a real price
+// is exactly the kind of incomplete markup Google flags -- omitting it
+// entirely is more honest than shipping a placeholder.
+const productJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  name,
+  url: new URL(`/products/${product.id}/`, Astro.site).toString(),
+  image: image.startsWith("http") ? image : new URL(image, Astro.site).toString(),
+  description: product.data.note ?? `${name}: ${product.data.finish}.`,
+  category: hallName,
+  ...(product.data.brand ? { brand: { "@type": "Brand", name: product.data.brand } } : {}),
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "All halls", item: new URL("/halls/", Astro.site).toString() },
+    { "@type": "ListItem", position: 2, name: hallName, item: new URL(`/halls/${hallId}/`, Astro.site).toString() },
+    { "@type": "ListItem", position: 3, name },
+  ],
+};
 ---
 
 <BaseLayout
   title={`${name} | ${hallName} | Elite Balaji Stones & Ceramics`}
-  description={kind === "tile" ? `${name}: ${product.data.size}, ${product.data.finish}. Ask for trade rate.` : `${product.data.name}: ${product.data.category}, ${product.data.finish}. Ask for trade rate.`}
+  description={`${name}: ${[product.data.category, product.data.finish].filter(Boolean).join(", ")}. Ask for trade rate.`}
   enquiryMessage={productEnquiryMessage(name)}
 >
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(productJsonLd)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
+
   <nav aria-label="Breadcrumb" class="mx-auto max-w-6xl px-5 pt-6 text-xs uppercase tracking-wide text-ink-soft">
     <a href="/halls/" class="hover:text-terracotta">All halls</a>
     <span class="mx-2">/</span>
@@ -99,23 +103,15 @@ const related = candidates
     <h1 class="mt-2 font-display text-4xl sm:text-5xl">{name}</h1>
 
     <div class="mt-6 flex flex-wrap justify-center gap-x-8 gap-y-2 text-sm text-ink-soft">
-      {kind === "tile" ? (
-        <>
-          <span><span class="text-ink-soft/60">Brand</span> · {product.data.brand}</span>
-          <span><span class="text-ink-soft/60">Size</span> · {product.data.size}</span>
-          <span><span class="text-ink-soft/60">Finish</span> · {product.data.finish}</span>
-        </>
-      ) : (
-        <>
-          <span><span class="text-ink-soft/60">Category</span> · {product.data.category}</span>
-          <span><span class="text-ink-soft/60">Finish</span> · {product.data.finish}</span>
-        </>
-      )}
+      {product.data.brand && <span><span class="text-ink-soft/60">Brand</span> · {product.data.brand}</span>}
+      {product.data.category && <span><span class="text-ink-soft/60">Category</span> · {product.data.category}</span>}
+      {product.data.size && <span><span class="text-ink-soft/60">Size</span> · {product.data.size}</span>}
+      <span><span class="text-ink-soft/60">Finish</span> · {product.data.finish}</span>
     </div>
     <p class="mt-3 text-sm text-ink-soft">{product.data.applications.join(" · ")}</p>
-    {kind === "tile" && <p class="mt-1 text-xs uppercase tracking-wide text-ink-soft/50">{product.data.sourceCatalogue}</p>}
+    {product.data.sourceCatalogue && <p class="mt-1 text-xs uppercase tracking-wide text-ink-soft/50">{product.data.sourceCatalogue}</p>}
 
-    <p class="mx-auto mt-5 max-w-md text-sm italic text-ink-soft">{product.data.note}</p>
+    {product.data.note && <p class="mx-auto mt-5 max-w-md text-sm italic text-ink-soft">{product.data.note}</p>}
 
     <div class="mt-8 flex flex-wrap justify-center gap-3">
       <a
@@ -149,19 +145,16 @@ const related = candidates
       <div class="mx-auto max-w-6xl px-5 py-14">
         <p class="text-xs uppercase tracking-[0.25em] text-terracotta">Related in {hallName}</p>
         <div class="mt-6 grid gap-6 sm:grid-cols-3">
-          {related.map((r) => {
-            const rName = "brand" in r.data ? `${r.data.series}${r.data.code ? ` ${r.data.code}` : ""}` : r.data.name;
-            return (
-              <a href={`/products/${r.id}/`} class="group block overflow-hidden rounded-sm border border-line bg-paper">
-                <div class="aspect-[4/3] overflow-hidden">
-                  <img src={r.data.image} alt={r.data.imageAlt} class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
-                </div>
-                <div class="p-4">
-                  <h3 class="text-sm group-hover:text-terracotta transition-colors">{rName}</h3>
-                </div>
-              </a>
-            );
-          })}
+          {related.map((r) => (
+            <a href={`/products/${r.id}/`} class="group block overflow-hidden rounded-sm border border-line bg-paper">
+              <div class="aspect-[4/3] overflow-hidden">
+                <img src={r.data.image} alt={r.data.imageAlt} class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+              </div>
+              <div class="p-4">
+                <h3 class="text-sm group-hover:text-terracotta transition-colors">{r.data.name}</h3>
+              </div>
+            </a>
+          ))}
         </div>
       </div>
     </section>

@@ -1,4 +1,7 @@
 {
+  "kind": "tile",
+  "hallId": "tiles",
+  "name": "Large Format GVT",
   "brand": "Adoration Ceramica",
   "series": "Large Format GVT",
   "size": "300 x 600mm up to 1200 x 3200mm",

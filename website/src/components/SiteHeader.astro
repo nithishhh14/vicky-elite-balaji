@@ -1,41 +1,32 @@
 ---
+import { getCollection } from "astro:content";
 import { business, telLink } from "../lib/business";
+import { materialWorlds, alsoStockedHallIds } from "../lib/material-worlds";
 
 const { pathname } = Astro.url;
+const halls = await getCollection("halls");
+const hallLink = (id: string) => {
+  const hall = halls.find((h) => h.id === id);
+  return { href: `/halls/${id}/`, label: hall?.data.name ?? id };
+};
 
 // Material-first grouping of the real halls (not a flat business-category
-// list) -- grouped by what a customer is actually shopping for, using only
-// halls that genuinely exist. Sanitaryware/Adhesive are real stock but not
-// "materials" in the discovery sense, so they sit in a lighter second group.
-const materialGroups = [
-  {
-    label: "Natural Stone",
-    items: [
-      { href: "/halls/granite-marbles/", label: "Granite & Marbles" },
-      { href: "/halls/kota-stone/", label: "Kota Stone" },
-      { href: "/halls/kadappa/", label: "Kadappa" },
-    ],
-  },
-  {
-    label: "Tiles & Ceramics",
-    items: [{ href: "/halls/tiles/", label: "Tiles" }],
-  },
-  {
-    label: "Surfaces",
-    items: [{ href: "/halls/quartz/", label: "Quartz" }],
-  },
-];
-const alsoStocked = [
-  { href: "/halls/sanitaryware/", label: "Sanitaryware" },
-  { href: "/halls/adhesive/", label: "Adhesive & Accessories" },
-];
+// list) -- grouped by what a customer is actually shopping for, from the
+// single shared config in lib/material-worlds.ts.
+const materialGroups = materialWorlds.map((world) => ({
+  slug: world.slug,
+  label: world.label,
+  items: world.hallIds.map(hallLink),
+}));
+const alsoStocked = alsoStockedHallIds.map(hallLink);
 
 const allHalls = [
   ...materialGroups.flatMap((g) => g.items),
   ...alsoStocked,
   { href: "/halls/laying-works/", label: "Laying Works" },
 ];
-const materialsActive = allHalls.some((h) => pathname.startsWith(h.href)) || pathname === "/halls/";
+const materialsActive =
+  allHalls.some((h) => pathname.startsWith(h.href)) || pathname === "/halls/" || pathname.startsWith("/materials/");
 ---
 
 <header class="sticky top-0 z-40 border-b border-line/70 bg-paper/95 backdrop-blur">
@@ -70,7 +61,9 @@ const materialsActive = allHalls.some((h) => pathname.startsWith(h.href)) || pat
           <div class="grid grid-cols-3 gap-8">
             {materialGroups.map((group) => (
               <div>
-                <p class="text-[0.65rem] uppercase tracking-[0.2em] text-terracotta">{group.label}</p>
+                <a href={`/materials/${group.slug}/`} class="text-[0.65rem] uppercase tracking-[0.2em] text-terracotta hover:text-terracotta-dark">
+                  {group.label} &rarr;
+                </a>
                 <ul class="mt-3 space-y-2">
                   {group.items.map((item) => (
                     <li><a href={item.href} class="text-sm text-ink hover:text-terracotta transition-colors">{item.label}</a></li>

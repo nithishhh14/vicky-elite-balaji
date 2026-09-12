@@ -1,0 +1,195 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import MaterialField from "../../components/MaterialField.astro";
+import { getCollection } from "astro:content";
+import { materialWorlds } from "../../lib/material-worlds";
+import { deriveColours } from "../../lib/facets";
+import { waLink, emailQuoteLink, productEnquiryMessage } from "../../lib/business";
+
+export async function getStaticPaths() {
+  return materialWorlds.map((world) => ({ params: { world: world.slug }, props: { world } }));
+}
+
+const { world } = Astro.props;
+const halls = (await getCollection("halls")).filter((h) => (world.hallIds as readonly string[]).includes(h.id));
+const flagship = halls.find((h) => h.id === world.hallIds[0]) ?? halls[0];
+const allProducts = await getCollection("products");
+const products = allProducts
+  .filter((p) => (world.hallIds as readonly string[]).includes(p.data.hallId))
+  .sort((a, b) => a.data.order - b.data.order);
+
+const COLOUR_SWATCH: Record<string, string> = {
+  white: "#f4f1ea", black: "#1c1a17", grey: "#8a8580", beige: "#cdbfa0",
+  brown: "#6b4a34", red: "#8c2f22", mustard: "#c48f2e", green: "#3f5c46",
+};
+const worldColours = Array.from(
+  new Set(products.flatMap((p) => deriveColours(p.data.name, p.data.finish, p.data.imageAlt)))
+).sort();
+
+const applications = Array.from(new Set(halls.flatMap((h) => h.data.applications))).slice(0, 8);
+const otherWorlds = materialWorlds.filter((w) => w.slug !== world.slug);
+---
+
+<BaseLayout
+  title={`${world.label} | Elite Balaji Stones & Ceramics`}
+  description={`Explore ${world.label} at Elite Balaji: ${halls.map((h) => h.data.name).join(", ")}. Real stock, honestly labelled, with trade rates on enquiry.`}
+>
+  <nav aria-label="Breadcrumb" class="mx-auto max-w-6xl px-5 pt-6 text-xs uppercase tracking-wide text-ink-soft">
+    <a href="/halls/" class="hover:text-terracotta">All halls</a>
+    <span class="mx-2">/</span>
+    <span class="text-ink">{world.label}</span>
+  </nav>
+
+  <!-- Large visual introduction -->
+  <section class="relative isolate mt-6 flex h-[48vh] min-h-[340px] items-end overflow-hidden">
+    {flagship?.data.heroImage ? (
+      <img src={flagship.data.heroImage} alt={flagship.data.heroAlt} class="absolute inset-0 h-full w-full object-cover" fetchpriority="high" />
+    ) : (
+      <div class="absolute inset-0 h-full w-full">
+        <MaterialField color={flagship?.data.materialColor ?? "#8a8580"} texture={flagship?.data.materialTexture ?? "stone"} label="" class="h-full w-full" />
+      </div>
+    )}
+    <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-transparent" aria-hidden="true"></div>
+    <div class="relative mx-auto w-full max-w-6xl px-5 pb-10 text-paper">
+      <p class="text-xs uppercase tracking-[0.3em] text-mustard">Material world</p>
+      <h1 class="mt-2 font-display text-4xl sm:text-5xl">{world.label}</h1>
+      <p class="mt-3 max-w-lg text-paper/80">{halls.map((h) => h.data.name).join(" · ")}</p>
+    </div>
+  </section>
+
+  <!-- Explore by colour -->
+  {worldColours.length > 1 && (
+    <section class="border-b border-line/60 bg-card">
+      <div class="mx-auto max-w-6xl px-5 py-10">
+        <p class="text-xs uppercase tracking-[0.25em] text-terracotta">Explore by colour</p>
+        <div class="mt-4 flex flex-wrap gap-3">
+          {worldColours.map((colour) => (
+            <a
+              href={`/search/?colour=${encodeURIComponent(colour)}`}
+              class="group flex items-center gap-2 rounded-full border border-line bg-paper py-1.5 pl-1.5 pr-4 hover:border-terracotta transition-colors"
+            >
+              <span class="h-6 w-6 rounded-full border border-line/60" style={{ backgroundColor: COLOUR_SWATCH[colour] ?? "#ccc" }} aria-hidden="true"></span>
+              <span class="text-sm capitalize text-ink-soft group-hover:text-terracotta transition-colors">{colour}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Featured materials: the real halls in this world -->
+  <section class="mx-auto max-w-6xl px-5 py-16">
+    <p class="text-xs uppercase tracking-[0.3em] text-terracotta">Featured in {world.label}</p>
+    <h2 class="mt-2 text-3xl">Browse by hall</h2>
+    <div data-gsap-stagger class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {halls.map((hall) => (
+        <a href={`/halls/${hall.id}/`} class="group block overflow-hidden rounded-sm shadow-card">
+          <div class="aspect-[4/3]">
+            {hall.data.heroImage ? (
+              <img src={hall.data.heroImage} alt={hall.data.heroAlt} class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" loading="lazy" />
+            ) : (
+              <MaterialField color={hall.data.materialColor} texture={hall.data.materialTexture} label={hall.data.tagline} class="h-full" />
+            )}
+          </div>
+          <div class="bg-card p-5">
+            <h3 class="text-xl group-hover:text-terracotta transition-colors">{hall.data.name}</h3>
+            <p class="mt-1 text-sm text-ink-soft">{hall.data.tagline}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- Full catalogue for this world -->
+  <section class="border-t border-line/60 bg-card">
+    <div class="mx-auto max-w-6xl px-5 py-16">
+      <p class="text-xs uppercase tracking-[0.3em] text-terracotta">Full catalogue</p>
+      <h2 class="mt-2 text-3xl">Everything in {world.label}</h2>
+      {products.length > 0 ? (
+        <div data-gsap-stagger class="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {products.map((p) => (
+            <article class="overflow-hidden rounded-sm border border-line bg-paper shadow-card">
+              <a href={`/products/${p.id}/`} class="block" aria-label={`View details for ${p.data.name}`}>
+                <div class="aspect-[4/3] overflow-hidden">
+                  <img src={p.data.image} alt={p.data.imageAlt} class="h-full w-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy" width="600" height="450" />
+                </div>
+              </a>
+              <div class="p-5">
+                <p class="text-xs uppercase tracking-[0.15em] text-terracotta">{p.data.brand ?? p.data.category}</p>
+                <h3 class="mt-1 text-lg">
+                  <a href={`/products/${p.id}/`} class="hover:text-terracotta transition-colors">{p.data.name}</a>
+                </h3>
+                <p class="mt-2 text-sm text-ink-soft">{[p.data.size, p.data.finish].filter(Boolean).join(" · ")}</p>
+                <div class="mt-4 flex flex-wrap gap-x-4 gap-y-1">
+                  <a href={`/products/${p.id}/`} class="inline-block text-sm font-semibold uppercase tracking-wide text-ink hover:text-terracotta">View details &rarr;</a>
+                  <a
+                    href={waLink(productEnquiryMessage(p.data.name))}
+                    target="_blank"
+                    rel="noopener"
+                    class="inline-block text-sm font-semibold uppercase tracking-wide text-terracotta hover:text-terracotta-dark"
+                  >
+                    WhatsApp &rarr;
+                  </a>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <p class="mt-6 text-ink-soft">Photography for this world is being organised. WhatsApp us for what's in stock today.</p>
+      )}
+      <a href={`/search/?material=${encodeURIComponent(halls[0]?.data.name ?? "")}`} class="mt-8 inline-block rounded-full bg-terracotta px-6 py-3 text-sm font-semibold uppercase tracking-wide text-paper hover:bg-terracotta-dark transition-colors">
+        Filter &amp; search this world
+      </a>
+    </div>
+  </section>
+
+  <!-- Applications -->
+  {applications.length > 0 && (
+    <section class="mx-auto max-w-6xl px-5 py-16">
+      <p class="text-xs uppercase tracking-[0.3em] text-terracotta">Applications</p>
+      <h2 class="mt-2 text-3xl">Where {world.label.toLowerCase()} gets used</h2>
+      <div class="mt-6 flex flex-wrap gap-2">
+        {applications.map((app) => (
+          <span class="rounded-full border border-line px-4 py-1.5 text-sm text-ink-soft">{app}</span>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- Related material worlds -->
+  <section class="border-t border-line/60 bg-card py-16">
+    <div class="mx-auto max-w-6xl px-5">
+      <p class="text-xs uppercase tracking-[0.3em] text-terracotta">Related</p>
+      <h2 class="mt-2 text-3xl">Other material worlds</h2>
+      <div class="mt-8 flex flex-wrap gap-4">
+        {otherWorlds.map((w) => (
+          <a href={`/materials/${w.slug}/`} class="rounded-full border border-line bg-paper px-6 py-3 text-sm font-semibold uppercase tracking-wide text-ink-soft hover:border-terracotta hover:text-terracotta transition-colors">
+            {w.label} &rarr;
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Custom sourcing CTA -->
+  <section class="bg-charcoal py-16 text-paper">
+    <div class="mx-auto max-w-2xl px-5 text-center">
+      <h2 class="font-display text-3xl">Can't find the right {world.label.toLowerCase().replace(/s$/, "")}?</h2>
+      <p class="mt-4 text-paper/75">Tell us what you're looking for. We can help source it beyond what's shown here.</p>
+      <div class="mt-6 flex flex-wrap justify-center gap-3">
+        <a
+          href={waLink(`Hi Elite Balaji, I'm looking for something in ${world.label} that isn't shown on the website. Here's what I need:`)}
+          target="_blank"
+          rel="noopener"
+          class="rounded-full bg-mustard px-6 py-3 text-sm font-semibold uppercase tracking-wide text-ink hover:bg-mustard-dark transition-colors"
+        >
+          Ask us to source it
+        </a>
+        <a href={emailQuoteLink()} class="rounded-full border border-paper/50 px-6 py-3 text-sm font-semibold uppercase tracking-wide hover:bg-paper/10 transition-colors">
+          Request Email Quote
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

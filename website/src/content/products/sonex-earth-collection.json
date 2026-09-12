@@ -1,4 +1,7 @@
 {
+  "kind": "tile",
+  "hallId": "tiles",
+  "name": "Earth Collection",
   "brand": "Sonex Tiles",
   "series": "Earth Collection",
   "size": "600 x 1200mm",

@@ -3,23 +3,19 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import { waLink, telLink, productEnquiryMessage } from "../lib/business";
 
-const halls = (await getCollection("halls")).sort((a, b) => a.data.order - b.data.order);
-const services = halls.flatMap((hall) =>
-  (hall.data.additionalServices ?? []).map((service) => ({ ...service, hallId: hall.id, hallName: hall.data.name }))
-);
+const halls = await getCollection("halls");
+const hallName = (id: string) => halls.find((h) => h.id === id)?.data.name ?? id;
+const services = (await getCollection("services")).sort((a, b) => a.data.order - b.data.order);
 
-// Restrained line-art icon per capability, not a photo — none of this
-// fabrication is claimed to be an actual finished job, it's a visual cue
-// for a real, described capability.
+// Restrained line-art icon per capability category, not a photo — none of
+// this is claimed to be an actual finished job, it's a visual cue for a
+// real, described capability. Keyed by category slug (not the display
+// name) so a future rename of the service doesn't silently lose its icon.
 const icons: Record<string, string> = {
-  "Custom Photo-Printing on Tiles":
-    "M4 5h16v14H4z M4 15l4-4 3 3 5-6 4 5 M8.5 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z",
-  "CNC Granite Engraving":
-    "M12 3l2.5 5 5.5.8-4 3.9.9 5.5-4.9-2.6-4.9 2.6.9-5.5-4-3.9 5.5-.8z",
-  "Handcrafted Inlay Slabs":
-    "M4 4h7v7H4z M13 4h7v7h-7z M4 13h7v7H4z M13 13h7v7h-7z",
-  "Sculptures & Name Boards":
-    "M12 3c2 0 3 2 3 4s-1 3-1 4c1 .5 2 2 2 4v3H8v-3c0-2 1-3.5 2-4 0-1-1-2-1-4s1-4 3-4z",
+  "tile-printing": "M4 5h16v14H4z M4 15l4-4 3 3 5-6 4 5 M8.5 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z",
+  engraving: "M12 3l2.5 5 5.5.8-4 3.9.9 5.5-4.9-2.6-4.9 2.6.9-5.5-4-3.9 5.5-.8z",
+  inlay: "M4 4h7v7H4z M13 4h7v7h-7z M4 13h7v7H4z M13 13h7v7h-7z",
+  "sculpture-signage": "M12 3c2 0 3 2 3 4s-1 3-1 4c1 .5 2 2 2 4v3H8v-3c0-2 1-3.5 2-4 0-1-1-2-1-4s1-4 3-4z",
 };
 ---
 
@@ -69,23 +65,23 @@ const icons: Record<string, string> = {
             <div class="group rounded-sm border border-line bg-paper p-6 transition-colors hover:border-terracotta/60">
               <div class="flex h-12 w-12 items-center justify-center rounded-full bg-charcoal text-mustard">
                 <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d={icons[service.name] ?? "M12 3l9 9-9 9-9-9z"} />
+                  <path d={icons[service.data.category] ?? "M12 3l9 9-9 9-9-9z"} />
                 </svg>
               </div>
-              <p class="mt-4 text-xs uppercase tracking-[0.2em] text-terracotta">{service.hallName}</p>
-              <h2 class="mt-1 text-lg">{service.name}</h2>
-              <p class="mt-2 text-sm text-ink-soft leading-relaxed">{service.description}</p>
+              <p class="mt-4 text-xs uppercase tracking-[0.2em] text-terracotta">{hallName(service.data.hallId)}</p>
+              <h2 class="mt-1 text-lg">{service.data.name}</h2>
+              <p class="mt-2 text-sm text-ink-soft leading-relaxed">{service.data.description}</p>
               <div class="mt-4 flex flex-wrap gap-x-4 gap-y-1">
                 <a
-                  href={waLink(productEnquiryMessage(service.name))}
+                  href={waLink(productEnquiryMessage(service.data.name))}
                   target="_blank"
                   rel="noopener"
-                  aria-label={`Ask about ${service.name} via WhatsApp`}
+                  aria-label={`Ask about ${service.data.name} via WhatsApp`}
                   class="inline-block text-sm font-semibold uppercase tracking-wide text-terracotta hover:text-terracotta-dark"
                 >
                   WhatsApp &rarr;
                 </a>
-                <a href={`/halls/${service.hallId}/`} class="inline-block text-sm font-semibold uppercase tracking-wide text-ink-soft hover:text-terracotta">
+                <a href={`/halls/${service.data.hallId}/`} class="inline-block text-sm font-semibold uppercase tracking-wide text-ink-soft hover:text-terracotta">
                   See the hall &rarr;
                 </a>
               </div>
