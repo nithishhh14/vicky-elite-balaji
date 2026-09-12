@@ -248,3 +248,13 @@ rather than looking for the old file content.
 Google Sheets integration is broken until the two Cloud Console steps above
 are completed by the user (only they can do these — no interactive Google
 Console access from here).
+
+---
+
+### Decision: Palette shifted to material-led charcoal/ivory (supersedes green-dominant)
+**Date:** 2026-09-12
+**Reason:** A detailed, internally-consistent creative-direction brief (architectural-magazine / material-house positioning) explicitly asked to stop forcing every section into one cream+green treatment and instead vary the palette per section around real material colours: charcoal/near-black, warm ivory, stone-grey, one warm accent. Unlike earlier relayed briefs, this one contained no fabrication risk, no broken references, and explicitly said not to ask style questions — direction was clear enough to implement directly.
+**What changed:** `global.css` — `--color-charcoal`/`--color-charcoal-deep`/`--color-stone`/`--color-stone-light` added; `--color-moss`/`--color-sage` removed (unused elsewhere, confirmed by grep before deleting); terracotta promoted to the single warm accent on the homepage (was bottle-green); bottle-green demoted from a dominant background role to contextual use only (still literally appears in the real Athangudi tile photo).
+**Scope:** Homepage (`index.astro`) only, in this pass. `about.astro`, `contact.astro`, `halls/[slug].astro`, `SiteHeader`/`SiteFooter` still reference `text-bottle`/`bg-bottle` etc. — the token wasn't deleted, so nothing broke, but those pages have not been re-themed yet. That's a separate follow-up (Phase 4+ in the brief's own ordering: catalogue/product experience), not silently skipped.
+**Also in this pass:** Removed the literal empty `<video>` element from the previous message's direct instruction — it rendered as a blank black box under both the old and new creative direction, and the new brief's "material introduction" section (real photography of tile/granite/marble/kadappa) serves the actual homepage goal better. The brand-story paragraph copy that lived next to it was preserved, not deleted — relocated into the "Why Elite Balaji" section. Added a small vanilla-JS scroll-reveal (IntersectionObserver, opacity/transform only, respects prefers-reduced-motion, content stays visible by default if JS fails) rather than adding GSAP for this scale of motion.
+**Current status:** Implemented and browser-QA'd (desktop/tablet visually confirmed; mobile confirmed correct via direct DOM measurement after a screenshot-capture display quirk unrelated to the page itself). Build clean. Catalogue experience, product pages, 3D, and a full mobile-specific art pass remain explicitly out of scope for this message and should not be assumed done.
