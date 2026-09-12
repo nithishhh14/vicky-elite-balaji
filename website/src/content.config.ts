@@ -15,6 +15,9 @@ const halls = defineCollection({
     materialTexture: z.enum(["stone", "ceramic", "cement", "porcelain"]),
     applications: z.array(z.string()),
     enquiryNote: z.string(),
+    additionalServices: z
+      .array(z.object({ name: z.string(), description: z.string() }))
+      .optional(),
   }),
 });
 

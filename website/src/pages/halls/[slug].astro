@@ -10,7 +10,7 @@ export async function getStaticPaths() {
 }
 
 const { hall } = Astro.props;
-const { name, tagline, intro, hasRealContent, heroImage, heroAlt, materialColor, materialTexture, applications, enquiryNote } = hall.data;
+const { name, tagline, intro, hasRealContent, heroImage, heroAlt, materialColor, materialTexture, applications, enquiryNote, additionalServices } = hall.data;
 
 const products = hall.id === "tiles"
   ? (await getCollection("tileProducts")).sort((a, b) => a.data.order - b.data.order)
@@ -149,4 +149,30 @@ const products = hall.id === "tiles"
         ))}
     </div>
   </section>
+
+  {additionalServices && additionalServices.length > 0 && (
+    <section class="border-t border-line/60 bg-card">
+      <div class="mx-auto max-w-6xl px-5 py-16">
+        <p class="text-xs uppercase tracking-[0.3em] text-bottle">Also from this hall</p>
+        <h2 class="mt-2 text-3xl">Bespoke &amp; made to order</h2>
+        <div class="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {additionalServices.map((service) => (
+            <div class="rounded-sm border border-line bg-paper p-6">
+              <h3 class="text-lg">{service.name}</h3>
+              <p class="mt-2 text-sm text-ink-soft leading-relaxed">{service.description}</p>
+              <a
+                href={waLink(productEnquiryMessage(service.name))}
+                target="_blank"
+                rel="noopener"
+                aria-label={`Ask about ${service.name} via WhatsApp`}
+                class="mt-4 inline-block text-sm font-semibold uppercase tracking-wide text-bottle hover:text-bottle-dark"
+              >
+                Ask about this &rarr;
+              </a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
 </BaseLayout>

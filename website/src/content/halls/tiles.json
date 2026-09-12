@@ -9,5 +9,11 @@
   "materialColor": "#a8402c",
   "materialTexture": "ceramic",
   "applications": ["Living & dining floors", "Bathroom & kitchen walls", "Verandas & courtyards", "Commercial floors"],
-  "enquiryNote": "Ask for trade rate. Box pricing and site quantities on request."
+  "enquiryNote": "Ask for trade rate. Box pricing and site quantities on request.",
+  "additionalServices": [
+    {
+      "name": "Custom Photo-Printing on Tiles",
+      "description": "High-definition digital printing on vitrified and ceramic tiles for accent walls, murals and heritage pattern recreations. Send us the image and the wall size and we'll confirm what's possible."
+    }
+  ]
 }
