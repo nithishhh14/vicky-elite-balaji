@@ -16,7 +16,10 @@ RULES_PATH = BASE_DIR / ".cursorrules"
 CREDS_PATH = BASE_DIR / "google_creds.json"
 MARBLE_PATH = BASE_DIR / "assets" / "black_gold_marble.jpg"
 
-SHEET_ID = "10-5n2epVeVhn9_ecRGd9xHpvmHkJ5qdwlGoHdMumwKg"
+# Overridable via .env — lets the sheet (and the service account behind
+# CREDS_PATH) be swapped to the verified Elite Balaji Google Business account
+# later without a code change, just a .env + google_creds.json update.
+SHEET_ID = os.environ.get("GOOGLE_SHEET_ID", "10-5n2epVeVhn9_ecRGd9xHpvmHkJ5qdwlGoHdMumwKg")
 GEMINI_MODEL = "gemini-3.6-flash"
 
 BUSINESS_NAME = "Elite Balaji Stones and Ceramics"
