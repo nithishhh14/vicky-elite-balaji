@@ -1,11 +1,11 @@
 {
   "hallId": "kota-stone",
-  "name": "Kota Stone — Tiled Finish",
+  "name": "Kota Stone, Tiled Finish",
   "category": "Natural limestone flooring",
   "finish": "Natural cleft, tiled",
   "order": 2,
   "applications": ["Budget civil projects", "Courtyards"],
   "image": "https://images.unsplash.com/photo-1532901074349-dc9d1505589c?auto=format&fit=crop&w=1200&q=80",
   "imageAlt": "Natural stone floor tiles with visible grout joints",
-  "note": "Representative style — confirm exact stock, size and finish with our team."
+  "note": "Representative style. Confirm exact stock, size and finish with our team."
 }

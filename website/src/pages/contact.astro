@@ -4,7 +4,7 @@ import { business, telLink, waLink, emailQuoteLink } from "../lib/business";
 ---
 
 <BaseLayout
-  title="Contact Elite Balaji Stones & Ceramics — Karamadai, Coimbatore"
+  title="Contact Elite Balaji Stones & Ceramics | Karamadai, Coimbatore"
   description="Call, WhatsApp or send an enquiry to Elite Balaji Stones & Ceramics, Karamadai, Coimbatore. Ask for trade rate and current stock."
 >
   <section class="mx-auto grid max-w-5xl gap-14 px-5 py-20 md:grid-cols-2">
@@ -59,7 +59,7 @@ import { business, telLink, waLink, emailQuoteLink } from "../lib/business";
     <form id="enquiry-form" class="rounded-sm border border-line bg-card p-6" aria-label="Enquiry form">
       <p class="text-xs uppercase tracking-[0.2em] text-bottle">Send an enquiry</p>
       <p class="mt-2 text-xs text-ink-soft">
-        This opens WhatsApp or your email app with your message pre-filled — nothing is submitted to a server.
+        This opens WhatsApp or your email app with your message pre-filled. Nothing is submitted to a server.
       </p>
 
       <label class="mt-5 block text-sm">
@@ -97,7 +97,7 @@ import { business, telLink, waLink, emailQuoteLink } from "../lib/business";
       const material = (data.get("material") || "").toString().trim();
       const message = (data.get("message") || "").toString().trim();
       if (via === "email") {
-        const subject = `Trade rate enquiry — ${material || "general"}`;
+        const subject = `Trade rate enquiry: ${material || "general"}`;
         const body = [`Hi Elite Balaji, I'm ${name}.`, `I'm interested in: ${material}.`, message]
           .filter(Boolean)
           .join("\n");

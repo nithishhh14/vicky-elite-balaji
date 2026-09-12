@@ -1,11 +1,11 @@
 {
   "hallId": "quartz",
-  "name": "Engineered Quartz — White",
+  "name": "Engineered Quartz, White",
   "category": "Engineered stone surface",
   "finish": "Polished",
   "order": 1,
   "applications": ["Kitchen counters", "Reception & retail counters"],
   "image": "https://images.unsplash.com/photo-1665507279638-5b48073c637b?auto=format&fit=crop&w=1200&q=80",
   "imageAlt": "White engineered quartz countertop",
-  "note": "Representative style — slab availability varies by colourway, confirm with our team."
+  "note": "Representative style. Slab availability varies by colourway, confirm with our team."
 }

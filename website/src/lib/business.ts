@@ -39,7 +39,7 @@ export const business = {
     { title: "Faster timelines", detail: "We move fast on structural work without cutting corners on finish." },
     { title: "Zero-bubble laying", detail: "Our crews lay tile so it doesn't bubble or lift later." },
     { title: "Specialist workforce", detail: "Hands that know granite, marble, kota and sanitary installs." },
-    { title: "Wholesale bundles", detail: "Buy material in bulk at factory-style rates — ask for the trade price." },
+    { title: "Wholesale bundles", detail: "Buy material in bulk at factory-style rates. Ask for the trade price." },
   ],
 } as const;
 
@@ -58,7 +58,7 @@ export function productEnquiryMessage(productName: string): string {
 export const defaultEnquiryMessage = `Hi Elite Balaji, I'd like trade pricing information.`;
 
 export function emailQuoteLink(productName?: string): string {
-  const subject = productName ? `Trade rate enquiry — ${productName}` : "Trade rate enquiry";
+  const subject = productName ? `Trade rate enquiry: ${productName}` : "Trade rate enquiry";
   const body = productName
     ? `Hi Elite Balaji,\n\nI'm interested in ${productName}. Please share the current trade rate and availability.\n\nThanks.`
     : `Hi Elite Balaji,\n\nI'd like trade pricing information.\n\nThanks.`;
