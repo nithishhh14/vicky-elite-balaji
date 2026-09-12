@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import MaterialField from "../../components/MaterialField.astro";
+import MaterialViewer3D from "../../components/MaterialViewer3D.astro";
 import { getCollection } from "astro:content";
 import { waLink, telLink, emailQuoteLink, productEnquiryMessage } from "../../lib/business";
 
@@ -78,10 +79,31 @@ const products = hall.id === "tiles"
     </div>
   </section>
 
+  {hall.id === "tiles" && (
+    <section class="border-t border-line/60 bg-card">
+      <div class="mx-auto grid max-w-6xl gap-10 px-5 py-16 md:grid-cols-[0.8fr_1.2fr] md:items-center">
+        <MaterialViewer3D
+          image="/media/tiles/athangudi-series/swatch-petal-red.jpg"
+          alt="Athangudi Series Petal Red tile swatch with corner petal motif"
+          label="Athangudi Petal Red"
+        />
+        <div>
+          <p class="text-xs uppercase tracking-[0.3em] text-terracotta">Real swatch, up close</p>
+          <h2 class="mt-2 text-3xl">See the pattern in the round</h2>
+          <p class="mt-4 max-w-md text-ink-soft leading-relaxed">
+            This is the actual Athangudi Series Petal Red swatch from the BEJ Ceramic catalogue,
+            mapped onto a simple tile so you can turn it and see the corner petal motif from an
+            angle before it arrives on site. Drag it, or leave it to turn on its own.
+          </p>
+        </div>
+      </div>
+    </section>
+  )}
+
   <section class="mx-auto max-w-6xl px-5 py-16">
     <p class="text-xs uppercase tracking-[0.3em] text-terracotta">{hall.id === "tiles" ? "Series in stock" : "Catalogue"}</p>
     <h2 class="mt-2 text-3xl">{hall.id === "tiles" ? "Tile catalogue" : `${name} range`}</h2>
-    <div class="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+    <div data-gsap-stagger class="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
       {hall.id === "tiles"
         ? products.map((p) => "data" in p && "brand" in p.data && (
           <article class="overflow-hidden rounded-sm border border-line bg-card shadow-card">
@@ -169,7 +191,7 @@ const products = hall.id === "tiles"
       <div class="mx-auto max-w-6xl px-5 py-16">
         <p class="text-xs uppercase tracking-[0.3em] text-terracotta">Also from this hall</p>
         <h2 class="mt-2 text-3xl">Bespoke &amp; made to order</h2>
-        <div class="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div data-gsap-stagger class="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {additionalServices.map((service) => (
             <div class="rounded-sm border border-line bg-paper p-6">
               <h3 class="text-lg">{service.name}</h3>

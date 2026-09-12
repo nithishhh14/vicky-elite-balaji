@@ -98,15 +98,17 @@
     }
   }
 
-  .parallax-layer {
-    will-change: transform;
-    transition: transform 0.05s linear;
+  /* GSAP-driven motion: pre-hidden only once JS confirms it's running AND
+     motion is allowed (see the js-motion-ready inline script). Content stays
+     visible by default so a failed/slow script never leaves it stuck. */
+  .js-motion-ready [data-gsap-hero] > *,
+  .js-motion-ready [data-gsap-stagger] > * {
+    opacity: 0;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .parallax-layer {
-      transition: none;
-    }
+  .heritage-pattern {
+    opacity: 0.2;
+    will-change: transform, opacity;
   }
 
   .quatrefoil-divider {

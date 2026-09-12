@@ -7,6 +7,20 @@ const halls = (await getCollection("halls")).sort((a, b) => a.data.order - b.dat
 const services = halls.flatMap((hall) =>
   (hall.data.additionalServices ?? []).map((service) => ({ ...service, hallId: hall.id, hallName: hall.data.name }))
 );
+
+// Restrained line-art icon per capability, not a photo — none of this
+// fabrication is claimed to be an actual finished job, it's a visual cue
+// for a real, described capability.
+const icons: Record<string, string> = {
+  "Custom Photo-Printing on Tiles":
+    "M4 5h16v14H4z M4 15l4-4 3 3 5-6 4 5 M8.5 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z",
+  "CNC Granite Engraving":
+    "M12 3l2.5 5 5.5.8-4 3.9.9 5.5-4.9-2.6-4.9 2.6.9-5.5-4-3.9 5.5-.8z",
+  "Handcrafted Inlay Slabs":
+    "M4 4h7v7H4z M13 4h7v7h-7z M4 13h7v7H4z M13 13h7v7h-7z",
+  "Sculptures & Name Boards":
+    "M12 3c2 0 3 2 3 4s-1 3-1 4c1 .5 2 2 2 4v3H8v-3c0-2 1-3.5 2-4 0-1-1-2-1-4s1-4 3-4z",
+};
 ---
 
 <BaseLayout
@@ -14,24 +28,31 @@ const services = halls.flatMap((hall) =>
   description="Bespoke stone and tile work from Elite Balaji: custom photo-printing on tiles, CNC granite engraving, handcrafted inlay slabs, sculptures and name boards, made to order."
   enquiryMessage="Hi Elite Balaji, I have a requirement for custom tile printing, marble or granite artwork. I would like to discuss the project."
 >
-  <section class="mx-auto max-w-3xl px-5 py-16 text-center">
-    <p class="text-xs uppercase tracking-[0.3em] text-terracotta">Made to order</p>
-    <h1 class="mt-3 font-display text-4xl sm:text-5xl">Custom &amp; Fabrication</h1>
-    <p class="mt-5 text-lg text-ink-soft leading-relaxed">
-      Beyond standard stock, we take on bespoke stone and tile work: custom printing, engraving,
-      inlay and made-to-order pieces. Every one of the pieces below is a real capability, not a
-      catalogue photo, so tell us what you have in mind and we'll confirm what's possible.
-    </p>
+  <section class="border-b border-line/60 bg-charcoal py-20 text-paper">
+    <div data-gsap-hero class="mx-auto max-w-3xl px-5 text-center">
+      <p class="text-xs uppercase tracking-[0.3em] text-mustard">Made to order</p>
+      <h1 class="mt-3 font-display text-4xl sm:text-5xl">Custom &amp; Fabrication</h1>
+      <p class="mt-5 text-lg text-paper/75 leading-relaxed">
+        Beyond standard stock, we take on bespoke stone and tile work: custom printing, engraving,
+        inlay and made-to-order pieces. Every capability below is real, not a catalogue photo, so
+        tell us what you have in mind and we'll confirm what's possible.
+      </p>
+    </div>
   </section>
 
-  <section class="border-t border-line/60 bg-card">
+  <section class="bg-card">
     <div class="mx-auto max-w-6xl px-5 py-16">
       {services.length > 0 ? (
-        <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div data-gsap-stagger class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((service) => (
-            <div class="rounded-sm border border-line bg-paper p-6">
-              <p class="text-xs uppercase tracking-[0.2em] text-terracotta">{service.hallName}</p>
-              <h2 class="mt-2 text-lg">{service.name}</h2>
+            <div class="group rounded-sm border border-line bg-paper p-6 transition-colors hover:border-terracotta/60">
+              <div class="flex h-12 w-12 items-center justify-center rounded-full bg-charcoal text-mustard">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d={icons[service.name] ?? "M12 3l9 9-9 9-9-9z"} />
+                </svg>
+              </div>
+              <p class="mt-4 text-xs uppercase tracking-[0.2em] text-terracotta">{service.hallName}</p>
+              <h2 class="mt-1 text-lg">{service.name}</h2>
               <p class="mt-2 text-sm text-ink-soft leading-relaxed">{service.description}</p>
               <div class="mt-4 flex flex-wrap gap-x-4 gap-y-1">
                 <a
@@ -53,6 +74,18 @@ const services = halls.flatMap((hall) =>
       ) : (
         <p class="text-center text-ink-soft">More bespoke work is being added here.</p>
       )}
+    </div>
+  </section>
+
+  <section class="border-t border-line/60 bg-paper">
+    <div class="mx-auto max-w-4xl px-5 py-16 text-center">
+      <p class="text-xs uppercase tracking-[0.3em] text-terracotta">Beyond the list above</p>
+      <h2 class="mt-3 text-2xl sm:text-3xl">Bring us a stone or tile idea we haven't listed</h2>
+      <p class="mt-4 text-ink-soft leading-relaxed">
+        If it's granite, marble, tile or ceramic, our team can talk through sourcing, fabrication
+        and installation even when it isn't one of the fixed categories above. Nothing here is
+        promised until we've confirmed it against your actual site and material.
+      </p>
     </div>
   </section>
 
