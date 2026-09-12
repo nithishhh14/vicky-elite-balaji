@@ -1,6 +1,70 @@
 # Vicky / Elite Balaji — Current Project State
 
-_Last updated: 2026-09-11 — website optimization pass (green-dominant palette, verified stock photography for 7 halls, email + Maps, no-price CTA set) plus the expanded cross-device "JARVIS brain" vision (planning only, not yet architected or built)._
+_Last updated: 2026-09-12 — functional-fix pass (real catalogue routes, search, product detail pages), then a motion/3D pass (GSAP + Three.js, approved as new dependencies), then a strategic-direction update ("living digital showroom" / large-scale filterable catalogue) received and currently at the planning stage — see `docs/DECISIONS.md` for each._
+
+## 2026-09-12 — motion system + 3D viewer + consistency fixes
+
+- Added GSAP + ScrollTrigger (`website/src/scripts/motion-gsap.ts`, wired via
+  `BaseLayout.astro`) replacing the previous vanilla-JS scroll parallax:
+  hero entrance, coordinated staggered reveals (`data-gsap-stagger`, used on
+  the homepage material grid, hall product/service grids, and the Custom page
+  cards), and a layered "living heritage" Athangudi section (real photo +
+  decorative quatrefoil pattern layer + content, each drifting at a different
+  rate, `data-gsap-heritage`). Gated the same way the pre-existing reveal
+  system is: CSS only pre-hides `[data-gsap-hero]`/`[data-gsap-stagger]`
+  children once a synchronous inline script confirms JS is running AND the
+  user allows motion (`js-motion-ready` class) — content is never stuck
+  invisible if a script fails to load.
+- **Real bug found and fixed during QA**: `gsap.from()` was used initially,
+  which auto-detects the tween's end state from each element's *current*
+  computed CSS — but the CSS pre-hide already set `opacity: 0` before GSAP
+  ran, so it animated 0 → 0 and content stayed permanently invisible. Fixed
+  by switching to `gsap.fromTo()` with explicit end values everywhere.
+- Added `MaterialViewer3D.astro`: a lazy-loaded (dynamic `import("three")`,
+  tree-shaken named imports, ~132KB gzip, only fetched on the Tiles hall
+  page) rotating 3D viewer mapping the real, already-verified Athangudi
+  Petal Red swatch photo onto a simple tile mesh. Drag-to-rotate, idle
+  auto-spin suppressed under `prefers-reduced-motion`, falls back to the
+  static `<img>` if WebGL/texture loading fails.
+- Custom & Fabrication page (`custom.astro`) restyled with icon-badged
+  capability cards; same 4 real services as before (Custom Photo-Printing on
+  Tiles, CNC Granite Engraving, Handcrafted Inlay Slabs, Sculptures & Name
+  Boards) — no new capabilities invented.
+- Fixed leftover `bottle`-green Tailwind classes in `about.astro`,
+  `contact.astro`, `privacy.astro`, `terms.astro`, `404.astro`,
+  `halls/index.astro`, and `SiteFooter.astro` — these were missed by the
+  2026-09-12 terracotta/charcoal palette migration, which only touched the
+  homepage and hall detail page at the time.
+- Fixed two more em-dashes that survived the earlier sitewide cleanup
+  (`dc65952`) because they lived in a JS string literal (`search.astro`
+  error text) and a meta-description template literal
+  (`products/[id].astro`), not in template markup — the original grep only
+  checked rendered text nodes.
+- Verified: `astro check` (0 errors) and `astro build` (39 pages) both clean;
+  browser QA at desktop (588×415) and mobile (375×812) — hero/stagger/
+  heritage transforms confirmed genuinely dynamic via direct DOM/transform
+  measurement (not just visual screenshot, which had known compositing
+  glitches in this session's tooling — see below); CTAs click-tested; no
+  console errors on home, Tiles hall, Granite & Marbles hall, or Custom.
+- Committed as `d23f6ef` (consistency fixes) and `35ecc4f` (motion/3D/custom).
+- **Known cost, disclosed not hidden**: GSAP+ScrollTrigger now loads on
+  every page (~46KB gzip, was ~0KB with the vanilla approach it replaced).
+  This was an explicit user choice (approved adding GSAP + Three.js over
+  keeping the vanilla approach) after being told the tradeoff plainly.
+
+## 2026-09-12 — strategic direction update (planning stage, not yet implemented)
+
+The user sent a "PLAN UPDATE" message repositioning the site from a small
+static catalogue toward a "living digital showroom": large/expandable
+data-driven product catalogue (10 → 500+ products without redesign),
+multi-axis discovery (by material/colour/look/application), product
+relationships, a dedicated "can't find it? we can source it" experience,
+custom fabrication as a major site section, and a luxury-stone-website-tier
+visual/interaction standard. The message explicitly asks for a concise
+implementation plan before any implementation, and states a master product
+list will be supplied separately — **do not fabricate products/categories to
+make the catalogue look bigger in the meantime.** See `docs/DECISIONS.md`
+for the plan itself and what is/isn't blocked on that product list.
 
 ## Website optimization pass (2026-09-11)
 
