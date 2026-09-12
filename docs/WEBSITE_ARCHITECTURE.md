@@ -1,30 +1,43 @@
 # Website Architecture — Elite Balaji Virtual Showroom
 
-Status: Phase 2 foundation shipped (2025 rebuild). This document is the technical
-reference for `website/`; business/design rules live in `.cursorrules` and
+Status: catalogue-discovery + agent-ready data architecture shipped
+(2026-09-12). This document is the technical reference for `website/`;
+business/design rules live in `.cursorrules` and
 `.cursor/rules/elite-balaji-virtual-showroom.mdc`.
 
-## 1. Current state (post-rebuild)
+The website is Phase 1 of a larger planned system (website → marketing
+agents → Vicky executive/orchestrator). It is **not** built with any agent
+API or backend — that's explicitly out of scope until those phases exist —
+but the content layer is deliberately structured as plain, schema-validated
+JSON files so a future agent can read/write business facts through this same
+data layer instead of editing page components. See §3.
 
-`website/` is an **Astro 5 + TypeScript + Tailwind CSS v4** static site. It replaced
-a hand-written HTML/CSS shell (dark emerald/gold marble theme, 3 of 8 hall pages
-were empty files, no content/data separation) that was explicitly marked
-temporary in the original brief.
+## 1. Current state
+
+`website/` is an **Astro 5 + TypeScript + Tailwind CSS v4** static site.
 
 ```
 website/
   src/
-    content.config.ts       # Zod schemas for the two content collections
+    content.config.ts       # Zod schemas: halls, products, services
     content/
       halls/*.json           # 8 hall entries (name, intro, applications, colour...)
-      tile-products/*.json   # Real tile series data (see §3)
+      products/*.json        # Canonical product records, kind: "tile" | "material" (see §3)
+      services/*.json        # Bespoke/custom-fabrication capabilities (see §3)
     components/              # SiteHeader, SiteFooter, EnquiryBar, Seo, MaterialField
     layouts/BaseLayout.astro
-    lib/business.ts          # Single source of truth for phone/address/USPs/hubs
+    lib/
+      business.ts             # Single source of truth for phone/address/USPs/hubs
+      material-worlds.ts       # Single source of truth for hall -> "material world" grouping
+      facets.ts                 # Derives colour/character/application tags from real fields
+    scripts/motion-gsap.ts    # GSAP + ScrollTrigger motion (hero, stagger reveals, heritage parallax)
     pages/
-      index.astro             about.astro   contact.astro   404.astro
-      halls/index.astro        halls/[slug].astro
-    styles/global.css         # Tailwind v4 @theme tokens (Athangudi palette)
+      index.astro              about.astro    contact.astro    404.astro    custom.astro
+      search.astro              search-index.json.ts     (faceted catalogue discovery)
+      halls/index.astro         halls/[slug].astro
+      materials/[world].astro   (Natural Stone / Tiles & Ceramics / Surfaces landing pages)
+      products/[id].astro
+    styles/global.css         # Tailwind v4 @theme tokens (material-led charcoal/ivory/terracotta palette)
   public/
     media/                    # Web-servable images (catalogue crops, business card)
     favicon.svg  robots.txt
@@ -48,32 +61,55 @@ catalogue), add a scoped island rather than converting the whole site to a SPA.
 
 ## 3. Content model
 
-Two Astro content collections (`src/content.config.ts`), loaded from JSON so
-non-developers can eventually edit them without touching component code:
+Three Astro content collections (`src/content.config.ts`), loaded from JSON so
+non-developers — or a future agent — can eventually edit them without
+touching component code:
 
 - **`halls`** — one entry per showroom hall. Fields include `hasRealContent`
   (bool) which the hall template uses to decide whether to render a real photo
   or a `MaterialField` (see §5), and `materialColor`/`materialTexture` for the
   placeholder look.
-- **`tileProducts`** — real tile series extracted from the 8 supplier
-  catalogues in `catalogue_extract/`. Every entry traces to a specific
-  catalogue page image and only records what is visible on that page (brand,
-  series, size, finish) — no invented specs or prices, per the project's
-  content-integrity rule.
+- **`products`** — the canonical product record. **One shape for every real
+  product across every hall** (`kind: "tile" | "material"`), so one record
+  powers the catalogue card, the search/filter index, the product detail
+  page, related-product ranking, and Product structured data — instead of
+  the two differently-shaped collections (`tileProducts`/`materialProducts`)
+  this replaced on 2026-09-12, which forced every consumer to branch on
+  which shape it was looking at. Fields: `kind`, `hallId`, `name`, `brand?`,
+  `series?`, `code?`, `category?`, `size?`, `finish`, `order`, `applications`,
+  `image`, `imageAlt`, `sourceCatalogue?`, `note?`. Colour/look/application
+  facet tags are **not stored here** — they're derived at build time from
+  `name`/`finish`/`imageAlt`/`applications` by `src/lib/facets.ts`, so any
+  new product automatically becomes filterable with zero extra tagging.
+- **`services`** — bespoke/custom-fabrication capabilities (CNC engraving,
+  tile printing, inlay, sculptures). Fields: `hallId`, `name`, `category`
+  (a stable slug like `"tile-printing"` — used for icon lookup, not the
+  display name, so a rename doesn't silently lose its icon), `description`,
+  `capabilities?` (an array left empty until the client verifies specific
+  sub-capabilities — do not populate this speculatively), `order`.
 
-**Important finding from the Phase 2 audit:** all 8 catalogue extracts
-(`Athangudi_Series_`, `GC_COIMBATORE`/Adoration Ceramica, `HOME_CENTER_-_COIMBATORE`
-/Grace Series, `HOME_CENTRE_..._MOROCAN_COLLECTION`, `LEVERPOOL_15`,
-`_20_SONEX_...`, `12x18-wall_tiles`) are **tile** catalogues. There is currently
-no real photography for Granite & Marbles, Kota Stone, Kadappa, Sanitaryware,
-Adhesive & Accessories, or Quartz. Only the Tiles hall has a real product grid;
-the other seven use the placeholder treatment below until photos arrive.
+**Important finding from the Phase 2 audit (still true):** the 7 tile-shaped
+catalogue extracts in `catalogue_extract/` are the only real product
+photography that exists. There is currently no real photography for Granite
+& Marbles, Kota Stone, Kadappa, Sanitaryware, Adhesive & Accessories, or
+Quartz — those `products` entries use verified-checked stock photography
+with an honest "Mood photography, not actual stock" disclosure (see the
+`hasRealContent` flag on the corresponding hall).
 
-### Adding a new tile series
-Drop a JSON file in `src/content/tile-products/`, add the image to
-`public/media/tiles/<slug>/`, and reference it — the Tiles hall page picks it
-up automatically via `getCollection`. Never write a spec you can't see in the
-source catalogue image.
+### Adding a new real product
+Drop a JSON file in `src/content/products/` matching the schema above
+(`kind: "tile"` for a catalogue tile series, `"material"` for anything else),
+add the image to `public/media/<hall>/<slug>/` (or reference verified stock),
+and reference it — the hall page, `/search/`, the material-world landing
+page, and the product detail page all pick it up automatically via
+`getCollection("products")`. Never write a spec you can't see in the source
+catalogue image or that the client hasn't confirmed.
+
+### Adding a new custom-fabrication service
+Drop a JSON file in `src/content/services/` with a real, described
+capability — it appears automatically on `/custom/`, the homepage's Custom
+section, and its parent hall page. Never invent a capability, technology,
+material, or specification that hasn't been confirmed by the client.
 
 ### Adding real photos to a placeholder hall
 1. Put photos under `website/catalogues/product-photos/<hall>/` (existing drop
@@ -128,6 +164,11 @@ for the correct pattern.
 - `src/components/Seo.astro` emits canonical URL, Open Graph, Twitter card,
   and a `HomeAndConstructionBusiness` JSON-LD block built from
   `src/lib/business.ts` (name, address, phone, founding date, area served).
+- Product pages additionally emit `Product` and `BreadcrumbList` JSON-LD
+  (`src/pages/products/[id].astro`). The `Product` block deliberately has no
+  `offers`/price — this site never publishes prices, and Offer markup
+  without a real price is exactly the incomplete structured data Google
+  flags in Search Console, so it's omitted rather than faked.
 - `@astrojs/sitemap` generates `sitemap-index.xml` at build time.
 - `public/robots.txt` points at it. **TODO:** the sitemap/robots hostname is
   a placeholder (`elitebalaji.example.in`) until a real domain is chosen —

@@ -1,6 +1,44 @@
 # Vicky / Elite Balaji — Current Project State
 
-_Last updated: 2026-09-12 — functional-fix pass, then a motion/3D pass (GSAP + Three.js), then a catalogue-discovery pass (real facet filtering), then a UI/UX redesign pass (material-first navigation, discovery-led homepage, redesigned product imagery). See `docs/DECISIONS.md` for each._
+_Last updated: 2026-09-12 — functional-fix pass, motion/3D pass (GSAP + Three.js), catalogue-discovery pass (real facet filtering), UI/UX redesign pass (material-first navigation, discovery-led homepage), then a data-architecture pass (canonical product/service schema, agent-ready structure, Three.js removed, material-world landing pages). See `docs/DECISIONS.md` for each._
+
+## 2026-09-12 — data architecture: canonical schema, agent-ready structure (commit `ce20076`)
+
+Prompted by an explicit "this website is part of a larger AI business
+system" direction (future marketing agents + a "Vicky" executive
+orchestrator, not built now, but the website shouldn't need rebuilding to
+support them later). Changes:
+
+- `tileProducts`/`materialProducts` collections merged into one canonical
+  `products` collection (`kind: "tile" | "material"`) — one record now
+  powers the catalogue card, search/filters, product detail page, related-
+  product ranking, and structured data. No product content changed in
+  substance, only its shape; all 22 real products carried over unchanged.
+- New `services` collection replaces the `additionalServices` arrays that
+  were inlined on hall JSON files — capabilities are now directly
+  queryable records instead of something every consumer had to flatMap
+  out of `halls`. Custom Tile Printing given a proper `"tile-printing"`
+  category and a `capabilities` field left empty pending client
+  verification (not fabricated).
+- New `lib/material-worlds.ts` — single source of truth for hall groupings,
+  now shared by `SiteHeader`, the homepage, and the new landing pages
+  instead of three separate hardcoded copies.
+- New `/materials/[world]/` landing pages (Natural Stone, Tiles & Ceramics,
+  Surfaces) — the item deferred from the previous UX pass. Hero → explore
+  by colour → featured halls → full catalogue for that world →
+  applications → related worlds → sourcing CTA.
+- Removed the Three.js tile viewer and its dependencies per explicit
+  instruction (it sat too close to the "no fake 3D objects" rule from the
+  UI/UX brief).
+- Added `Product` + `BreadcrumbList` JSON-LD to product pages. No `offers`
+  block — this site has no real prices to publish, and incomplete Offer
+  markup is worse than none.
+- Verified: `astro check` 0 errors, `astro build` 42 pages (was 39, +3 for
+  the material-world routes), browser-QA'd desktop + mobile, all JSON-LD
+  blocks confirmed valid JSON, all 30 catalogue items (22 products + 8
+  halls) still present in the search index.
+- Full rationale in `docs/DECISIONS.md`; technical detail in
+  `docs/WEBSITE_ARCHITECTURE.md` §3.
 
 ## 2026-09-12 — UI/UX redesign: material-first discovery (commit `bc9cf42`)
 
