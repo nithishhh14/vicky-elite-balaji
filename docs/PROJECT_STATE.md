@@ -1,6 +1,26 @@
 # Vicky / Elite Balaji — Current Project State
 
-_Last updated: 2026-09-12 — functional-fix pass (real catalogue routes, search, product detail pages), then a motion/3D pass (GSAP + Three.js, approved as new dependencies), then a strategic-direction update ("living digital showroom" / large-scale filterable catalogue) received and currently at the planning stage — see `docs/DECISIONS.md` for each._
+_Last updated: 2026-09-12 — functional-fix pass, then a motion/3D pass (GSAP + Three.js), then a catalogue-discovery pass (real facet filtering), then a UI/UX redesign pass (material-first navigation, discovery-led homepage, redesigned product imagery). See `docs/DECISIONS.md` for each._
+
+## 2026-09-12 — UI/UX redesign: material-first discovery (commit `bc9cf42`)
+
+Nav rebuilt into a "Materials" mega-menu (Natural Stone / Tiles & Ceramics /
+Surfaces / Also stocked), regrouping the 8 real halls by shopping intent
+instead of listing them flat. Homepage rebuilt around a DISCOVER → EXPLORE →
+FILTER flow: 3 large material-world panels replace the old 4-tile grid, and
+a new Filter section deep-links into `/search/` via real facet values.
+`search.astro` now accepts `material`/`colour`/`look`/`application` URL
+params for pre-filtered deep links. Hall pages gained an "Explore by colour"
+swatch strip (real derived colours) and a sourcing CTA. Product pages
+redesigned around a large mat-backed `object-contain` image (switched from
+an initial `object-cover` attempt after QA caught it cropping/blanking real
+swatch-card photos that have genuine white borders baked in). Custom page
+gained a "Material → Design → Fabrication → Finish → Installation" process
+strip. Full detail and rationale in `docs/DECISIONS.md`. Build-verified,
+browser-QA'd desktop + mobile. **Not done:** true intermediate "material
+world" landing pages (Natural Stone/Tiles & Ceramics/Surfaces currently link
+straight to their flagship hall) — a reasonable next step once there's more
+real content per group to justify a dedicated page.
 
 ## 2026-09-12 — motion system + 3D viewer + consistency fixes
 
