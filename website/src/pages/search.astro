@@ -1,0 +1,103 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Search | Elite Balaji Stones & Ceramics"
+  description="Search Elite Balaji's real product catalogue by material, finish, size or application."
+>
+  <section class="mx-auto max-w-3xl px-5 py-16">
+    <p class="text-xs uppercase tracking-[0.3em] text-terracotta">Catalogue search</p>
+    <h1 class="mt-3 font-display text-4xl">Find a material</h1>
+    <p class="mt-3 text-ink-soft">Try "white marble", "black granite", "bathroom", or a finish like "polished".</p>
+
+    <input
+      id="search-input"
+      type="search"
+      placeholder="Search materials, finishes, applications..."
+      class="mt-6 w-full rounded-full border border-line bg-card px-5 py-3 text-sm focus-visible:outline-2 focus-visible:outline-terracotta"
+      autocomplete="off"
+    />
+
+    <p id="search-status" class="mt-4 text-sm text-ink-soft" aria-live="polite"></p>
+    <div id="search-results" class="mt-2 grid gap-4 sm:grid-cols-2"></div>
+  </section>
+
+  <script>
+    type Item = {
+      id: string;
+      url: string;
+      name: string;
+      hall: string;
+      category: string;
+      finish: string;
+      size: string;
+      applications: string[];
+      image: string;
+    };
+
+    const input = document.getElementById("search-input") as HTMLInputElement;
+    const status = document.getElementById("search-status")!;
+    const results = document.getElementById("search-results")!;
+    let items: Item[] = [];
+
+    function haystack(item: Item): string {
+      return [item.name, item.hall, item.category, item.finish, item.size, ...item.applications]
+        .join(" ")
+        .toLowerCase();
+    }
+
+    function render(list: Item[], query: string) {
+      results.innerHTML = "";
+      if (!query) {
+        status.textContent = `${items.length} items in the catalogue. Start typing to search.`;
+        return;
+      }
+      status.textContent = `${list.length} result${list.length === 1 ? "" : "s"} for "${query}"`;
+      for (const item of list) {
+        const a = document.createElement("a");
+        a.href = item.url;
+        a.className = "flex gap-4 rounded-sm border border-line bg-card p-4 hover:border-terracotta transition-colors";
+        a.innerHTML = `
+          ${item.image ? `<img src="${item.image}" alt="" loading="lazy" class="h-16 w-16 flex-shrink-0 rounded object-cover" />` : ""}
+          <div>
+            <p class="text-xs uppercase tracking-wide text-terracotta">${item.hall}</p>
+            <p class="text-sm font-medium">${item.name}</p>
+            <p class="text-xs text-ink-soft">${[item.category, item.finish, item.size].filter(Boolean).join(" · ")}</p>
+          </div>
+        `;
+        results.appendChild(a);
+      }
+    }
+
+    fetch("/search-index.json")
+      .then((r) => r.json())
+      .then((data: Item[]) => {
+        items = data;
+        render([], "");
+        const params = new URLSearchParams(location.search);
+        const q = params.get("q");
+        if (q) {
+          input.value = q;
+          input.dispatchEvent(new Event("input"));
+        }
+      })
+      .catch(() => {
+        status.textContent = "Could not load the catalogue right now — WhatsApp us instead.";
+      });
+
+    input.addEventListener("input", () => {
+      const query = input.value.trim().toLowerCase();
+      if (!query) {
+        render([], "");
+        return;
+      }
+      const terms = query.split(/\s+/).filter(Boolean);
+      const matches = items.filter((item) => {
+        const h = haystack(item);
+        return terms.every((t) => h.includes(t));
+      });
+      render(matches, query);
+    });
+  </script>
+</BaseLayout>

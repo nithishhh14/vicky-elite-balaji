@@ -50,16 +50,16 @@ const restHalls = halls.filter((h) => !featured.includes(h.id));
     </div>
     <div class="mt-10 grid grid-cols-2 gap-1 px-1 md:grid-cols-4">
       {[
-        { src: "/media/tiles/grace-series/lifestyle-ns9613.jpg", alt: "Mustard patterned tile floor, cross-petal motif", label: "Tile" },
-        { src: "https://images.unsplash.com/photo-1604762537333-e60adda0acdc?auto=format&fit=crop&w=900&q=80", alt: "Polished granite slab surface", label: "Granite" },
-        { src: "https://images.unsplash.com/photo-1566041510394-cf7c8fe21800?auto=format&fit=crop&w=900&q=80", alt: "White marble surface with veining", label: "Marble" },
-        { src: "https://images.unsplash.com/photo-1585314062340-f1a5a7c9328d?auto=format&fit=crop&w=900&q=80", alt: "Dark honed stone texture", label: "Kadappa" },
+        { href: "/halls/tiles/", src: "/media/tiles/grace-series/lifestyle-ns9613.jpg", alt: "Mustard patterned tile floor, cross-petal motif", label: "Tile" },
+        { href: "/halls/granite-marbles/", src: "https://images.unsplash.com/photo-1604762537333-e60adda0acdc?auto=format&fit=crop&w=900&q=80", alt: "Polished granite slab surface", label: "Granite" },
+        { href: "/halls/granite-marbles/", src: "https://images.unsplash.com/photo-1566041510394-cf7c8fe21800?auto=format&fit=crop&w=900&q=80", alt: "White marble surface with veining", label: "Marble" },
+        { href: "/halls/kadappa/", src: "https://images.unsplash.com/photo-1585314062340-f1a5a7c9328d?auto=format&fit=crop&w=900&q=80", alt: "Dark honed stone texture", label: "Kadappa" },
       ].map((m) => (
-        <div class="reveal group relative aspect-[3/4] overflow-hidden">
+        <a href={m.href} class="reveal group relative aspect-[3/4] overflow-hidden block" aria-label={`Browse ${m.label}`}>
           <img src={m.src} alt={m.alt} class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" loading="lazy" />
           <div class="absolute inset-0 bg-gradient-to-t from-charcoal-deep/80 via-transparent to-transparent"></div>
           <span class="absolute bottom-4 left-4 text-xs uppercase tracking-[0.25em] text-paper/90">{m.label}</span>
-        </div>
+        </a>
       ))}
     </div>
   </section>

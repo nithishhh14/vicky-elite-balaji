@@ -1,0 +1,142 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { waLink, telLink, emailQuoteLink, productEnquiryMessage } from "../../lib/business";
+
+export async function getStaticPaths() {
+  const tileProducts = await getCollection("tileProducts");
+  const materialProducts = await getCollection("materialProducts");
+
+  const tilePaths = tileProducts.map((p) => ({
+    params: { id: p.id },
+    props: { kind: "tile" as const, product: p, hallId: "tiles" },
+  }));
+  const materialPaths = materialProducts.map((p) => ({
+    params: { id: p.id },
+    props: { kind: "material" as const, product: p, hallId: p.data.hallId },
+  }));
+  return [...tilePaths, ...materialPaths];
+}
+
+const { kind, product, hallId } = Astro.props;
+
+const name = kind === "tile" ? `${product.data.series}${"code" in product.data && product.data.code ? ` ${product.data.code}` : ""}` : product.data.name;
+const image = product.data.image;
+const imageAlt = product.data.imageAlt;
+
+const hallNames: Record<string, string> = {
+  tiles: "Tiles",
+  "granite-marbles": "Granite & Marbles",
+  "kota-stone": "Kota Stone",
+  kadappa: "Kadappa",
+  sanitaryware: "Sanitaryware",
+  adhesive: "Adhesive & Accessories",
+  quartz: "Quartz",
+  "laying-works": "Laying Works",
+};
+const hallName = hallNames[hallId] ?? hallId;
+
+// Related: other real products from the same hall (tile products only relate
+// to other tile products; material products relate within the same hallId).
+const allTile = kind === "tile" ? (await getCollection("tileProducts")).sort((a, b) => a.data.order - b.data.order) : [];
+const allMaterial = kind === "material" ? (await getCollection("materialProducts")).filter((p) => p.data.hallId === hallId).sort((a, b) => a.data.order - b.data.order) : [];
+const related = kind === "tile"
+  ? allTile.filter((p) => p.id !== product.id).slice(0, 3)
+  : allMaterial.filter((p) => p.id !== product.id).slice(0, 3);
+---
+
+<BaseLayout
+  title={`${name} | ${hallName} | Elite Balaji Stones & Ceramics`}
+  description={kind === "tile" ? `${name} — ${product.data.size}, ${product.data.finish}. Ask for trade rate.` : `${product.data.name} — ${product.data.category}, ${product.data.finish}. Ask for trade rate.`}
+  enquiryMessage={productEnquiryMessage(name)}
+>
+  <nav aria-label="Breadcrumb" class="mx-auto max-w-6xl px-5 pt-6 text-xs uppercase tracking-wide text-ink-soft">
+    <a href="/halls/" class="hover:text-terracotta">All halls</a>
+    <span class="mx-2">/</span>
+    <a href={`/halls/${hallId}/`} class="hover:text-terracotta">{hallName}</a>
+    <span class="mx-2">/</span>
+    <span class="text-ink">{name}</span>
+  </nav>
+
+  <section class="mx-auto grid max-w-6xl gap-10 px-5 py-10 md:grid-cols-2 md:gap-14">
+    <div class="overflow-hidden rounded-sm shadow-card">
+      <img src={image} alt={imageAlt} class="h-full w-full object-cover" width="900" height="1200" fetchpriority="high" />
+    </div>
+
+    <div>
+      <p class="text-xs uppercase tracking-[0.25em] text-terracotta">{hallName}</p>
+      <h1 class="mt-2 font-display text-3xl sm:text-4xl">{name}</h1>
+
+      <dl class="mt-6 divide-y divide-line/60 border-y border-line/60 text-sm">
+        {kind === "tile" ? (
+          <>
+            <div class="flex justify-between py-2.5"><dt class="text-ink-soft">Brand</dt><dd>{product.data.brand}</dd></div>
+            <div class="flex justify-between py-2.5"><dt class="text-ink-soft">Size</dt><dd>{product.data.size}</dd></div>
+            <div class="flex justify-between py-2.5"><dt class="text-ink-soft">Finish</dt><dd>{product.data.finish}</dd></div>
+            <div class="flex justify-between py-2.5"><dt class="text-ink-soft">Applications</dt><dd class="text-right">{product.data.applications.join(", ")}</dd></div>
+            <div class="flex justify-between py-2.5"><dt class="text-ink-soft">Source</dt><dd class="text-right">{product.data.sourceCatalogue}</dd></div>
+          </>
+        ) : (
+          <>
+            <div class="flex justify-between py-2.5"><dt class="text-ink-soft">Category</dt><dd>{product.data.category}</dd></div>
+            <div class="flex justify-between py-2.5"><dt class="text-ink-soft">Finish</dt><dd>{product.data.finish}</dd></div>
+            <div class="flex justify-between py-2.5"><dt class="text-ink-soft">Applications</dt><dd class="text-right">{product.data.applications.join(", ")}</dd></div>
+          </>
+        )}
+      </dl>
+
+      <p class="mt-5 text-sm italic text-ink-soft">
+        {kind === "tile" ? product.data.note : product.data.note}
+      </p>
+
+      <div class="mt-8 flex flex-col gap-2">
+        <a
+          href={waLink(productEnquiryMessage(name))}
+          target="_blank"
+          rel="noopener"
+          aria-label={`Ask for trade rate on ${name} via WhatsApp`}
+          class="rounded-full bg-terracotta px-5 py-3 text-center text-sm font-semibold uppercase tracking-wide text-paper hover:bg-terracotta-dark transition-colors"
+        >
+          Enquire via WhatsApp
+        </a>
+        <a
+          href={telLink()}
+          aria-label="Call our showroom"
+          class="rounded-full border border-line px-5 py-3 text-center text-sm font-semibold uppercase tracking-wide text-ink-soft hover:border-terracotta hover:text-terracotta transition-colors"
+        >
+          Call Showroom
+        </a>
+        <a
+          href={emailQuoteLink(name)}
+          aria-label={`Request an email quote for ${name}`}
+          class="rounded-full border border-line px-5 py-3 text-center text-sm font-semibold uppercase tracking-wide text-ink-soft hover:border-terracotta hover:text-terracotta transition-colors"
+        >
+          Request Email Quote
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {related.length > 0 && (
+    <section class="border-t border-line/60 bg-card">
+      <div class="mx-auto max-w-6xl px-5 py-14">
+        <p class="text-xs uppercase tracking-[0.25em] text-terracotta">Related in {hallName}</p>
+        <div class="mt-6 grid gap-6 sm:grid-cols-3">
+          {related.map((r) => {
+            const rName = "brand" in r.data ? `${r.data.series}${r.data.code ? ` ${r.data.code}` : ""}` : r.data.name;
+            return (
+              <a href={`/products/${r.id}/`} class="group block overflow-hidden rounded-sm border border-line bg-paper">
+                <div class="aspect-[4/3] overflow-hidden">
+                  <img src={r.data.image} alt={r.data.imageAlt} class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                </div>
+                <div class="p-4">
+                  <h3 class="text-sm group-hover:text-terracotta transition-colors">{rName}</h3>
+                </div>
+              </a>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  )}
+</BaseLayout>

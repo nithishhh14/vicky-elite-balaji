@@ -44,7 +44,7 @@ const products = hall.id === "tiles"
     <div class="grid gap-12 md:grid-cols-[1.3fr_0.7fr]">
       <p class="max-w-2xl text-lg leading-relaxed text-ink-soft">{intro}</p>
       <div class="rounded-sm border border-line bg-card p-6">
-        <p class="text-xs uppercase tracking-[0.2em] text-bottle">Applications</p>
+        <p class="text-xs uppercase tracking-[0.2em] text-terracotta">Applications</p>
         <ul class="mt-3 space-y-1.5 text-sm text-ink-soft">
           {applications.map((app) => <li>{app}</li>)}
         </ul>
@@ -55,7 +55,7 @@ const products = hall.id === "tiles"
             target="_blank"
             rel="noopener"
             aria-label={`Ask for trade rate on ${name} via WhatsApp`}
-            class="rounded-full bg-bottle px-5 py-2.5 text-center text-sm font-semibold uppercase tracking-wide text-paper hover:bg-bottle-dark transition-colors"
+            class="rounded-full bg-terracotta px-5 py-2.5 text-center text-sm font-semibold uppercase tracking-wide text-paper hover:bg-terracotta-dark transition-colors"
           >
             Enquire via WhatsApp
           </a>
@@ -69,7 +69,7 @@ const products = hall.id === "tiles"
           <a
             href={emailQuoteLink(name)}
             aria-label={`Request an email quote for ${name}`}
-            class="rounded-full border border-line px-5 py-2.5 text-center text-sm font-semibold uppercase tracking-wide text-ink-soft hover:border-bottle hover:text-bottle transition-colors"
+            class="rounded-full border border-line px-5 py-2.5 text-center text-sm font-semibold uppercase tracking-wide text-ink-soft hover:border-terracotta hover:text-terracotta transition-colors"
           >
             Request Email Quote
           </a>
@@ -79,34 +79,41 @@ const products = hall.id === "tiles"
   </section>
 
   <section class="mx-auto max-w-6xl px-5 py-16">
-    <p class="text-xs uppercase tracking-[0.3em] text-bottle">{hall.id === "tiles" ? "Series in stock" : "Catalogue"}</p>
+    <p class="text-xs uppercase tracking-[0.3em] text-terracotta">{hall.id === "tiles" ? "Series in stock" : "Catalogue"}</p>
     <h2 class="mt-2 text-3xl">{hall.id === "tiles" ? "Tile catalogue" : `${name} range`}</h2>
     <div class="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
       {hall.id === "tiles"
         ? products.map((p) => "data" in p && "brand" in p.data && (
           <article class="overflow-hidden rounded-sm border border-line bg-card shadow-card">
-            <div class="aspect-[4/3] overflow-hidden">
-              <img src={p.data.image} alt={p.data.imageAlt} class="h-full w-full object-cover" loading="lazy" width="600" height="450" />
-            </div>
+            <a href={`/products/${p.id}/`} class="block" aria-label={`View details for ${p.data.series}`}>
+              <div class="aspect-[4/3] overflow-hidden">
+                <img src={p.data.image} alt={p.data.imageAlt} class="h-full w-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy" width="600" height="450" />
+              </div>
+            </a>
             <div class="p-5">
-              <p class="text-xs uppercase tracking-[0.15em] text-bottle">{p.data.brand}</p>
-              <h3 class="mt-1 text-lg">{p.data.series}{p.data.code ? ` · ${p.data.code}` : ""}</h3>
+              <p class="text-xs uppercase tracking-[0.15em] text-terracotta">{p.data.brand}</p>
+              <h3 class="mt-1 text-lg">
+                <a href={`/products/${p.id}/`} class="hover:text-terracotta transition-colors">{p.data.series}{p.data.code ? ` · ${p.data.code}` : ""}</a>
+              </h3>
               <p class="mt-2 text-sm text-ink-soft">{p.data.size} · {p.data.finish}</p>
               {p.data.note && <p class="mt-2 text-sm text-ink-soft italic">{p.data.note}</p>}
               <div class="mt-4 flex flex-wrap gap-x-4 gap-y-1">
+                <a href={`/products/${p.id}/`} class="inline-block text-sm font-semibold uppercase tracking-wide text-ink hover:text-terracotta">
+                  View details &rarr;
+                </a>
                 <a
                   href={waLink(productEnquiryMessage(`${p.data.series}${p.data.code ? " " + p.data.code : ""}`))}
                   target="_blank"
                   rel="noopener"
                   aria-label={`Ask for trade rate on ${p.data.series} via WhatsApp`}
-                  class="inline-block text-sm font-semibold uppercase tracking-wide text-bottle hover:text-bottle-dark"
+                  class="inline-block text-sm font-semibold uppercase tracking-wide text-terracotta hover:text-terracotta-dark"
                 >
                   WhatsApp &rarr;
                 </a>
                 <a
                   href={emailQuoteLink(`${p.data.series}${p.data.code ? " " + p.data.code : ""}`)}
                   aria-label={`Request an email quote for ${p.data.series}`}
-                  class="inline-block text-sm font-semibold uppercase tracking-wide text-ink-soft hover:text-bottle"
+                  class="inline-block text-sm font-semibold uppercase tracking-wide text-ink-soft hover:text-terracotta"
                 >
                   Email quote &rarr;
                 </a>
@@ -117,29 +124,36 @@ const products = hall.id === "tiles"
         ))
         : products.map((p) => "data" in p && "category" in p.data && (
           <article class="overflow-hidden rounded-sm border border-line bg-card shadow-card">
-            <div class="aspect-[4/3] overflow-hidden">
-              <img src={p.data.image} alt={p.data.imageAlt} class="h-full w-full object-cover" loading="lazy" width="600" height="450" />
-            </div>
+            <a href={`/products/${p.id}/`} class="block" aria-label={`View details for ${p.data.name}`}>
+              <div class="aspect-[4/3] overflow-hidden">
+                <img src={p.data.image} alt={p.data.imageAlt} class="h-full w-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy" width="600" height="450" />
+              </div>
+            </a>
             <div class="p-5">
-              <p class="text-xs uppercase tracking-[0.15em] text-bottle">{p.data.category}</p>
-              <h3 class="mt-1 text-lg">{p.data.name}</h3>
+              <p class="text-xs uppercase tracking-[0.15em] text-terracotta">{p.data.category}</p>
+              <h3 class="mt-1 text-lg">
+                <a href={`/products/${p.id}/`} class="hover:text-terracotta transition-colors">{p.data.name}</a>
+              </h3>
               <p class="mt-2 text-sm text-ink-soft">Finish: {p.data.finish}</p>
               <p class="mt-1 text-sm text-ink-soft">{p.data.applications.join(", ")}</p>
               <p class="mt-2 text-sm text-ink-soft italic">{p.data.note}</p>
               <div class="mt-4 flex flex-wrap gap-x-4 gap-y-1">
+                <a href={`/products/${p.id}/`} class="inline-block text-sm font-semibold uppercase tracking-wide text-ink hover:text-terracotta">
+                  View details &rarr;
+                </a>
                 <a
                   href={waLink(productEnquiryMessage(p.data.name))}
                   target="_blank"
                   rel="noopener"
                   aria-label={`Ask for trade rate on ${p.data.name} via WhatsApp`}
-                  class="inline-block text-sm font-semibold uppercase tracking-wide text-bottle hover:text-bottle-dark"
+                  class="inline-block text-sm font-semibold uppercase tracking-wide text-terracotta hover:text-terracotta-dark"
                 >
                   WhatsApp &rarr;
                 </a>
                 <a
                   href={emailQuoteLink(p.data.name)}
                   aria-label={`Request an email quote for ${p.data.name}`}
-                  class="inline-block text-sm font-semibold uppercase tracking-wide text-ink-soft hover:text-bottle"
+                  class="inline-block text-sm font-semibold uppercase tracking-wide text-ink-soft hover:text-terracotta"
                 >
                   Email quote &rarr;
                 </a>
@@ -153,7 +167,7 @@ const products = hall.id === "tiles"
   {additionalServices && additionalServices.length > 0 && (
     <section class="border-t border-line/60 bg-card">
       <div class="mx-auto max-w-6xl px-5 py-16">
-        <p class="text-xs uppercase tracking-[0.3em] text-bottle">Also from this hall</p>
+        <p class="text-xs uppercase tracking-[0.3em] text-terracotta">Also from this hall</p>
         <h2 class="mt-2 text-3xl">Bespoke &amp; made to order</h2>
         <div class="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {additionalServices.map((service) => (
@@ -165,7 +179,7 @@ const products = hall.id === "tiles"
                 target="_blank"
                 rel="noopener"
                 aria-label={`Ask about ${service.name} via WhatsApp`}
-                class="mt-4 inline-block text-sm font-semibold uppercase tracking-wide text-bottle hover:text-bottle-dark"
+                class="mt-4 inline-block text-sm font-semibold uppercase tracking-wide text-terracotta hover:text-terracotta-dark"
               >
                 Ask about this &rarr;
               </a>
