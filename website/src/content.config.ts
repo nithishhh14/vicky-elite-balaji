@@ -40,8 +40,20 @@ const products = defineCollection({
     applications: z.array(z.string()),
     image: z.string(),
     imageAlt: z.string(),
+    // Additional real photos (texture close-up, lifestyle/application shots,
+    // alternate angles). Optional -- most products still have exactly one
+    // verified image; `image`/`imageAlt` above always remains the primary/
+    // fallback shot so nothing breaks for products without a gallery.
+    images: z.array(z.object({ src: z.string(), alt: z.string() })).optional(),
     sourceCatalogue: z.string().optional(),
     note: z.string().optional(),
+    // Real packing/technical spec fields, sourced from the actual supplier
+    // catalogue (e.g. BEJ Ceramic's packing-details page) -- left absent
+    // wherever that page wasn't part of the verified source material.
+    thickness: z.string().optional(),
+    qtyPerBox: z.string().optional(),
+    coverageArea: z.string().optional(),
+    weight: z.string().optional(),
   }),
 });
 

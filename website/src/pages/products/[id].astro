@@ -12,6 +12,20 @@ export async function getStaticPaths() {
 const { product } = Astro.props;
 const { name, image, imageAlt, hallId } = product.data;
 
+// Most products still have exactly one verified photo -- fall back to it as
+// a single-item gallery so the thumbnail strip only appears when there's
+// genuinely more than one real image to show.
+const gallery = product.data.images && product.data.images.length > 0
+  ? product.data.images
+  : [{ src: image, alt: imageAlt }];
+
+const specRows = [
+  { label: "Thickness", value: product.data.thickness },
+  { label: "Qty / box", value: product.data.qtyPerBox },
+  { label: "Coverage", value: product.data.coverageArea },
+  { label: "Weight / box", value: product.data.weight },
+].filter((row): row is { label: string; value: string } => Boolean(row.value));
+
 const halls = await getCollection("halls");
 const hall = halls.find((h) => h.id === hallId);
 const hallName = hall?.data.name ?? hallId;
@@ -94,9 +108,53 @@ const breadcrumbJsonLd = {
        cut off real card content, not just empty space. -->
   <section class="mx-auto max-w-6xl px-5 pt-6">
     <div class="flex h-[50vh] min-h-[340px] items-center justify-center overflow-hidden rounded-sm bg-card">
-      <img src={image} alt={imageAlt} class="h-full w-full object-contain" width="1600" height="1000" fetchpriority="high" />
+      <img
+        id="product-main-image"
+        src={gallery[0].src}
+        alt={gallery[0].alt}
+        class="h-full w-full object-contain"
+        width="1600"
+        height="1000"
+        fetchpriority="high"
+      />
     </div>
+
+    {gallery.length > 1 && (
+      <div class="mt-3 flex justify-center gap-3">
+        {gallery.map((img, i) => (
+          <button
+            type="button"
+            class="product-thumb h-16 w-16 overflow-hidden rounded-sm border-2 transition-colors"
+            class:list={[i === 0 ? "border-terracotta" : "border-line"]}
+            data-src={img.src}
+            data-alt={img.alt}
+            aria-label={`Show image ${i + 1} of ${name}`}
+          >
+            <img src={img.src} alt="" class="h-full w-full object-cover" loading="lazy" />
+          </button>
+        ))}
+      </div>
+    )}
   </section>
+
+  {gallery.length > 1 && (
+    <script>
+      // Plain DOM swap, no framework -- one product page never needs a React
+      // island just to change an <img> src on click.
+      const main = document.getElementById("product-main-image") as HTMLImageElement | null;
+      document.querySelectorAll<HTMLButtonElement>(".product-thumb").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          if (!main) return;
+          main.src = btn.dataset.src ?? main.src;
+          main.alt = btn.dataset.alt ?? main.alt;
+          document.querySelectorAll(".product-thumb").forEach((b) => b.classList.remove("border-terracotta"));
+          document.querySelectorAll(".product-thumb").forEach((b) => b.classList.add("border-line"));
+          btn.classList.remove("border-line");
+          btn.classList.add("border-terracotta");
+        });
+      });
+    </script>
+  )}
 
   <section class="mx-auto max-w-3xl px-5 py-10 text-center">
     <p class="text-xs uppercase tracking-[0.25em] text-terracotta">{hallName}</p>
@@ -109,7 +167,19 @@ const breadcrumbJsonLd = {
       <span><span class="text-ink-soft/60">Finish</span> · {product.data.finish}</span>
     </div>
     <p class="mt-3 text-sm text-ink-soft">{product.data.applications.join(" · ")}</p>
-    {product.data.sourceCatalogue && <p class="mt-1 text-xs uppercase tracking-wide text-ink-soft/50">{product.data.sourceCatalogue}</p>}
+
+    {specRows.length > 0 && (
+      <div class="mx-auto mt-6 grid max-w-lg grid-cols-2 gap-x-6 gap-y-2 border-t border-line/60 pt-5 text-left text-sm sm:grid-cols-4">
+        {specRows.map((row) => (
+          <div>
+            <p class="text-xs uppercase tracking-wide text-ink-soft/50">{row.label}</p>
+            <p class="text-ink">{row.value}</p>
+          </div>
+        ))}
+      </div>
+    )}
+
+    {product.data.sourceCatalogue && <p class="mt-4 text-xs uppercase tracking-wide text-ink-soft/50">{product.data.sourceCatalogue}</p>}
 
     {product.data.note && <p class="mx-auto mt-5 max-w-md text-sm italic text-ink-soft">{product.data.note}</p>}
 

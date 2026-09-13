@@ -1,0 +1,20 @@
+{
+  "kind": "tile",
+  "hallId": "tiles",
+  "name": "Athangudi Series Blossom Terracotta",
+  "brand": "BEJ Ceramic",
+  "series": "Athangudi Series",
+  "code": "Blossom Terracotta",
+  "size": "300 x 300mm (12 x 12in)",
+  "finish": "Satin, red body, rectified, 7.5mm",
+  "order": 1.3,
+  "applications": ["Verandas & courtyards", "Living floors", "Heritage-style interiors"],
+  "image": "/media/tiles/athangudi-series/swatch-blossom-terracotta.jpg",
+  "imageAlt": "Athangudi Series Blossom Terracotta tile swatch with a four-petal motif on terracotta",
+  "sourceCatalogue": "BEJ Ceramic, Athangudi Series catalogue",
+  "note": "Same handcraft-style pattern as Petal Red, in a warm terracotta colourway.",
+  "thickness": "7.5mm",
+  "qtyPerBox": "9 tiles",
+  "coverageArea": "0.81 sq.mt. per box",
+  "weight": "12.2kg per box (approx)"
+}

@@ -1,0 +1,20 @@
+{
+  "kind": "tile",
+  "hallId": "tiles",
+  "name": "Athangudi Series Palace Verde",
+  "brand": "BEJ Ceramic",
+  "series": "Athangudi Series",
+  "code": "Palace Verde",
+  "size": "300 x 300mm (12 x 12in)",
+  "finish": "Satin, red body, rectified, 7.5mm",
+  "order": 1.4,
+  "applications": ["Verandas & courtyards", "Living floors", "Heritage-style interiors"],
+  "image": "/media/tiles/athangudi-series/swatch-palace-verde.jpg",
+  "imageAlt": "Athangudi Series Palace Verde tile swatch with a palace-style motif on green",
+  "sourceCatalogue": "BEJ Ceramic, Athangudi Series catalogue",
+  "note": "Palace-style pattern variant of the Athangudi Series, in a deep green colourway.",
+  "thickness": "7.5mm",
+  "qtyPerBox": "9 tiles",
+  "coverageArea": "0.81 sq.mt. per box",
+  "weight": "12.2kg per box (approx)"
+}

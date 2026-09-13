@@ -11,6 +11,15 @@
   "applications": ["Verandas & courtyards", "Living floors", "Heritage-style interiors"],
   "image": "/media/tiles/athangudi-series/swatch-petal-red.jpg",
   "imageAlt": "Athangudi Series Petal Red tile swatch with corner petal motif",
+  "images": [
+    { "src": "/media/tiles/athangudi-series/swatch-petal-red.jpg", "alt": "Athangudi Series Petal Red tile swatch with corner petal motif" },
+    { "src": "/media/tiles/athangudi-series/lifestyle-petal-red.jpg", "alt": "Athangudi Series Petal Red tile laid in a traditional veranda" },
+    { "src": "/media/tiles/athangudi-series/hero-crop.jpg", "alt": "Close-up of Athangudi Series Petal Red pattern on a heritage floor" }
+  ],
   "sourceCatalogue": "BEJ Ceramic, Athangudi Series catalogue",
-  "note": "Handcraft-style Chettinad pattern; also sets the visual language for this website."
+  "note": "Handcraft-style Chettinad pattern; also sets the visual language for this website.",
+  "thickness": "7.5mm",
+  "qtyPerBox": "9 tiles",
+  "coverageArea": "0.81 sq.mt. per box",
+  "weight": "12.2kg per box (approx)"
 }
