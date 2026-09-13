@@ -1,6 +1,60 @@
 # Vicky / Elite Balaji — Current Project State
 
-_Last updated: 2026-09-12 — functional-fix pass, motion/3D pass (GSAP + Three.js), catalogue-discovery pass (real facet filtering), UI/UX redesign pass (material-first navigation, discovery-led homepage), then a data-architecture pass (canonical product/service schema, agent-ready structure, Three.js removed, material-world landing pages). See `docs/DECISIONS.md` for each._
+_Last updated: 2026-09-13 — real React Bits component integration, Athangudi catalogue depth expansion (product image galleries + spec fields), SEO structured-data gap closed on hall/material pages. See `docs/DECISIONS.md` for each._
+
+## 2026-09-13 — Athangudi catalogue depth: all 8 real colourways, product galleries, CollectionPage SEO (commits `9d5e92c`, `956ac8e`)
+
+Client/brief pressure was "empty spaces, entire product list and catalogues
+aren't there" — the fix was mining real, already-approved source material
+that was sitting unused, not inventing anything. `website/catalogue_extract/
+Athangudi_Series_/` (a genuine BEJ Ceramic catalogue render cache, approved
+2026-09-10) turned out to contain 8 distinct real colourway/pattern variants;
+only 1 (Petal Red) had ever been turned into a product record. Cropped the
+other 7 (Blossom Grey/Yellow/Terracotta, Palace Verde, Floral Earth,
+Heritage Kolam, Heritage Red) from the source page renders with `ffmpeg`,
+verified each against its source page, and added them as real `products`
+records (`website/src/content/products/athangudi-*.json`).
+
+While doing this, found the same catalogue's packing-details page (real
+thickness/qty-per-box/coverage/weight specs) and Varmora.com research
+(reference-only, not copied) both pointed at the same missing schema
+fields. Extended the `products` schema (`src/content.config.ts`) with an
+optional multi-image `images` gallery and 4 optional real spec fields, and
+updated `src/pages/products/[id].astro` to render a thumbnail-swap gallery
+(plain JS, no framework) and a spec grid when present. Petal Red's record
+was backfilled with its existing real lifestyle/hero photos into the new
+gallery field.
+
+Also closed a gap flagged in the 2026-09-12 reset report: hall and
+material-world pages had no structured data beyond the sitewide
+LocalBusiness block. Added `CollectionPage` + `BreadcrumbList` JSON-LD to
+both, mirroring the pattern already used on product pages.
+
+**Not done this pass** (explicitly deferred, real follow-up opportunity):
+`catalogue_extract/GC_COIMBATORE/` has 10 more real, currently-unused SKU
+codes for the existing single "Adoration Ceramica" product; 5 more
+catalogue folders (`HOME_CENTER_-_COIMBATORE`, `HOME_CENTRE_..._MOROCAN_...`,
+`LEVERPOOL_15`, `_20_SONEX_...`, `12x18-wall_tiles`, `GC_TILES_COIMBATORE_LLP`)
+haven't been mined for additional real SKU depth at all.
+
+`astro check` + `astro build` verified clean after both commits; browser-QA
+passed on desktop and mobile (gallery click-to-swap, spec grid, search
+index auto-picking up new products via existing facet derivation, no
+console errors on home/search/hall/product pages).
+
+## 2026-09-12 — real React Bits components on homepage (commit `0083ba2`)
+
+Client sent a reference video; the library shown was identified as React
+Bits (reactbits.dev). Installed `@astrojs/react` + `react`/`react-dom` and
+fetched the actual upstream source for `Magnet` and `SpotlightCard` via
+GitHub's raw registry JSON (not an approximation) — see attribution headers
+in `src/components/react-bits/`. Wired `Magnet` into the hero CTA and
+`SpotlightCard` into the 3 material-world panels on the homepage. Verified
+working via real OS-level mouse interaction (synthetic `mouseenter`/
+`mouseleave` DOM events don't trigger React's synthetic handlers and gave a
+false "not working" reading during automated testing — see
+`docs/DECISIONS.md`). Vanilla GSAP equivalents are kept for catalogue-scale
+card grids so they don't each hydrate a React island.
 
 ## 2026-09-12 — stone-variety reference layer + Athangudi de-emphasis (commit `7150b40`)
 

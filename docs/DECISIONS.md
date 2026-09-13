@@ -5,6 +5,51 @@ reconsidering something that may already have been decided.
 
 ---
 
+### Decision: `@astrojs/react` + real React Bits component source, used sparingly
+**Date:** 2026-09-12
+**Reason:** Client sent a reference video showing a specific interaction
+library; identified as React Bits (reactbits.dev). Fetched the actual
+upstream component source (GitHub raw registry JSON, `gh api`), not an
+approximation, for `Magnet` and `SpotlightCard`. Kept to exactly these 2
+components as React islands (`client:load`/`client:visible`) rather than
+converting the site to React, to preserve the zero-JS-by-default budget;
+catalogue-scale repeated effects (card grids) stay on the existing vanilla
+GSAP implementation instead of hydrating a React island per card.
+**Alternatives considered:** Approximating the effect in plain CSS/JS
+(rejected — client asked for the specific library shown in the video, not a
+lookalike); converting more of the site to React (rejected — unnecessary
+client JS for a static catalogue site, against the existing Astro-first
+architecture decision below).
+**Current status:** Implemented, commit `0083ba2`. Verified via real OS-level
+mouse interaction — note for future testing: synthetic `mouseenter`/
+`mouseleave` DOM events do not trigger React's synthetic event system (it's
+built on bubbling `mouseover`/`mouseout`), so automated tests must dispatch
+`mouseover`/`mouseout` or use real interaction, not `mouseenter`/`mouseleave`.
+
+---
+
+### Decision: Product schema gains an optional `images` gallery + real spec fields, not a redesign
+**Date:** 2026-09-13
+**Reason:** Mining the already-approved BEJ Ceramic Athangudi catalogue
+render cache for more real colourway variants surfaced a packing-details
+page (thickness/qty-per-box/coverage/weight) that no product record could
+capture, and separately Varmora.com research had already flagged multi-
+image galleries and these same spec fields as standard for the tile
+industry. Rather than a new collection or a breaking schema change, added
+them as optional fields on the existing canonical `products` schema
+(`src/content.config.ts`) — every existing product record needed zero
+changes, and `image`/`imageAlt` remain the required fallback so nothing
+breaks for the products that still have exactly one verified photo.
+**Alternatives considered:** A separate `productMedia`/`productSpecs`
+collection joined by id (rejected — over-engineering for 2 optional field
+groups on one collection that already has 8 other optional fields).
+**Current status:** Implemented, commit `9d5e92c`. Rendered on
+`src/pages/products/[id].astro` via a plain-JS thumbnail-swap gallery (no
+framework — one click handler doesn't need a React island) and a conditional
+spec grid, both no-ops when the optional fields are absent.
+
+---
+
 ### Decision: Rebuild the website on Astro + TypeScript + Tailwind CSS v4
 **Date:** 2026-09-10
 **Reason:** The original site was static hand-written HTML/CSS with no

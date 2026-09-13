@@ -1,82 +1,71 @@
-# TOMORROW — START HERE
+# START HERE
 
 ## Current objective
-Phase 2 (the Elite Balaji public website) is functionally rebuilt on Astro.
-The immediate objective now is **client feedback and content completion**,
-not further architecture work.
+The website is mid-way through a large, still-active "anti-slop" redesign
+and content-depth brief (material-first nav, DISCOVER→EXPLORE→FILTER
+homepage, canonical product schema, real React Bits islands, growing real
+catalogue depth from already-approved supplier PDFs). Deployment is
+explicitly **DEFERRED — POST-DESIGN / PRE-LAUNCH**; do not deploy, buy a
+domain, or set up hosting without new, explicit user permission (the user
+answered "No, not yet" to a direct deployment question on 2026-09-12, and a
+later brief reiterated deployment is out of scope for now).
 
-## What was completed today (2026-09-10)
-- Full rebuild of `website/` from static HTML to Astro 5 + TypeScript +
-  Tailwind v4 (see `docs/PROJECT_STATE.md` for the complete, verified list).
-- Real product content for the Tiles hall (7 series, sourced from genuine
-  supplier catalogues, user-confirmed).
-- `MaterialField` placeholder for the 7 halls without real photography.
-- WhatsApp enquiry flow, SEO foundation, responsive nav, a11y basics.
-- Found and fixed a real layout bug (`MaterialField` position conflict).
-- `astro check` + `astro build` both verified clean at end of session.
-- git initialized for the whole project; two commits made; no remote yet.
-- This handoff system itself (`docs/PROJECT_STATE.md`,
-  `docs/CLIENT_PREFERENCES.md`, `docs/DECISIONS.md`, this file).
+## What was completed in the most recent session (2026-09-13)
+- Expanded the Athangudi Series from 1 to all 8 real colourway variants
+  found in the already-approved `catalogue_extract/Athangudi_Series_/`
+  render cache (cropped with `ffmpeg`, verified against source pages).
+- Extended the `products` schema with an optional multi-image `images`
+  gallery and real spec fields (thickness/qty-per-box/coverage/weight);
+  rendered both on the product detail page (thumbnail-swap gallery, spec
+  grid), verified via browser QA on desktop + mobile.
+- Closed a flagged SEO gap: added `CollectionPage` + `BreadcrumbList`
+  JSON-LD to hall and material-world pages (product pages already had it).
+- `astro check` + `astro build` verified clean; committed as `9d5e92c` and
+  `956ac8e`. See `docs/PROJECT_STATE.md` for full detail, `docs/DECISIONS.md`
+  for the schema/architecture reasoning.
 
-## What still needs work
-- Real photography for 6-7 halls (see `docs/PROJECT_STATE.md` "Blocked items").
-- Domain + hosting decision, then actual deployment.
-- GitHub remote setup.
-- A first round of client feedback on design direction — nothing has been
-  reviewed by the client yet, so treat the current design as a draft, not
-  a locked decision, until `docs/CLIENT_PREFERENCES.md` says otherwise.
+## What still needs work (real, deferred-for-time, not forgotten)
+- `catalogue_extract/GC_COIMBATORE/` has 10 more real, currently-unused SKU
+  codes for the existing single "Adoration Ceramica" product — not yet
+  mined into separate product records.
+- 5 more catalogue folders never examined at all: `HOME_CENTER_-_COIMBATORE`,
+  `HOME_CENTRE_..._MOROCAN_...`, `LEVERPOOL_15`, `_20_SONEX_...`,
+  `12x18-wall_tiles`, `GC_TILES_COIMBATORE_LLP` — likely more real SKU depth
+  sitting unused, same pattern as Athangudi.
+- Real photography still missing for most non-Tiles halls (Granite &
+  Marbles, Kota Stone, Kadappa, Sanitaryware, Adhesive & Accessories,
+  Quartz) — they still use the `MaterialField` colour/texture placeholder.
+- The broader 12-stage "lead designer" brief (design system refinement,
+  motion/imagery/responsive polish, a full regression pass) is large and
+  was only partially worked through this session — catalogue depth + the
+  SEO gap were the concrete, verifiable, non-fabricated wins picked out of
+  it. Re-read that brief in the transcript/summary if continuing it
+  directly, and keep applying the same rule: real data and real fixes over
+  decoration, never invent products/specs/stats.
 
 ## First thing Claude should inspect
-Run `git log --oneline` and `git status` to confirm nothing changed outside
-this session, then read the six files listed in the Resume Instruction below.
-
-## First task to execute
-Depends entirely on what the user says at the start of the next session.
-Do not assume — ask, or read `docs/CLIENT_PREFERENCES.md` if the user says
-"I have client feedback" before touching any code.
-
-## Client information I need to provide
-(For the user, not Claude — things Claude cannot get on its own:)
-- Real photos or a photo shoot plan for Granite & Marbles, Kota Stone,
-  Kadappa, Sanitaryware, Adhesive & Accessories, Quartz.
-- Any explicit design feedback (colours, layout, tone) from Elite Balaji.
-- A domain name decision (buy one, or launch on a free subdomain first).
-- Confirmation of whether/when to create a GitHub remote.
-
-## Design decisions waiting for client feedback
-Every section of `docs/CLIENT_PREFERENCES.md` is currently PENDING CLIENT
-INPUT. The Athangudi-derived colour palette and the `MaterialField` placeholder
-approach are working assumptions (see `docs/DECISIONS.md`), not confirmed
-client preferences.
+Run `git log --oneline -15` and `git status` to confirm nothing changed
+outside the last session, then read `docs/PROJECT_STATE.md` (top entry) and
+`docs/DECISIONS.md` (bottom entries) for what's freshest.
 
 ## Known bugs
-None open. The `MaterialField` position-conflict bug found during this
-session's QA was fixed and verified (see `docs/PROJECT_STATE.md`
-"Known issues" and `docs/WEBSITE_ARCHITECTURE.md` §5).
+None open as of 2026-09-13.
 
 ## Known placeholders
-- 7 of 8 halls use `MaterialField` colour/texture panels instead of real
-  photography (Tiles is the only hall with real product images).
+- Most non-Tiles halls still use `MaterialField` instead of real photography.
 - `astro.config.mjs`'s `site` and `public/robots.txt`'s sitemap URL use a
-  placeholder hostname (`elitebalaji.example.in`).
-
-## Assets still required
-- Real photographs: granite/marble slabs, kota stone, kadappa stone,
-  sanitaryware/sinks in stock, adhesive/accessory packaging or application
-  shots, quartz surfaces, laying-works in progress.
-- Optional: partner brand logo files (currently a plain text list in the footer).
+  placeholder hostname (`elitebalaji.example.in`) — domain is not decided,
+  though `elitebalaji.com` was confirmed available as of 2026-09-12.
 
 ## Deployment status
 Not deployed anywhere. No hosting connected, no domain purchased, no CI/CD.
-The site builds successfully to `website/dist/` locally.
+**Do not deploy without new explicit permission** — see "Current objective."
+The site builds cleanly to `website/dist/` locally (`astro build`).
 
 ## Git status
-- Local repository only, branch `master`, 2 commits, no remote.
-- Working tree was clean at end of session (verify again with `git status`
-  before assuming this still holds).
-
-## Important files to read first
-See the Resume Instruction below — it's the authoritative list.
+Local repository, branch `main`. Working tree was clean at end of the
+2026-09-13 session (verify again with `git status` before assuming this
+still holds) — no GitHub remote as of this writing.
 
 ---
 
