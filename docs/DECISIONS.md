@@ -5,6 +5,41 @@ reconsidering something that may already have been decided.
 
 ---
 
+### Decision: Homepage hero goes photo-free (dark/gold editorial); reference-image statistics not copied
+**Date:** 2026-09-13
+**Reason:** Client feedback (with a reference screenshot) said the homepage
+still reads as "Athangudi-themed." Root cause: the hero background was
+literally `athangudi-series/hero-crop.jpg`, credited in text as "Photo:
+Athangudi Series, BEJ Ceramic catalogue" — the earlier 2026-09-12
+de-emphasis pass only shortened homepage copy about Athangudi, it never
+touched the actual hero image. Investigated whether a different real photo
+could replace it: every other real photo on the site is a supplier's raw
+catalogue page (Grace Series, Sonex, Leverpool, Adoration all have the
+manufacturer's own logo baked into the image), so no single "clean" real
+photo exists to be the new one-image identity. Went photo-free instead —
+dark charcoal/bottle-green gradient, gold serif wordmark, real trust facts
+(founded 2012, 8 halls, Karamadai/Coimbatore) — and added a 6-image swatch
+strip spanning multiple halls so no one material dominates.
+The client's reference image also displayed marketing statistics ("1000+
+Products," "Premium Global Brands," "Trusted by Architects & Builders")
+that are not verified Elite Balaji facts. Per the standing no-fabrication
+rule (`docs/CLAUDE.md` "Client feedback override rule" still requires real
+facts; see also `docs/PROJECT_STATE.md`), these were deliberately not
+copied — real, checkable facts were used instead. Visual language (dark+
+gold palette, confident serif logotype, category-strip layout) was taken as
+inspiration; the fabricated-sounding statistics were not.
+**Alternatives considered:** Reusing an existing Unsplash stock photo as
+before (rejected — doesn't solve "one material as identity," just changes
+which one); sourcing a brand-new stock photo (spent time attempting this;
+found nothing that wasn't either paid/Unsplash+ or a competitor-logo-
+bearing catalogue page); fabricating the reference image's statistics
+(rejected outright per the no-fabrication rule).
+**Current status:** Implemented, commit `26ae9d2`. Tiles hall hero also
+changed from a single Athangudi photo to a 2x2 grid of 4 distinct real
+brands for the same reason.
+
+---
+
 ### Decision: `@astrojs/react` + real React Bits component source, used sparingly
 **Date:** 2026-09-12
 **Reason:** Client sent a reference video showing a specific interaction

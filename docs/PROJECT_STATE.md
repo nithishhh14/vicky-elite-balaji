@@ -1,6 +1,30 @@
 # Vicky / Elite Balaji — Current Project State
 
-_Last updated: 2026-09-13 — real React Bits component integration, Athangudi catalogue depth expansion (product image galleries + spec fields), SEO structured-data gap closed on hall/material pages. See `docs/DECISIONS.md` for each._
+_Last updated: 2026-09-13 — homepage/Tiles-hero rebuilt away from Athangudi, honest sourcing layer extended to Quartz/Sanitaryware, real React Bits component integration, Athangudi catalogue depth expansion (product image galleries + spec fields), SEO structured-data gap closed on hall/material pages. See `docs/DECISIONS.md` for each._
+
+## 2026-09-13 — homepage/Tiles hero no longer Athangudi; Quartz + Sanitaryware get honest sourcing layers (commit `26ae9d2`)
+
+Client feedback (with a reference image) that the site still reads as
+"Athangudi-themed" was correct: the homepage hero background was literally
+an Athangudi product photo, credited as such in the hero's own caption —
+the 2026-09-12 "de-emphasis" pass had only shortened homepage copy, never
+touched the actual identity image. Rebuilt the homepage hero photo-free
+(dark charcoal/gold editorial treatment, real facts only — founded 2012, 8
+halls, Karamadai/Coimbatore — explicitly not the fabricated-sounding
+statistics shown in the client's reference image; see
+`docs/CLIENT_PREFERENCES.md` and `docs/DECISIONS.md` for the full
+reasoning), plus a 6-image swatch strip spanning tiles/granite/stone/
+quartz/sanitaryware. Tiles hall hero changed from one Athangudi photo to a
+2x2 grid of 4 distinct real brands. Also extended the `stone-varieties.ts`
+"ask us to source" honest reference layer (previously Natural Stone only)
+to Quartz (Surfaces world page) and Sanitaryware (own hall section),
+addressing feedback that most of the earlier supplied product list wasn't
+reflected anywhere outside Natural Stone. Softened (not removed) the "mood
+photography, not actual stock" hero disclaimer wording/styling on halls
+without real photos. `astro check`/`astro build` clean; browser-QA on
+desktop and mobile. A "searchbar doesn't work" report could not be
+reproduced (typing, filtering and result counts all worked in testing) —
+flagged back to the user for more detail rather than guessed at further.
 
 ## 2026-09-13 — Athangudi catalogue depth: all 8 real colourways, product galleries, CollectionPage SEO (commits `9d5e92c`, `956ac8e`)
 

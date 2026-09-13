@@ -8,6 +8,34 @@ where a working assumption was made by Claude without client sign-off, it is
 labeled as a **working assumption**, not a preference, and lives in
 `docs/DECISIONS.md` instead._
 
+## 2026-09-13 — reference image + concrete complaints
+User supplied a reference screenshot (source/authorship unknown — reads as
+an AI-generated or template mockup, not a photo of a real competitor site)
+showing a dark charcoal/deep-green hero, gold serif wordmark ("Elite
+Balaji" logotype with a handshake emblem), a 5-tile category strip
+(Granite/Marble/Tiles/Bathroom/Exterior), and a trust-stat bar reading
+"1000+ Products / Premium Global Brands / Expert Consultation / Pan India
+Supply / Trusted by Architects & Builders." Treated as **visual/typography
+direction only** — the dark+gold palette, serif logotype confidence, and
+category-strip layout were used as inspiration (see `docs/DECISIONS.md`
+2026-09-13 hero decision). The trust-bar statistics were explicitly **not**
+copied: "1000+ Products," "Premium Global Brands," and "Trusted by
+Architects & Builders" are not verified Elite Balaji facts and would violate
+the project's no-fabrication rule if presented as such. Real facts (founded
+2012, 8 material halls, Karamadai/Coimbatore) were used in their place —
+flag to the user if the client specifically wants invented-sounding stats
+anyway, since that would need an explicit, informed override of the
+no-fabrication rule, not just visual styling.
+
+Same message also reported 3 concrete issues, resolved as of commit
+`26ae9d2`: (1) the homepage/Tiles hero was still a single Athangudi photo
+despite the earlier "de-emphasis" pass only having touched copy, not the
+actual identity image; (2) Natural Stone's "ask us to source" honest layer
+existed but Quartz and Sanitaryware had no equivalent, making those halls
+look sparse; (3) a "searchbar doesn't work" report that could not be
+reproduced in testing (filtering, typing, and result counts all functioned)
+— flagged back to the user rather than guessed at further.
+
 ## Brand personality
 PENDING CLIENT INPUT
 
@@ -16,7 +44,9 @@ PENDING CLIENT INPUT — a design brief was relayed by the user on 2026-09-11
 (sourced from an external LLM session, not a documented conversation with
 Elite Balaji itself) requesting a flat, editorial, no-3D, premium-trading-
 business aesthetic. Treated as a working assumption, not confirmed client
-preference — see `docs/DECISIONS.md`.
+preference — see `docs/DECISIONS.md`. The 2026-09-13 reference image (dark/
+gold, serif wordmark) is a second, partially-overlapping direction — see
+above.
 
 ## Colours
 PENDING CLIENT INPUT — the 2026-09-11 relayed brief requested green-dominant
@@ -30,7 +60,9 @@ Elite Balaji directly. Flag clearly if/when the actual client reacts to it.
 PENDING CLIENT INPUT
 
 ## Hero section
-PENDING CLIENT INPUT
+PENDING CLIENT INPUT — see 2026-09-13 entry above: homepage hero rebuilt as
+a photo-free dark/gold treatment specifically to stop a single product
+photo (Athangudi) reading as the site's identity.
 
 ## Navigation
 PENDING CLIENT INPUT
