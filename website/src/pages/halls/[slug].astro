@@ -29,6 +29,33 @@ const COLOUR_SWATCH: Record<string, string> = {
 const hallColours = Array.from(
   new Set(products.flatMap((p) => deriveColours(p.data.name, p.data.finish, p.data.imageAlt)))
 ).sort();
+
+const hallUrl = new URL(`/halls/${hall.id}/`, Astro.site).toString();
+const collectionJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name,
+  description: intro,
+  url: hallUrl,
+  mainEntity: {
+    "@type": "ItemList",
+    itemListElement: products.map((p, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      url: new URL(`/products/${p.id}/`, Astro.site).toString(),
+      name: p.data.name,
+    })),
+  },
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "All halls", item: new URL("/halls/", Astro.site).toString() },
+    { "@type": "ListItem", position: 2, name },
+  ],
+};
 ---
 
 <BaseLayout
@@ -36,6 +63,9 @@ const hallColours = Array.from(
   description={intro}
   enquiryMessage={productEnquiryMessage(name)}
 >
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(collectionJsonLd)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
+
   <section class="relative isolate flex h-[52vh] min-h-[360px] items-end overflow-hidden">
     {heroImage ? (
       <img src={heroImage} alt={heroAlt} class="absolute inset-0 h-full w-full object-cover" fetchpriority="high" />

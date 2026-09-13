@@ -30,6 +30,33 @@ const worldColours = Array.from(
 const applications = Array.from(new Set(halls.flatMap((h) => h.data.applications))).slice(0, 8);
 const otherWorlds = materialWorlds.filter((w) => w.slug !== world.slug);
 
+const worldUrl = new URL(`/materials/${world.slug}/`, Astro.site).toString();
+const collectionJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: world.label,
+  description: `${world.label} at Elite Balaji: ${halls.map((h) => h.data.name).join(", ")}.`,
+  url: worldUrl,
+  mainEntity: {
+    "@type": "ItemList",
+    itemListElement: products.map((p, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      url: new URL(`/products/${p.id}/`, Astro.site).toString(),
+      name: p.data.name,
+    })),
+  },
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "All halls", item: new URL("/halls/", Astro.site).toString() },
+    { "@type": "ListItem", position: 2, name: world.label },
+  ],
+};
+
 // Stone-type breakdown (Granite/Marble/Limestone/Quartzite/...), shown only
 // on the Natural Stone world. Real product counts come from the actual
 // `products` collection (matched by category keyword); the "varieties" list
@@ -47,6 +74,9 @@ const categoriesWithStock = world.slug === "natural-stone"
   title={`${world.label} | Elite Balaji Stones & Ceramics`}
   description={`Explore ${world.label} at Elite Balaji: ${halls.map((h) => h.data.name).join(", ")}. Real stock, honestly labelled, with trade rates on enquiry.`}
 >
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(collectionJsonLd)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
+
   <nav aria-label="Breadcrumb" class="mx-auto max-w-6xl px-5 pt-6 text-xs uppercase tracking-wide text-ink-soft">
     <a href="/halls/" class="hover:text-terracotta">All halls</a>
     <span class="mx-2">/</span>
