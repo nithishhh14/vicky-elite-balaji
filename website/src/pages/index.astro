@@ -51,10 +51,20 @@ const heroSwatches = [
 >
   <!-- 01 — Entrance: no single product photo standing in for the whole
        business (that was the Athangudi-hero problem this replaces) --
-       instead a dark, editorial, typography-led treatment plus a strip of
-       real photography across every hall. -->
+       instead a licensed, illustrative reception-lobby photo (not a photo
+       of Elite Balaji's own premises -- see the credit line below), colour-
+       graded to the site's charcoal/gold palette, plus a strip of real
+       photography across every hall further down. -->
   <section class="relative isolate flex min-h-[92vh] flex-col justify-between overflow-hidden bg-charcoal-deep text-paper">
-    <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_rgba(31,61,51,0.55),_transparent_60%),radial-gradient(ellipse_at_bottom_right,_rgba(163,130,47,0.18),_transparent_55%)]" aria-hidden="true"></div>
+    <img
+      src="/media/brand/hero-lobby.jpg"
+      alt=""
+      aria-hidden="true"
+      class="absolute inset-0 h-full w-full object-cover opacity-80"
+      fetchpriority="high"
+    />
+    <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-charcoal-deep via-charcoal-deep/70 to-charcoal-deep/30" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_rgba(31,61,51,0.45),_transparent_60%),radial-gradient(ellipse_at_bottom_right,_rgba(163,130,47,0.15),_transparent_55%)]" aria-hidden="true"></div>
 
     <div data-gsap-hero class="relative mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center px-5 pt-32">
       <p class="text-xs uppercase tracking-[0.4em] text-brass">Since {business.since} &middot; Karamadai, Coimbatore</p>
@@ -72,6 +82,9 @@ const heroSwatches = [
           </a>
         </Magnet>
       </div>
+      <p class="mt-10 text-[0.65rem] uppercase tracking-[0.2em] text-paper/40">
+        Illustrative photography (licensed stock), not Elite Balaji's own premises
+      </p>
     </div>
 
     <!-- Real facts, not marketing statistics -- every figure here is a
