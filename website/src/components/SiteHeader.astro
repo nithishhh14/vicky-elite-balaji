@@ -32,20 +32,21 @@ const materialsActive =
 <header class="sticky top-0 z-40 border-b border-line/70 bg-paper/95 backdrop-blur">
   <div class="mx-auto flex max-w-6xl items-center justify-between gap-3 px-5 py-3">
     <a href="/" class="flex flex-shrink-0 items-center gap-2.5 leading-none">
-      <!-- Original geometric monogram (not a claimed trademark/registered
-           mark) -- a diamond motif referencing stone/gem cutting, echoing
-           the client's reference-image request for a crest-style logo
-           without inventing brand history around it. -->
-      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="flex-shrink-0">
-        <circle cx="17" cy="17" r="16" stroke="var(--color-terracotta)" stroke-width="1"/>
-        <path d="M17 8L23 14L17 26L11 14L17 8Z" stroke="var(--color-terracotta)" stroke-width="1.1" stroke-linejoin="round"/>
-        <path d="M11 14H23" stroke="var(--color-terracotta)" stroke-width="1.1"/>
-        <path d="M17 8L14.5 14L17 26" stroke="var(--color-terracotta)" stroke-width="0.75" opacity="0.7"/>
-        <path d="M17 8L19.5 14L17 26" stroke="var(--color-terracotta)" stroke-width="0.75" opacity="0.7"/>
+      <!-- Original crest (not a claimed trademark/registered mark) -- a
+           compass-rosette badge in the gold/brass already used across the
+           site, echoing the reference image's circular emblem without
+           reproducing its exact artwork (the handshake motif from that
+           image is reused, larger, in the "Why Elite Balaji" section where
+           it can actually read at size instead of being illegible at 36px). -->
+      <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="flex-shrink-0">
+        <circle cx="19" cy="19" r="17.5" stroke="var(--color-brass)" stroke-width="1"/>
+        <circle cx="19" cy="19" r="14" stroke="var(--color-brass)" stroke-width="0.6" opacity="0.6"/>
+        <path d="M19 7L21.3 16.7L31 19L21.3 21.3L19 31L16.7 21.3L7 19L16.7 16.7L19 7Z" stroke="var(--color-brass)" stroke-width="1" stroke-linejoin="round"/>
+        <circle cx="19" cy="19" r="2.2" fill="var(--color-brass)"/>
       </svg>
       <span class="flex flex-col">
-        <span class="font-display text-lg font-semibold tracking-wide text-ink whitespace-nowrap">Elite Balaji</span>
-        <span class="text-[0.6rem] uppercase tracking-[0.25em] text-terracotta whitespace-nowrap">Stones &amp; Ceramics</span>
+        <span class="bg-gradient-to-b from-brass to-mustard-dark bg-clip-text font-display text-xl italic text-transparent whitespace-nowrap">Elite Balaji</span>
+        <span class="text-[0.55rem] uppercase tracking-[0.3em] text-brass whitespace-nowrap">Stones &amp; Ceramics</span>
       </span>
     </a>
 
