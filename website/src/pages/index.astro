@@ -22,6 +22,16 @@ const materialWorlds = materialWorldsConfig.map((world) => ({
   also: world.hallIds.slice(1).map(hallByI),
 }));
 
+// Category strip: the 3 material worlds plus the 2 real halls that aren't
+// grouped into a world (Sanitaryware, Laying Works) -- 5 categories total,
+// each a real hall/world with real content, not a decorative count chosen
+// to match a reference layout.
+const categoryStrip = [
+  ...materialWorlds.map((w) => ({ href: `/materials/${w.slug}/`, label: w.label, image: w.flagship, position: undefined as string | undefined })),
+  { href: "/halls/sanitaryware/", label: "Sanitaryware", image: hallByI("sanitaryware"), position: undefined },
+  { href: "/halls/laying-works/", label: "Laying Works", image: hallByI("laying-works"), position: undefined },
+];
+
 // Real, already-derived facet values (see src/lib/facets.ts / search-index.json.ts)
 // used only as clickable text-search shortcuts into /search/ -- not fabricated categories.
 const discoveryTerms = ["Grey", "White", "Polished", "Glossy", "Flooring", "Kitchen"];
@@ -82,7 +92,25 @@ const heroSwatches = [
           </a>
         </Magnet>
       </div>
-      <p class="mt-10 text-[0.65rem] uppercase tracking-[0.2em] text-paper/40">
+
+      <!-- Real claims only -- each traces to lib/business.ts (the USP list
+           and partnerBrands count), not invented "premium quality" filler. -->
+      <div class="mt-10 flex flex-wrap gap-x-10 gap-y-4">
+        <div class="flex items-center gap-2.5">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="flex-shrink-0 text-brass" aria-hidden="true"><path d="M9 12l2 2 4-4M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9Z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="text-xs uppercase tracking-wide text-paper/75">Zero-bubble laying</span>
+        </div>
+        <div class="flex items-center gap-2.5">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="flex-shrink-0 text-brass" aria-hidden="true"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5L12 3Z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="text-xs uppercase tracking-wide text-paper/75">{business.partnerBrands.length} partner brands</span>
+        </div>
+        <div class="flex items-center gap-2.5">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="flex-shrink-0 text-brass" aria-hidden="true"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="text-xs uppercase tracking-wide text-paper/75">Wholesale rates</span>
+        </div>
+      </div>
+
+      <p class="mt-8 text-[0.65rem] uppercase tracking-[0.2em] text-paper/40">
         Illustrative photography (licensed stock), not Elite Balaji's own premises
       </p>
     </div>
@@ -125,41 +153,45 @@ const heroSwatches = [
 
   <div class="quatrefoil-divider" aria-hidden="true"></div>
 
-  <!-- 02 — Explore: material worlds -->
+  <!-- 02 — Explore: 5 real categories (3 material worlds + Sanitaryware +
+       Laying Works), each a full photographic card with a circular arrow
+       button that appears on hover -- inspired by the client's reference
+       image and Varmora's own category strip, built from real hall photos
+       already used honestly elsewhere on the site. -->
   <section id="materials" class="scroll-mt-20 bg-charcoal py-20">
     <div class="mx-auto max-w-6xl px-5 reveal">
       <p class="text-xs uppercase tracking-[0.3em] text-mustard">Explore</p>
-      <h2 class="mt-2 max-w-lg font-display text-3xl text-paper sm:text-4xl">Three material worlds, one yard</h2>
+      <h2 class="mt-2 max-w-lg font-display text-3xl text-paper sm:text-4xl">Five categories, one yard</h2>
       <p class="mt-3 max-w-xl text-paper/70">
         Everything we stock and lay, grouped the way you'd actually go looking for it.
       </p>
     </div>
-    <div data-gsap-stagger class="mt-12 grid gap-1 px-1 md:grid-cols-3">
-      {materialWorlds.map((world) => (
+    <div data-gsap-stagger class="mt-12 grid gap-1 px-1 sm:grid-cols-2 lg:grid-cols-5">
+      {categoryStrip.map((cat) => (
         <SpotlightCard
           client:visible
-          className="group relative isolate flex aspect-[3/4] flex-col justify-end md:aspect-[2/3]"
+          className="group relative isolate flex aspect-[3/4] flex-col justify-end"
           spotlightColor="rgba(196, 143, 46, 0.35)"
         >
-          {world.flagship.data.heroImage ? (
+          {cat.image.data.heroImage ? (
             <img
-              src={world.flagship.data.heroImage}
-              alt={world.flagship.data.heroAlt}
-              style={world.slug === "tiles-ceramics" ? { objectPosition: "85% center" } : undefined}
+              src={cat.image.data.heroImage}
+              alt={cat.image.data.heroAlt}
+              style={cat.href === "/materials/tiles-ceramics/" ? { objectPosition: "85% center" } : undefined}
               class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               loading="lazy"
             />
           ) : (
-            <div class="absolute inset-0 h-full w-full" style={{ backgroundColor: world.flagship.data.materialColor }}></div>
+            <div class="absolute inset-0 h-full w-full" style={{ backgroundColor: cat.image.data.materialColor }}></div>
           )}
           <div class="absolute inset-0 bg-gradient-to-t from-charcoal-deep/90 via-charcoal-deep/10 to-transparent"></div>
-          <div class="relative p-6">
-            <h3 class="font-display text-2xl text-paper sm:text-3xl">{world.label}</h3>
-            <p class="mt-2 text-sm uppercase tracking-[0.2em] text-paper/70">
-              {[world.flagship, ...world.also].map((h) => h.data.name).join(" · ")}
-            </p>
+          <div class="relative flex items-end justify-between gap-3 p-5">
+            <h3 class="font-display text-xl text-paper sm:text-2xl">{cat.label}</h3>
+            <span class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full border border-paper/40 text-paper opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100 -translate-x-2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
           </div>
-          <a href={`/materials/${world.slug}/`} class="absolute inset-0" aria-label={`Explore ${world.label}`}></a>
+          <a href={cat.href} class="absolute inset-0" aria-label={`Explore ${cat.label}`}></a>
         </SpotlightCard>
       ))}
     </div>
