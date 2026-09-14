@@ -29,29 +29,30 @@ const materialsActive =
   allHalls.some((h) => pathname.startsWith(h.href)) || pathname === "/halls/" || pathname.startsWith("/materials/");
 ---
 
-<header class="sticky top-0 z-40 border-b border-line/70 bg-paper/95 backdrop-blur">
-  <div class="mx-auto flex max-w-6xl items-center justify-between gap-3 px-5 py-3">
-    <a href="/" class="flex flex-shrink-0 items-center gap-2.5 leading-none">
+<header class="sticky top-0 z-40 border-b border-paper/10 bg-charcoal-deep/95 backdrop-blur">
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-3 px-5 py-4">
+    <a href="/" class="flex flex-shrink-0 items-center gap-3 leading-none">
       <!-- Original crest (not a claimed trademark/registered mark) -- a
            compass-rosette badge in the gold/brass already used across the
            site, echoing the reference image's circular emblem without
            reproducing its exact artwork (the handshake motif from that
            image is reused, larger, in the "Why Elite Balaji" section where
-           it can actually read at size instead of being illegible at 36px). -->
-      <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="flex-shrink-0">
+           it can read at real size). Enlarged per VISUAL_AUDIT_V2.md #2 --
+           previously ~half the reference's visual weight. -->
+      <svg width="56" height="56" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="flex-shrink-0">
         <circle cx="19" cy="19" r="17.5" stroke="var(--color-brass)" stroke-width="1"/>
         <circle cx="19" cy="19" r="14" stroke="var(--color-brass)" stroke-width="0.6" opacity="0.6"/>
         <path d="M19 7L21.3 16.7L31 19L21.3 21.3L19 31L16.7 21.3L7 19L16.7 16.7L19 7Z" stroke="var(--color-brass)" stroke-width="1" stroke-linejoin="round"/>
         <circle cx="19" cy="19" r="2.2" fill="var(--color-brass)"/>
       </svg>
       <span class="flex flex-col">
-        <span class="bg-gradient-to-b from-brass to-mustard-dark bg-clip-text font-display text-xl italic text-transparent whitespace-nowrap">Elite Balaji</span>
-        <span class="text-[0.55rem] uppercase tracking-[0.3em] text-brass whitespace-nowrap">Stones &amp; Ceramics</span>
-        <span class="hidden text-[0.45rem] uppercase tracking-[0.25em] text-ink-soft/60 whitespace-nowrap sm:block">— {business.subTagline} —</span>
+        <span class="bg-gradient-to-b from-brass to-mustard-dark bg-clip-text font-display text-2xl italic text-transparent whitespace-nowrap sm:text-3xl">Elite Balaji</span>
+        <span class="text-[0.6rem] uppercase tracking-[0.3em] text-brass whitespace-nowrap">Stones &amp; Ceramics</span>
+        <span class="hidden text-[0.48rem] uppercase tracking-[0.25em] text-paper/50 whitespace-nowrap sm:block">— {business.subTagline} —</span>
       </span>
     </a>
 
-    <nav aria-label="Primary" class="relative hidden items-center gap-5 text-sm lg:flex">
+    <nav aria-label="Primary" class="relative hidden items-center gap-6 text-sm lg:flex">
       <div class="relative">
         <button
           id="materials-toggle"
@@ -59,8 +60,8 @@ const materialsActive =
           aria-expanded="false"
           aria-controls="materials-menu"
           class:list={[
-            "flex items-center gap-1.5 whitespace-nowrap text-xs font-medium uppercase tracking-wide hover:text-terracotta transition-colors",
-            materialsActive ? "text-terracotta" : "text-ink-soft",
+            "flex items-center gap-1.5 whitespace-nowrap text-xs font-medium uppercase tracking-widest hover:text-brass transition-colors",
+            materialsActive ? "text-brass" : "text-paper/80",
           ]}
         >
           Materials
@@ -103,8 +104,8 @@ const materialsActive =
       <a
         href="/halls/laying-works/"
         class:list={[
-          "whitespace-nowrap text-xs font-medium uppercase tracking-wide hover:text-terracotta transition-colors",
-          pathname.startsWith("/halls/laying-works/") ? "text-terracotta" : "text-ink-soft",
+          "whitespace-nowrap text-xs font-medium uppercase tracking-widest hover:text-brass transition-colors",
+          pathname.startsWith("/halls/laying-works/") ? "text-brass" : "text-paper/80",
         ]}
       >
         Laying Works
@@ -112,13 +113,13 @@ const materialsActive =
       <a
         href="/custom/"
         class:list={[
-          "whitespace-nowrap text-xs font-medium uppercase tracking-wide hover:text-terracotta transition-colors",
-          pathname.startsWith("/custom/") ? "text-terracotta" : "text-ink-soft",
+          "whitespace-nowrap text-xs font-medium uppercase tracking-widest hover:text-brass transition-colors",
+          pathname.startsWith("/custom/") ? "text-brass" : "text-paper/80",
         ]}
       >
         Custom
       </a>
-      <a href="/about/" class="whitespace-nowrap text-xs font-medium uppercase tracking-wide text-ink-soft hover:text-terracotta transition-colors">
+      <a href="/about/" class="whitespace-nowrap text-xs font-medium uppercase tracking-widest text-paper/80 hover:text-brass transition-colors">
         About
       </a>
     </nav>
@@ -126,7 +127,7 @@ const materialsActive =
     <div class="flex flex-shrink-0 items-center gap-2">
       <a
         href="/search/"
-        class="inline-flex items-center justify-center rounded-full border border-line p-2.5 text-ink-soft hover:border-terracotta hover:text-terracotta transition-colors"
+        class="inline-flex items-center justify-center rounded-full border border-paper/25 p-2.5 text-paper/80 hover:border-brass hover:text-brass transition-colors"
         aria-label="Search the catalogue"
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -136,13 +137,13 @@ const materialsActive =
       </a>
       <a
         href={telLink()}
-        class="hidden whitespace-nowrap rounded-full border border-terracotta/60 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-terracotta hover:bg-terracotta hover:text-paper transition-colors sm:inline-block"
+        class="hidden whitespace-nowrap rounded-full border border-brass/60 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-brass hover:bg-brass hover:text-charcoal-deep transition-colors sm:inline-block"
       >
         Call {business.phoneDisplay}
       </a>
       <a
         href={telLink()}
-        class="inline-flex items-center justify-center rounded-full border border-terracotta/60 p-2.5 text-terracotta sm:hidden"
+        class="inline-flex items-center justify-center rounded-full border border-brass/60 p-2.5 text-brass sm:hidden"
         aria-label={`Call ${business.phoneDisplay}`}
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
@@ -154,7 +155,7 @@ const materialsActive =
         type="button"
         aria-expanded="false"
         aria-controls="mobile-nav"
-        class="inline-flex items-center justify-center rounded-full border border-line p-2.5 text-ink lg:hidden"
+        class="inline-flex items-center justify-center rounded-full border border-paper/25 p-2.5 text-paper lg:hidden"
       >
         <span class="sr-only">Open menu</span>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -164,41 +165,58 @@ const materialsActive =
     </div>
   </div>
 
-  <nav id="mobile-nav" aria-label="Mobile" hidden class="border-t border-line/60 bg-paper px-5 py-4 lg:hidden">
+  <!-- Secondary row, matching the reference's thin sub-nav strip -- links
+       to the 3 material-world pages that already exist, not new
+       destinations (VISUAL_AUDIT_V2.md #1 header fix, held to "no new nav
+       destinations" per instruction). -->
+  <div class="hidden border-t border-paper/10 lg:block">
+    <div class="mx-auto flex max-w-6xl items-center justify-center gap-4 px-5 py-2">
+      {materialGroups.map((group, i) => (
+        <>
+          {i > 0 && <span class="text-paper/20">|</span>}
+          <a href={`/materials/${group.slug}/`} class="whitespace-nowrap text-[0.65rem] uppercase tracking-[0.2em] text-paper/50 hover:text-brass transition-colors">
+            {group.label}
+          </a>
+        </>
+      ))}
+    </div>
+  </div>
+
+  <nav id="mobile-nav" aria-label="Mobile" hidden class="border-t border-paper/10 bg-charcoal-deep px-5 py-4 lg:hidden">
     <ul class="flex flex-col gap-4 text-sm">
       {materialGroups.map((group) => (
         <li>
-          <p class="text-[0.65rem] uppercase tracking-[0.2em] text-terracotta">{group.label}</p>
+          <p class="text-[0.65rem] uppercase tracking-[0.2em] text-brass">{group.label}</p>
           <ul class="mt-2 flex flex-col gap-2 pl-1">
             {group.items.map((item) => (
-              <li><a href={item.href} class="block text-sm text-ink hover:text-terracotta">{item.label}</a></li>
+              <li><a href={item.href} class="block text-sm text-paper/85 hover:text-brass">{item.label}</a></li>
             ))}
           </ul>
         </li>
       ))}
-      <li class="border-t border-line/60 pt-3">
-        <p class="text-[0.65rem] uppercase tracking-[0.2em] text-ink-soft/60">Also stocked</p>
+      <li class="border-t border-paper/10 pt-3">
+        <p class="text-[0.65rem] uppercase tracking-[0.2em] text-paper/50">Also stocked</p>
         <ul class="mt-2 flex flex-col gap-2 pl-1">
           {alsoStocked.map((item) => (
-            <li><a href={item.href} class="block text-sm text-ink hover:text-terracotta">{item.label}</a></li>
+            <li><a href={item.href} class="block text-sm text-paper/85 hover:text-brass">{item.label}</a></li>
           ))}
-          <li><a href="/halls/laying-works/" class="block text-sm text-ink hover:text-terracotta">Laying Works</a></li>
+          <li><a href="/halls/laying-works/" class="block text-sm text-paper/85 hover:text-brass">Laying Works</a></li>
         </ul>
       </li>
-      <li class="border-t border-line/60 pt-3">
-        <a href="/halls/" class="block py-1 text-xs font-medium uppercase tracking-wide text-ink-soft hover:text-terracotta">All halls</a>
+      <li class="border-t border-paper/10 pt-3">
+        <a href="/halls/" class="block py-1 text-xs font-medium uppercase tracking-wide text-paper/80 hover:text-brass">All halls</a>
       </li>
       <li>
-        <a href="/custom/" class="block py-1 text-xs font-medium uppercase tracking-wide text-ink-soft hover:text-terracotta">Custom &amp; Fabrication</a>
+        <a href="/custom/" class="block py-1 text-xs font-medium uppercase tracking-wide text-paper/80 hover:text-brass">Custom &amp; Fabrication</a>
       </li>
       <li>
-        <a href="/search/" class="block py-1 text-xs font-medium uppercase tracking-wide text-ink-soft hover:text-terracotta">Explore &amp; Filter</a>
+        <a href="/search/" class="block py-1 text-xs font-medium uppercase tracking-wide text-paper/80 hover:text-brass">Explore &amp; Filter</a>
       </li>
       <li>
-        <a href="/about/" class="block py-1 text-xs font-medium uppercase tracking-wide text-ink-soft hover:text-terracotta">About</a>
+        <a href="/about/" class="block py-1 text-xs font-medium uppercase tracking-wide text-paper/80 hover:text-brass">About</a>
       </li>
       <li>
-        <a href="/contact/" class="block py-1 text-xs font-medium uppercase tracking-wide text-ink-soft hover:text-terracotta">Contact</a>
+        <a href="/contact/" class="block py-1 text-xs font-medium uppercase tracking-wide text-paper/80 hover:text-brass">Contact</a>
       </li>
     </ul>
   </nav>

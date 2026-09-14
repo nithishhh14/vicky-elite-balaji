@@ -65,7 +65,7 @@ const heroSwatches = [
        of Elite Balaji's own premises -- see the credit line below), colour-
        graded to the site's charcoal/gold palette, plus a strip of real
        photography across every hall further down. -->
-  <section class="relative isolate flex min-h-[92vh] flex-col justify-between overflow-hidden bg-charcoal-deep text-paper">
+  <section class="relative isolate flex min-h-screen items-center overflow-hidden bg-charcoal-deep py-32 text-paper">
     <img
       src="/media/brand/hero-lobby.jpg"
       alt=""
@@ -73,87 +73,85 @@ const heroSwatches = [
       class="absolute inset-0 h-full w-full object-cover opacity-80"
       fetchpriority="high"
     />
-    <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-charcoal-deep via-charcoal-deep/70 to-charcoal-deep/30" aria-hidden="true"></div>
-    <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_rgba(31,61,51,0.45),_transparent_60%),radial-gradient(ellipse_at_bottom_right,_rgba(163,130,47,0.15),_transparent_55%)]" aria-hidden="true"></div>
+    <div class="marble-veins pointer-events-none absolute inset-y-0 left-0 w-[55%] bg-[linear-gradient(to_right,_var(--color-charcoal-deep)_0%,_var(--color-bottle-dark)_55%,_transparent_100%)]" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-charcoal-deep via-charcoal-deep/50 to-transparent" aria-hidden="true"></div>
 
-    <div data-gsap-hero class="relative z-10 mx-auto flex w-full max-w-6xl flex-1 items-center gap-10 px-5 pt-32">
-      <div class="flex-1">
-      <p class="text-xs uppercase tracking-[0.4em] text-brass">Since {business.since} &middot; Karamadai, Coimbatore</p>
-      <h1 class="mt-4 max-w-3xl font-display text-6xl font-semibold leading-[0.95] sm:text-8xl">
-        Elite Balaji
+    <div data-gsap-hero class="relative z-10 mx-auto w-full max-w-6xl px-5">
+      <p class="text-xs uppercase leading-relaxed tracking-[0.4em] text-brass">
+        Since {business.since}<br />Karamadai, Coimbatore
+      </p>
+      <h1 class="mt-6 font-display text-7xl font-semibold leading-[0.9] sm:text-8xl lg:text-9xl">
+        <span class="bg-gradient-to-b from-brass to-mustard-dark bg-clip-text text-transparent">Stones &amp;</span><br />
+        <span class="text-paper">Ceramics</span>
       </h1>
-      <p class="mt-3 text-sm uppercase tracking-[0.35em] text-paper/70">Stones &amp; Ceramics</p>
-      <p class="mt-7 max-w-lg font-display text-xl italic text-paper/80">
+      <p class="mt-8 max-w-lg font-display text-xl italic text-paper/80">
         Granite, marble, natural stone, tiles and surfaces — sourced, supplied and laid from one yard.
       </p>
-      <div id="hero-cta" class="mt-9">
+      <div id="hero-cta" class="mt-10">
         <Magnet client:load padding={80} magnetStrength={3}>
-          <a href="#materials" class="inline-block rounded-full border border-brass/70 px-7 py-3.5 text-sm font-semibold uppercase tracking-wide text-brass hover:bg-brass hover:text-charcoal-deep transition-colors">
+          <a href="#materials" class="inline-block rounded-full border border-brass/70 px-8 py-4 text-sm font-semibold uppercase tracking-wide text-brass hover:bg-brass hover:text-charcoal-deep transition-colors">
             Explore Materials
           </a>
         </Magnet>
       </div>
 
-      <!-- Real claims only -- each traces to lib/business.ts (the USP list
-           and partnerBrands count), not invented "premium quality" filler. -->
-      <div class="mt-10 flex flex-wrap gap-x-10 gap-y-4">
-        <div class="flex items-center gap-2.5">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="flex-shrink-0 text-brass" aria-hidden="true"><path d="M9 12l2 2 4-4M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9Z" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span class="text-xs uppercase tracking-wide text-paper/75">Zero-bubble laying</span>
+      <!-- Minimal supporting indicators only -- 3 real facts, 2-line
+           stacked to match the reference's rhythm. Trust stats and
+           category imagery now live in their own sections below, not
+           stacked into the hero. -->
+      <div class="mt-14 flex flex-wrap gap-x-12 gap-y-6">
+        <div class="flex items-center gap-3">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" class="flex-shrink-0 text-brass" aria-hidden="true"><path d="M9 12l2 2 4-4M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9Z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="text-xs uppercase leading-snug tracking-wide text-paper/80">Zero-Bubble<br />Laying</span>
         </div>
-        <div class="flex items-center gap-2.5">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="flex-shrink-0 text-brass" aria-hidden="true"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5L12 3Z" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span class="text-xs uppercase tracking-wide text-paper/75">{business.partnerBrands.length} partner brands</span>
+        <div class="flex items-center gap-3">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" class="flex-shrink-0 text-brass" aria-hidden="true"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5L12 3Z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="text-xs uppercase leading-snug tracking-wide text-paper/80">{business.partnerBrands.length} Partner<br />Brands</span>
         </div>
-        <div class="flex items-center gap-2.5">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="flex-shrink-0 text-brass" aria-hidden="true"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span class="text-xs uppercase tracking-wide text-paper/75">Wholesale rates</span>
-        </div>
-      </div>
-
-      <p class="mt-8 text-[0.65rem] uppercase tracking-[0.2em] text-paper/40">
-        Illustrative photography (licensed stock), not Elite Balaji's own premises
-      </p>
-      </div>
-
-      <!-- Right-side supporting text panel, mirroring the reference image's
-           layout -- real copy (the site's own mission line + subtagline),
-           not a new claim, just placed the way the reference placed its
-           equivalent panel. Hidden below lg since there's no room once the
-           hero text wraps that wide. -->
-      <div class="hidden max-w-xs flex-shrink-0 self-end border-l border-brass/40 py-1 pl-6 pb-2 text-sm text-paper/75 lg:block">
-        <p>From Karamadai's finest stone to world-class ceramics, we bring beauty, strength and style to every space.</p>
-        <p class="mt-4 text-xs uppercase tracking-[0.3em] text-brass">{business.subTagline}</p>
-      </div>
-    </div>
-
-    <!-- Real facts, not marketing statistics -- every figure here is a
-         literal, checkable business detail (founding year, hall count,
-         region), never an invented "1000+ products" style claim. -->
-    <div class="relative border-t border-paper/10 bg-charcoal-deep/60 backdrop-blur-sm">
-      <div class="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-5 py-6 text-center sm:grid-cols-4">
-        <div>
-          <p class="font-display text-2xl text-brass">{business.since}</p>
-          <p class="mt-1 text-[0.65rem] uppercase tracking-[0.2em] text-paper/60">Founded</p>
-        </div>
-        <div>
-          <p class="font-display text-2xl text-brass">{halls.length}</p>
-          <p class="mt-1 text-[0.65rem] uppercase tracking-[0.2em] text-paper/60">Material halls</p>
-        </div>
-        <div>
-          <p class="font-display text-2xl text-brass">One yard</p>
-          <p class="mt-1 text-[0.65rem] uppercase tracking-[0.2em] text-paper/60">Supply &amp; laying</p>
-        </div>
-        <div>
-          <p class="font-display text-2xl text-brass">Karamadai</p>
-          <p class="mt-1 text-[0.65rem] uppercase tracking-[0.2em] text-paper/60">Coimbatore</p>
+        <div class="flex items-center gap-3">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" class="flex-shrink-0 text-brass" aria-hidden="true"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="text-xs uppercase leading-snug tracking-wide text-paper/80">Wholesale<br />Rates</span>
         </div>
       </div>
     </div>
 
-    <!-- Swatch strip: real photography from several halls at once, so no
-         single material reads as the site's identity. -->
-    <div class="relative grid grid-cols-3 sm:grid-cols-6">
+    <!-- Right-side supporting text panel, mirroring the reference image's
+         layout -- real copy, no border rule (VISUAL_AUDIT_V2.md #9). -->
+    <div class="absolute bottom-24 right-5 hidden max-w-xs text-right text-sm text-paper/75 lg:block xl:right-[max(1.25rem,calc((100vw-72rem)/2))]">
+      <p>From Karamadai's finest stone to world-class ceramics, we bring beauty, strength and style to every space.</p>
+      <p class="mt-4 text-xs uppercase tracking-[0.3em] text-brass">{business.subTagline}</p>
+    </div>
+
+    <p class="absolute bottom-5 left-5 text-[0.6rem] uppercase tracking-[0.15em] text-paper/35">
+      Illustrative photography (licensed stock), not Elite Balaji's own premises
+    </p>
+  </section>
+
+  <!-- 02 — Facts & range: relocated out of the hero (VISUAL_AUDIT_V2.md #4)
+       so the hero above is one uninterrupted statement instead of three
+       stacked bands. Content/styling unchanged from before the move --
+       consolidating this with the post-category-strip stat bar is later,
+       separate work. -->
+  <section class="border-b border-paper/10 bg-charcoal-deep text-paper">
+    <div class="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-5 py-8 text-center sm:grid-cols-4">
+      <div>
+        <p class="font-display text-2xl text-brass">{business.since}</p>
+        <p class="mt-1 text-[0.65rem] uppercase tracking-[0.2em] text-paper/60">Founded</p>
+      </div>
+      <div>
+        <p class="font-display text-2xl text-brass">{halls.length}</p>
+        <p class="mt-1 text-[0.65rem] uppercase tracking-[0.2em] text-paper/60">Material halls</p>
+      </div>
+      <div>
+        <p class="font-display text-2xl text-brass">One yard</p>
+        <p class="mt-1 text-[0.65rem] uppercase tracking-[0.2em] text-paper/60">Supply &amp; laying</p>
+      </div>
+      <div>
+        <p class="font-display text-2xl text-brass">Karamadai</p>
+        <p class="mt-1 text-[0.65rem] uppercase tracking-[0.2em] text-paper/60">Coimbatore</p>
+      </div>
+    </div>
+    <div class="grid grid-cols-3 sm:grid-cols-6">
       {heroSwatches.map((s) => (
         <a href={s.href} class="group relative aspect-square overflow-hidden">
           <img src={s.src} alt={s.alt} style={s.position ? { objectPosition: s.position } : undefined} class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy" />
