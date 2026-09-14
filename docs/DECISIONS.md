@@ -5,6 +5,35 @@ reconsidering something that may already have been decided.
 
 ---
 
+### Decision: License one Adobe Stock photo for the homepage hero instead of AI-generating it
+**Date:** 2026-09-14
+**Reason:** After the photo-free hero (2026-09-13) still didn't match the
+richness of the client's reference image, the client asked for AI image
+generation and connected the Adobe for Creativity MCP connector to get it.
+Adobe's own tool documentation for this connector states outright: "Most
+generative AI capabilities (image generation, generative fill, text-to-
+image...) are not available in this environment" — the only generative
+tool exposed is `image_generative_expand` (canvas outpainting on an
+existing image), not text-to-image. So true "generate a luxury lobby
+photo" was not possible even with Adobe connected. Used Adobe Stock search
++ licensing instead — a real, professionally shot photo, not AI-generated
+and not a claim about Elite Balaji's own premises — then colour-graded it
+with Adobe's Photoshop-API tools (exposure/gamma/contrast, warm colour
+temperature, a soft charcoal-green overlay) to match the site's palette
+rather than using it in its original bright/neutral tone.
+**Alternatives considered:** Waiting for real photography of Elite
+Balaji's actual yard/showroom (the only option giving a wholly real photo;
+not something either party could arrange immediately); staying photo-free
+(rejected once the client specifically asked to close this gap).
+**Current status:** Implemented, commit `a2fafc3`. Licensing the Stock
+asset is a real purchase against the connected Adobe account — explicit
+user confirmation (via `AskUserQuestion`) was obtained immediately before
+that specific step, not assumed from the general "use Adobe for this"
+instruction. The image carries an on-page credit: "Illustrative photography
+(licensed stock), not Elite Balaji's own premises."
+
+---
+
 ### Decision: Homepage hero goes photo-free (dark/gold editorial); reference-image statistics not copied
 **Date:** 2026-09-13
 **Reason:** Client feedback (with a reference screenshot) said the homepage
