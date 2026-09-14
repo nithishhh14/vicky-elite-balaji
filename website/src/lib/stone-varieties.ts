@@ -27,9 +27,6 @@ export const stoneCategories: StoneCategory[] = [
     blurb: "Indian and imported granite for counters, flooring, cladding and staircases.",
     varieties: [
       { name: "Black Galaxy" },
-      { name: "Absolute Black" },
-      { name: "Kashmir White", note: "Tamil Nadu-quarried" },
-      { name: "Tan Brown" },
       { name: "River White", note: "Tamil Nadu-quarried" },
       { name: "Imperial Red", note: "Tamil Nadu-quarried" },
       { name: "Steel Grey" },
@@ -49,8 +46,6 @@ export const stoneCategories: StoneCategory[] = [
     varieties: [
       { name: "Makrana White" },
       { name: "Statuario-look" },
-      { name: "Carrara-look" },
-      { name: "Fantasy Brown" },
       { name: "Banswara White" },
       { name: "Katni" },
       { name: "Ambaji White" },
@@ -64,8 +59,6 @@ export const stoneCategories: StoneCategory[] = [
     label: "Limestone",
     blurb: "Kota and Kadappa limestone, our most-stocked natural stone for flooring and platforms.",
     varieties: [
-      { name: "Kota Blue" },
-      { name: "Kota Brown" },
       { name: "Tandur Limestone" },
       { name: "Black Limestone" },
     ],
@@ -136,13 +129,11 @@ export const quartzCategories: StoneCategory[] = [
   {
     slug: "quartz",
     label: "Engineered Quartz",
-    blurb: "Engineered quartz surfaces for counters and heavy-use worktops, sourced on request beyond our 2 confirmed colours.",
+    blurb: "Engineered quartz surfaces for counters and heavy-use worktops, sourced on request beyond our confirmed colours.",
     varieties: [
       { name: "Pure White" },
       { name: "Calacatta-look" },
       { name: "Carrara-look" },
-      { name: "Concrete Grey" },
-      { name: "Black Pearl" },
       { name: "Beige Sahara" },
       { name: "Snow White" },
     ],
