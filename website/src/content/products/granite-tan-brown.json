@@ -1,0 +1,12 @@
+{
+  "kind": "material",
+  "hallId": "granite-marbles",
+  "name": "Tan Brown Granite",
+  "category": "Natural granite slab",
+  "finish": "Polished",
+  "order": 4,
+  "applications": ["Flooring", "Countertops", "Staircases", "Cladding"],
+  "image": "https://images.unsplash.com/photo-1584593405096-50f4612566d1?auto=format&fit=crop&w=1200&q=80",
+  "imageAlt": "Polished tan brown granite slab with black and pink speckling",
+  "note": "Representative style. Confirm exact slab, veining and finish with our team before ordering."
+}

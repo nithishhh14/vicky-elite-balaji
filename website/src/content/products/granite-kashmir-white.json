@@ -1,0 +1,12 @@
+{
+  "kind": "material",
+  "hallId": "granite-marbles",
+  "name": "Kashmir White Granite",
+  "category": "Natural granite slab",
+  "finish": "Polished",
+  "order": 5,
+  "applications": ["Flooring", "Countertops", "Wall cladding"],
+  "image": "https://images.unsplash.com/photo-1628977614615-f5f4068361ed?auto=format&fit=crop&w=1200&q=80",
+  "imageAlt": "Polished white granite slab with grey and gold speckling",
+  "note": "Representative style. Confirm exact slab, veining and finish with our team before ordering."
+}
