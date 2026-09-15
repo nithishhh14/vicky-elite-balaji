@@ -63,6 +63,13 @@ for (const p of products) {
   { src: "/media/concepts/staircase-960.jpg", alt: "Concept: staircase in polished dark granite", title: "Staircase concept", groups: ["spaces", "granite"] },
   { src: "/media/concepts/facade-960.jpg", alt: "Concept: villa entrance with granite cladding and stone driveway", title: "Facade concept", groups: ["spaces"] },
 ].forEach((r) => tiles.push({ ...r, label: "Application concept", tone: "idea" }));
+// Custom tile printing concepts (no finished-job photos yet).
+[
+  { slug: "pooja-mural", alt: "Concept: pooja room mural of printed tiles with a golden lotus", title: "Printed tile mural", groups: ["tiles", "spaces", "stonecraft"] },
+  { slug: "kitchen-backsplash", alt: "Concept: printed tile kitchen backsplash of misty tea hills", title: "Printed tile backsplash", groups: ["tiles", "kitchen", "spaces"] },
+  { slug: "entrance-feature-wall", alt: "Concept: printed tile feature wall with a peacock", title: "Printed tile feature wall", groups: ["tiles", "spaces"] },
+  { slug: "printed-tiles-closeup", alt: "Concept: printed tiles with heritage and landscape designs", title: "Custom printed tiles", groups: ["tiles", "stonecraft"] },
+].forEach((r) => tiles.push({ src: `/media/concepts/tile-printing/${r.slug}-960.jpg`, alt: r.alt, title: r.title, groups: r.groups, label: "Concept visual · custom tile printing", tone: "idea", href: "/custom/#tile-printing" }));
 [
   { src: "/media/reference/hero-interior.jpg", alt: "Concept render of a marble showroom reception", title: "Showroom concept" },
   { src: "/media/reference/card-exterior.jpg", alt: "Concept render of a marble-clad building entrance", title: "Exterior concept" },

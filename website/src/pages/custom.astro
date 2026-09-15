@@ -37,20 +37,96 @@ const hero = bySlug("tulsi-madam-engraved-black");
     <div class="mx-auto grid max-w-7xl gap-10 px-5 pb-16 pt-32 lg:grid-cols-[1.1fr_0.9fr] lg:items-end lg:px-8 lg:pt-40">
       <div data-gsap-hero>
         <p class="text-xs uppercase tracking-[0.45em] text-brass">Custom stonecraft</p>
-        <h1 class="mt-5 font-display text-[clamp(3rem,8vw,6.5rem)] font-medium leading-[0.92]">Bring an idea.<br /><span class="text-brass">We cut it in stone.</span></h1>
+        <h1 class="mt-5 font-display text-[clamp(3rem,8vw,6.5rem)] font-medium leading-[0.92]">Bring an idea.<br /><span class="text-brass">We make it in stone &amp; tile.</span></h1>
         <p class="mt-6 max-w-lg text-lg text-paper/80 leading-relaxed">
-          Bring a pattern, drawing or idea. We help translate it into granite or marble: engraved
-          name plates, tulsi madams, benches and tables, made for one place.
+          Bring a pattern, drawing, photo or idea. We translate it into granite, marble or printed tile:
+          engraved name plates, tulsi madams, benches and tables, and custom tile murals. Delivered
+          across India.
         </p>
         <div class="mt-9 flex flex-wrap gap-3">
           <a href={waLink("Hi Elite Balaji, I have an idea for a custom stone piece (photo/sketch attached):")} target="_blank" rel="noopener" class="bg-gradient-to-r from-brass to-mustard-dark px-7 py-3.5 text-xs uppercase tracking-[0.2em] hover:brightness-110">Share your idea</a>
           <a href="#work" class="border border-paper/40 px-7 py-3.5 text-xs uppercase tracking-[0.2em] hover:border-brass">See our work</a>
+          <a href="#tile-printing" class="border border-paper/40 px-7 py-3.5 text-xs uppercase tracking-[0.2em] hover:border-brass">Custom tile printing</a>
         </div>
       </div>
       <figure class="relative">
         <img src={hero.src} alt={hero.alt} width={hero.width} height={hero.height} class="max-h-[70svh] w-full object-cover" fetchpriority="high" />
         <figcaption class="mt-3 text-[0.6rem] uppercase tracking-[0.2em] text-paper/45">{provenanceLabel.work} · {hero.title}</figcaption>
       </figure>
+    </div>
+  </section>
+
+  <!-- Custom tile printing. Visuals are generated concepts (Runway,
+       2026-09-15), always labelled, until the client has finished-job photos. -->
+  <section id="tile-printing" class="scroll-mt-24 bg-paper py-20">
+    <div class="mx-auto max-w-7xl px-5 lg:px-8">
+      <div class="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
+        <div>
+          <p class="text-xs uppercase tracking-[0.3em] text-mustard-dark">Custom tile printing</p>
+          <h2 class="mt-3 font-display text-4xl sm:text-6xl">Your picture, printed on tile</h2>
+          <p class="mt-5 max-w-lg text-ink-soft leading-relaxed">
+            High-definition digital printing on vitrified and ceramic tiles, for pooja room murals,
+            kitchen backsplashes, feature walls and heritage pattern recreations. Send us the image and
+            the wall size, and we'll confirm what's possible.
+          </p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href={waLink("Hi Elite Balaji, I'd like custom printed tiles. Image: (attached). Wall size: ___. Room: ___. Location: ___.")} target="_blank" rel="noopener" class="inline-flex min-h-12 items-center bg-gradient-to-r from-brass to-mustard-dark px-7 text-xs uppercase tracking-[0.2em] text-paper hover:brightness-110">Send your image</a>
+            <span class="inline-flex min-h-12 items-center border border-line px-5 text-xs uppercase tracking-[0.18em] text-ink-soft">Delivered pan-India</span>
+          </div>
+        </div>
+        <figure class="relative overflow-hidden bg-charcoal-deep">
+          <img data-gsap-reveal src="/media/concepts/tile-printing/pooja-mural.jpg" srcset="/media/concepts/tile-printing/pooja-mural-960.jpg 960w, /media/concepts/tile-printing/pooja-mural.jpg 1920w" sizes="(min-width: 1024px) 700px, 100vw" alt="Concept: pooja room wall of printed tiles showing a golden lotus under a temple arch" class="aspect-[16/10] w-full object-cover" loading="lazy" />
+          <figcaption class="absolute bottom-3 left-3 bg-charcoal-deep/70 px-3 py-1.5 text-[0.55rem] uppercase tracking-[0.2em] text-paper/80 backdrop-blur">Concept visual · pooja room mural</figcaption>
+        </figure>
+      </div>
+
+      <ul data-gsap-stagger class="mt-6 grid gap-4 md:grid-cols-3">
+        {[
+          { slug: "kitchen-backsplash", alt: "Concept: kitchen backsplash of printed tiles showing misty tea hills", caption: "Kitchen backsplash" },
+          { slug: "entrance-feature-wall", alt: "Concept: entrance feature wall of printed tiles with a peacock among foliage", caption: "Entrance feature wall" },
+          { slug: "printed-tiles-closeup", alt: "Concept: printed tiles with kolam, Kerala mural, sunset and Chettinad designs", caption: "Any design, any tile" },
+        ].map((c) => (
+          <li>
+            <figure class="relative overflow-hidden bg-charcoal-deep">
+              <img src={`/media/concepts/tile-printing/${c.slug}-960.jpg`} alt={c.alt} class="aspect-[4/3] w-full object-cover" loading="lazy" />
+              <figcaption class="absolute bottom-3 left-3 bg-charcoal-deep/70 px-3 py-1.5 text-[0.55rem] uppercase tracking-[0.2em] text-paper/80 backdrop-blur">Concept visual · {c.caption}</figcaption>
+            </figure>
+          </li>
+        ))}
+      </ul>
+
+      <div class="mt-14 grid gap-10 md:grid-cols-3">
+        <div>
+          <h3 class="text-sm font-semibold uppercase tracking-[0.14em]">What you can print</h3>
+          <ul class="mt-3 space-y-1.5 text-sm text-ink-soft">
+            <li>Deity art and temple motifs</li>
+            <li>Landscapes and nature scenes</li>
+            <li>Kolam, Chettinad and heritage patterns</li>
+            <li>Family photos and memories</li>
+            <li>Logos and artwork for shops and offices</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-sm font-semibold uppercase tracking-[0.14em]">Where it goes</h3>
+          <ul class="mt-3 space-y-1.5 text-sm text-ink-soft">
+            <li>Pooja rooms</li>
+            <li>Kitchen backsplashes</li>
+            <li>Entrance and living feature walls</li>
+            <li>Bathroom accent walls</li>
+            <li>Reception and commercial walls</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-sm font-semibold uppercase tracking-[0.14em]">How it works</h3>
+          <ol class="mt-3 space-y-1.5 text-sm text-ink-soft">
+            <li><span class="font-display text-lg text-brass">01</span> Send the image and wall size</li>
+            <li><span class="font-display text-lg text-brass">02</span> We confirm tile, size and finish</li>
+            <li><span class="font-display text-lg text-brass">03</span> Approve the layout before printing</li>
+            <li><span class="font-display text-lg text-brass">04</span> Printed, packed and delivered, or laid by our crew locally</li>
+          </ol>
+        </div>
+      </div>
+      <p class="mt-8 text-xs text-ink-soft/80">Images on this section are concept visuals showing the kind of work possible, not photographs of completed jobs.</p>
     </div>
   </section>
 

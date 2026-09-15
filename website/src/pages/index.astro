@@ -30,7 +30,7 @@ const facts = [
   { value: `${business.partnerBrands.length} brands`, label: "We work with" },
   { value: "Own slab yard", label: "Granite & marble" },
   { value: "Made to order", label: "Custom stonecraft" },
-  { value: "India-wide", label: "Supply on request" },
+  { value: "Pan-India", label: "Custom art delivery" },
 ];
 
 const specimens = products
@@ -187,7 +187,11 @@ const localHubs = ["Karamadai", "Coimbatore", "Mettupalayam", "Annur", "Sirumuga
         <div class="flex items-center gap-4"><span data-gsap-line class="block h-px w-12 bg-brass" aria-hidden="true"></span><p class="text-xs uppercase tracking-[0.3em] text-brass">Custom stonecraft</p></div>
         <h2 class="mt-4 font-display text-4xl sm:text-5xl">Bring a pattern, drawing or idea.</h2>
         <p class="mt-3 font-display text-2xl text-paper/80">We help translate it into stone.</p>
-        <p class="mt-6 max-w-md text-paper/70 leading-relaxed">Engraved name plates and welcome signs, tulsi madams and pooja units, granite tables and benches. Every piece shown here is our own work.</p>
+        <p class="mt-6 max-w-md text-paper/70 leading-relaxed">Engraved name plates and welcome signs, tulsi madams and pooja units, granite tables and benches. Every piece shown here is our own work, delivered across India.</p>
+        <a href="/custom/#tile-printing" class="group mt-6 flex max-w-md items-center gap-4 border border-paper/15 p-3 hover:border-brass">
+          <img src="/media/concepts/tile-printing/printed-tiles-closeup-960.jpg" alt="" class="h-16 w-24 flex-shrink-0 object-cover" loading="lazy" />
+          <span><span class="block font-display text-xl group-hover:text-brass">Custom tile printing</span><span class="text-[0.6rem] uppercase tracking-[0.16em] text-paper/55">Your image printed on tile · concept visual</span></span>
+        </a>
         <ol class="mt-8 grid grid-cols-3 gap-4 text-[0.6rem] uppercase tracking-[0.16em] text-paper/70 sm:grid-cols-6 lg:grid-cols-3">
           {["Raw stone", "Design", "Engraving", "Finishing", "Installation", "Final piece"].map((s, i) => (
             <li class="border-t border-paper/20 pt-2"><span class="block font-display text-lg text-brass">{String(i + 1).padStart(2, "0")}</span>{s}</li>
@@ -266,15 +270,22 @@ const localHubs = ["Karamadai", "Coimbatore", "Mettupalayam", "Annur", "Sirumuga
     <div class="mx-auto grid max-w-7xl gap-12 px-5 md:grid-cols-2 lg:px-8">
       <div>
         <div class="flex items-center gap-4"><span data-gsap-line class="block h-px w-12 bg-brass" aria-hidden="true"></span><p class="text-xs uppercase tracking-[0.3em] text-mustard-dark">Service area</p></div>
-        <h2 class="mt-4 font-display text-4xl sm:text-5xl">Karamadai, Coimbatore, Mettupalayam and around</h2>
+        <h2 class="mt-4 font-display text-4xl sm:text-5xl">Coimbatore &amp; the surrounding region. Custom art, pan-India.</h2>
         <p class="mt-5 text-ink-soft leading-relaxed">
-          Serving homes, builders, architects and projects across Coimbatore, Mettupalayam and the
-          Nilgiris from our Karamadai yard on Mettupalayam Main Road. Site visits and our laying crews
+          Serving homes, builders, architects and projects across Coimbatore and the surrounding region
+          from our Karamadai yard on Mettupalayam Main Road. Site visits, supply and our laying crews
           cover the areas listed here.
         </p>
-        <div class="mt-8 border-l-2 border-brass pl-5">
-          <p class="font-display text-2xl">Need something specific?</p>
-          <p class="mt-1 text-ink-soft">Ask us. We can help source materials beyond our displayed collection, and arrange supply further across India on request.</p>
+        <div class="mt-8 grid gap-6 sm:grid-cols-2">
+          <div class="border-l-2 border-brass pl-5">
+            <p class="font-display text-2xl">Custom art, delivered across India</p>
+            <p class="mt-1 text-ink-soft">Engraved stonecraft, name plates, tulsi madams and custom printed tiles are made here and shipped pan-India.</p>
+            <a href="/custom/" class="mt-2 inline-flex min-h-11 items-center text-xs uppercase tracking-[0.18em] text-mustard-dark hover:text-ink">See custom work &rarr;</a>
+          </div>
+          <div class="border-l-2 border-line pl-5">
+            <p class="font-display text-2xl">Need something specific?</p>
+            <p class="mt-1 text-ink-soft">Ask us. We can help source materials beyond our displayed collection.</p>
+          </div>
         </div>
       </div>
       <ul class="flex flex-wrap content-start gap-2">

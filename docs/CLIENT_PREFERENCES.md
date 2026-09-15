@@ -8,6 +8,17 @@ where a working assumption was made by Claude without client sign-off, it is
 labeled as a **working assumption**, not a preference, and lives in
 `docs/DECISIONS.md` instead._
 
+## 2026-09-15 (night) — service area + custom tile printing
+- **Service area (client-confirmed):** Coimbatore and the surrounding region
+  for site visits, supply and laying. **Pan-India** for custom art products
+  (engraved stonecraft, name plates, tulsi madams, custom printed tiles).
+  Reflected in the footer, homepage and About page.
+- **Custom tile printing** must be shown. The client has no finished-job
+  photos yet, so the user asked for generated visuals "for now". Four
+  Runway concept images are in `public/media/concepts/tile-printing/`,
+  always captioned "Concept visual". Replace them with real job photos when
+  available.
+
 ## 2026-09-15 (later) — the AI reference mockup IS the design
 Client instruction, relayed by the user: "even if the AI mockups are not
 looking like the actual showroom, that's what the client wants; the showroom

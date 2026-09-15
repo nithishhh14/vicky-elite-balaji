@@ -1,47 +1,81 @@
 ---
 import { business, telLink, waLink, emailQuoteLink, defaultEnquiryMessage } from "../lib/business";
+
+// Service area (client-confirmed, 2026-09-15): site visits, supply and laying
+// across Coimbatore and the surrounding region; custom art products
+// (stonecraft, engraved pieces, custom printed tiles) delivered pan-India.
+const materials = [
+  { href: "/granite/", label: "Granite" },
+  { href: "/marble/", label: "Marble" },
+  { href: "/halls/tiles/", label: "Tiles" },
+  { href: "/halls/quartz/", label: "Quartz" },
+  { href: "/halls/kota-stone/", label: "Kota & Kadappa" },
+  { href: "/halls/sanitaryware/", label: "Sanitaryware" },
+  { href: "/halls/adhesive/", label: "Adhesives & grout" },
+];
+const explore = [
+  { href: "/custom/", label: "Custom stonecraft" },
+  { href: "/custom/#tile-printing", label: "Custom tile printing" },
+  { href: "/applications/", label: "Applications" },
+  { href: "/gallery/", label: "Gallery" },
+  { href: "/shortlist/", label: "My Materials" },
+  { href: "/contact/", label: "Request a quote" },
+];
 ---
 
-<footer class="mt-24 border-t border-line/70 bg-charcoal text-paper">
-  <div class="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:grid-cols-3">
+<footer class="border-t border-paper/10 bg-charcoal-deep text-paper">
+  <div class="mx-auto grid max-w-7xl gap-12 px-5 py-16 sm:grid-cols-2 lg:grid-cols-[1.2fr_0.8fr_0.8fr_1.4fr] lg:px-8">
     <div>
-      <p class="font-display text-2xl">Elite Balaji</p>
-      <p class="text-xs uppercase tracking-[0.25em] text-mustard mt-1">Stones &amp; Ceramics</p>
-      <p class="mt-4 text-sm text-paper/75">{business.tagline}, since {business.since}.</p>
+      <div class="flex items-center gap-3">
+        <img src="/media/brand/logo-emblem-240.png" alt="" aria-hidden="true" width="50" height="48" class="h-12 w-auto" loading="lazy" />
+        <div>
+          <p class="font-display text-2xl italic text-brass">Elite Balaji</p>
+          <p class="text-[0.6rem] uppercase tracking-[0.28em] text-brass/80">Stones &amp; Ceramics</p>
+        </div>
+      </div>
+      <p class="mt-5 max-w-xs text-sm text-paper/70 leading-relaxed">{business.tagline}, since {business.since}. Granite, marble, tiles and custom stonecraft from Karamadai.</p>
+      <address class="mt-5 not-italic text-sm text-paper/70 leading-relaxed">{business.address}</address>
+      <div class="mt-5 flex flex-col gap-1 text-sm">
+        <a href={telLink()} class="inline-flex min-h-10 items-center text-paper hover:text-brass">{business.phoneDisplay}</a>
+        <a href={`mailto:${business.email}`} class="inline-flex min-h-10 items-center break-all text-paper/80 hover:text-brass">{business.email}</a>
+      </div>
     </div>
 
-    <div class="text-sm text-paper/80">
-      <p class="uppercase tracking-wide text-xs text-paper/50 mb-2">Visit</p>
-      <p>{business.address}</p>
-      <p class="mt-3">
-        <a href={telLink()} class="underline decoration-mustard/60 underline-offset-4 hover:text-mustard">{business.phoneDisplay}</a>
-      </p>
-      <p class="mt-1">
-        <a href={`mailto:${business.email}`} class="underline decoration-mustard/60 underline-offset-4 hover:text-mustard">{business.email}</a>
-      </p>
-      <p class="mt-1">
-        <a href={waLink(defaultEnquiryMessage)} class="underline decoration-mustard/60 underline-offset-4 hover:text-mustard">WhatsApp enquiry</a>
-      </p>
-      <p class="mt-1">
-        <a href={emailQuoteLink()} class="underline decoration-mustard/60 underline-offset-4 hover:text-mustard">Request email quote</a>
-      </p>
-      <p class="mt-1">
-        <a href={business.mapLink} target="_blank" rel="noopener" class="underline decoration-mustard/60 underline-offset-4 hover:text-mustard">Get directions</a>
-      </p>
-    </div>
+    <nav aria-label="Materials">
+      <p class="text-[0.65rem] uppercase tracking-[0.22em] text-brass">Materials</p>
+      <ul class="mt-4 flex flex-col text-sm text-paper/80">
+        {materials.map((l) => <li><a href={l.href} class="inline-flex min-h-10 items-center hover:text-brass">{l.label}</a></li>)}
+      </ul>
+    </nav>
 
-    <div class="text-sm text-paper/80">
-      <p class="uppercase tracking-wide text-xs text-paper/50 mb-2">Service area</p>
-      <p class="leading-relaxed">{business.serviceHubs.join(" · ")}</p>
+    <nav aria-label="Explore">
+      <p class="text-[0.65rem] uppercase tracking-[0.22em] text-brass">Explore</p>
+      <ul class="mt-4 flex flex-col text-sm text-paper/80">
+        {explore.map((l) => <li><a href={l.href} class="inline-flex min-h-10 items-center hover:text-brass">{l.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <div>
+      <p class="text-[0.65rem] uppercase tracking-[0.22em] text-brass">Service area</p>
+      <p class="mt-4 text-sm text-paper font-medium">Coimbatore &amp; surrounding region</p>
+      <p class="mt-1 text-sm text-paper/60 leading-relaxed">Site visits, supply and laying across {business.serviceHubs.join(", ")}.</p>
+      <p class="mt-5 text-sm text-paper font-medium">Pan-India</p>
+      <p class="mt-1 text-sm text-paper/60 leading-relaxed">Custom art products: engraved stonecraft, name plates, tulsi madams and custom printed tiles, delivered across India.</p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href={waLink(defaultEnquiryMessage)} target="_blank" rel="noopener" class="inline-flex min-h-11 items-center bg-gradient-to-r from-brass to-mustard-dark px-5 text-xs uppercase tracking-[0.18em] hover:brightness-110">WhatsApp</a>
+        <a href={emailQuoteLink()} class="inline-flex min-h-11 items-center border border-paper/25 px-5 text-xs uppercase tracking-[0.18em] hover:border-brass">Email a quote</a>
+        <a href={business.mapLink} target="_blank" rel="noopener" class="inline-flex min-h-11 items-center border border-paper/25 px-5 text-xs uppercase tracking-[0.18em] hover:border-brass">Directions</a>
+      </div>
     </div>
   </div>
 
-  <div class="border-t border-paper/10 py-5 text-center text-xs text-paper/50">
-    <p>&copy; {business.since}-{new Date().getFullYear()} {business.name}. All rights reserved.</p>
-    <p class="mt-1">
-      <a href="/privacy/" class="underline decoration-paper/30 underline-offset-4 hover:text-mustard">Privacy</a>
-      <span class="mx-2">·</span>
-      <a href="/terms/" class="underline decoration-paper/30 underline-offset-4 hover:text-mustard">Terms</a>
-    </p>
+  <div class="border-t border-paper/10">
+    <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-5 py-5 pb-24 text-xs text-paper/45 sm:pb-5 lg:px-8">
+      <p>&copy; {business.since}–{new Date().getFullYear()} {business.name}. All rights reserved.</p>
+      <p class="flex gap-4">
+        <a href="/privacy/" class="inline-flex min-h-10 items-center hover:text-brass">Privacy</a>
+        <a href="/terms/" class="inline-flex min-h-10 items-center hover:text-brass">Terms</a>
+      </p>
+    </div>
   </div>
 </footer>
