@@ -42,6 +42,9 @@ significant changes, read in this order:
 4. `docs/DECISIONS.md` — architectural decisions already made; don't re-litigate them
 5. `docs/NEXT_SESSION.md` — the last session's practical handoff
 6. `docs/WEBSITE_ARCHITECTURE.md` — website technical architecture
+7. `docs/COMPETITOR_ANALYSIS.md` — who we're up against (Lakshmi Ceramics,
+   The Tile Bros, Kandhaas, Kurinji, Karamadai/Mettupalayam shops) and the
+   goal: dominate them online, on truth and stone specialism
 
 Before ending a substantial session, update: `docs/PROJECT_STATE.md`,
 `docs/CLIENT_PREFERENCES.md` (if client feedback came in),
