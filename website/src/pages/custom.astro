@@ -2,131 +2,138 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import { waLink, telLink, productEnquiryMessage } from "../lib/business";
+import { mediaLibrary, mediaIn, provenanceLabel } from "../lib/media-library";
 
-const halls = await getCollection("halls");
-const hallName = (id: string) => halls.find((h) => h.id === id)?.data.name ?? id;
+// Custom Stonecraft: built around Elite Balaji's own finished work
+// (provenance "work" in media-library.ts). The two process photos from the
+// client's forwarded references are labelled "Process reference", never
+// presented as our workshop.
 const services = (await getCollection("services")).sort((a, b) => a.data.order - b.data.order);
+const bySlug = (slug: string) => mediaLibrary.find((m) => m.slug === slug)!;
 
-// Restrained line-art icon per capability category, not a photo — none of
-// this is claimed to be an actual finished job, it's a visual cue for a
-// real, described capability. Keyed by category slug (not the display
-// name) so a future rename of the service doesn't silently lose its icon.
-const icons: Record<string, string> = {
-  "tile-printing": "M4 5h16v14H4z M4 15l4-4 3 3 5-6 4 5 M8.5 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z",
-  engraving: "M12 3l2.5 5 5.5.8-4 3.9.9 5.5-4.9-2.6-4.9 2.6.9-5.5-4-3.9 5.5-.8z",
-  inlay: "M4 4h7v7H4z M13 4h7v7h-7z M4 13h7v7H4z M13 13h7v7h-7z",
-  "sculpture-signage": "M12 3c2 0 3 2 3 4s-1 3-1 4c1 .5 2 2 2 4v3H8v-3c0-2 1-3.5 2-4 0-1-1-2-1-4s1-4 3-4z",
-};
+const process = [
+  { step: "01", title: "Raw stone", detail: "Choose the granite or marble from our yard, or we source the block you want.", media: bySlug("black-galaxy-slabs"), label: provenanceLabel.stock },
+  { step: "02", title: "Design", detail: "Bring a pattern, drawing, photo or lettering. We work out size, depth and layout with you.", media: bySlug("house-name-plate"), label: provenanceLabel.work },
+  { step: "03", title: "CNC & engraving", detail: "Motifs, lettering and profiles are cut and engraved into the stone.", media: bySlug("idea-cnc-engraving"), label: "Process reference" },
+  { step: "04", title: "Hand finishing", detail: "Edges, curves and details are refined by hand, then polished or honed.", media: bySlug("idea-hand-finishing"), label: "Process reference" },
+  { step: "05", title: "Installation", detail: "Delivered and fixed on site, whether in a garden, a pooja room or an entrance.", media: bySlug("granite-garden-bench"), label: provenanceLabel.work },
+  { step: "06", title: "Final piece", detail: "A piece in natural stone, made for one place.", media: bySlug("tulsi-madam-engraved-black"), label: provenanceLabel.work },
+];
+
+const collections = [
+  { id: "engraving", title: "Engraved signs & name plates", blurb: "House names, welcome signs and decorative motifs engraved into black granite, with gold-filled lettering on request.", items: mediaIn("engraving", "work") },
+  { id: "devotional", title: "Tulsi madams & pooja units", blurb: "Tulsi madams and pooja units in black, grey and red granite or white marble, with engraved deity panels and lotus crowns.", items: mediaIn("devotional", "work") },
+  { id: "furniture", title: "Stone furniture", blurb: "Dining tables, outdoor table sets and garden benches cut from solid granite to last outdoors for decades.", items: mediaIn("furniture", "work") },
+];
+const hero = bySlug("tulsi-madam-engraved-black");
 ---
 
 <BaseLayout
-  title="Custom & Fabrication | Elite Balaji Stones & Ceramics"
-  description="Bespoke stone and tile work from Elite Balaji: custom photo-printing on tiles, CNC granite engraving, handcrafted inlay slabs, sculptures and name boards, made to order."
-  enquiryMessage="Hi Elite Balaji, I have a requirement for custom tile printing, marble or granite artwork. I would like to discuss the project."
+  title="Custom Stonecraft, Granite Engraving & Name Plates | Elite Balaji, Coimbatore"
+  description="Custom granite and marble work from Elite Balaji, Karamadai: engraved name plates and signs, tulsi madams, pooja units, granite tables and benches, made to order for Coimbatore homes."
+  enquiryMessage="Hi Elite Balaji, I have an idea for a custom stone piece. Here are the details:"
 >
-  <section class="border-b border-line/60 bg-charcoal py-20 text-paper">
-    <div data-gsap-hero class="mx-auto max-w-3xl px-5 text-center">
-      <p class="text-xs uppercase tracking-[0.3em] text-mustard">Made to order</p>
-      <h1 class="mt-3 font-display text-4xl sm:text-5xl">Custom &amp; Fabrication</h1>
-      <p class="mt-5 text-lg text-paper/75 leading-relaxed">
-        Beyond standard stock, we take on bespoke stone and tile work: custom printing, engraving,
-        inlay and made-to-order pieces. Every capability below is real, not a catalogue photo, so
-        tell us what you have in mind and we'll confirm what's possible.
-      </p>
-    </div>
-  </section>
-
-  <section class="border-b border-line/60 bg-paper py-16">
-    <div class="mx-auto max-w-6xl px-5">
-      <p class="text-center text-xs uppercase tracking-[0.3em] text-terracotta">How a custom piece happens</p>
-      <div data-gsap-stagger class="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
-        {[
-          { step: "01", label: "Material", detail: "Pick the stone or tile, from our stock or sourced for you." },
-          { step: "02", label: "Design", detail: "Send us the image, pattern or drawing you have in mind." },
-          { step: "03", label: "Fabrication", detail: "Printing, CNC engraving or inlay work, cut to your size." },
-          { step: "04", label: "Finish", detail: "Polished, honed or matte, finished to match the rest of the job." },
-          { step: "05", label: "Installation", detail: "Our own crews fit it on site, same as any other laying job." },
-        ].map((s) => (
-          <div>
-            <span class="font-display text-2xl text-terracotta">{s.step}</span>
-            <h3 class="mt-2 text-sm font-semibold uppercase tracking-wide">{s.label}</h3>
-            <p class="mt-2 text-sm text-ink-soft leading-relaxed">{s.detail}</p>
-          </div>
-        ))}
+  <section class="relative isolate overflow-hidden bg-charcoal-deep text-paper">
+    <div class="mx-auto grid max-w-7xl gap-10 px-5 pb-16 pt-32 lg:grid-cols-[1.1fr_0.9fr] lg:items-end lg:px-8 lg:pt-40">
+      <div data-gsap-hero>
+        <p class="text-xs uppercase tracking-[0.45em] text-brass">Custom stonecraft</p>
+        <h1 class="mt-5 font-display text-[clamp(3rem,8vw,6.5rem)] font-medium leading-[0.92]">Bring an idea.<br /><span class="text-brass">We cut it in stone.</span></h1>
+        <p class="mt-6 max-w-lg text-lg text-paper/80 leading-relaxed">
+          Bring a pattern, drawing or idea. We help translate it into granite or marble: engraved
+          name plates, tulsi madams, benches and tables, made for one place.
+        </p>
+        <div class="mt-9 flex flex-wrap gap-3">
+          <a href={waLink("Hi Elite Balaji, I have an idea for a custom stone piece (photo/sketch attached):")} target="_blank" rel="noopener" class="bg-gradient-to-r from-brass to-mustard-dark px-7 py-3.5 text-xs uppercase tracking-[0.2em] hover:brightness-110">Share your idea</a>
+          <a href="#work" class="border border-paper/40 px-7 py-3.5 text-xs uppercase tracking-[0.2em] hover:border-brass">See our work</a>
+        </div>
       </div>
+      <figure class="relative">
+        <img src={hero.src} alt={hero.alt} width={hero.width} height={hero.height} class="max-h-[70svh] w-full object-cover" fetchpriority="high" />
+        <figcaption class="mt-3 text-[0.6rem] uppercase tracking-[0.2em] text-paper/45">{provenanceLabel.work} · {hero.title}</figcaption>
+      </figure>
     </div>
   </section>
 
-  <section class="bg-card">
-    <div class="mx-auto max-w-6xl px-5 py-16">
-      {services.length > 0 ? (
-        <div data-gsap-stagger class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {services.map((service) => (
-            <div data-gsap-spotlight class="group rounded-sm border border-line bg-paper p-6 transition-colors hover:border-terracotta/60">
-              <div class="flex h-12 w-12 items-center justify-center rounded-full bg-charcoal text-mustard">
-                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d={icons[service.data.category] ?? "M12 3l9 9-9 9-9-9z"} />
-                </svg>
-              </div>
-              <p class="mt-4 text-xs uppercase tracking-[0.2em] text-terracotta">{hallName(service.data.hallId)}</p>
-              <h2 class="mt-1 text-lg">{service.data.name}</h2>
-              <p class="mt-2 text-sm text-ink-soft leading-relaxed">{service.data.description}</p>
-              <div class="mt-4 flex flex-wrap gap-x-4 gap-y-1">
-                <a
-                  href={waLink(productEnquiryMessage(service.data.name))}
-                  target="_blank"
-                  rel="noopener"
-                  aria-label={`Ask about ${service.data.name} via WhatsApp`}
-                  class="inline-block text-sm font-semibold uppercase tracking-wide text-terracotta hover:text-terracotta-dark"
-                >
-                  WhatsApp &rarr;
-                </a>
-                <a href={`/halls/${service.data.hallId}/`} class="inline-block text-sm font-semibold uppercase tracking-wide text-ink-soft hover:text-terracotta">
-                  See the hall &rarr;
-                </a>
-              </div>
+  <!-- Process: pinned-feeling horizontal sequence on desktop, stacked on mobile. -->
+  <section class="bg-paper py-20" aria-labelledby="process-title">
+    <div class="mx-auto max-w-7xl px-5 lg:px-8">
+      <p class="text-xs uppercase tracking-[0.3em] text-mustard-dark">How a piece is made</p>
+      <h2 id="process-title" class="mt-3 font-display text-4xl sm:text-5xl">From raw stone to final piece</h2>
+    </div>
+    <ol class="mx-auto mt-12 flex max-w-7xl snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-6 lg:px-8" data-gsap-stagger>
+      {process.map((s) => (
+        <li class="w-[78vw] max-w-[22rem] flex-shrink-0 snap-start">
+          <div class="overflow-hidden bg-charcoal-deep">
+            <img src={s.media.thumb} alt={s.media.alt} class="aspect-[4/5] w-full object-cover" loading="lazy" />
+          </div>
+          <p class="mt-2 text-[0.55rem] uppercase tracking-[0.2em] text-ink-soft/60">{s.label}</p>
+          <div class="mt-3 flex items-baseline gap-3">
+            <span class="font-display text-3xl text-brass">{s.step}</span>
+            <h3 class="text-sm font-semibold uppercase tracking-[0.14em]">{s.title}</h3>
+          </div>
+          <p class="mt-2 text-sm text-ink-soft leading-relaxed">{s.detail}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <div id="work" class="scroll-mt-24">
+    {collections.map((c, i) => (
+      <section id={c.id} class:list={["py-20", i % 2 === 0 ? "bg-charcoal-deep text-paper" : "bg-card"]}>
+        <div class="mx-auto max-w-7xl px-5 lg:px-8">
+          <div class="grid gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+            <div>
+              <p class:list={["text-xs uppercase tracking-[0.3em]", i % 2 === 0 ? "text-brass" : "text-mustard-dark"]}>{String(i + 1).padStart(2, "0")} · {provenanceLabel.work}</p>
+              <h2 class="mt-3 font-display text-4xl">{c.title}</h2>
+            </div>
+            <p class:list={["max-w-xl leading-relaxed", i % 2 === 0 ? "text-paper/75" : "text-ink-soft"]}>{c.blurb}</p>
+          </div>
+          <div data-gsap-stagger class="mt-10 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+            {c.items.map((m) => (
+              <figure class="group">
+                <div class="overflow-hidden">
+                  <img src={m.thumb} alt={m.alt} class="aspect-square w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+                </div>
+                <figcaption class:list={["mt-2 text-xs uppercase tracking-[0.12em]", i % 2 === 0 ? "text-paper/70" : "text-ink-soft"]}>{m.title}</figcaption>
+              </figure>
+            ))}
+          </div>
+          <a
+            href={waLink(`Hi Elite Balaji, I'm interested in ${c.title.toLowerCase()}. Here's what I have in mind:`)}
+            target="_blank"
+            rel="noopener"
+            class:list={["mt-8 inline-flex min-h-11 items-center border-b text-xs uppercase tracking-[0.2em]", i % 2 === 0 ? "border-brass text-paper hover:text-brass" : "border-mustard-dark hover:text-mustard-dark"]}
+          >
+            Ask about {c.title.toLowerCase()} &rarr;
+          </a>
+        </div>
+      </section>
+    ))}
+  </div>
+
+  {services.length > 0 && (
+    <section class="border-t border-line bg-paper py-16">
+      <div class="mx-auto max-w-7xl px-5 lg:px-8">
+        <p class="text-xs uppercase tracking-[0.3em] text-mustard-dark">Also made to order</p>
+        <div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {services.map((s) => (
+            <div class="border-t border-line pt-4">
+              <h3 class="text-sm font-semibold uppercase tracking-[0.12em]">{s.data.name}</h3>
+              <p class="mt-2 text-sm text-ink-soft leading-relaxed">{s.data.description}</p>
+              <a href={waLink(productEnquiryMessage(s.data.name))} target="_blank" rel="noopener" class="mt-1 inline-flex min-h-11 items-center text-xs font-medium uppercase tracking-[0.14em] text-mustard-dark hover:text-ink">Ask about this &rarr;</a>
             </div>
           ))}
         </div>
-      ) : (
-        <p class="text-center text-ink-soft">More bespoke work is being added here.</p>
-      )}
-    </div>
-  </section>
-
-  <section class="border-t border-line/60 bg-paper">
-    <div class="mx-auto max-w-4xl px-5 py-16 text-center">
-      <p class="text-xs uppercase tracking-[0.3em] text-terracotta">Beyond the list above</p>
-      <h2 class="mt-3 text-2xl sm:text-3xl">Bring us a stone or tile idea we haven't listed</h2>
-      <p class="mt-4 text-ink-soft leading-relaxed">
-        If it's granite, marble, tile or ceramic, our team can talk through sourcing, fabrication
-        and installation even when it isn't one of the fixed categories above. Nothing here is
-        promised until we've confirmed it against your actual site and material.
-      </p>
-    </div>
-  </section>
-
-  <section class="bg-charcoal py-20 text-paper">
-    <div class="mx-auto max-w-2xl px-5 text-center">
-      <h2 class="font-display text-3xl sm:text-4xl">Have a specific requirement?</h2>
-      <p class="mt-4 text-paper/80">
-        Tell us what you're looking for. If it involves tiles, stone, marble, granite or ceramics,
-        we'll help you find the right solution.
-      </p>
-      <div class="mt-8 flex flex-wrap justify-center gap-3">
-        <a
-          href={waLink('Hi Elite Balaji, I have a requirement involving tiles, stone, marble, granite or ceramics. Here are the details:')}
-          target="_blank"
-          rel="noopener"
-          data-gsap-magnetic
-          class="rounded-full bg-terracotta px-6 py-3 text-sm font-semibold uppercase tracking-wide text-paper hover:bg-terracotta-dark transition-colors"
-        >
-          Start a Requirement
-        </a>
-        <a href={telLink()} class="rounded-full border border-paper/50 px-6 py-3 text-sm font-semibold uppercase tracking-wide hover:bg-paper/10 transition-colors">
-          Call Showroom
-        </a>
       </div>
+    </section>
+  )}
+
+  <section class="marble-veins bg-charcoal py-20 text-center text-paper">
+    <h2 class="font-display text-4xl sm:text-5xl">Have a drawing or a photo?</h2>
+    <p class="mx-auto mt-4 max-w-xl text-paper/75">Send it on WhatsApp with the size and where it will go. We'll tell you what's possible in stone and what it will take.</p>
+    <div class="mt-8 flex flex-wrap justify-center gap-3">
+      <a href={waLink("Hi Elite Balaji, here's my custom stone idea (photo/sketch, size, location):")} target="_blank" rel="noopener" class="bg-gradient-to-r from-brass to-mustard-dark px-8 py-4 text-xs uppercase tracking-[0.2em] hover:brightness-110">Send your idea</a>
+      <a href={telLink()} class="border border-paper/40 px-8 py-4 text-xs uppercase tracking-[0.2em] hover:border-brass">Call us</a>
     </div>
   </section>
 </BaseLayout>

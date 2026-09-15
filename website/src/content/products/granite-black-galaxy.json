@@ -1,0 +1,32 @@
+{
+  "kind": "material",
+  "hallId": "granite-marbles",
+  "name": "Black Galaxy Granite",
+  "category": "Natural granite slab",
+  "finish": "Polished",
+  "order": 1,
+  "applications": [
+    "Kitchen countertops",
+    "Flooring",
+    "Staircases",
+    "Wall cladding",
+    "Vanity tops"
+  ],
+  "image": "/media/client/granite/black-galaxy-slabs.jpg",
+  "imageAlt": "Polished black granite slabs with gold flecks, stacked in our yard",
+  "images": [
+    {
+      "src": "/media/client/granite/black-galaxy-slabs.jpg",
+      "alt": "Polished black granite slabs with gold flecks, stacked in our yard"
+    },
+    {
+      "src": "/media/client/granite/black-galaxy-closeup.jpg",
+      "alt": "Close-up of black granite with fine gold and copper flecks"
+    },
+    {
+      "src": "/media/client/granite/black-galaxy-macro.jpg",
+      "alt": "Macro view of black granite with bronze crystal flecks"
+    }
+  ],
+  "note": "Variety identified from our own stock photo. Slabs vary by batch, so ask us to confirm the current slab, size and finish."
+}

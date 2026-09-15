@@ -1,0 +1,196 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { waLink, telLink, productEnquiryMessage } from "../lib/business";
+import { mediaIn, provenanceLabel } from "../lib/media-library";
+import { stoneCategories } from "../lib/stone-varieties";
+
+// Granite as a hero category: every specimen below is a photograph of Elite
+// Balaji's own slab stock (src/lib/media-library.ts). Names were identified
+// visually and are shown with a confirm-availability note.
+const products = (await getCollection("products"))
+  .filter((p) => p.data.hallId === "granite-marbles" && p.data.category === "Natural granite slab")
+  .sort((a, b) => a.data.order - b.data.order);
+
+const families = [
+  { label: "Black", ids: ["granite-black-galaxy", "granite-absolute-black", "granite-absolute-black-leathered", "granite-black-markino"] },
+  { label: "Brown & red", ids: ["granite-tan-brown", "granite-kondagattu"] },
+  { label: "Blue & blue-grey", ids: ["granite-blue-pearl", "granite-black-pearl"] },
+  { label: "Grey", ids: ["granite-steel-grey"] },
+].map((f) => ({ ...f, items: products.filter((p) => f.ids.includes(p.id)) }));
+
+const stock = mediaIn("granite", "stock");
+const staircase = mediaIn("granite", "work")[0];
+const kitchenIdea = mediaIn("kitchen", "idea").find((m) => m.slug === "idea-black-granite-kitchen");
+const leatherCounter = stock.find((m) => m.slug === "absolute-black-leathered-countertop");
+const sourceMore = stoneCategories.find((c) => c.slug === "granite");
+
+const applications = [
+  { label: "Kitchen countertops & islands", image: kitchenIdea, href: "/search/?q=granite%20kitchen" },
+  { label: "Staircases & entrances", image: staircase, href: "/search/?q=granite%20stairs" },
+  { label: "Leathered worktops & vanities", image: leatherCounter, href: "/products/granite-absolute-black-leathered/" },
+];
+
+const finishes = [
+  { name: "Polished", detail: "Mirror gloss that deepens colour and pattern. The classic choice for floors, counters and cladding." },
+  { name: "Leathered", detail: "Soft, textured sheen that hides fingerprints and water marks. Popular for black kitchen worktops." },
+  { name: "Honed", detail: "Smooth and matte, with a calmer look and less glare. Ask us which varieties we can supply honed." },
+  { name: "Flamed", detail: "Rough, slip-resistant texture for outdoor steps, parking and pool surrounds. Available on request." },
+];
+
+const slabImage = (id: string) => products.find((p) => p.id === id);
+const hero = stock.find((m) => m.slug === "black-markino-slab") ?? stock[0];
+---
+
+<BaseLayout
+  title="Granite Slabs in Coimbatore & Karamadai | Elite Balaji Stones & Ceramics"
+  description="Black Galaxy, Absolute Black, Tan Brown, Steel Grey, Blue Pearl and more granite slabs from our Karamadai yard, for kitchen countertops, flooring, staircases and cladding across Coimbatore."
+  enquiryMessage="Hi Elite Balaji, I'm looking for granite. Please share photos of the slabs in your yard today."
+>
+  <section class="relative isolate flex min-h-[78svh] items-end overflow-hidden bg-charcoal-deep text-paper">
+    <img src={hero.src} alt={hero.alt} width={hero.width} height={hero.height} class="absolute inset-0 h-full w-full object-cover opacity-70" fetchpriority="high" />
+    <div class="absolute inset-0 bg-gradient-to-t from-charcoal-deep via-charcoal-deep/55 to-charcoal-deep/20" aria-hidden="true"></div>
+    <div data-gsap-hero class="relative mx-auto w-full max-w-7xl px-5 pb-16 pt-40 lg:px-8">
+      <p class="text-xs uppercase tracking-[0.45em] text-brass">01 · Material world</p>
+      <h1 class="mt-5 font-display text-[clamp(3.25rem,11vw,8rem)] font-medium leading-[0.9]">Granite</h1>
+      <p class="mt-5 max-w-xl text-lg text-paper/85 leading-relaxed">
+        Slabs photographed in our own yard, for kitchen countertops, floors, staircases and cladding.
+        Every slab is different, so see the real thing before you choose.
+      </p>
+      <div class="mt-9 flex flex-wrap gap-3">
+        <a href="#specimens" class="border border-brass px-7 py-3.5 text-xs uppercase tracking-[0.2em] hover:bg-brass hover:text-charcoal-deep transition-colors">View the slabs</a>
+        <a href={waLink("Hi Elite Balaji, I'm looking for granite. Please share photos of the slabs in your yard today.")} target="_blank" rel="noopener" class="bg-gradient-to-r from-brass to-mustard-dark px-7 py-3.5 text-xs uppercase tracking-[0.2em] hover:brightness-110">Ask for today's stock</a>
+      </div>
+      <p class="mt-10 text-[0.6rem] uppercase tracking-[0.2em] text-paper/45">{provenanceLabel.stock} · {hero.title}</p>
+    </div>
+  </section>
+
+  <!-- Specimens: one large material photograph per variety. -->
+  <section id="specimens" class="scroll-mt-24 bg-paper py-20">
+    <div class="mx-auto max-w-7xl px-5 lg:px-8">
+      <div class="flex flex-wrap items-end justify-between gap-6">
+        <div class="reveal max-w-2xl">
+          <p class="text-xs uppercase tracking-[0.3em] text-mustard-dark">Specimens</p>
+          <h2 class="mt-3 font-display text-4xl sm:text-5xl">From our slab yard</h2>
+          <p class="mt-4 text-ink-soft leading-relaxed">
+            Varieties identified from our own stock photographs. Natural granite changes from block to
+            block, so ask us to confirm the current slab, size and finish.
+          </p>
+        </div>
+        <nav aria-label="Colour families" class="flex flex-wrap gap-2">
+          {families.map((f) => (
+            <a href={`#family-${f.label.toLowerCase().replace(/[^a-z]+/g, "-")}`} class="border border-line px-4 py-2 text-xs uppercase tracking-[0.16em] text-ink-soft hover:border-brass hover:text-ink transition-colors">{f.label}</a>
+          ))}
+        </nav>
+      </div>
+
+      {families.map((family) => (
+        <div id={`family-${family.label.toLowerCase().replace(/[^a-z]+/g, "-")}`} class="mt-16 scroll-mt-28">
+          <p class="border-b border-line pb-3 text-xs uppercase tracking-[0.25em] text-ink-soft">{family.label}</p>
+          <div data-gsap-stagger class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {family.items.map((p) => (
+              <article class="specimen group relative">
+                <a href={`/products/${p.id}/`} class="block overflow-hidden bg-charcoal-deep" aria-label={`${p.data.name}: view details`}>
+                  <img src={p.data.image.replace(/\.jpg$/, "-720.jpg")} alt={p.data.imageAlt} class="aspect-[4/5] w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.04]" loading="lazy" width="720" height="900" />
+                </a>
+                <div class="relative pt-4">
+                  <span class="absolute left-0 top-0 h-px w-0 bg-brass transition-all duration-500 group-hover:w-16" aria-hidden="true"></span>
+                  <h3 class="font-display text-2xl leading-tight"><a href={`/products/${p.id}/`} class="hover:text-mustard-dark transition-colors">{p.data.name.replace(" Granite", "")}</a></h3>
+                  <p class="mt-1 text-xs uppercase tracking-[0.16em] text-ink-soft">{p.data.finish} · {p.data.applications.slice(0, 2).join(" · ")}</p>
+                  <div class="mt-1 flex flex-wrap gap-x-5 text-xs font-medium uppercase tracking-[0.14em]">
+                    <a href={`/products/${p.id}/`} class="inline-flex min-h-11 items-center text-ink hover:text-mustard-dark">Details</a>
+                    <a href={waLink(productEnquiryMessage(p.data.name, p.data.category))} target="_blank" rel="noopener" class="inline-flex min-h-11 items-center text-mustard-dark hover:text-ink">Check availability</a>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Applications -->
+  <section class="bg-charcoal-deep py-20 text-paper">
+    <div class="mx-auto max-w-7xl px-5 lg:px-8">
+      <p class="text-xs uppercase tracking-[0.3em] text-brass">Where granite goes</p>
+      <h2 class="mt-3 font-display text-4xl sm:text-5xl">Built for daily use</h2>
+      <div data-gsap-stagger class="mt-10 grid gap-5 md:grid-cols-3">
+        {applications.map((app) => app.image && (
+          <a href={app.href} class="group block">
+            <div class="overflow-hidden">
+              <img src={app.image.thumb} alt={app.image.alt} class="aspect-[4/3] w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+            </div>
+            <p class="mt-4 text-sm uppercase tracking-[0.14em]">{app.label}</p>
+            <p class="mt-1 text-[0.6rem] uppercase tracking-[0.2em] text-paper/45">{provenanceLabel[app.image.provenance]}</p>
+          </a>
+        ))}
+      </div>
+      <div class="mt-10 flex flex-wrap gap-2 text-xs uppercase tracking-[0.14em] text-paper/70">
+        {["Kitchen countertops", "Islands", "Staircases", "Flooring", "Wall cladding", "Vanity tops", "Window sills", "Commercial surfaces", "Custom fabrication"].map((a) => (
+          <span class="border border-paper/15 px-3 py-1.5">{a}</span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Finishes -->
+  <section class="bg-card py-20">
+    <div class="mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-[0.8fr_1.2fr] lg:px-8">
+      <div class="reveal">
+        <p class="text-xs uppercase tracking-[0.3em] text-mustard-dark">Finishes</p>
+        <h2 class="mt-3 font-display text-4xl">Same stone, different surface</h2>
+        {slabImage("granite-absolute-black-leathered") && (
+          <img src="/media/client/granite/absolute-black-leathered-countertop-720.jpg" alt="Close-up of a leathered black granite countertop" class="mt-8 aspect-[4/3] w-full object-cover" loading="lazy" />
+        )}
+      </div>
+      <dl class="divide-y divide-line self-center border-y border-line">
+        {finishes.map((f) => (
+          <div class="grid gap-2 py-6 sm:grid-cols-[10rem_1fr]">
+            <dt class="font-display text-2xl">{f.name}</dt>
+            <dd class="text-ink-soft leading-relaxed">{f.detail}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <!-- Custom fabrication -->
+  <section class="bg-paper py-20">
+    <div class="mx-auto flex max-w-7xl flex-col gap-10 px-5 lg:flex-row lg:items-center lg:px-8">
+      <div class="grid flex-1 grid-cols-3 gap-3">
+        {["/media/client/stonecraft/granite-dining-table-720.jpg", "/media/client/stonecraft/tulsi-madam-engraved-black-720.jpg", "/media/client/stonecraft/welcome-sign-720.jpg"].map((src) => (
+          <img src={src} alt="" class="aspect-[3/4] w-full object-cover" loading="lazy" />
+        ))}
+      </div>
+      <div class="max-w-md">
+        <p class="text-xs uppercase tracking-[0.3em] text-mustard-dark">Custom stonecraft</p>
+        <h2 class="mt-3 font-display text-4xl">Granite, cut to your idea</h2>
+        <p class="mt-4 text-ink-soft leading-relaxed">Tables, benches, tulsi madams, engraved signs and name plates. This is our own work. Bring a pattern, drawing or idea and we'll help translate it into stone.</p>
+        <a href="/custom/" class="mt-6 inline-block border-b border-brass pb-1 text-xs uppercase tracking-[0.2em] hover:text-mustard-dark">See our stonecraft &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Source more -->
+  {sourceMore && (
+    <section class="border-t border-line bg-card py-16">
+      <div class="mx-auto max-w-7xl px-5 lg:px-8">
+        <h2 class="font-display text-3xl">More varieties, on request</h2>
+        <p class="mt-2 max-w-2xl text-ink-soft">We can help source other granites too. Ask us to confirm availability before planning around one.</p>
+        <ul class="mt-6 flex flex-wrap gap-2">
+          {sourceMore.varieties.map((v) => <li class="rounded-full border border-line px-3.5 py-1.5 text-sm text-ink-soft">{v.name}</li>)}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <section class="marble-veins bg-charcoal py-20 text-center text-paper">
+    <h2 class="font-display text-4xl sm:text-5xl">Found a granite you like?</h2>
+    <p class="mx-auto mt-4 max-w-xl text-paper/75">Send us a photo, a name or a screenshot. We'll share what's in the yard today and a current rate.</p>
+    <div class="mt-8 flex flex-wrap justify-center gap-3">
+      <a href={waLink("Hi Elite Balaji, I'm looking for this granite (photo/name attached):")} target="_blank" rel="noopener" class="bg-gradient-to-r from-brass to-mustard-dark px-8 py-4 text-xs uppercase tracking-[0.2em] hover:brightness-110">Send your requirement</a>
+      <a href={telLink()} class="border border-paper/40 px-8 py-4 text-xs uppercase tracking-[0.2em] hover:border-brass">Call us</a>
+    </div>
+  </section>
+</BaseLayout>

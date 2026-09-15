@@ -5,8 +5,12 @@
   "category": "Natural limestone flooring",
   "finish": "Natural cleft / honed",
   "order": 3,
-  "applications": ["Godowns & utility floors", "Parking & driveways", "Outdoor pathways"],
-  "image": "https://images.unsplash.com/photo-1602571833716-143df80f654a?auto=format&fit=crop&w=1200&q=80",
-  "imageAlt": "Bluish-grey natural limestone floor tiles",
-  "note": "Representative style. Confirm exact stock, size and finish with our team."
+  "applications": [
+    "Godowns & utility floors",
+    "Parking & driveways",
+    "Outdoor pathways"
+  ],
+  "image": "/media/swatches/kota-blue.jpg",
+  "imageAlt": "Kota Blue indicative colour swatch laid out as a slab grid",
+  "note": "Colour swatch only, not a photograph. Kota is a fine-grained natural limestone with no veining, and shade varies by quarry lot. Ask us for photos of the current Kota lot."
 }

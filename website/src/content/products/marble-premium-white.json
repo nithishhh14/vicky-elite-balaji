@@ -5,8 +5,12 @@
   "category": "Natural marble slab",
   "finish": "Polished, veined",
   "order": 2,
-  "applications": ["Counters", "Feature flooring", "Wall cladding"],
-  "image": "https://images.unsplash.com/photo-1566041510394-cf7c8fe21800?auto=format&fit=crop&w=1200&q=80",
-  "imageAlt": "White marble surface with natural grey veining",
-  "note": "Representative style. Confirm exact slab, veining and finish with our team before ordering."
+  "applications": [
+    "Counters",
+    "Feature flooring",
+    "Wall cladding"
+  ],
+  "image": "/media/client/marble/white-slab-veined.jpg",
+  "imageAlt": "Large polished white slab with soft grey veining on a slab rack",
+  "note": "Photographed from our stock. White veined slabs can be natural marble or engineered quartz, so ask us to confirm the exact material, slab and finish."
 }

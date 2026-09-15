@@ -1,0 +1,17 @@
+{
+  "kind": "material",
+  "hallId": "granite-marbles",
+  "name": "Black Markino Granite",
+  "category": "Natural granite slab",
+  "finish": "Polished",
+  "order": 8,
+  "applications": [
+    "Kitchen islands",
+    "Feature walls",
+    "Countertops",
+    "Flooring"
+  ],
+  "image": "/media/client/granite/black-markino-slab.jpg",
+  "imageAlt": "Black granite slab with bold white wave-like veins in a warehouse",
+  "note": "Variety identified from our own stock photo. Slabs vary by batch, so ask us to confirm the current slab, size and finish."
+}

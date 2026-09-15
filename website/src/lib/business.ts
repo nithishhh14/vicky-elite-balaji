@@ -51,8 +51,9 @@ export function telLink(): string {
   return `tel:${business.phoneTel}`;
 }
 
-export function productEnquiryMessage(productName: string): string {
-  return `Hi Elite Balaji, I'm interested in ${productName}. Please share the current trade rate and availability.`;
+export function productEnquiryMessage(productName: string, category?: string): string {
+  const what = category ? `${productName} (${category})` : productName;
+  return `Hi Elite Balaji, I would like to enquire about ${what}. Please share current availability and price.`;
 }
 
 export const defaultEnquiryMessage = `Hi Elite Balaji, I'd like trade pricing information.`;

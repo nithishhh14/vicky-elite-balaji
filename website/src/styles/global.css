@@ -102,8 +102,50 @@
      motion is allowed (see the js-motion-ready inline script). Content stays
      visible by default so a failed/slow script never leaves it stuck. */
   .js-motion-ready [data-gsap-hero] > *,
-  .js-motion-ready [data-gsap-stagger] > * {
+  .js-motion-ready [data-gsap-stagger] > *,
+  .js-motion-ready [data-intro-image] {
     opacity: 0;
+  }
+  /* Decorative intro rule: invisible unless GSAP draws it. */
+  [data-intro-line] {
+    opacity: 0;
+    transform-origin: left center;
+  }
+
+  /* Material cards: on hover-capable pointers the secondary line and CTA
+     reveal on hover; on touch they are simply always visible. */
+  @media (hover: hover) and (pointer: fine) {
+    .material-card .material-meta {
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+    .material-card:hover .material-meta,
+    .material-card:focus-visible .material-meta {
+      opacity: 1;
+      transform: none;
+    }
+    .material-card .material-name {
+      transition: transform 0.5s ease;
+    }
+    .material-card:hover .material-name {
+      transform: translateY(-4px);
+    }
+  }
+  /* Touch devices: small uppercase text links ("View details →",
+     "WhatsApp →", in-page anchors) get a ~44px tap area via vertical
+     padding. Pointer-fine (desktop) layouts are untouched. */
+  @media (pointer: coarse) {
+    main a.uppercase:not(:has(img)):not(.min-h-11):not(.min-h-12),
+    nav[aria-label="Breadcrumb"] a {
+      padding-block: 0.8rem;
+    }
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
   }
 
   /* Spotlight cards: a soft glow that tracks the cursor, position set by

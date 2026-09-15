@@ -5,6 +5,70 @@ reconsidering something that may already have been decided.
 
 ---
 
+### Decision: Project Maharaja: real client assets first, provenance labels, granite and stonecraft as hero categories
+**Date:** 2026-09-15
+**Reason:** The "Project Maharaja" brief found the redesign too AI-led while
+real client material sat unused. The audit (`docs/MAHARAJA_AUDIT.md`)
+found 51 client WhatsApp photos in `Downloads/`:
+- granite slabs
+- stonecraft work
+- white slabs
+- basins
+- forwarded internet references
+
+**User decisions (via AskUserQuestion):**
+1. **Split by provenance.** The client's own photos are shown as "Our work" or
+   "From our stock". Forwarded internet images (watermarked kitchen, JACOF
+   basin display, Somany showroom, stock CNC and hand-finishing shots) are
+   shown only as "Application idea" or "Process reference".
+2. **Granite names:** use visual identifications (Black Galaxy, Blue Pearl,
+   Black Pearl, Black Markino, Steel Grey, Tan Brown, Absolute Black), each
+   with a confirm-availability note. "Kondagattu" and "Absolute Black
+   leathered" are client-labelled.
+3. **Name plate:** blur the private customer names (pixelated plus blur,
+   verified unreadable).
+
+**Implemented:**
+- **Media:** `public/media/client/` and `src/lib/media-library.ts`, the single
+  source for provenance.
+- **Granite:** 9 granite products on real photos. Kashmir White and Classic
+  Grey (stock-photo-only) were moved to the "source on request" list.
+- **Marble:** the 2 white-marble products use the client's white slabs, with a
+  marble-or-quartz confirm note.
+- **Kota:** the inaccurate Unsplash images were removed and replaced with
+  plain generated colour swatches labelled "Colour swatch only, not a
+  photograph". The Kota hall hero became the colour panel.
+- **New pages:** a new `/granite/` page, and a rebuilt `/custom/` (Custom
+  Stonecraft: 6-step process plus real work collections).
+- **Gallery:** rebuilt with visible provenance labels; Unsplash product
+  photos are excluded.
+- **Homepage:** rebuilt to the brief's 12-section order: cinematic intro,
+  Material Match, specimens, stonecraft, applications, why us, brands, local
+  service area, showroom transformation, quote form and final CTA.
+- **Search:** synonym and size layer (`src/lib/search-synonyms.ts`),
+  services and pages added to the index, and weighted "closest matches"
+  fallback.
+- **Quote form:** `QuoteForm.astro` builds a WhatsApp or email message. There
+  is no backend, and the confirmation says so.
+- **Mobile:** a touch-target rule for coarse pointers.
+
+**Kept:**
+- The dark emerald and gold direction, and the mockup hero render (labelled as
+  a concept).
+- The client's exact logo.
+- "Supply across India": client-confirmed (commit `8881174`), phrased
+  separately from local service.
+
+**Not done / needs client:**
+- Real Kota photos.
+- Confirmation of the visual granite IDs.
+- Quartz, sanitaryware, Kadappa and adhesive real photos.
+- Mozzato "Endless" catalogue pages (Downloads #7–11) not yet turned into
+  products.
+- The real domain.
+
+---
+
 ### Decision: Rebuild the site from the client's AI reference mockup, including its imagery
 **Date:** 2026-09-15
 **Reason:** Explicit client direction, which has the highest priority per

@@ -10,7 +10,40 @@ domain, or set up hosting without new, explicit user permission (the user
 answered "No, not yet" to a direct deployment question on 2026-09-12, and a
 later brief reiterated deployment is out of scope for now).
 
-## Latest (2026-09-15, afternoon) — site rebuilt from the client's AI mockup
+## Latest (2026-09-15, evening) — Project Maharaja pass
+Read the top entry of `docs/DECISIONS.md` and `docs/MAHARAJA_AUDIT.md` first.
+- **Real client photos are in:**
+  - Media: `public/media/client/`; provenance lives in `src/lib/media-library.ts`.
+  - **Rule:** anything with provenance "idea" must always show its label.
+- **New or rebuilt pages:**
+  - `/granite/`
+  - `/custom/` (Custom Stonecraft)
+  - `/gallery/`
+  - homepage (12 sections)
+  - `/contact/` (quote form)
+  - `/resources/` (architects & builders)
+- **Components:** `MaterialMatch.astro` (rule-based guide), `QuoteForm.astro`.
+- **Search:** `src/lib/search-synonyms.ts`. Extend `TERM_SYNONYMS` for Tamil
+  and Tanglish words.
+- **Kota:** now indicative colour swatches in `public/media/swatches/`.
+  Replace them with real lot photos when the client sends them.
+- **Verified:**
+  - `astro check` 0 errors, build 67 pages, 0 broken links or images.
+  - 20 page types at 375px and 412px (touch emulation): no overflow, no
+    clipped headings, one h1 each.
+  - Search synonyms, Material Match, quote form validation and success state
+    tested; 85 same-origin resources return 200.
+- **Needs the client:**
+  1. Confirm the granite visual IDs.
+  2. Real Kota lot photos.
+  3. Real quartz, sanitaryware and Kadappa photos.
+  4. Whether the Mozzato "Endless" catalogue (Downloads #7–11) is a
+     stocked line.
+  5. The real domain (all canonical URLs still use `elitebalaji.example.in`).
+- **Tooling:** Playwright MCP was not available, so QA used the in-app
+  browser with scripted iframe checks.
+
+## Earlier (2026-09-15, afternoon) — site rebuilt from the client's AI mockup
 - **Client direction:** the AI reference mockup IS the design (the showroom
   is under renovation). See the `docs/DECISIONS.md` top entry.
 - **Homepage:** hero, category strip and trust bar rebuilt to the mockup,

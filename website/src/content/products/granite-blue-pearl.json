@@ -1,0 +1,17 @@
+{
+  "kind": "material",
+  "hallId": "granite-marbles",
+  "name": "Blue Pearl Granite",
+  "category": "Natural granite slab",
+  "finish": "Polished",
+  "order": 6,
+  "applications": [
+    "Kitchen countertops",
+    "Feature walls",
+    "Vanity tops",
+    "Commercial surfaces"
+  ],
+  "image": "/media/client/granite/blue-pearl-closeup.jpg",
+  "imageAlt": "Close-up of dark granite with iridescent blue crystal patches",
+  "note": "Variety identified from our own stock photo. Slabs vary by batch, so ask us to confirm the current slab, size and finish."
+}

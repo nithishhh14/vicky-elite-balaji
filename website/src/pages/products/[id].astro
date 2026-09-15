@@ -87,7 +87,7 @@ const breadcrumbJsonLd = {
 <BaseLayout
   title={`${name} | ${hallName} | Elite Balaji Stones & Ceramics`}
   description={`${name}: ${[product.data.category, product.data.finish].filter(Boolean).join(", ")}. Ask for trade rate.`}
-  enquiryMessage={productEnquiryMessage(name)}
+  enquiryMessage={productEnquiryMessage(name, product.data.category)}
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(productJsonLd)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
@@ -183,30 +183,31 @@ const breadcrumbJsonLd = {
 
     {product.data.note && <p class="mx-auto mt-5 max-w-md text-sm italic text-ink-soft">{product.data.note}</p>}
 
-    <div class="mt-8 flex flex-wrap justify-center gap-3">
+    <p class="mt-8 text-xs uppercase tracking-[0.22em] text-mustard-dark">Enquire for current price &amp; availability</p>
+    <div class="mt-4 flex flex-wrap justify-center gap-3">
       <a
-        href={waLink(productEnquiryMessage(name))}
+        href={waLink(productEnquiryMessage(name, product.data.category))}
         target="_blank"
         rel="noopener"
-        aria-label={`Ask for trade rate on ${name} via WhatsApp`}
+        aria-label={`Request availability for ${name} on WhatsApp`}
         data-gsap-magnetic
-        class="rounded-full bg-terracotta px-6 py-3 text-sm font-semibold uppercase tracking-wide text-paper hover:bg-terracotta-dark transition-colors"
+        class="inline-flex min-h-12 items-center bg-gradient-to-r from-brass to-mustard-dark px-6 py-3 text-xs font-medium uppercase tracking-[0.18em] text-paper hover:brightness-110 transition"
       >
-        Enquire via WhatsApp
+        Request availability
       </a>
       <a
         href={telLink()}
-        aria-label="Call our showroom"
-        class="rounded-full border border-line px-6 py-3 text-sm font-semibold uppercase tracking-wide text-ink-soft hover:border-terracotta hover:text-terracotta transition-colors"
+        aria-label="Call our team"
+        class="inline-flex min-h-12 items-center border border-line px-6 py-3 text-xs uppercase tracking-[0.18em] text-ink-soft hover:border-brass hover:text-ink transition-colors"
       >
-        Call Showroom
+        Call our team
       </a>
       <a
         href={emailQuoteLink(name)}
         aria-label={`Request an email quote for ${name}`}
-        class="rounded-full border border-line px-6 py-3 text-sm font-semibold uppercase tracking-wide text-ink-soft hover:border-terracotta hover:text-terracotta transition-colors"
+        class="inline-flex min-h-12 items-center border border-line px-6 py-3 text-xs uppercase tracking-[0.18em] text-ink-soft hover:border-brass hover:text-ink transition-colors"
       >
-        Request Email Quote
+        Email a quote request
       </a>
     </div>
   </section>

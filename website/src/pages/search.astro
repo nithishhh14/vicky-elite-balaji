@@ -18,7 +18,7 @@ import { waLink } from "../lib/business";
     <input
       id="search-input"
       type="search"
-      placeholder="Search materials, finishes, applications..."
+      placeholder="Try “black granite”, “2x4 bathroom tile”, “white marble kitchen”…"
       class="mt-6 w-full rounded-full border border-line bg-card px-5 py-3 text-sm focus-visible:outline-2 focus-visible:outline-terracotta"
       autocomplete="off"
     />
@@ -57,6 +57,8 @@ import { waLink } from "../lib/business";
   </section>
 
   <script>
+    import { expandQuery, matchesQuery } from "../lib/search-synonyms";
+
     type Item = {
       id: string;
       url: string;
@@ -96,7 +98,17 @@ import { waLink } from "../lib/business";
     };
 
     function haystack(item: Item): string {
-      return [item.name, item.hall, item.category, item.finish, item.size, ...item.applications]
+      return [
+        item.name,
+        item.hall,
+        item.category,
+        item.finish,
+        item.size,
+        ...item.applications,
+        ...item.colours,
+        ...item.character,
+        ...item.applicationTags,
+      ]
         .join(" ")
         .toLowerCase();
     }
@@ -190,14 +202,26 @@ import { waLink } from "../lib/business";
     }
 
     function runSearch() {
-      const query = input.value.trim().toLowerCase();
-      const terms = query.split(/\s+/).filter(Boolean);
-      const filtered = items.filter((item) => {
-        if (!matchesFacets(item)) return false;
-        if (!terms.length) return true;
-        const h = haystack(item);
-        return terms.every((t) => h.includes(t));
-      });
+      const groups = expandQuery(input.value);
+      const filtered = items.filter((item) => matchesFacets(item) && (!groups.length || matchesQuery(haystack(item), groups)));
+      if (filtered.length === 0 && groups.length > 1) {
+        // No exact match for every word: show the closest items (most words
+        // matched first) under an honest label, alongside the source-it CTA.
+        // Sizes are the most specific signal; generic words ("tile") the least.
+        const weight = (g: string[]) => (/^\d{3,4}x\d{3,4}$/.test(g[0]) ? 3 : ["tile", "tiles", "stone"].includes(g[0]) ? 0.5 : 1);
+        const scored = items
+          .filter(matchesFacets)
+          .map((item) => ({ item, score: groups.reduce((sum, g) => sum + (matchesQuery(haystack(item), [g]) ? weight(g) : 0), 0) }))
+          .filter((x) => x.score > 0)
+          .sort((a, b) => b.score - a.score)
+          .slice(0, 12);
+        render([]);
+        if (scored.length) {
+          status.textContent = `No exact match. ${scored.length} closest match${scored.length === 1 ? "" : "es"} below. Or ask us to source it.`;
+          scored.forEach((x) => appendCard(x.item));
+        }
+        return;
+      }
       render(filtered);
     }
 

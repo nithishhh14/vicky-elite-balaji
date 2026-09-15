@@ -2,6 +2,22 @@
 
 _Last updated: 2026-09-13 — homepage/Tiles-hero rebuilt away from Athangudi, honest sourcing layer extended to Quartz/Sanitaryware, real React Bits component integration, Athangudi catalogue depth expansion (product image galleries + spec fields), SEO structured-data gap closed on hall/material pages. See `docs/DECISIONS.md` for each._
 
+## 2026-09-15 — Project Maharaja: real client assets, granite and stonecraft hero categories
+
+- **Content from real client material:**
+  - 40 client photos imported (granite stock, white slabs, stonecraft work),
+    plus forwarded references kept as labelled ideas.
+  - 9 granite products on real photos; 2 white-marble products on real
+    white slabs.
+  - Kota stock photos replaced by labelled colour swatches.
+- **New and rebuilt:**
+  - `/granite/`, Custom Stonecraft, gallery (with provenance labels) and the
+    12-section homepage.
+  - Material Match guide, quote form and search synonyms.
+  - An architects & builders section on Resources.
+- **Pages:** 67. Full detail is in `docs/DECISIONS.md` (top) and
+  `docs/MAHARAJA_AUDIT.md`.
+
 ## 2026-09-15 — client's exact logo in header; art direction started
 
 The header badge is now the client's own emblem image

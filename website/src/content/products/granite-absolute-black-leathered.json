@@ -1,0 +1,27 @@
+{
+  "kind": "material",
+  "hallId": "granite-marbles",
+  "name": "Absolute Black Granite, Leathered",
+  "category": "Natural granite slab",
+  "finish": "Leathered",
+  "order": 3,
+  "applications": [
+    "Kitchen countertops",
+    "Islands",
+    "Vanity tops",
+    "Wall cladding"
+  ],
+  "image": "/media/client/granite/absolute-black-leathered-slab.jpg",
+  "imageAlt": "Absolute Black granite slab with a leathered finish",
+  "images": [
+    {
+      "src": "/media/client/granite/absolute-black-leathered-slab.jpg",
+      "alt": "Absolute Black granite slab with a leathered finish"
+    },
+    {
+      "src": "/media/client/granite/absolute-black-leathered-countertop.jpg",
+      "alt": "Close-up of a leathered black granite countertop showing the textured surface"
+    }
+  ],
+  "note": "Photographed from our stock and labelled by our team. Slabs vary by batch, so ask us to confirm the current slab before ordering."
+}

@@ -32,6 +32,7 @@ const steps = [
   <nav aria-label="On this page" class="border-b border-line/60 bg-paper">
     <div class="mx-auto flex max-w-7xl gap-6 overflow-x-auto px-5 py-3 lg:px-8">
       <a href="#how-it-works" class="whitespace-nowrap text-xs uppercase tracking-[0.18em] text-ink-soft hover:text-terracotta">How it works</a>
+      <a href="#professionals" class="whitespace-nowrap text-xs uppercase tracking-[0.18em] text-ink-soft hover:text-terracotta">Architects &amp; builders</a>
       <a href="#sizes-finishes" class="whitespace-nowrap text-xs uppercase tracking-[0.18em] text-ink-soft hover:text-terracotta">Sizes &amp; finishes</a>
       <a href="#sourcing" class="whitespace-nowrap text-xs uppercase tracking-[0.18em] text-ink-soft hover:text-terracotta">Varieties we source</a>
       <a href="#services" class="whitespace-nowrap text-xs uppercase tracking-[0.18em] text-ink-soft hover:text-terracotta">Services</a>
@@ -51,6 +52,33 @@ const steps = [
         ))}
       </ol>
     </div>
+  </section>
+
+  <section id="professionals" class="scroll-mt-32 bg-charcoal-deep py-16 text-paper">
+    <div class="mx-auto grid max-w-7xl gap-10 px-5 lg:grid-cols-[0.9fr_1.1fr] lg:px-8">
+      <div>
+        <p class="text-xs uppercase tracking-[0.3em] text-brass">For architects &amp; builders</p>
+        <h2 class="mt-3 font-display text-4xl">One team for material, sourcing and laying</h2>
+        <p class="mt-4 text-paper/70 leading-relaxed">Working on a villa, apartment block, office or temple? Send the drawings or schedule, and we'll work through material options, quantities and timelines with you.</p>
+        <a href={waLink("Hi Elite Balaji, I'm an architect/builder working on a project and would like to discuss material requirements.")} target="_blank" rel="noopener" class="mt-8 inline-flex min-h-12 items-center bg-gradient-to-r from-brass to-mustard-dark px-7 py-3.5 text-xs uppercase tracking-[0.2em] hover:brightness-110">Discuss a project</a>
+      </div>
+      <ul class="grid gap-px bg-paper/10 sm:grid-cols-2">
+        {[
+          ["Project sourcing", "Tell us the spec; we find the material, including varieties beyond our displayed collection."],
+          ["Bulk requirements", "Quantity pricing for larger floors, facades and multi-unit projects."],
+          ["Samples", "Ask for a sample or photos of the current lot before you commit."],
+          ["Technical discussion", "Thickness, finish, fixing system and laying method for each area."],
+          ["Quotations", "Itemised quotes on WhatsApp or email, updated as the schedule changes."],
+          ["Repeat orders", "Match an earlier material for extensions and later phases."],
+        ].map(([t, d]) => (
+          <li class="bg-charcoal-deep p-5">
+            <h3 class="text-sm uppercase tracking-[0.12em]">{t}</h3>
+            <p class="mt-2 text-sm text-paper/65 leading-relaxed">{d}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+    <p class="mx-auto mt-10 max-w-7xl px-5 text-xs text-paper/45 lg:px-8">Manufacturer technical data sheets and shade cards (for example adhesives and grout) are available on request for the products we supply.</p>
   </section>
 
   <section id="sizes-finishes" class="scroll-mt-32 bg-card py-16">

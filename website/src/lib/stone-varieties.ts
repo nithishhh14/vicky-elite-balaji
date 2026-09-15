@@ -26,10 +26,11 @@ export const stoneCategories: StoneCategory[] = [
     label: "Granite",
     blurb: "Indian and imported granite for counters, flooring, cladding and staircases.",
     varieties: [
-      { name: "Black Galaxy" },
+      { name: "Kashmir White" },
       { name: "River White", note: "Tamil Nadu-quarried" },
       { name: "Imperial Red", note: "Tamil Nadu-quarried" },
-      { name: "Steel Grey" },
+      { name: "Classic Grey" },
+      { name: "Viscount White" },
       { name: "Colonial White" },
       { name: "Alaska White" },
       { name: "P White" },

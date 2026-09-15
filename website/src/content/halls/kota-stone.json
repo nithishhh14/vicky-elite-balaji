@@ -2,12 +2,18 @@
   "name": "Kota Stone",
   "order": 3,
   "tagline": "Durable natural flooring stone",
-  "intro": "Kota stone for durable, low-maintenance flooring, a standard choice for godowns, parking, utility areas and budget-conscious civil work across our Coimbatore and Nilgiris project sites.",
-  "heroImage": "https://images.unsplash.com/photo-1717416698017-b0ea714a7658?auto=format&fit=crop&w=1800&q=80",
-  "heroAlt": "Beige natural stone floor with a cut stone slab corner",
+  "intro": "Kota stone is a fine-grained natural limestone from Rajasthan: muted blue-grey, green-grey or brown, with no veining and a calm, even texture. It is laid as jointed slabs for hard-wearing floors in homes, verandas, staircases, godowns, parking and outdoor paths. Shade varies by quarry lot, so ask us for photos of the current lot.",
+  "heroImage": "",
+  "heroAlt": "Kota stone colour panel",
   "hasRealContent": false,
   "materialColor": "#5c6b5f",
   "materialTexture": "stone",
-  "applications": ["Godowns & utility floors", "Parking & driveways", "Budget civil projects", "Outdoor pathways"],
+  "applications": [
+    "Home & veranda floors",
+    "Staircases",
+    "Godowns & utility floors",
+    "Parking & driveways",
+    "Outdoor pathways"
+  ],
   "enquiryNote": "Ask for trade rate. Quoted by slab thickness and finish."
 }

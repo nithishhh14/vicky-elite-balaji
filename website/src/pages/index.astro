@@ -1,58 +1,65 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
-import { business, waLink, telLink, defaultEnquiryMessage } from "../lib/business";
+import { business, waLink, telLink } from "../lib/business";
+import { mediaIn, mediaLibrary, provenanceLabel } from "../lib/media-library";
 import Magnet from "../components/react-bits/Magnet";
+import MaterialMatch from "../components/MaterialMatch.astro";
+import QuoteForm from "../components/QuoteForm.astro";
 
-const halls = (await getCollection("halls")).sort((a, b) => a.data.order - b.data.order);
-const fabricationServices = (await getCollection("services")).sort((a, b) => a.data.order - b.data.order).slice(0, 4);
+const products = await getCollection("products");
+const bySlug = (slug: string) => mediaLibrary.find((m) => m.slug === slug)!;
 
-// Category strip, reproduced from the client's reference mockup (2026-09-15
-// client direction): same 5 categories, same wording, same imagery -- the
-// photos are cut from that mockup (see docs/ART_DIRECTION.md). Every card
-// links to a real page.
-const categoryStrip = [
-  { href: "/search/?q=granite", label: "Granite", descriptor: "Natural Strength", image: "/media/reference/card-granite.jpg" },
-  { href: "/search/?q=marble", label: "Marble", descriptor: "Timeless Elegance", image: "/media/reference/card-marble.jpg" },
-  { href: "/materials/tiles-ceramics/", label: "Tiles & Ceramics", descriptor: "Modern Living", image: "/media/reference/card-tiles.jpg" },
-  { href: "/halls/sanitaryware/", label: "Bathroom Solutions", descriptor: "Beauty in Every Detail", image: "/media/reference/card-bathroom.jpg" },
-  { href: "/materials/natural-stone/", label: "Exterior Solutions", descriptor: "Built for Tomorrow", image: "/media/reference/card-exterior.jpg" },
+// 02 — Material worlds. Real photography wherever it exists: granite and
+// marble from our own yard, tiles from supplier catalogues, stonecraft from
+// our own work. Only Bathroom still uses the client-approved concept render,
+// and says so.
+const worlds = [
+  { href: "/granite/", label: "Granite", descriptor: "From our slab yard", image: bySlug("black-galaxy-slabs").thumb, credit: provenanceLabel.stock },
+  { href: "/search/?q=marble", label: "Marble", descriptor: "White & veined slabs", image: bySlug("white-slab-veined").thumb, credit: provenanceLabel.stock },
+  { href: "/halls/tiles/", label: "Tiles & Ceramics", descriptor: "Floor, wall & large format", image: "/media/tiles/moroccan-collection/lifestyle-9613fl.jpg", credit: "Supplier catalogue" },
+  { href: "/halls/sanitaryware/", label: "Bathroom", descriptor: "Sanitaryware & fittings", image: "/media/reference/card-bathroom.jpg", credit: "Concept render" },
+  { href: "/custom/", label: "Custom Stonecraft", descriptor: "Engraving & stone furniture", image: bySlug("tulsi-madam-engraved-black").thumb, credit: provenanceLabel.work },
 ];
 
-// Trust bar in the reference's layout and wording. The reference's "1000+
-// Products" is replaced with the real founding year until the client
-// confirms an actual product count; the other four are true of the business
-// (partner brands, site measurement/consultation, India-wide supply,
-// contractor/builder customers -- see business.ts and the About page).
-const stats = [
-  { value: `Since ${business.since}`, label: "Trusted Supplier" },
-  { value: "Premium", label: "Partner Brands" },
-  { value: "Expert", label: "Consultation" },
-  { value: "Pan India", label: "Supply" },
-  { value: "Trusted By", label: "Contractors & Builders" },
+// Trust bar: verified facts only (business.ts / .cursorrules / client
+// confirmation logged in docs/DECISIONS.md).
+const facts = [
+  { value: `Since ${business.since}`, label: "Karamadai, Coimbatore" },
+  { value: `${business.partnerBrands.length} brands`, label: "We work with" },
+  { value: "Own slab yard", label: "Granite & marble" },
+  { value: "Made to order", label: "Custom stonecraft" },
+  { value: "India-wide", label: "Supply on request" },
 ];
 
-const heroFeatures = [
-  { title: "Premium", sub: "Quality", icon: "M6 3h12l4 6-10 12L2 9l4-6Zm-4 6h20M9.5 3 12 9l2.5-6M12 9v12" },
-  { title: "Wide", sub: "Range", icon: "M12 2 21 7v10l-9 5-9-5V7l9-5Zm0 0v20M3 7l9 5 9-5" },
-  { title: "Trusted", sub: "Partner", icon: "M12 2 20 5v6c0 5-3.4 9.4-8 11-4.6-1.6-8-6-8-11V5l8-3Z" },
+const specimens = products
+  .filter((p) => p.data.category === "Natural granite slab")
+  .sort((a, b) => a.data.order - b.data.order);
+
+const craft = mediaIn("stonecraft", "work");
+
+const applications = [
+  { label: "Living & flooring", href: "/applications/#flooring", image: "/media/tiles/grace-series/lifestyle-ns9613.jpg", credit: "Supplier catalogue" },
+  { label: "Kitchen", href: "/applications/#kitchen", image: bySlug("idea-black-granite-kitchen").thumb, credit: provenanceLabel.idea },
+  { label: "Bathroom", href: "/applications/#bathroom", image: bySlug("idea-sanitaryware-gallery").thumb, credit: provenanceLabel.idea },
+  { label: "Staircase", href: "/applications/#staircase", image: bySlug("granite-staircase").thumb, credit: provenanceLabel.work },
+  { label: "Facade & exterior", href: "/applications/#exterior", image: "/media/reference/card-exterior.jpg", credit: "Concept render" },
+  { label: "Outdoor & garden", href: "/custom/#furniture", image: bySlug("granite-outdoor-table-set").thumb, credit: provenanceLabel.work },
 ];
 
-// Real, already-derived facet values used as text-search shortcuts into /search/.
-const discoveryTerms = ["Grey", "White", "Polished", "Glossy", "Flooring", "Kitchen"];
+const productBrands = new Set(products.map((p) => p.data.brand).filter(Boolean));
+const localHubs = ["Karamadai", "Coimbatore", "Mettupalayam", "Annur", "Sirumugai", "Periyanaickenpalayam", "Thudiyalur", "Saravanampatti", "Kallar", "Ooty", "Kotagiri", "Nilgiris"];
 ---
 
 <BaseLayout
-  title="Elite Balaji Stones & Ceramics | Virtual Showroom, Karamadai, Coimbatore"
-  description="Granite, marble, tiles, sanitaryware and laying works. Wholesale trade supply from Karamadai since 2012. Walk the virtual showroom, then ask for a trade rate."
+  title="Elite Balaji Stones & Ceramics | Granite, Marble, Tiles & Stonecraft in Karamadai, Coimbatore"
+  description="Granite slabs, marble, tiles, sanitaryware and custom stonecraft from Karamadai since 2012. Serving homes, builders and architects across Coimbatore, Mettupalayam and the Nilgiris."
   overlayHeader
 >
-  <!-- 01 — Hero, reproduced from the client's reference mockup: dark marble
-       zone on the left carrying the type, lit showroom interior on the right.
-       The interior image is the mockup's own render (client-approved while
-       the real showroom is under renovation). The header floats over it. -->
-  <section class="relative isolate flex min-h-[100svh] items-center overflow-hidden bg-charcoal-deep pb-14 pt-36 text-paper lg:min-h-[max(92svh,760px)] lg:pt-44">
+  <!-- 01 — Cinematic hero: black → gold line → showroom concept settles in → type. -->
+  <section data-hero-intro class="relative isolate flex min-h-[92svh] items-center overflow-hidden bg-charcoal-deep pb-16 pt-36 text-paper lg:min-h-[max(92svh,780px)] lg:pt-44">
     <img
+      data-intro-image
       src="/media/reference/hero-interior.jpg"
       alt=""
       aria-hidden="true"
@@ -61,74 +68,61 @@ const discoveryTerms = ["Grey", "White", "Polished", "Glossy", "Flooring", "Kitc
       class="absolute inset-y-0 right-0 h-full w-full object-cover object-[70%_center] lg:w-[68%] lg:object-left"
       fetchpriority="high"
     />
-    <div class="marble-veins pointer-events-none absolute inset-y-0 left-0 w-full bg-[linear-gradient(to_right,_var(--color-charcoal-deep)_0%,_color-mix(in_srgb,var(--color-bottle-dark)_85%,transparent)_45%,_transparent_75%)] lg:w-[62%] lg:bg-[linear-gradient(to_right,_var(--color-charcoal-deep)_0%,_var(--color-bottle-dark)_60%,_transparent_100%)]" aria-hidden="true"></div>
-    <div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-charcoal-deep/85 via-transparent to-charcoal-deep/60" aria-hidden="true"></div>
+    <div class="marble-veins pointer-events-none absolute inset-y-0 left-0 w-full bg-[linear-gradient(to_right,_var(--color-charcoal-deep)_0%,_color-mix(in_srgb,var(--color-bottle-dark)_85%,transparent)_45%,_transparent_78%)] lg:w-[62%] lg:bg-[linear-gradient(to_right,_var(--color-charcoal-deep)_0%,_var(--color-bottle-dark)_60%,_transparent_100%)]" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-charcoal-deep/85 via-transparent to-charcoal-deep/70" aria-hidden="true"></div>
+    <span data-intro-line class="pointer-events-none absolute left-0 top-1/2 z-10 h-px w-full bg-gradient-to-r from-transparent via-brass to-transparent" aria-hidden="true"></span>
 
-    <div data-gsap-hero class="relative z-10 mx-auto w-full max-w-7xl px-5 lg:px-8">
-      <p class="text-xs uppercase leading-[1.9] tracking-[0.45em] text-paper/85 sm:text-sm">
-        Natural Beauty<br />Timeless Spaces
-      </p>
-      <h1 class="mt-6 font-display text-[clamp(2.75rem,13vw,7.5rem)] font-medium uppercase leading-[0.92]">
+    <div data-gsap-hero data-gsap-delay="1.1" class="relative z-10 mx-auto w-full max-w-7xl px-5 lg:px-8">
+      <p class="font-display text-2xl italic text-brass sm:text-3xl">Elite Balaji</p>
+      <h1 class="mt-2 font-display text-[clamp(2.75rem,12vw,7.25rem)] font-medium uppercase leading-[0.92]">
         <span class="bg-gradient-to-b from-[#f3d9a4] via-brass to-mustard-dark bg-clip-text text-transparent">Stones &amp;</span><br />
         <span class="text-paper">Ceramics</span>
       </h1>
-      <p class="mt-5 text-lg text-paper/90 sm:text-xl">Premium Surfaces for a Better Tomorrow</p>
-      <div id="hero-cta" class="mt-9">
-        <Magnet client:load padding={80} magnetStrength={3}>
-          <a href="#collection" class="inline-flex items-center gap-3 border border-brass px-8 py-4 text-xs font-medium uppercase tracking-[0.2em] text-paper hover:bg-brass hover:text-charcoal-deep transition-colors">
-            Explore Collection
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-        </Magnet>
+      <p class="mt-6 max-w-xl font-display text-2xl leading-snug text-paper/90 sm:text-3xl">
+        Natural stone. Architectural surfaces. Built to last.
+      </p>
+      <div class="mt-9 flex flex-wrap items-center gap-3">
+        <div id="hero-cta">
+          <Magnet client:load padding={70} magnetStrength={3}>
+            <a href="#materials" class="inline-flex min-h-12 items-center gap-3 border border-brass bg-charcoal-deep/30 px-7 py-3.5 text-xs uppercase tracking-[0.2em] text-paper hover:bg-brass hover:text-charcoal-deep transition-colors">
+              Explore materials
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </Magnet>
+        </div>
+        <a href={waLink("Hi Elite Balaji, I'd like to talk to your team about a project.")} target="_blank" rel="noopener" class="inline-flex min-h-12 items-center px-5 py-3.5 text-xs uppercase tracking-[0.2em] text-paper/85 underline decoration-brass/60 underline-offset-8 hover:text-brass">Talk to our team</a>
+        <a href="#quote" class="inline-flex min-h-12 items-center px-5 py-3.5 text-xs uppercase tracking-[0.2em] text-paper/85 underline decoration-brass/60 underline-offset-8 hover:text-brass">Request a quote</a>
       </div>
-
-      <ul class="mt-12 flex flex-wrap items-stretch gap-y-6">
-        {heroFeatures.map((f, i) => (
-          <li class:list={["flex flex-col gap-3 pr-8 sm:pr-10", i > 0 && "border-l border-paper/20 pl-8 sm:pl-10"]}>
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" class="text-brass" aria-hidden="true"><path d={f.icon} stroke-linejoin="round" stroke-linecap="round"/></svg>
-            <span class="text-xs uppercase leading-snug tracking-[0.15em] text-paper">
-              {f.title}<br /><span class="text-[0.6rem] tracking-[0.25em] text-paper/60">{f.sub}</span>
-            </span>
-          </li>
-        ))}
-      </ul>
     </div>
 
-    <div class="absolute right-8 top-1/2 z-10 hidden max-w-[13rem] -translate-y-[10%] text-left xl:block">
-      <p class="text-[0.7rem] uppercase leading-[2] tracking-[0.2em] text-paper/85">
-        From nature's finest stones to world-class ceramics, we bring beauty, strength and style to every space.
+    <div class="absolute right-8 top-1/2 z-10 hidden max-w-[13rem] -translate-y-[5%] xl:block">
+      <p class="text-[0.7rem] uppercase leading-[2] tracking-[0.2em] text-paper/80">
+        Granite, marble, tiles and custom stonecraft, from Karamadai since {business.since}.
       </p>
       <span class="my-6 block h-px w-10 bg-brass" aria-hidden="true"></span>
-      <p class="text-[0.7rem] uppercase leading-[2] tracking-[0.3em] text-paper/85">Build<br />Better Spaces</p>
+      <p class="text-[0.7rem] uppercase leading-[2] tracking-[0.3em] text-paper/80">Build<br />Better Spaces</p>
     </div>
 
-    <p class="absolute bottom-3 left-5 z-10 text-[0.55rem] uppercase tracking-[0.15em] text-paper/30 lg:left-8">
-      Illustrative showroom render · our Karamadai showroom is being renovated
+    <p class="absolute bottom-3 left-5 z-10 text-[0.55rem] uppercase tracking-[0.15em] text-paper/35 lg:left-8">
+      Illustrative showroom concept · our Karamadai showroom is being transformed
     </p>
   </section>
 
-  <!-- 02 — Category strip + trust bar on the reference's warm ivory ground. -->
-  <section id="collection" class="scroll-mt-24 bg-paper pb-10 pt-6 sm:pt-8">
-    <div data-gsap-stagger class="mx-auto grid max-w-[96rem] gap-3 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-5 lg:gap-4 lg:px-8">
-      {categoryStrip.map((cat) => (
-        <a href={cat.href} class="group relative isolate block aspect-[16/10] overflow-hidden bg-charcoal-deep sm:last:col-span-2 lg:last:col-span-1">
-          <img
-            src={cat.image}
-            alt=""
-            width="562"
-            height="348"
-            class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-            loading="lazy"
-          />
-          <div class="absolute inset-0 bg-gradient-to-t from-charcoal-deep/85 via-charcoal-deep/15 to-transparent"></div>
-          <div class="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-5">
-            <div>
-              <h3 class="max-w-[10ch] text-lg font-medium uppercase leading-tight tracking-[0.12em] text-paper">{cat.label}</h3>
-              <p class="mt-1.5 text-[0.6rem] uppercase tracking-[0.22em] text-paper/75">{cat.descriptor}</p>
-            </div>
-            <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-paper/70 text-paper transition-colors duration-300 group-hover:border-brass group-hover:bg-brass group-hover:text-charcoal-deep">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
+  <!-- 02 — Material worlds + verified trust bar -->
+  <section id="materials" class="scroll-mt-24 bg-paper pb-12 pt-8">
+    <div data-gsap-stagger class="mx-auto grid max-w-[96rem] grid-cols-2 gap-3 px-4 sm:px-6 lg:grid-cols-5 lg:gap-4 lg:px-8">
+      {worlds.map((w, i) => (
+        <a href={w.href} class:list={["material-card group relative isolate block aspect-[4/5] overflow-hidden bg-charcoal-deep lg:aspect-[3/4]", i === 4 && "col-span-2 aspect-[16/9] lg:col-span-1 lg:aspect-[3/4]"]}>
+          <img src={w.image} alt="" class="absolute inset-0 h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-105" loading="lazy" />
+          <div class="absolute inset-0 bg-gradient-to-t from-charcoal-deep/90 via-charcoal-deep/20 to-transparent"></div>
+          <span class="absolute left-4 top-4 text-[0.5rem] uppercase tracking-[0.2em] text-paper/60">{w.credit}</span>
+          <div class="absolute inset-x-0 bottom-0 p-4 sm:p-5">
+            <span class="block h-px w-8 bg-brass transition-all duration-500 group-hover:w-14" aria-hidden="true"></span>
+            <h3 class="material-name mt-3 font-display text-2xl leading-tight text-paper sm:text-3xl">{w.label}</h3>
+            <p class="material-meta mt-1 flex items-center justify-between gap-2 text-[0.6rem] uppercase tracking-[0.18em] text-paper/80">
+              {w.descriptor}
+              <span aria-hidden="true" class="text-brass">&rarr;</span>
+            </p>
           </div>
         </a>
       ))}
@@ -136,199 +130,198 @@ const discoveryTerms = ["Grey", "White", "Polished", "Glossy", "Flooring", "Kitc
 
     <div class="mx-auto mt-10 flex max-w-7xl flex-col gap-8 px-5 lg:flex-row lg:items-center lg:px-8">
       <dl class="grid flex-1 grid-cols-2 gap-x-4 gap-y-7 sm:grid-cols-3 lg:grid-cols-5">
-        {stats.map((s) => (
-          <div class="flex flex-col-reverse border-l border-brass/50 pl-5">
-            <dt class="mt-1.5 text-[0.6rem] uppercase tracking-[0.22em] text-ink-soft">{s.label}</dt>
-            <dd class="text-lg uppercase tracking-[0.14em] text-mustard-dark sm:text-xl">{s.value}</dd>
+        {facts.map((s) => (
+          <div class="flex flex-col-reverse border-l border-brass/50 pl-4">
+            <dt class="mt-1.5 text-[0.6rem] uppercase tracking-[0.2em] text-ink-soft">{s.label}</dt>
+            <dd class="font-display text-xl text-mustard-dark sm:text-2xl">{s.value}</dd>
           </div>
         ))}
       </dl>
-      <a
-        href={waLink(defaultEnquiryMessage)}
-        target="_blank"
-        rel="noopener"
-        class="inline-flex flex-shrink-0 items-center justify-center gap-3 self-start bg-gradient-to-r from-brass to-mustard-dark px-8 py-4 text-xs font-medium uppercase tracking-[0.22em] text-paper shadow-lift hover:brightness-110 transition lg:self-center"
-      >
-        Get a Quote
+      <a href="#quote" class="inline-flex min-h-12 flex-shrink-0 items-center justify-center gap-3 self-start bg-gradient-to-r from-brass to-mustard-dark px-8 py-4 text-xs uppercase tracking-[0.22em] text-paper shadow-lift hover:brightness-110 transition lg:self-center">
+        Request a quote
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
   </section>
 
-
-  <!-- 02b — Engraved tagline: the backlit-marble-lettering motif from the
-       reference image, built with CSS text-shadow rather than a photo, using
-       the business's own real, already-established tagline (business.ts),
-       never invented copy. -->
-  <section class="marble-veins bg-charcoal-deep py-24 text-center">
-    <p class="text-xs uppercase tracking-[0.4em] text-paper/50">{business.tagline}</p>
-    <h2 class="engraved-gold mt-4 font-display text-4xl italic sm:text-6xl">
-      {business.subTagline}
-    </h2>
+  <!-- 03 — Find your material -->
+  <section class="marble-veins bg-charcoal-deep py-20 text-paper">
+    <div class="mx-auto max-w-7xl px-5 lg:px-8">
+      <div class="flex items-center gap-4"><span data-gsap-line class="block h-px w-12 bg-brass" aria-hidden="true"></span><p class="text-xs uppercase tracking-[0.3em] text-brass">Find your material</p></div>
+      <h2 class="mt-4 max-w-2xl font-display text-4xl sm:text-5xl">Not sure what you need? Start with the space.</h2>
+      <p class="mt-4 max-w-xl text-paper/70">Tell us what you're building and finishing, and we'll point you to the materials that suit it. No jargon needed.</p>
+      <div class="mt-10"><MaterialMatch /></div>
+    </div>
   </section>
 
-  <!-- 03 — Filter: catalogue discovery -->
-  <section class="border-y border-line/60 bg-card py-20">
-    <div class="mx-auto max-w-6xl px-5">
-      <div class="max-w-xl reveal">
-        <p class="text-xs uppercase tracking-[0.3em] text-terracotta">Filter</p>
-        <h2 class="mt-3 text-3xl sm:text-4xl">Search the full catalogue</h2>
-        <p class="mt-4 text-ink-soft leading-relaxed">
-          Filter by material, colour, look or application across every hall at once, or jump
-          straight to a real result below.
-        </p>
+  <!-- 04 — Featured real materials: granite specimens from our yard -->
+  <section class="bg-paper py-20">
+    <div class="mx-auto flex max-w-7xl flex-wrap items-end justify-between gap-6 px-5 lg:px-8">
+      <div>
+        <div class="flex items-center gap-4"><span data-gsap-line class="block h-px w-12 bg-brass" aria-hidden="true"></span><p class="text-xs uppercase tracking-[0.3em] text-mustard-dark">From our slab yard</p></div>
+        <h2 class="mt-4 font-display text-4xl sm:text-5xl">Real granite, photographed here</h2>
       </div>
-      <div class="mt-8 flex flex-wrap gap-3">
-        {discoveryTerms.map((term) => (
-          <a
-            href={`/search/?q=${encodeURIComponent(term.toLowerCase())}`}
-            class="rounded-full border border-line bg-paper px-5 py-2.5 text-sm text-ink-soft hover:border-terracotta hover:text-terracotta transition-colors"
-          >
-            {term}
+      <a href="/granite/" class="inline-flex min-h-11 items-center text-xs uppercase tracking-[0.2em] underline decoration-brass underline-offset-8 hover:text-mustard-dark">All granite &rarr;</a>
+    </div>
+    <ul class="no-scrollbar mx-auto mt-10 flex max-w-[96rem] snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2 lg:px-8" aria-label="Granite specimens">
+      {specimens.map((p) => (
+        <li class="w-[68vw] max-w-[18rem] flex-shrink-0 snap-start">
+          <a href={`/products/${p.id}/`} class="group block">
+            <div class="overflow-hidden bg-charcoal-deep">
+              <img src={p.data.image.replace(/\.jpg$/, "-720.jpg")} alt={p.data.imageAlt} class="aspect-[3/4] w-full object-cover transition-transform duration-[900ms] group-hover:scale-105" loading="lazy" width="540" height="720" />
+            </div>
+            <p class="mt-3 font-display text-2xl leading-tight group-hover:text-mustard-dark">{p.data.name.replace(" Granite", "")}</p>
+            <p class="text-[0.6rem] uppercase tracking-[0.18em] text-ink-soft">{p.data.finish} · Check availability</p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- 05 — Custom stonecraft -->
+  <section class="bg-charcoal-deep py-20 text-paper">
+    <div class="mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:px-8">
+      <div>
+        <div class="flex items-center gap-4"><span data-gsap-line class="block h-px w-12 bg-brass" aria-hidden="true"></span><p class="text-xs uppercase tracking-[0.3em] text-brass">Custom stonecraft</p></div>
+        <h2 class="mt-4 font-display text-4xl sm:text-5xl">Bring a pattern, drawing or idea.</h2>
+        <p class="mt-3 font-display text-2xl text-paper/80">We help translate it into stone.</p>
+        <p class="mt-6 max-w-md text-paper/70 leading-relaxed">Engraved name plates and welcome signs, tulsi madams and pooja units, granite tables and benches. Every piece shown here is our own work.</p>
+        <ol class="mt-8 grid grid-cols-3 gap-4 text-[0.6rem] uppercase tracking-[0.16em] text-paper/70 sm:grid-cols-6 lg:grid-cols-3">
+          {["Raw stone", "Design", "Engraving", "Finishing", "Installation", "Final piece"].map((s, i) => (
+            <li class="border-t border-paper/20 pt-2"><span class="block font-display text-lg text-brass">{String(i + 1).padStart(2, "0")}</span>{s}</li>
+          ))}
+        </ol>
+        <a href="/custom/" class="mt-9 inline-flex min-h-12 items-center border border-brass px-7 py-3.5 text-xs uppercase tracking-[0.2em] hover:bg-brass hover:text-charcoal-deep transition-colors">See our stonecraft</a>
+      </div>
+      <div class="grid grid-cols-3 gap-3">
+        {craft.slice(0, 6).map((m, i) => (
+          <figure data-gsap-reveal class:list={["overflow-hidden", i === 0 && "col-span-2 row-span-2"]}>
+            <img src={m.thumb} alt={m.alt} class="h-full w-full object-cover" loading="lazy" />
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 — Applications -->
+  <section class="bg-card py-20">
+    <div class="mx-auto max-w-7xl px-5 lg:px-8">
+      <div class="flex items-center gap-4"><span data-gsap-line class="block h-px w-12 bg-brass" aria-hidden="true"></span><p class="text-xs uppercase tracking-[0.3em] text-mustard-dark">Applications</p></div>
+      <h2 class="mt-4 font-display text-4xl sm:text-5xl">Start from the room</h2>
+      <div data-gsap-stagger class="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-3">
+        {applications.map((a) => (
+          <a href={a.href} class="group relative block aspect-[4/3] overflow-hidden bg-charcoal-deep">
+            <img src={a.image} alt="" class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+            <div class="absolute inset-0 bg-gradient-to-t from-charcoal-deep/85 to-transparent"></div>
+            <div class="absolute inset-x-0 bottom-0 p-4">
+              <p class="font-display text-xl text-paper sm:text-2xl">{a.label}</p>
+              <p class="text-[0.5rem] uppercase tracking-[0.2em] text-paper/55">{a.credit}</p>
+            </div>
           </a>
         ))}
       </div>
-      <a href="/search/" data-gsap-magnetic class="mt-8 inline-block rounded-full bg-terracotta px-6 py-3 text-sm font-semibold uppercase tracking-wide text-paper hover:bg-terracotta-dark transition-colors">
-        Open the full catalogue
-      </a>
-
-      <div class="mt-16 border-t border-line/60 pt-8">
-        <p class="text-xs uppercase tracking-[0.25em] text-ink-soft">All halls</p>
-        <nav class="mt-4 flex flex-wrap gap-x-8 gap-y-3">
-          {halls.map((hall) => (
-            <a href={`/halls/${hall.id}/`} class="text-lg text-ink hover:text-terracotta transition-colors">
-              {hall.data.name}
-            </a>
-          ))}
-        </nav>
-      </div>
     </div>
   </section>
 
-  <!-- 04 — Custom & Fabrication -->
-  <section class="marble-veins border-y border-line/60 bg-charcoal py-20 text-paper">
-    <div class="mx-auto max-w-6xl px-5">
-      <div class="max-w-xl reveal">
-        <p class="text-xs uppercase tracking-[0.3em] text-mustard">Beyond standard stock</p>
-        <h2 class="mt-3 text-3xl sm:text-4xl">Custom &amp; fabrication</h2>
-        <p class="mt-4 text-paper/75 leading-relaxed">
-          Photo-printing on tiles, CNC granite engraving, hand-inlaid slabs, sculptures and name
-          boards, all cut and finished to order. Real capabilities, not catalogue photos.
-        </p>
-      </div>
-      <div data-gsap-stagger class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {fabricationServices.map((service) => (
-          <div class="rounded-sm border border-paper/15 bg-paper/5 p-5">
-            <h3 class="text-base">{service.data.name}</h3>
-            <p class="mt-2 text-sm text-paper/70 leading-relaxed">{service.data.description}</p>
-          </div>
-        ))}
-      </div>
-      <a href="/custom/" class="mt-8 inline-block text-sm font-semibold uppercase tracking-wide text-mustard hover:text-mustard-dark">
-        See all custom &amp; fabrication work &rarr;
-      </a>
-    </div>
-  </section>
-
-  <!-- 05 — Athangudi (one line among several, not the site's identity) -->
-  <section class="border-b border-line/60 bg-card py-14">
-    <a href="/halls/tiles/" class="group mx-auto flex max-w-6xl flex-col gap-6 px-5 sm:flex-row sm:items-center">
-      <div class="h-20 w-28 flex-shrink-0 overflow-hidden rounded-sm sm:h-24 sm:w-32">
-        <img
-          src="/media/tiles/athangudi-series/swatch-petal-red.jpg"
-          alt="Athangudi Series Petal Red tile swatch"
-          class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-          loading="lazy"
-        />
-      </div>
+  <!-- 07 — Why Elite Balaji -->
+  <section class="bg-paper py-20">
+    <div class="mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-[0.8fr_1.2fr] lg:px-8">
       <div>
-        <p class="text-xs uppercase tracking-[0.2em] text-terracotta">In the Tiles hall</p>
-        <p class="mt-1 text-lg">
-          <span class="font-display">Athangudi Series</span> — handmade heritage cement tiles, one of several lines we stock.
-        </p>
-      </div>
-      <span class="text-sm font-semibold uppercase tracking-wide text-terracotta group-hover:text-terracotta-dark sm:ml-auto">
-        View the range &rarr;
-      </span>
-    </a>
-  </section>
-
-  <!-- 06 — Why Elite Balaji -->
-  <section class="mx-auto max-w-6xl px-5 py-20">
-    <!-- The handshake motif from the reference badge, rendered large enough
-         to actually read (illegible at header size), standing for the
-         "trusted partner" idea this section's copy backs up with real USPs. -->
-    <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="text-brass">
-      <circle cx="28" cy="28" r="26" stroke="currentColor" stroke-width="1"/>
-      <path d="M14 30l6 5c1 .8 2.4.8 3.3-.1l1.2-1.2M42 30l-6 5c-1 .8-2.4.8-3.3-.1l-1.2-1.2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M20 27l-6 3 3 6M36 27l6 3-3 6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M23 29l3.5 3c.9.8 2.3.8 3.2 0l3.3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-    <p class="mt-5 text-xs uppercase tracking-[0.3em] text-terracotta">Why contractors choose us</p>
-    <h2 class="mt-3 max-w-lg text-3xl sm:text-4xl">Trusted since {business.since}, from Karamadai</h2>
-    <p class="mt-5 max-w-xl text-ink-soft leading-relaxed">
-      We've supplied granite, marble, tiles and sanitaryware to contractors and homes from Karamadai
-      since {business.since}. We also lay it: our own crews do the site measurement, the laying and
-      the finishing, so you're not coordinating two separate people. Trade rates move with supply, so
-      we quote by WhatsApp or call rather than posting a price list on this site.
-    </p>
-    <ol class="mt-12 divide-y divide-line/60 border-y border-line/60">
-      {business.usps.map((usp, i) => (
-        <li class="grid grid-cols-[3rem_1fr] gap-6 py-6 sm:grid-cols-[4rem_1fr_2fr]">
-          <span class="font-display text-2xl text-terracotta">{String(i + 1).padStart(2, "0")}</span>
-          <span class="font-semibold uppercase tracking-wide text-sm self-center">{usp.title}</span>
-          <span class="text-ink-soft self-center">{usp.detail}</span>
-        </li>
-      ))}
-    </ol>
-  </section>
-
-  <!-- 07 — Trusted brands -->
-  <section class="border-y border-line/60 bg-card py-14">
-    <div class="mx-auto max-w-6xl px-5 text-center">
-      <p class="text-xs uppercase tracking-[0.3em] text-terracotta">Partner brands</p>
-      <p class="mt-4 text-lg leading-loose text-ink-soft">
-        {business.partnerBrands.join(" · ")}
-      </p>
-    </div>
-  </section>
-
-  <!-- 08 — Service area -->
-  <section class="mx-auto max-w-6xl px-5 py-20">
-    <div class="grid gap-10 md:grid-cols-2">
-      <div>
-        <p class="text-xs uppercase tracking-[0.3em] text-terracotta">Service area</p>
-        <h2 class="mt-3 text-3xl sm:text-4xl">Coimbatore &amp; the Nilgiris</h2>
+        <div class="flex items-center gap-4"><span data-gsap-line class="block h-px w-12 bg-brass" aria-hidden="true"></span><p class="text-xs uppercase tracking-[0.3em] text-mustard-dark">Why Elite Balaji</p></div>
+        <h2 class="mt-4 font-display text-4xl sm:text-5xl">Material, fabrication and laying, from one team</h2>
         <p class="mt-5 text-ink-soft leading-relaxed">
-          Site visits and our own laying crews cover Coimbatore city, the Nilgiris and the
-          surrounding hubs below. Material orders themselves aren't limited to this belt — we
-          supply and transport to any destination in India, ask us for a delivery quote.
+          Since {business.since}, homes, contractors and builders have come to our Karamadai yard for granite,
+          marble, tiles and sanitaryware. Our own crews measure, lay and finish, and our stonecraft
+          work is made to order. Rates move with supply, so we quote on WhatsApp or by phone.
         </p>
       </div>
-      <div class="flex flex-wrap content-start gap-2">
-        {business.serviceHubs.map((hub) => (
-          <span class="rounded-full border border-line px-4 py-1.5 text-sm text-ink-soft">{hub}</span>
+      <ol class="divide-y divide-line border-y border-line self-center">
+        {business.usps.map((usp, i) => (
+          <li class="grid grid-cols-[3rem_1fr] gap-4 py-6 sm:grid-cols-[4rem_12rem_1fr]">
+            <span class="font-display text-3xl text-brass">{String(i + 1).padStart(2, "0")}</span>
+            <span class="self-center text-sm font-medium uppercase tracking-[0.12em]">{usp.title}</span>
+            <span class="col-start-2 self-center text-ink-soft sm:col-start-auto">{usp.detail}</span>
+          </li>
         ))}
-      </div>
+      </ol>
     </div>
   </section>
 
-  <!-- 09 — Final CTA -->
-  <section class="marble-veins bg-charcoal py-20 text-paper">
-    <div class="mx-auto max-w-3xl px-5 text-center">
-      <h2 class="text-3xl sm:text-4xl">Have a site measurement ready?</h2>
-      <p class="mt-4 text-paper/80">
-        Send us the material, size and quantity, and we'll come back with trade pricing and what's
-        available in stock today.
-      </p>
-      <div class="mt-8 flex flex-wrap justify-center gap-3">
-        <a href={waLink(defaultEnquiryMessage)} target="_blank" rel="noopener" data-gsap-magnetic class="rounded-full bg-mustard px-6 py-3 text-sm font-semibold uppercase tracking-wide text-ink hover:bg-mustard-dark transition-colors">
-          WhatsApp us
-        </a>
-        <a href={telLink()} class="rounded-full border border-paper/50 px-6 py-3 text-sm font-semibold uppercase tracking-wide hover:bg-paper/10 transition-colors">
-          Call {business.phoneDisplay}
-        </a>
+  <!-- 08 — Brands -->
+  <section class="border-y border-line bg-card py-14">
+    <div class="mx-auto max-w-7xl px-5 text-center lg:px-8">
+      <p class="text-xs uppercase tracking-[0.3em] text-mustard-dark">Brands &amp; collections we work with</p>
+      <ul class="mt-6 flex flex-wrap justify-center gap-x-8 gap-y-3 font-display text-2xl text-ink-soft">
+        {business.partnerBrands.map((b) => (
+          <li>{productBrands.has(b) ? <a href={`/search/?q=${encodeURIComponent(b)}`} class="hover:text-ink">{b}</a> : b}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- 09 — Local service area -->
+  <section class="bg-paper py-20">
+    <div class="mx-auto grid max-w-7xl gap-12 px-5 md:grid-cols-2 lg:px-8">
+      <div>
+        <div class="flex items-center gap-4"><span data-gsap-line class="block h-px w-12 bg-brass" aria-hidden="true"></span><p class="text-xs uppercase tracking-[0.3em] text-mustard-dark">Service area</p></div>
+        <h2 class="mt-4 font-display text-4xl sm:text-5xl">Karamadai, Coimbatore, Mettupalayam and around</h2>
+        <p class="mt-5 text-ink-soft leading-relaxed">
+          Serving homes, builders, architects and projects across Coimbatore, Mettupalayam and the
+          Nilgiris from our Karamadai yard on Mettupalayam Main Road. Site visits and our laying crews
+          cover the areas listed here.
+        </p>
+        <div class="mt-8 border-l-2 border-brass pl-5">
+          <p class="font-display text-2xl">Need something specific?</p>
+          <p class="mt-1 text-ink-soft">Ask us. We can help source materials beyond our displayed collection, and arrange supply further across India on request.</p>
+        </div>
       </div>
+      <ul class="flex flex-wrap content-start gap-2">
+        {localHubs.map((hub) => <li class="border border-line px-4 py-2 text-sm text-ink-soft">{hub}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <!-- 10 — Showroom transformation -->
+  <section class="relative isolate overflow-hidden bg-charcoal-deep py-24 text-paper">
+    <img src="/media/reference/hero-interior.jpg" alt="" aria-hidden="true" class="absolute inset-0 h-full w-full object-cover opacity-35" loading="lazy" />
+    <div class="absolute inset-0 bg-gradient-to-r from-charcoal-deep via-charcoal-deep/80 to-charcoal-deep/30" aria-hidden="true"></div>
+    <div class="relative mx-auto max-w-7xl px-5 lg:px-8">
+      <p class="text-xs uppercase tracking-[0.3em] text-brass">Our showroom is being transformed</p>
+      <h2 class="mt-4 max-w-2xl font-display text-4xl sm:text-5xl">A new material experience is taking shape in Karamadai.</h2>
+      <p class="mt-5 max-w-xl text-paper/75 leading-relaxed">While the new showroom takes shape, explore our collection online or speak directly with our team. We're happy to share photos and videos of current stock.</p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="/gallery/" class="inline-flex min-h-12 items-center border border-brass px-7 py-3.5 text-xs uppercase tracking-[0.2em] hover:bg-brass hover:text-charcoal-deep transition-colors">Explore the gallery</a>
+        <a href={waLink("Hi Elite Balaji, could you share photos of your current stock?")} target="_blank" rel="noopener" class="inline-flex min-h-12 items-center px-5 text-xs uppercase tracking-[0.2em] underline decoration-brass underline-offset-8 hover:text-brass">Ask for stock photos</a>
+      </div>
+      <p class="mt-10 text-[0.55rem] uppercase tracking-[0.18em] text-paper/35">Background: illustrative concept render, not a photograph of our showroom</p>
+    </div>
+  </section>
+
+  <!-- 11 — Request a quote + source it -->
+  <section id="quote" class="scroll-mt-24 bg-charcoal py-20 text-paper">
+    <div class="mx-auto grid max-w-7xl gap-14 px-5 lg:grid-cols-[0.8fr_1.2fr] lg:px-8">
+      <div>
+        <div class="flex items-center gap-4"><span data-gsap-line class="block h-px w-12 bg-brass" aria-hidden="true"></span><p class="text-xs uppercase tracking-[0.3em] text-brass">Request a quote</p></div>
+        <h2 class="mt-4 font-display text-4xl sm:text-5xl">Can't find your material?</h2>
+        <p class="mt-5 text-paper/75 leading-relaxed">What you see here is a curated selection. Send us any of these and our team will help find the right option:</p>
+        <ul class="mt-5 grid grid-cols-2 gap-2 text-sm text-paper/80">
+          {["A photo", "A product name", "A screenshot", "A catalogue page", "Colour & size", "Where it will go"].map((x) => (
+            <li class="flex items-center gap-2"><span class="h-px w-4 bg-brass" aria-hidden="true"></span>{x}</li>
+          ))}
+        </ul>
+        <a href={waLink("Hi Elite Balaji, I'm looking for this material (photo/details attached):")} target="_blank" rel="noopener" class="mt-8 inline-flex min-h-12 items-center border border-brass px-7 py-3.5 text-xs uppercase tracking-[0.2em] hover:bg-brass hover:text-charcoal-deep transition-colors">Send your requirement</a>
+      </div>
+      <QuoteForm id="home-quote" tone="dark" />
+    </div>
+  </section>
+
+  <!-- 12 — Final CTA -->
+  <section class="marble-veins bg-charcoal-deep py-24 text-center text-paper">
+    <p class="text-xs uppercase tracking-[0.4em] text-paper/50">{business.tagline}</p>
+    <h2 class="engraved-gold mt-4 font-display text-5xl italic sm:text-7xl">{business.subTagline}</h2>
+    <div class="mt-10 flex flex-wrap justify-center gap-3">
+      <a href={waLink("Hi Elite Balaji, I'd like to discuss a project.")} target="_blank" rel="noopener" class="inline-flex min-h-12 items-center bg-gradient-to-r from-brass to-mustard-dark px-8 py-4 text-xs uppercase tracking-[0.2em] hover:brightness-110">WhatsApp our team</a>
+      <a href={telLink()} class="inline-flex min-h-12 items-center border border-paper/40 px-8 py-4 text-xs uppercase tracking-[0.2em] hover:border-brass">Call {business.phoneDisplay}</a>
     </div>
   </section>
 </BaseLayout>

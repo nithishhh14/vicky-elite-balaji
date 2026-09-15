@@ -2,95 +2,125 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHero from "../components/PageHero.astro";
 import { getCollection } from "astro:content";
+import { mediaLibrary, provenanceLabel } from "../lib/media-library";
 
-// Gallery: every image already on the site, in one browsable wall. Showroom
-// renders from the client's reference mockup come first, then the real
-// catalogue grouped by hall. Filtering is plain JS on a data attribute.
-const halls = (await getCollection("halls")).sort((a, b) => a.data.order - b.data.order);
-const products = (await getCollection("products")).sort((a, b) => a.data.order - b.data.order);
+// Gallery: real client material first, every image visibly labelled with
+// what it is. Stock (Unsplash) product photos and colour swatches are NOT
+// shown here: the gallery is for real material, real work, supplier
+// catalogue imagery, and clearly-labelled ideas and renders.
+type Tile = { src: string; alt: string; title: string; label: string; tone: "real" | "idea"; groups: string[]; href?: string };
 
-const renders = [
-  { src: "/media/reference/hero-interior.jpg", alt: "Showroom reception with marble walls and counter", label: "Showroom render" },
-  { src: "/media/reference/card-granite.jpg", alt: "Dark granite surface", label: "Granite" },
-  { src: "/media/reference/card-marble.jpg", alt: "Cream marble with gold veining", label: "Marble" },
-  { src: "/media/reference/card-tiles.jpg", alt: "Glossy marble-look porcelain tiles", label: "Tiles & Ceramics" },
-  { src: "/media/reference/card-bathroom.jpg", alt: "Bathroom with stone walls and vessel basin", label: "Bathroom" },
-  { src: "/media/reference/card-exterior.jpg", alt: "Building entrance with marble cladding", label: "Exterior" },
-];
-
-type Tile = { src: string; alt: string; label: string; group: string; href?: string };
-const seen = new Set<string>();
 const tiles: Tile[] = [];
-const push = (t: Tile) => {
-  if (seen.has(t.src)) return;
-  seen.add(t.src);
-  tiles.push(t);
-};
-renders.forEach((r) => push({ ...r, group: "renders" }));
-for (const hall of halls) {
-  for (const p of products.filter((x) => x.data.hallId === hall.id)) {
-    push({ src: p.data.image, alt: p.data.imageAlt, label: p.data.name, group: hall.id, href: `/products/${p.id}/` });
-    for (const img of p.data.images ?? []) push({ src: img.src, alt: img.alt, label: p.data.name, group: hall.id, href: `/products/${p.id}/` });
+const order: Record<string, number> = { work: 0, stock: 1, idea: 3 };
+[...mediaLibrary]
+  .sort((a, b) => order[a.provenance] - order[b.provenance])
+  .forEach((m) => {
+    const groups = new Set<string>();
+    m.categories.forEach((c) => {
+      if (c === "stonecraft" || c === "engraving" || c === "devotional" || c === "furniture") groups.add("stonecraft");
+      else if (c === "stonecraft-process") groups.add("stonecraft");
+      else groups.add(c);
+    });
+    tiles.push({
+      src: m.thumb,
+      alt: m.alt,
+      title: m.title,
+      label: m.categories.includes("stonecraft-process") ? "Process reference" : provenanceLabel[m.provenance],
+      tone: m.provenance === "idea" ? "idea" : "real",
+      groups: [...groups],
+      href: m.productId ? `/products/${m.productId}/` : undefined,
+    });
+  });
+
+const products = (await getCollection("products")).filter((p) => p.data.hallId === "tiles").sort((a, b) => a.data.order - b.data.order);
+const seen = new Set<string>();
+for (const p of products) {
+  for (const img of [{ src: p.data.image, alt: p.data.imageAlt }, ...(p.data.images ?? [])]) {
+    if (seen.has(img.src)) continue;
+    seen.add(img.src);
+    tiles.push({ src: img.src, alt: img.alt, title: p.data.name, label: p.data.brand ? `Supplier catalogue · ${p.data.brand}` : "Supplier catalogue", tone: "real", groups: ["tiles"], href: `/products/${p.id}/` });
   }
 }
+
+[
+  { src: "/media/reference/hero-interior.jpg", alt: "Concept render of a marble showroom reception", title: "Showroom concept" },
+  { src: "/media/reference/card-bathroom.jpg", alt: "Concept render of a stone bathroom with a vessel basin", title: "Bathroom concept" },
+  { src: "/media/reference/card-exterior.jpg", alt: "Concept render of a marble-clad building entrance", title: "Exterior concept" },
+].forEach((r) => tiles.push({ ...r, label: "Illustrative render", tone: "idea", groups: ["showroom"] }));
+
 const groups = [
   { id: "all", label: "All" },
-  { id: "renders", label: "Showroom" },
-  ...halls.filter((h) => tiles.some((t) => t.group === h.id)).map((h) => ({ id: h.id, label: h.data.name })),
-];
+  { id: "stonecraft", label: "Stonecraft" },
+  { id: "granite", label: "Granite" },
+  { id: "marble", label: "Marble" },
+  { id: "tiles", label: "Tiles" },
+  { id: "kitchen", label: "Kitchen" },
+  { id: "bathroom", label: "Bathroom" },
+  { id: "applications", label: "Applications" },
+  { id: "showroom", label: "Showroom concept" },
+].filter((g) => g.id === "all" || tiles.some((t) => t.groups.includes(g.id)));
 ---
 
 <BaseLayout
-  title="Gallery | Elite Balaji Stones & Ceramics"
-  description="Browse granite, marble, tiles, quartz, Kota, Kadappa and sanitaryware in one gallery."
+  title="Gallery: Granite, Stonecraft & Tiles | Elite Balaji Stones & Ceramics"
+  description="Granite slabs from our Karamadai yard, our custom stonecraft (engraved name plates, tulsi madams, granite benches and tables) and tile collections, in one gallery."
 >
   <PageHero
     eyebrow="Gallery"
-    title="Timeless spaces"
-    intro="Stone, tile and surface imagery from across our halls. Tap any product to see its details."
+    title="Real stone, real work"
+    intro="Slabs from our yard, pieces we have made, and the tile collections we work with. Every image is labelled with what it is."
   />
 
   <section class="bg-paper py-12">
     <div class="mx-auto max-w-7xl px-5 lg:px-8">
-      <div class="flex flex-wrap gap-2" role="group" aria-label="Filter gallery">
-        {groups.map((g, i) => (
-          <button
-            type="button"
-            data-filter={g.id}
-            aria-pressed={i === 0 ? "true" : "false"}
-            class="border border-line px-4 py-2 text-xs uppercase tracking-[0.16em] text-ink-soft transition-colors hover:border-brass aria-pressed:border-brass aria-pressed:bg-brass aria-pressed:text-paper"
-          >
-            {g.label}
-          </button>
-        ))}
+      <div class="-mx-5 overflow-x-auto px-5 lg:mx-0 lg:px-0">
+        <div class="flex w-max gap-2" role="group" aria-label="Filter gallery">
+          {groups.map((g, i) => (
+            <button
+              type="button"
+              data-filter={g.id}
+              aria-pressed={i === 0 ? "true" : "false"}
+              class="min-h-11 whitespace-nowrap border border-line px-4 py-2 text-xs uppercase tracking-[0.16em] text-ink-soft transition-colors hover:border-brass aria-pressed:border-brass aria-pressed:bg-brass aria-pressed:text-paper"
+            >
+              {g.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div id="gallery-grid" class="mt-8 columns-2 gap-3 md:columns-3 lg:columns-4">
         {tiles.map((t) => {
           const Tag = t.href ? "a" : "figure";
           return (
-            <Tag href={t.href} data-group={t.group} class="group relative mb-3 block break-inside-avoid overflow-hidden bg-charcoal-deep">
-              <img src={t.src} alt={t.alt} class="w-full transition-transform duration-500 group-hover:scale-105" loading="lazy" />
-              <span class="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-charcoal-deep/85 to-transparent p-3 pt-8 text-[0.65rem] uppercase tracking-[0.16em] text-paper opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
-                {t.label}
+            <Tag href={t.href} data-groups={t.groups.join(" ")} class="group relative mb-3 block break-inside-avoid overflow-hidden bg-charcoal-deep">
+              <img src={t.src} alt={t.alt} class="w-full transition-transform duration-700 group-hover:scale-[1.04]" loading="lazy" />
+              <span class="absolute inset-x-0 bottom-0 flex flex-col gap-0.5 bg-gradient-to-t from-charcoal-deep/90 via-charcoal-deep/50 to-transparent p-3 pt-10">
+                <span class="text-xs text-paper">{t.title}</span>
+                <span class:list={["text-[0.55rem] uppercase tracking-[0.18em]", t.tone === "idea" ? "text-paper/55" : "text-brass"]}>{t.label}</span>
               </span>
             </Tag>
           );
         })}
       </div>
-      <p class="mt-6 text-xs text-ink-soft/70">Showroom images are illustrative renders while our Karamadai showroom is renovated. Natural stone varies by batch, so ask us to see current stock.</p>
+      <p class="mt-6 max-w-2xl text-xs text-ink-soft/80">
+        “Our work” and “From our stock” are Elite Balaji's own photographs. “Application idea”,
+        “Process reference” and “Illustrative render” images show possibilities and are not our projects.
+        Our Karamadai showroom is being transformed.
+      </p>
     </div>
   </section>
 
   <script is:inline>
     (function () {
       var buttons = document.querySelectorAll("[data-filter]");
-      var items = document.querySelectorAll("#gallery-grid [data-group]");
+      var items = document.querySelectorAll("#gallery-grid [data-groups]");
       buttons.forEach(function (btn) {
         btn.addEventListener("click", function () {
           var f = btn.getAttribute("data-filter");
           buttons.forEach(function (b) { b.setAttribute("aria-pressed", String(b === btn)); });
-          items.forEach(function (el) { el.hidden = f !== "all" && el.getAttribute("data-group") !== f; });
+          items.forEach(function (el) {
+            el.hidden = f !== "all" && el.getAttribute("data-groups").split(" ").indexOf(f) === -1;
+          });
         });
       });
     })();

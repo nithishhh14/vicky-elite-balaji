@@ -1,0 +1,18 @@
+{
+  "kind": "material",
+  "hallId": "granite-marbles",
+  "name": "Kondagattu Granite",
+  "category": "Natural granite slab",
+  "finish": "Polished",
+  "order": 5,
+  "applications": [
+    "Kitchen countertops",
+    "Flooring",
+    "Staircases",
+    "Wall cladding",
+    "Vanity tops"
+  ],
+  "image": "/media/client/granite/kondagattu-slabs.jpg",
+  "imageAlt": "Stack of polished red-brown flecked granite slabs labelled kondagattu",
+  "note": "Photographed from our stock and labelled by our team. Slabs vary by batch, so ask us to confirm the current slab before ordering."
+}

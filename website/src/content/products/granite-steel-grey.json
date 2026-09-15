@@ -1,0 +1,18 @@
+{
+  "kind": "material",
+  "hallId": "granite-marbles",
+  "name": "Steel Grey Granite",
+  "category": "Natural granite slab",
+  "finish": "Polished",
+  "order": 9,
+  "applications": [
+    "Kitchen countertops",
+    "Flooring",
+    "Staircases",
+    "Wall cladding",
+    "Vanity tops"
+  ],
+  "image": "/media/client/granite/steel-grey-slab.jpg",
+  "imageAlt": "Polished grey speckled granite slab outdoors",
+  "note": "Variety identified from our own stock photo. Slabs vary by batch, so ask us to confirm the current slab, size and finish."
+}

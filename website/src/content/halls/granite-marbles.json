@@ -2,12 +2,17 @@
   "name": "Granite & Marbles",
   "order": 2,
   "tagline": "Slabs, counters & sculpture-grade stone",
-  "intro": "Granite and marble slabs for flooring, counters and cladding, plus granite engraving, sculptures and name boards cut to order. Photography of current slab stock is being organised. Call or WhatsApp for what's in yard today.",
-  "heroImage": "https://images.unsplash.com/photo-1604762537333-e60adda0acdc?auto=format&fit=crop&w=1800&q=80",
-  "heroAlt": "Close-up of polished granite slab surface",
-  "hasRealContent": false,
+  "intro": "Granite and marble slabs from our yard for kitchen countertops, flooring, staircases and cladding, plus granite engraving, stone furniture and name boards cut to order. Every slab is different, so ask us for photos of what is in the yard today.",
+  "heroImage": "/media/client/granite/black-markino-slab.jpg",
+  "heroAlt": "Black granite slab with bold white veins in our slab yard",
+  "hasRealContent": true,
   "materialColor": "#2e2e30",
   "materialTexture": "stone",
-  "applications": ["Flooring & staircases", "Kitchen counters", "Cladding & facades", "Engraving, sculptures & name boards"],
+  "applications": [
+    "Flooring & staircases",
+    "Kitchen counters",
+    "Cladding & facades",
+    "Engraving, sculptures & name boards"
+  ],
   "enquiryNote": "Ask for trade rate. Slab availability changes with each yard delivery."
 }
