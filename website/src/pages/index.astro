@@ -86,9 +86,12 @@ const localHubs = ["Karamadai", "Coimbatore", "Mettupalayam", "Annur", "Sirumuga
     <span data-intro-line class="pointer-events-none absolute left-0 top-1/2 z-10 h-px w-full bg-gradient-to-r from-transparent via-brass to-transparent" aria-hidden="true"></span>
 
     <div class="relative z-10 mx-auto w-full max-w-7xl px-5 lg:px-8">
-      <p data-hero-seq="eyebrow" class="font-display text-2xl italic text-brass sm:text-3xl">Elite Balaji</p>
-      <h1 class="mt-2 font-display text-[clamp(2.75rem,12vw,7.25rem)] font-medium uppercase leading-[0.92]">
-        <span class="line-mask"><span data-hero-line class="bg-gradient-to-b from-[#f3d9a4] via-brass to-mustard-dark bg-clip-text text-transparent">Stones &amp;</span></span>
+      <!-- The brand name already sits in the header; the hero opens with the
+           reference mockup's eyebrow instead of repeating it. -->
+      <p data-hero-seq="eyebrow" class="text-[0.7rem] uppercase leading-[1.9] tracking-[0.5em] text-paper/80 sm:text-sm">Natural beauty<br />Timeless spaces</p>
+      <h1 class="mt-4 font-display text-[clamp(2.75rem,12vw,7.25rem)] font-medium uppercase leading-[0.92]">
+        <span class="sr-only">Elite Balaji </span>
+        <span class="line-mask"><span data-hero-line class="gold-engraved">Stones &amp;</span></span>
         <span class="line-mask"><span data-hero-line class="text-paper">Ceramics</span></span>
       </h1>
       <p data-hero-seq="support" class="mt-6 max-w-xl font-display text-2xl leading-snug text-paper/90 sm:text-3xl">

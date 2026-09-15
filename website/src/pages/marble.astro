@@ -13,6 +13,11 @@ import { imageBadge } from "../lib/image-badge";
 const products = await getCollection("products");
 const isStock = (src: string) => imageBadge(src) !== null;
 const slabs = products.filter((p) => p.data.category === "Natural marble slab" && !isStock(p.data.image)).sort((a, b) => a.data.order - b.data.order);
+// Statement marbles (Black Gold, Emerald Gold…): illustrative images until
+// the client sends slab photos, so they get their own labelled section.
+const statement = products
+  .filter((p) => p.data.category === "Natural marble slab" && imageBadge(p.data.image) === "Illustrative image")
+  .sort((a, b) => b.data.order - a.data.order);
 const looks = products.filter((p) => /marble-look/i.test(p.data.category ?? "") || (/marble/i.test(p.data.name) && p.data.kind === "tile")).sort((a, b) => a.data.order - b.data.order);
 const craft = mediaLibrary.find((m) => m.slug === "tulsi-madam-white-marble");
 const rooms = [
@@ -47,6 +52,7 @@ const compare = [
       <p class="mt-5 max-w-xl text-lg text-paper/85 leading-relaxed">Natural marble slabs from our yard, and marble-look tiles when you want the veining without the upkeep.</p>
       <nav aria-label="On this page" class="mt-8 flex flex-wrap gap-2 text-xs uppercase tracking-[0.18em]">
         <a href="#slabs" class="inline-flex min-h-11 items-center border border-paper/30 px-4 hover:border-brass">Marble slabs · {slabs.length}</a>
+        <a href="#statement" class="inline-flex min-h-11 items-center border border-paper/30 px-4 hover:border-brass">Gold-veined marbles · {statement.length}</a>
         <a href="#marble-look" class="inline-flex min-h-11 items-center border border-paper/30 px-4 hover:border-brass">Marble-look tiles · {looks.length}</a>
         <a href="#compare" class="inline-flex min-h-11 items-center border border-paper/30 px-4 hover:border-brass">Which one suits you?</a>
         <a href="#source" class="inline-flex min-h-11 items-center border border-paper/30 px-4 hover:border-brass">Varieties we source</a>
@@ -85,6 +91,40 @@ const compare = [
       </div>
     </div>
   </section>
+
+  {statement.length > 0 && (
+    <section id="statement" class="scroll-mt-24 marble-veins bg-charcoal-deep py-20 text-paper">
+      <div class="mx-auto max-w-7xl px-5 lg:px-8">
+        <div class="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-4"><span data-gsap-line class="block h-px w-12 bg-brass" aria-hidden="true"></span><p class="text-xs uppercase tracking-[0.3em] text-brass">Statement marbles</p></div>
+            <h2 class="mt-3 font-display text-4xl sm:text-5xl"><span class="gold-engraved">Gold-veined</span> &amp; dramatic</h2>
+            <p class="mt-3 max-w-xl text-paper/70">Black Gold, Emerald Gold and other bold marbles for feature walls, receptions and pooja rooms. Ask us for today's slabs and rates.</p>
+          </div>
+          <a href={waLink("Hi Elite Balaji, please share photos and rates for Black Gold, Emerald Gold and other statement marbles.")} target="_blank" rel="noopener" data-enquire="Request a sample or photos" data-product="Statement marbles" data-category="Marble" class="btn-arrow inline-flex min-h-12 items-center gap-3 border border-brass px-6 py-3 text-xs uppercase tracking-[0.2em] hover:bg-brass hover:text-charcoal-deep">
+            Ask for slab photos
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <div data-gsap-stagger class="mt-10 grid gap-5 md:grid-cols-3">
+          {statement.map((p) => (
+            <article class="group relative">
+              <div class="absolute right-3 top-3 z-10"><SaveButton product={p} hallName="Granite & Marbles" variant="overlay" /></div>
+              <a href={`/products/${p.id}/`} class="relative block overflow-hidden bg-charcoal">
+                <img src={p.data.image} alt={p.data.imageAlt} class="eb-img aspect-[4/5] w-full object-cover" loading="lazy" />
+                <span class="absolute bottom-3 left-3 bg-charcoal-deep/75 px-2.5 py-1 text-[0.55rem] uppercase tracking-[0.18em] text-paper backdrop-blur">{imageBadge(p.data.image)}</span>
+              </a>
+              <span class="eb-rule mt-4" aria-hidden="true"></span>
+              <h3 class="mt-2 font-display text-3xl"><a href={`/products/${p.id}/`} class="hover:text-brass">{p.data.name.replace(" Marble", "")}</a></h3>
+              <p class="text-xs uppercase tracking-[0.16em] text-paper/60">{p.data.finish} · {p.data.applications.slice(0, 2).join(" · ")}</p>
+              <a href={waLink(productEnquiryMessage(p.data.name, p.data.category))} target="_blank" rel="noopener" data-enquire="Ask price & availability" data-product={p.data.name} data-category={p.data.category} data-url={`/products/${p.id}/`} class="inline-flex min-h-11 items-center gap-2 text-xs font-medium uppercase tracking-[0.16em] text-brass hover:text-paper">Ask availability <span class="arrow" aria-hidden="true">&rarr;</span></a>
+            </article>
+          ))}
+        </div>
+        <p class="mt-6 text-xs text-paper/45">Illustrative images show the look of each variety, not a specific slab in our yard. Natural marble varies from block to block.</p>
+      </div>
+    </section>
+  )}
 
   <section id="marble-look" class="scroll-mt-24 bg-charcoal-deep py-20 text-paper">
     <div class="mx-auto max-w-7xl px-5 lg:px-8">

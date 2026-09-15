@@ -1,0 +1,16 @@
+{
+  "kind": "material",
+  "hallId": "granite-marbles",
+  "name": "Black Gold Marble",
+  "category": "Natural marble slab",
+  "finish": "Polished",
+  "order": 20,
+  "applications": [
+    "Feature walls",
+    "Flooring",
+    "Counters"
+  ],
+  "image": "/media/illustrative/marble-black-gold.jpg",
+  "imageAlt": "Polished black marble with bold gold and white veining",
+  "note": "Illustrative image, not a photo of our stock. Ask us about current availability, slab sizes and rates."
+}

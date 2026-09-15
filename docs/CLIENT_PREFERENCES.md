@@ -8,6 +8,20 @@ where a working assumption was made by Claude without client sign-off, it is
 labeled as a **working assumption**, not a preference, and lives in
 `docs/DECISIONS.md` instead._
 
+## 2026-09-16: statement marbles, gold header, no repeated brand in hero
+- The marble range needs gold-veined statement marbles ("black gold, emerald
+  gold and all"). Added Black Gold (the last Runway image) and Emerald Gold
+  (a crop of the client-approved reference render). Both are labelled
+  "Illustrative image" in a new "Gold-veined & dramatic" section on /marble/.
+  Calacatta Gold, Nero Marquina and Botticino were added to the "varieties we
+  source" list only. **Confirm with the client** which of these they actually
+  stock, and get slab photos.
+- The header wordmark should be engraved metallic gold like the reference.
+  Implemented in CSS (`.gold-engraved`); the logo image itself is unchanged,
+  only larger.
+- The hero repeated "Elite Balaji" right under the header. It now opens with
+  the reference's "Natural beauty / Timeless spaces" eyebrow.
+
 ## 2026-09-15 (late night): quartz sinks + fill missing images
 - The client says **quartz sinks and other sinks** are missing. Three
   quartz sink products were added. The exact models, sizes, colours and

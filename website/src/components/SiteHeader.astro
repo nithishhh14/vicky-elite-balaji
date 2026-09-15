@@ -79,12 +79,17 @@ const previews = [
         aria-hidden="true"
         width="59"
         height="56"
-        class="header-logo h-12 w-auto flex-shrink-0 sm:h-14"
+        class="header-logo h-14 w-auto flex-shrink-0 sm:h-[4.4rem] xl:h-[5rem]"
       />
-      <span class="header-wordmark flex min-w-0 flex-col">
-        <span class="bg-gradient-to-b from-brass to-mustard-dark bg-clip-text font-display text-2xl italic text-transparent whitespace-nowrap sm:text-3xl">Elite Balaji</span>
-        <span class="text-[0.55rem] uppercase tracking-[0.3em] text-brass whitespace-nowrap sm:text-[0.6rem]">Stones &amp; Ceramics</span>
-        <span class="header-subtag hidden text-[0.48rem] uppercase tracking-[0.25em] text-paper/50 whitespace-nowrap sm:block">— {business.subTagline} —</span>
+      <!-- Wordmark set in engraved metallic gold, after the reference mockup. -->
+      <span class="header-wordmark flex min-w-0 flex-col items-center">
+        <span class="gold-engraved font-display text-[1.6rem] font-semibold leading-[0.95] whitespace-nowrap sm:text-[2.55rem] xl:text-[2.95rem]">Elite Balaji</span>
+        <span class="mt-1 flex items-center gap-2 text-[0.5rem] uppercase tracking-[0.34em] text-[#d6ad5f] whitespace-nowrap sm:text-[0.6rem]">
+          <span class="hidden h-px w-4 bg-gradient-to-r from-transparent to-[#d6ad5f] sm:block" aria-hidden="true"></span>
+          Stones &amp; Ceramics
+          <span class="hidden h-px w-4 bg-gradient-to-l from-transparent to-[#d6ad5f] sm:block" aria-hidden="true"></span>
+        </span>
+        <span class="header-subtag mt-0.5 hidden text-[0.46rem] uppercase tracking-[0.36em] text-paper/60 whitespace-nowrap sm:block">{business.subTagline}</span>
       </span>
     </a>
 
@@ -153,7 +158,7 @@ const previews = [
        folds up into the bar while a brass hairline draws across. -->
   <div class="header-sub hidden lg:grid">
     <div class="header-sub-inner overflow-hidden">
-      <div class="mx-auto flex h-full max-w-7xl items-start justify-end gap-5 px-8">
+      <div class="mx-auto flex max-w-7xl items-start justify-end gap-5 px-8">
         {secondary.map((link, i) => (
           <>
             {i > 0 && <span class="sub-sep text-paper/25" aria-hidden="true">|</span>}

@@ -1,0 +1,16 @@
+{
+  "kind": "material",
+  "hallId": "granite-marbles",
+  "name": "Emerald Gold Marble",
+  "category": "Natural marble slab",
+  "finish": "Polished",
+  "order": 21,
+  "applications": [
+    "Feature walls",
+    "Reception counters",
+    "Pooja rooms"
+  ],
+  "image": "/media/illustrative/marble-emerald-gold.jpg",
+  "imageAlt": "Deep green marble with fine gold veining",
+  "note": "Illustrative image, not a photo of our stock. Ask us about current availability, slab sizes and rates."
+}

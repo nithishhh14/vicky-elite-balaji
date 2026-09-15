@@ -45,10 +45,13 @@
   --hdr-sub: 0rem;
 }
 @media (min-width: 640px) {
-  :root { --hdr-bar: 6rem; }
+  :root { --hdr-bar: 6.25rem; }
 }
 @media (min-width: 1024px) {
   :root { --hdr-sub: 1.9rem; }
+}
+@media (min-width: 1280px) {
+  :root { --hdr-bar: 6.75rem; }
 }
 
 @layer base {
@@ -298,10 +301,10 @@
     transition: opacity 0.3s ease, transform var(--t) var(--ease-arch);
   }
   .site-header:is([data-scrolled="true"], [data-drawer-open]) .header-logo {
-    transform: scale(0.78);
+    transform: scale(0.7);
   }
   .site-header:is([data-scrolled="true"], [data-drawer-open]) .header-wordmark {
-    transform: translateX(-0.8rem) scale(0.92);
+    transform: translateX(-1.3rem) scale(0.76);
   }
   .site-header:is([data-scrolled="true"], [data-drawer-open]) .header-subtag {
     opacity: 0;
@@ -766,6 +769,33 @@
   input[type="search"]::-webkit-search-cancel-button {
     -webkit-appearance: none;
     appearance: none;
+  }
+
+  /* Engraved metallic gold (header wordmark, hero): a bevelled gold
+     gradient clipped to the letters, a dark cut line beneath, a soft glow,
+     and one slow sheen that passes across on load. */
+  .gold-engraved {
+    background-image:
+      linear-gradient(105deg, transparent 42%, rgba(255, 248, 222, 0.85) 50%, transparent 58%),
+      linear-gradient(178deg, #fff1c1 0%, #f0cd7b 24%, #c69139 46%, #8c5f22 56%, #d8aa58 72%, #f5d991 86%, #a8772c 100%);
+    background-size: 250% 100%, 100% 100%;
+    background-position: 130% 0, 0 0;
+    background-repeat: no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 1px 0 rgba(58, 36, 8, 0.95)) drop-shadow(0 3px 6px rgba(0, 0, 0, 0.55)) drop-shadow(0 0 16px rgba(214, 168, 82, 0.22));
+    padding-inline: 0.04em;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .gold-engraved {
+      animation: gold-sheen 2.8s var(--ease-arch) 1.4s both;
+    }
+  }
+  @keyframes gold-sheen {
+    from { background-position: 130% 0, 0 0; }
+    to { background-position: -30% 0, 0 0; }
   }
 
   .quatrefoil-divider {
