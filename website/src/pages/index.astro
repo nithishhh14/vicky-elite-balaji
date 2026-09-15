@@ -25,34 +25,30 @@ const materialWorlds = materialWorldsConfig.map((world) => ({
 // Category strip: the 3 material worlds plus the 2 real halls that aren't
 // grouped into a world (Sanitaryware, Laying Works) -- 5 categories total,
 // each a real hall/world with real content, not a decorative count chosen
-// to match a reference layout.
+// to match a reference layout. The descriptor line under each label is the
+// flagship hall's own existing tagline (content/halls/*.json), not new
+// marketing copy written to fill the reference's second line.
 const categoryStrip = [
-  ...materialWorlds.map((w) => ({ href: `/materials/${w.slug}/`, label: w.label, image: w.flagship, position: undefined as string | undefined })),
-  { href: "/halls/sanitaryware/", label: "Sanitaryware", image: hallByI("sanitaryware"), position: undefined },
-  { href: "/halls/laying-works/", label: "Laying Works", image: hallByI("laying-works"), position: undefined },
+  ...materialWorlds.map((w) => ({ href: `/materials/${w.slug}/`, label: w.label, descriptor: w.flagship.data.tagline, image: w.flagship })),
+  { href: "/halls/sanitaryware/", label: "Sanitaryware", descriptor: hallByI("sanitaryware").data.tagline, image: hallByI("sanitaryware") },
+  { href: "/halls/laying-works/", label: "Laying Works", descriptor: hallByI("laying-works").data.tagline, image: hallByI("laying-works") },
+];
+
+// Single consolidated stat bar (VISUAL_AUDIT_V2.md #12) -- replaces the two
+// separate facts/stat bars. Every value is counted from real data or is an
+// already-documented business fact; no reference-style invented statistics.
+const stats = [
+  { value: String(business.since), label: "Founded" },
+  { value: String(halls.length), label: "Material halls" },
+  { value: String(business.partnerBrands.length), label: "Partner brands" },
+  { value: String(business.serviceHubs.length), label: "Service hubs" },
+  { value: "India-wide", label: "Transport & supply" },
 ];
 
 // Real, already-derived facet values (see src/lib/facets.ts / search-index.json.ts)
 // used only as clickable text-search shortcuts into /search/ -- not fabricated categories.
 const discoveryTerms = ["Grey", "White", "Polished", "Glossy", "Flooring", "Kitchen"];
 
-// Hero swatch strip: real material photography across every hall, not one
-// product line standing in for the whole business. Deliberately mixes genuine
-// catalogue photography (the 2 tile swatches) with the same honestly-disclosed
-// mood photography already used on each hall's own page -- nothing here claims
-// to be more real than it already is elsewhere on the site.
-const heroSwatches = [
-  { src: "/media/tiles/athangudi-series/hero-crop.jpg", alt: "Athangudi Series tile motif close-up", href: "/halls/tiles/" },
-  { src: hallByI("granite-marbles").data.heroImage, alt: "Granite texture", href: "/halls/granite-marbles/" },
-  { src: hallByI("kota-stone").data.heroImage, alt: "Kota stone texture", href: "/halls/kota-stone/" },
-  // object-position biased right: the source frame has a small swatch-card
-  // inset on its left third and the real bathroom scene on the right two-
-  // thirds -- a plain centre crop straddles both and reads as two unrelated
-  // fragments, so this pulls the crop onto the actual room photo.
-  { src: "/media/tiles/moroccan-collection/lifestyle-9613fl.jpg", alt: "Wall tile installation", href: "/halls/tiles/", position: "85% center" },
-  { src: hallByI("quartz").data.heroImage, alt: "Quartz surface texture", href: "/halls/quartz/" },
-  { src: hallByI("sanitaryware").data.heroImage, alt: "Sanitaryware fixture", href: "/halls/sanitaryware/" },
-];
 ---
 
 <BaseLayout
@@ -65,16 +61,23 @@ const heroSwatches = [
        of Elite Balaji's own premises -- see the credit line below), colour-
        graded to the site's charcoal/gold palette, plus a strip of real
        photography across every hall further down. -->
-  <section class="relative isolate flex min-h-screen items-center overflow-hidden bg-charcoal-deep py-32 text-paper">
+  <!-- Text block bottom-weighted (items-end) rather than dead-centre
+       (VISUAL_AUDIT_V2.md #6); photo opacity raised and the bottom overlay
+       lightened so the colour-graded warmth reads through on the right while
+       the left marble panel still carries text contrast (#14). Height is
+       viewport minus the ~8rem two-row header, not min-h-screen: with the
+       text bottom-weighted, a full-screen section put the feature row a
+       header's height below the fold. -->
+  <section class="relative isolate flex min-h-[calc(100svh-8rem)] items-end overflow-hidden bg-charcoal-deep pb-16 pt-24 text-paper">
     <img
       src="/media/brand/hero-lobby.jpg"
       alt=""
       aria-hidden="true"
-      class="absolute inset-0 h-full w-full object-cover opacity-80"
+      class="absolute inset-0 h-full w-full object-cover opacity-95"
       fetchpriority="high"
     />
     <div class="marble-veins pointer-events-none absolute inset-y-0 left-0 w-[55%] bg-[linear-gradient(to_right,_var(--color-charcoal-deep)_0%,_var(--color-bottle-dark)_55%,_transparent_100%)]" aria-hidden="true"></div>
-    <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-charcoal-deep via-charcoal-deep/50 to-transparent" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-charcoal-deep/90 via-charcoal-deep/20 to-transparent" aria-hidden="true"></div>
 
     <div data-gsap-hero class="relative z-10 mx-auto w-full max-w-6xl px-5">
       <p class="text-xs uppercase leading-relaxed tracking-[0.4em] text-brass">
@@ -117,7 +120,7 @@ const heroSwatches = [
 
     <!-- Right-side supporting text panel, mirroring the reference image's
          layout -- real copy, no border rule (VISUAL_AUDIT_V2.md #9). -->
-    <div class="absolute bottom-24 right-5 hidden max-w-xs text-right text-sm text-paper/75 lg:block xl:right-[max(1.25rem,calc((100vw-72rem)/2))]">
+    <div class="absolute bottom-32 right-5 hidden max-w-xs text-right text-sm text-paper/75 lg:block xl:right-[max(1.25rem,calc((100vw-72rem)/2))]">
       <p>From Karamadai's finest stone to world-class ceramics, we bring beauty, strength and style to every space.</p>
       <p class="mt-4 text-xs uppercase tracking-[0.3em] text-brass">{business.subTagline}</p>
     </div>
@@ -127,60 +130,27 @@ const heroSwatches = [
     </p>
   </section>
 
-  <!-- 02 — Facts & range: relocated out of the hero (VISUAL_AUDIT_V2.md #4)
-       so the hero above is one uninterrupted statement instead of three
-       stacked bands. Content/styling unchanged from before the move --
-       consolidating this with the post-category-strip stat bar is later,
-       separate work. -->
-  <section class="border-b border-paper/10 bg-charcoal-deep text-paper">
-    <div class="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-5 py-8 text-center sm:grid-cols-4">
-      <div>
-        <p class="font-display text-2xl text-brass">{business.since}</p>
-        <p class="mt-1 text-[0.65rem] uppercase tracking-[0.2em] text-paper/60">Founded</p>
-      </div>
-      <div>
-        <p class="font-display text-2xl text-brass">{halls.length}</p>
-        <p class="mt-1 text-[0.65rem] uppercase tracking-[0.2em] text-paper/60">Material halls</p>
-      </div>
-      <div>
-        <p class="font-display text-2xl text-brass">One yard</p>
-        <p class="mt-1 text-[0.65rem] uppercase tracking-[0.2em] text-paper/60">Supply &amp; laying</p>
-      </div>
-      <div>
-        <p class="font-display text-2xl text-brass">Karamadai</p>
-        <p class="mt-1 text-[0.65rem] uppercase tracking-[0.2em] text-paper/60">Coimbatore</p>
-      </div>
-    </div>
-    <div class="grid grid-cols-3 sm:grid-cols-6">
-      {heroSwatches.map((s) => (
-        <a href={s.href} class="group relative aspect-square overflow-hidden">
-          <img src={s.src} alt={s.alt} style={s.position ? { objectPosition: s.position } : undefined} class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy" />
-          <div class="absolute inset-0 bg-charcoal-deep/0 transition-colors group-hover:bg-charcoal-deep/20"></div>
-        </a>
-      ))}
-    </div>
-  </section>
-
-  <div class="quatrefoil-divider" aria-hidden="true"></div>
-
   <!-- 02 — Explore: 5 real categories (3 material worlds + Sanitaryware +
        Laying Works), each a full photographic card with a circular arrow
        button that appears on hover -- inspired by the client's reference
        image and Varmora's own category strip, built from real hall photos
-       already used honestly elsewhere on the site. -->
-  <section id="materials" class="marble-veins scroll-mt-20 bg-charcoal py-20">
+       already used honestly elsewhere on the site. Sits directly under the
+       hero, as in the reference. The former 6-image swatch strip that sat
+       between them was removed (VISUAL_AUDIT_V2.md #15): it repeated the
+       same hall photos this strip already shows, as a second competing band. -->
+  <section id="materials" class="marble-veins scroll-mt-20 bg-charcoal py-24 sm:py-28">
     <div class="mx-auto max-w-6xl px-5 reveal">
       <p class="text-xs uppercase tracking-[0.3em] text-mustard">Explore</p>
-      <h2 class="mt-2 max-w-lg font-display text-3xl text-paper sm:text-4xl">Five categories, one yard</h2>
-      <p class="mt-3 max-w-xl text-paper/70">
+      <h2 class="mt-3 max-w-lg font-display text-3xl text-paper sm:text-5xl">Five categories, one yard</h2>
+      <p class="mt-5 max-w-xl text-paper/70">
         Everything we stock and lay, grouped the way you'd actually go looking for it.
       </p>
     </div>
-    <div data-gsap-stagger class="mt-12 grid gap-1 px-1 sm:grid-cols-2 lg:grid-cols-5">
+    <div data-gsap-stagger class="mt-16 grid gap-1 px-1 sm:grid-cols-2 lg:grid-cols-5">
       {categoryStrip.map((cat) => (
         <SpotlightCard
           client:visible
-          className="group relative isolate flex aspect-[3/4] flex-col justify-end"
+          className="group relative isolate flex aspect-[4/5] flex-col justify-end sm:aspect-[3/4] lg:aspect-[2/3]"
           spotlightColor="rgba(196, 143, 46, 0.35)"
         >
           {cat.image.data.heroImage ? (
@@ -195,8 +165,11 @@ const heroSwatches = [
             <div class="absolute inset-0 h-full w-full" style={{ backgroundColor: cat.image.data.materialColor }}></div>
           )}
           <div class="absolute inset-0 bg-gradient-to-t from-charcoal-deep/90 via-charcoal-deep/10 to-transparent"></div>
-          <div class="relative flex items-end justify-between gap-3 p-5">
-            <h3 class="font-display text-xl text-paper sm:text-2xl">{cat.label}</h3>
+          <div class="relative flex items-end justify-between gap-3 p-6">
+            <div>
+              <h3 class="font-display text-2xl text-paper">{cat.label}</h3>
+              <p class="mt-1.5 text-[0.65rem] uppercase leading-snug tracking-[0.2em] text-brass/90">{cat.descriptor}</p>
+            </div>
             <span class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full border border-paper/40 text-paper opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100 -translate-x-2">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </span>
@@ -207,35 +180,25 @@ const heroSwatches = [
     </div>
   </section>
 
-  <!-- 02a — Stat/CTA bar directly under the category strip, mirroring the
-       reference image's bottom bar placement. Real, countable facts only
-       (partner brands, service hubs, halls) -- never the reference's own
-       "1000+ Products / Trusted by Architects" style invented statistics. -->
-  <section class="border-b border-line/60 bg-card py-8">
-    <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-6 px-5">
-      <div class="flex flex-wrap items-center gap-x-10 gap-y-3">
-        <div>
-          <p class="font-display text-xl text-terracotta">{business.partnerBrands.length}+</p>
-          <p class="text-[0.65rem] uppercase tracking-[0.2em] text-ink-soft/70">Partner brands</p>
-        </div>
-        <div>
-          <p class="font-display text-xl text-terracotta">{business.serviceHubs.length}</p>
-          <p class="text-[0.65rem] uppercase tracking-[0.2em] text-ink-soft/70">Service hubs</p>
-        </div>
-        <div>
-          <p class="font-display text-xl text-terracotta">{halls.length}</p>
-          <p class="text-[0.65rem] uppercase tracking-[0.2em] text-ink-soft/70">Material halls</p>
-        </div>
-        <div>
-          <p class="font-display text-xl text-terracotta">India-wide</p>
-          <p class="text-[0.65rem] uppercase tracking-[0.2em] text-ink-soft/70">Transport &amp; supply</p>
-        </div>
-      </div>
+  <!-- 02a — The single stat/CTA bar (VISUAL_AUDIT_V2.md #12): 5 real facts +
+       1 CTA, vertical divider rules between items, appearing exactly once.
+       Never the reference's own "1000+ Products / Trusted by Architects"
+       style invented statistics. -->
+  <section class="border-y border-paper/10 bg-charcoal-deep py-10 text-paper">
+    <div class="mx-auto flex max-w-6xl flex-col items-stretch gap-8 px-5 lg:flex-row lg:items-center">
+      <dl class="grid flex-1 grid-cols-2 gap-y-6 sm:grid-cols-3 lg:grid-cols-5 lg:divide-x lg:divide-paper/15">
+        {stats.map((s) => (
+          <div class="flex flex-col-reverse px-4 text-center">
+            <dt class="mt-1.5 text-[0.65rem] uppercase tracking-[0.2em] text-paper/60">{s.label}</dt>
+            <dd class="font-display text-2xl text-brass sm:text-3xl">{s.value}</dd>
+          </div>
+        ))}
+      </dl>
       <a
         href={waLink(defaultEnquiryMessage)}
         target="_blank"
         rel="noopener"
-        class="inline-flex flex-shrink-0 items-center gap-2 rounded-full bg-mustard px-6 py-3 text-sm font-semibold uppercase tracking-wide text-ink hover:bg-mustard-dark transition-colors"
+        class="inline-flex flex-shrink-0 items-center justify-center gap-2 self-center rounded-full bg-mustard px-7 py-3.5 text-sm font-semibold uppercase tracking-wide text-ink hover:bg-mustard-dark transition-colors"
       >
         Get a Quote
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>

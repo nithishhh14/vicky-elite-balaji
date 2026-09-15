@@ -2,6 +2,39 @@
 
 _Last updated: 2026-09-13 — homepage/Tiles-hero rebuilt away from Athangudi, honest sourcing layer extended to Quartz/Sanitaryware, real React Bits component integration, Athangudi catalogue depth expansion (product image galleries + spec fields), SEO structured-data gap closed on hall/material pages. See `docs/DECISIONS.md` for each._
 
+## 2026-09-15 — client's exact logo in header; art direction started
+
+The header badge is now the client's own emblem image
+(`public/media/brand/logo-emblem-240.png`), not an SVG placeholder. The only
+changes are crop, scale, and the outer teal made transparent; the user
+approved it. `docs/ART_DIRECTION.md` was created after feedback that the
+Kota Stone images (generic Unsplash) are inaccurate. No images have been
+replaced yet, and no generation API is connected.
+
+## 2026-09-15 — VISUAL_AUDIT_V2.md phase 2: stat bar, category strip, hero warmth/position
+
+Finished the rest of `VISUAL_AUDIT_V2.md`'s implementation order (phase 1
+was commit `f778785`). All changes are in `website/src/pages/index.astro`:
+- One consolidated dark stat/CTA bar (5 real facts + CTA, dividers)
+  replaces the two separate facts/stat bars.
+- Category cards are taller, with a descriptor line that reuses each
+  flagship hall's existing tagline.
+- The hero swatch strip was removed. It duplicated the category strip's
+  photos.
+- The hero overlay is lighter and the photo opacity higher, for warmth.
+- The hero text is bottom-weighted, and the hero is sized to viewport minus
+  header so the feature row stays above the fold.
+
+Bug found and fixed in QA: `min-h-screen` combined with bottom-aligned text
+pushed the feature row below the fold, and the right-side panel ended up
+under the floating enquiry button.
+
+Verified: `astro check` 0 errors, `astro build` 58 pages. Browser QA at
+1280x800 and 375x812: no console errors, no horizontal overflow. The browser
+tool's screenshot sometimes left out the hero text right after GSAP ran.
+DOM hit-testing confirmed the text was really there, and a later screenshot
+showed it.
+
 ## 2026-09-13 — homepage/Tiles hero no longer Athangudi; Quartz + Sanitaryware get honest sourcing layers (commit `26ae9d2`)
 
 Client feedback (with a reference image) that the site still reads as

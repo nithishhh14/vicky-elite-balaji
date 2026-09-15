@@ -8,6 +8,21 @@ where a working assumption was made by Claude without client sign-off, it is
 labeled as a **working assumption**, not a preference, and lives in
 `docs/DECISIONS.md` instead._
 
+## 2026-09-15 — exact logo, Kota images, art direction
+- **Logo:** the client supplied their exact emblem: a gold star seal with
+  ribbons, and a handshake holding a dark-green marble tile and a white one.
+  Instruction: **use it exactly, never redraw or alter it.** It is now used
+  in the header as `public/media/brand/logo-emblem-240.png`. The only changes
+  are crop, scale, and the outer teal backdrop made transparent. **Approved
+  by the user ("the badge looks great").** A hand-drawn SVG version was
+  rejected before this.
+- **Kota Stone images are inaccurate.** They are generic Unsplash photos.
+  The user asked for art direction first, before any new imagery; see
+  `docs/ART_DIRECTION.md`.
+- The user is exploring AI image and video generation for empty catalogue
+  areas. Not decided yet. Any generated image must be labelled illustrative,
+  per the no-fabrication rule.
+
 ## 2026-09-13 — reference image + concrete complaints
 User supplied a reference screenshot (source/authorship unknown — reads as
 an AI-generated or template mockup, not a photo of a real competitor site)

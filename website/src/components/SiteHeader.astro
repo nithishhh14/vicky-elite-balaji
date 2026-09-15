@@ -32,19 +32,18 @@ const materialsActive =
 <header class="sticky top-0 z-40 border-b border-paper/10 bg-charcoal-deep/95 backdrop-blur">
   <div class="mx-auto flex max-w-6xl items-center justify-between gap-3 px-5 py-4">
     <a href="/" class="flex flex-shrink-0 items-center gap-3 leading-none">
-      <!-- Original crest (not a claimed trademark/registered mark) -- a
-           compass-rosette badge in the gold/brass already used across the
-           site, echoing the reference image's circular emblem without
-           reproducing its exact artwork (the handshake motif from that
-           image is reused, larger, in the "Why Elite Balaji" section where
-           it can read at real size). Enlarged per VISUAL_AUDIT_V2.md #2 --
-           previously ~half the reference's visual weight. -->
-      <svg width="56" height="56" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="flex-shrink-0">
-        <circle cx="19" cy="19" r="17.5" stroke="var(--color-brass)" stroke-width="1"/>
-        <circle cx="19" cy="19" r="14" stroke="var(--color-brass)" stroke-width="0.6" opacity="0.6"/>
-        <path d="M19 7L21.3 16.7L31 19L21.3 21.3L19 31L16.7 21.3L7 19L16.7 16.7L19 7Z" stroke="var(--color-brass)" stroke-width="1" stroke-linejoin="round"/>
-        <circle cx="19" cy="19" r="2.2" fill="var(--color-brass)"/>
-      </svg>
+      <!-- The client's exact emblem (supplied 2026-09-15), used as-is: only
+           cropped, scaled, and the outer teal backdrop made transparent.
+           Never redraw or restyle it (client instruction). Full-resolution
+           original cutout: /media/brand/logo-emblem.png. -->
+      <img
+        src="/media/brand/logo-emblem-240.png"
+        alt=""
+        aria-hidden="true"
+        width="59"
+        height="56"
+        class="h-14 w-auto flex-shrink-0"
+      />
       <span class="flex flex-col">
         <span class="bg-gradient-to-b from-brass to-mustard-dark bg-clip-text font-display text-2xl italic text-transparent whitespace-nowrap sm:text-3xl">Elite Balaji</span>
         <span class="text-[0.6rem] uppercase tracking-[0.3em] text-brass whitespace-nowrap">Stones &amp; Ceramics</span>

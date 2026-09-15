@@ -10,7 +10,33 @@ domain, or set up hosting without new, explicit user permission (the user
 answered "No, not yet" to a direct deployment question on 2026-09-12, and a
 later brief reiterated deployment is out of scope for now).
 
-## What was completed in the most recent session (2026-09-13)
+## Most recent session (2026-09-15)
+- Finished `VISUAL_AUDIT_V2.md` phase 2: steps 4–9 (#6, #11, #12, #13, #14,
+  #15), all in `website/src/pages/index.astro`. The status section at the
+  bottom of that file has the details.
+- Build, typecheck and browser QA (desktop + mobile) are clean.
+- Items still held from that audit: #3 nav structure, CTA wording, carousel
+  dots.
+- **Header badge replaced with the client's exact logo:**
+  `public/media/brand/logo-emblem-240.png`, with the full-size cutout at
+  `logo-emblem.png`. The user approved it. Never redraw or alter it; see
+  `docs/CLIENT_PREFERENCES.md`.
+- **Kota Stone images are flagged as inaccurate** (generic Unsplash). Art
+  direction has started in `docs/ART_DIRECTION.md`, with the Kota sheet done
+  and other materials "to complete".
+- **Next:**
+  1. The user reviews the Kota sheet.
+  2. The user picks an image/video generation API. Recommended: Google
+     Imagen + Veo, reusing the Gemini key. It may need billing.
+  3. Then build a review-first generation script.
+
+  Any generated image must be labelled illustrative.
+- **Still open from the user:** do "empty catalogues" mean the text-only
+  "sourced on request" lists in `src/lib/stone-varieties.ts`? Also, which
+  option: client photos, supplier catalogues, stock, or swatches?
+- All of the above was committed at the user's request ("save it").
+
+## Earlier session (2026-09-13)
 - Expanded the Athangudi Series from 1 to all 8 real colourway variants
   found in the already-approved `catalogue_extract/Athangudi_Series_/`
   render cache (cropped with `ffmpeg`, verified against source pages).

@@ -296,3 +296,27 @@ things previously marked resolved are not.
    (fixes #6, #9)
 
 Waiting for your approval before touching any code.
+
+---
+
+## IMPLEMENTATION STATUS (2026-09-15)
+
+- **Phase 1 (commit `f778785`)**: steps 1, 2, 3, 6, 8 and the #9 half of
+  step 9, i.e. #1, #2, #4, #5, #7, #9, #10.
+- **Phase 2 (2026-09-15)**: the remaining steps.
+  - #12: both stat bars merged into one dark bar (5 real facts + Get a Quote
+    CTA, vertical dividers at `lg:`), placed directly under the category
+    strip.
+  - #11: cards made taller (`aspect-[2/3]` at `lg:`), with a descriptor line
+    added under each label. The descriptor reuses the flagship hall's
+    existing tagline, not new copy.
+  - #14: photo opacity raised from 80% to 95%, bottom overlay lightened
+    (`via /50` to `/20`).
+  - #6: hero text is bottom-weighted (`items-end`). The hero height is now
+    viewport minus header, not `min-h-screen`, which had pushed the feature
+    row below the fold.
+  - #13/#15: more padding in the category section. The 6-image swatch strip
+    and the quatrefoil divider between the hero and the category strip were
+    removed, because they repeated the strip's own hall photos.
+- **Still deliberately held**: #3 navigation, #8 CTA wording and the
+  carousel dots, as listed above.
