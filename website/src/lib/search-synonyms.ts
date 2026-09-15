@@ -90,7 +90,11 @@ const TERM_SYNONYMS: Record<string, string[]> = {
   gvt: ["gvt", "glazed vitrified", "vitrified"],
   pgvt: ["pgvt", "polished glazed", "glossy"],
   "double-charge": ["double charge", "double-charge", "vitrified"],
-  wood: ["wood"],
+  wood: ["wood", "teak"],
+  wooden: ["wood", "teak"],
+  teak: ["teak", "wood"],
+  teakwood: ["teak", "wood"],
+  sandstone: ["sandstone"],
   stone: ["stone", "granite", "kota", "kadappa", "marble", "limestone"],
   // Tamil / Tanglish: seeded conservatively; extend as confirmed.
   tharai: ["floor", "flooring"],

@@ -1,0 +1,17 @@
+{
+  "kind": "material",
+  "hallId": "granite-marbles",
+  "name": "Sandstone Granite",
+  "category": "Sandstone slab (sold as sandstone granite)",
+  "finish": "Honed",
+  "order": 16,
+  "applications": [
+    "Elevation cladding",
+    "Outdoor paving & pathways",
+    "Feature walls",
+    "Flooring"
+  ],
+  "image": "/media/client/granite/sandstone-granite-slab.jpg",
+  "imageAlt": "Light golden sandstone granite slab with soft horizontal banding under a shed",
+  "note": "Named by our team. A light golden stone with soft horizontal banding, popular for facades and outdoor areas. Ask us to confirm finish and slab size."
+}

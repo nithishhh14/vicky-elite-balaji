@@ -12,7 +12,7 @@ import { waLink } from "../lib/business";
 type Tile = { src: string; alt: string; title: string; label: string; tone: "real" | "idea"; groups: string[]; href?: string };
 
 const tiles: Tile[] = [];
-const order: Record<string, number> = { work: 0, stock: 1, idea: 3 };
+const order: Record<string, number> = { work: 0, stock: 1, supply: 2, idea: 3 };
 [...mediaLibrary]
   .sort((a, b) => order[a.provenance] - order[b.provenance])
   .forEach((m) => {

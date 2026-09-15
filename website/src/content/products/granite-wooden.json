@@ -1,0 +1,41 @@
+{
+  "kind": "material",
+  "hallId": "granite-marbles",
+  "name": "Wooden Granite",
+  "category": "Wood-grain sandstone slab (sold as wooden granite)",
+  "finish": "Polished",
+  "order": 14,
+  "applications": [
+    "Feature & accent walls",
+    "Elevation cladding",
+    "Flooring",
+    "Staircases",
+    "Table & counter tops"
+  ],
+  "image": "/media/client/granite/wooden-granite-lot-15.jpg",
+  "imageAlt": "Wood-grain sandstone slabs, lot 15: 305 × 74 cm, 34 pieces",
+  "images": [
+    {
+      "src": "/media/client/granite/wooden-granite-lot-15.jpg",
+      "alt": "Wood-grain sandstone slabs, lot 15: 305 × 74 cm, 34 pieces"
+    },
+    {
+      "src": "/media/client/granite/wooden-granite-lot-16.jpg",
+      "alt": "Wood-grain sandstone slabs with orange banding, lot 16: 275 × 76 cm, 25 pieces"
+    },
+    {
+      "src": "/media/client/granite/wooden-granite-lot-13.jpg",
+      "alt": "Red-brown wood-grain sandstone slabs, lot 13: 244 × 53 cm, 25 pieces"
+    },
+    {
+      "src": "/media/client/granite/wooden-granite-lot-09.jpg",
+      "alt": "Wood-grain sandstone slabs, lot 09: 275 × 62 cm, 22 pieces"
+    },
+    {
+      "src": "/media/client/granite/wooden-granite-stack.jpg",
+      "alt": "Stack of polished wood-grain slabs"
+    }
+  ],
+  "size": "Lot slabs from about 244 × 53 cm to 305 × 76 cm",
+  "note": "Natural stone with a wood-grain pattern in red, brown and orange bands, known in the trade as wooden granite. Photos are recent supplier lots with their slab sizes; lots change quickly, so ask us which lots are available now."
+}

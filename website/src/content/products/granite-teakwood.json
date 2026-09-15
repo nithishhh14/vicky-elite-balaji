@@ -1,0 +1,18 @@
+{
+  "kind": "material",
+  "hallId": "granite-marbles",
+  "name": "Teakwood Granite",
+  "category": "Wood-grain sandstone slab (sold as teakwood granite)",
+  "finish": "Polished",
+  "order": 15,
+  "applications": [
+    "Feature & accent walls",
+    "Elevation cladding",
+    "Flooring",
+    "Staircases",
+    "Table & counter tops"
+  ],
+  "image": "/media/client/granite/teakwood-granite-slab.jpg",
+  "imageAlt": "Polished teakwood granite slab with swirling wood-grain pattern being unloaded",
+  "note": "Named by our team. A dramatic swirling wood-grain natural stone. Every slab is different, so ask us for photos of the current slab."
+}

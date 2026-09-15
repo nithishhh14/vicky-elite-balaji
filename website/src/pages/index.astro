@@ -34,7 +34,7 @@ const facts = [
 ];
 
 const specimens = products
-  .filter((p) => p.data.category === "Natural granite slab")
+  .filter((p) => p.data.hallId === "granite-marbles" && /granite|sandstone/i.test(p.data.category ?? ""))
   .sort((a, b) => a.data.order - b.data.order);
 
 const craft = mediaIn("stonecraft", "work");

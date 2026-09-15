@@ -5,7 +5,9 @@
 // Granite names were identified visually from our stock photos (user-approved,
 // 2026-09-15) and carry a confirm-availability note wherever shown.
 
-export type Provenance = "stock" | "work" | "idea";
+// "supply" = a supplier's lot photo the client shared (real material, not
+// necessarily in our yard today).
+export type Provenance = "stock" | "work" | "idea" | "supply";
 export interface MediaItem {
   slug: string;
   title: string;
@@ -23,6 +25,7 @@ export const provenanceLabel: Record<Provenance, string> = {
   stock: "From our stock",
   work: "Our work",
   idea: "Application idea",
+  supply: "Supplier lot photo",
 };
 
 export const mediaLibrary: MediaItem[] = [
@@ -70,6 +73,13 @@ export const mediaLibrary: MediaItem[] = [
   {"slug": "marvel-red-lappato-slab", "title": "Marvel Red, Lappato", "alt": "Red-brown granite slab with dark crystals and a lappato finish", "src": "/media/client/granite/marvel-red-lappato-slab.jpg", "thumb": "/media/client/granite/marvel-red-lappato-slab-720.jpg", "width": 1280, "height": 960, "provenance": "stock", "categories": ["granite"], "productId": "granite-marvel-red-lappato"},
   {"slug": "tan-brown-leathered-slab", "title": "Tan Brown, Leathered", "alt": "Black and brown granite slab with a textured leathered finish", "src": "/media/client/granite/tan-brown-leathered-slab.jpg", "thumb": "/media/client/granite/tan-brown-leathered-slab-720.jpg", "width": 1280, "height": 960, "provenance": "stock", "categories": ["granite"], "productId": "granite-tan-brown-leathered"},
   {"slug": "blue-pearl-leathered-slab", "title": "Blue Pearl, Leathered", "alt": "Blue-black granite slab with blue crystals and a textured leathered finish", "src": "/media/client/granite/blue-pearl-leathered-slab.jpg", "thumb": "/media/client/granite/blue-pearl-leathered-slab-720.jpg", "width": 1600, "height": 1200, "provenance": "stock", "categories": ["granite"], "productId": "granite-blue-pearl-leathered"},
+  {"slug": "wooden-granite-lot-15", "title": "Wooden Granite, supplier lot", "alt": "Wood-grain sandstone slabs, lot 15: 305 × 74 cm, 34 pieces", "src": "/media/client/granite/wooden-granite-lot-15.jpg", "thumb": "/media/client/granite/wooden-granite-lot-15-720.jpg", "width": 1024, "height": 767, "provenance": "supply", "categories": ["granite"], "productId": "granite-wooden"},
+  {"slug": "wooden-granite-lot-16", "title": "Wooden Granite, supplier lot", "alt": "Wood-grain sandstone slabs with orange banding, lot 16: 275 × 76 cm, 25 pieces", "src": "/media/client/granite/wooden-granite-lot-16.jpg", "thumb": "/media/client/granite/wooden-granite-lot-16-720.jpg", "width": 1024, "height": 768, "provenance": "supply", "categories": ["granite"], "productId": "granite-wooden"},
+  {"slug": "wooden-granite-lot-13", "title": "Wooden Granite, supplier lot", "alt": "Red-brown wood-grain sandstone slabs, lot 13: 244 × 53 cm, 25 pieces", "src": "/media/client/granite/wooden-granite-lot-13.jpg", "thumb": "/media/client/granite/wooden-granite-lot-13-720.jpg", "width": 1024, "height": 767, "provenance": "supply", "categories": ["granite"], "productId": "granite-wooden"},
+  {"slug": "wooden-granite-lot-09", "title": "Wooden Granite, supplier lot", "alt": "Wood-grain sandstone slabs, lot 09: 275 × 62 cm, 22 pieces", "src": "/media/client/granite/wooden-granite-lot-09.jpg", "thumb": "/media/client/granite/wooden-granite-lot-09-720.jpg", "width": 1024, "height": 767, "provenance": "supply", "categories": ["granite"], "productId": "granite-wooden"},
+  {"slug": "wooden-granite-stack", "title": "Wooden Granite, supplier lot", "alt": "Stack of polished wood-grain slabs", "src": "/media/client/granite/wooden-granite-stack.jpg", "thumb": "/media/client/granite/wooden-granite-stack-720.jpg", "width": 1080, "height": 810, "provenance": "supply", "categories": ["granite"], "productId": "granite-wooden"},
+  {"slug": "teakwood-granite-slab", "title": "Teakwood Granite", "alt": "Polished teakwood granite slab with swirling wood-grain pattern being unloaded", "src": "/media/client/granite/teakwood-granite-slab.jpg", "thumb": "/media/client/granite/teakwood-granite-slab-720.jpg", "width": 1080, "height": 608, "provenance": "stock", "categories": ["granite"], "productId": "granite-teakwood"},
+  {"slug": "sandstone-granite-slab", "title": "Sandstone Granite", "alt": "Light golden sandstone granite slab with soft horizontal banding under a shed", "src": "/media/client/granite/sandstone-granite-slab.jpg", "thumb": "/media/client/granite/sandstone-granite-slab-720.jpg", "width": 960, "height": 1280, "provenance": "stock", "categories": ["granite"], "productId": "granite-sandstone"},
 ];
 
 export const mediaIn = (category: string, provenance?: Provenance) =>

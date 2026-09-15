@@ -33,6 +33,14 @@ later brief reiterated deployment is out of scope for now).
   - Legacy terracotta styling replaced sitewide; "samples in-store" removed.
   - "Reference photo" and "Colour swatch" badges on non-client images.
   - The Granite & Marbles hall links to `/granite/` and `/marble/`.
+- **Also added the same night:**
+  - **Wooden Granite:** 5 photos (supplier lots 09/13/15/16 plus a stack),
+    with lot sizes from 244×53 to 305×76 cm.
+  - **Teakwood Granite** and **Sandstone Granite:** client trade names. The
+    categories say wood-grain sandstone / sandstone so buyers aren't misled.
+  - A new provenance label, "Supplier lot photo".
+  - The client's file `t wood granite.jpeg` saved as 0 bytes and needs
+    re-sending.
 - **Verified:** build 82 pages, 0 errors, 0 broken links or images; 8 changed
   pages OK at 375px.
 - **Still stock photos:** quartz (4), Kadappa (2), sanitaryware (2), laying
