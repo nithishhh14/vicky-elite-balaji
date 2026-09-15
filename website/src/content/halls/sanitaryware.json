@@ -1,13 +1,18 @@
 {
   "name": "Sanitaryware",
   "order": 5,
-  "tagline": "Sinks, fittings & partner brands",
-  "intro": "Sanitaryware and sinks from established partner brands, supplied and fitted alongside your tile and stone order so plumbing and flooring stay on one timeline.",
-  "heroImage": "https://images.unsplash.com/photo-1642755623141-23b3cb4284aa?auto=format&fit=crop&w=1800&q=80",
-  "heroAlt": "Ceramic countertop wash basin",
+  "tagline": "Quartz sinks, steel sinks & basins",
+  "intro": "Quartz kitchen sinks, stainless steel sinks and wash basins, supplied alongside your granite, quartz or tile counter so the cut-out, sink and plumbing are planned together.",
+  "heroImage": "/media/illustrative/quartz-sink-single-black.jpg",
+  "heroAlt": "Black quartz kitchen sink in a stone counter",
   "hasRealContent": false,
   "materialColor": "#e8e4dc",
   "materialTexture": "porcelain",
-  "applications": ["Bathrooms", "Kitchen sinks", "Commercial washrooms"],
+  "applications": [
+    "Kitchen sinks",
+    "Bathrooms",
+    "Utility areas",
+    "Commercial washrooms"
+  ],
   "enquiryNote": "Ask for trade rate. Partner brand pricing on request."
 }

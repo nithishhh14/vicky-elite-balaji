@@ -1,0 +1,15 @@
+{
+  "kind": "material",
+  "hallId": "sanitaryware",
+  "category": "Quartz sink",
+  "name": "Quartz Kitchen Sink, Single Bowl",
+  "finish": "Quartz composite, matt",
+  "order": 1,
+  "applications": [
+    "Kitchens",
+    "Utility areas"
+  ],
+  "image": "/media/illustrative/quartz-sink-single-black.jpg",
+  "imageAlt": "Matt black quartz single-bowl kitchen sink in a grey stone counter",
+  "note": "Illustrative image, not a photo of our stock. Ask us for the current quartz sink models, bowl sizes and colours."
+}

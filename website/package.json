@@ -8,6 +8,7 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
+    "qa": "node scripts/qa.mjs",
     "astro": "astro"
   },
   "dependencies": {
@@ -24,6 +25,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
     "@tailwindcss/vite": "^4.0.9",
+    "playwright": "^1.55.0",
     "tailwindcss": "^4.0.9",
     "typescript": "^5.7.3",
     "vite": "^6.4.1"

@@ -1,0 +1,14 @@
+{
+  "kind": "material",
+  "hallId": "sanitaryware",
+  "category": "Quartz sink",
+  "name": "Quartz Kitchen Sink, Double Bowl",
+  "finish": "Quartz composite, matt",
+  "order": 2,
+  "applications": [
+    "Kitchens"
+  ],
+  "image": "/media/illustrative/quartz-sink-double-grey.jpg",
+  "imageAlt": "Grey quartz double-bowl kitchen sink in a white counter",
+  "note": "Illustrative image, not a photo of our stock. Ask us for the current quartz sink models, bowl sizes and colours."
+}

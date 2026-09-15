@@ -10,7 +10,38 @@ domain, or set up hosting without new, explicit user permission (the user
 answered "No, not yet" to a direct deployment question on 2026-09-12, and a
 later brief reiterated deployment is out of scope for now).
 
-## Latest (2026-09-15, night) — customer walkthrough fixes + new client material
+## Latest (2026-09-15, late night): quartz sinks, illustrative images, Playwright
+- **Quartz sinks** (the client asked about missing quartz sinks and other
+  sinks): 3 new Sanitaryware products (Single Bowl, Double Bowl, With
+  Drainboard). The old "Kitchen Sink" is now "Stainless Steel Kitchen Sink".
+  The hall tagline is now "Quartz sinks, steel sinks & basins". Also
+  surfaced in the footer, quote form and Material Match.
+  - **Confirm with client:** which quartz sink brands, models, sizes and
+    colours they stock, and what "other sinks" covers (granite composite?
+    ceramic?). No specs were invented.
+- **Illustrative images:** 15 Runway images in
+  `public/media/illustrative/` replace every stock product photo:
+  - Quartz (4), Kadappa (2), Fantasy Brown, Laying (2), Basins (2), Sinks (4)
+  - Hero images for the Quartz, Kadappa, Laying and Sanitaryware halls
+  - `src/lib/image-badge.ts` labels them "Illustrative image" on every
+    card, product page, hall hero, similar-products card and hall list.
+  - Replace them with real photos when the client sends them. Runway credits
+    are now **0 usable** (20 left, one image costs 20).
+- **Playwright:**
+  - `playwright` is installed locally (with Chromium).
+  - Run it with `npm run qa` against `astro preview --port 4322`. It checks
+    all pages at 1366px and 375px for:
+    - console errors
+    - failed or 4xx requests
+    - broken images
+    - overflow
+    - unlabelled generated images
+  - Screenshots go to `website/qa-screens/` (gitignored).
+  - The Playwright MCP server is configured in the Claude CLI, but it isn't
+    loaded in this desktop session; a new session should pick it up.
+  - Last run: 87 pages × 2 viewports, 0 problems.
+
+## Earlier (2026-09-15, night): customer walkthrough fixes + new client material
 - **New real products:**
   - **Granite:** 4 leathered and lappato slabs sent by the client today, in
     `whatsapp vicky pdfs`: Silver Black Lappato and Marvel Red Lappato

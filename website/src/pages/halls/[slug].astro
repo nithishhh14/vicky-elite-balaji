@@ -5,6 +5,7 @@ import SaveButton from "../../components/SaveButton.astro";
 import { getCollection } from "astro:content";
 import { waLink, telLink, emailQuoteLink, productEnquiryMessage } from "../../lib/business";
 import { deriveColours } from "../../lib/facets";
+import { imageBadge } from "../../lib/image-badge";
 import { sanitarywareCategories } from "../../lib/stone-varieties";
 
 export async function getStaticPaths() {
@@ -121,7 +122,7 @@ const breadcrumbJsonLd = {
       <p class="text-xs uppercase tracking-[0.3em] text-mustard">{tagline}</p>
       <h1 class="mt-2 font-display text-4xl sm:text-5xl">{name}</h1>
       {heroImage && !hasRealContent && (
-        <p class="mt-3 text-xs italic text-paper/50">Reference photos. Ask us for photos of current stock</p>
+        <p class="mt-3 text-xs italic text-paper/50">{imageBadge(heroImage) === "Illustrative image" ? "Illustrative image" : "Reference photo"}, not our stock. Ask us for photos of current stock</p>
       )}
     </div>
   </section>
@@ -209,9 +210,9 @@ const breadcrumbJsonLd = {
             <div class="aspect-[4/3] overflow-hidden">
               <img src={p.data.image} alt={p.data.imageAlt} class="h-full w-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy" width="600" height="450" />
             </div>
-            {/unsplash|\/swatches\//.test(p.data.image) && (
+            {imageBadge(p.data.image) && (
               <span class="absolute bottom-2 left-2 bg-charcoal-deep/75 px-2.5 py-1 text-[0.55rem] uppercase tracking-[0.18em] text-paper backdrop-blur">
-                {/\/swatches\//.test(p.data.image) ? "Colour swatch" : "Reference photo"}
+                {imageBadge(p.data.image)}
               </span>
             )}
           </a>

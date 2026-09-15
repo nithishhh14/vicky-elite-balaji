@@ -3,11 +3,16 @@
   "order": 8,
   "tagline": "Site measurement, laying & finishing",
   "intro": "Site measurement and estimation, then laying by our own specialist crews: precision tile and stone laying aimed at a clean, bubble-free finish, sized to keep your project timeline moving.",
-  "heroImage": "https://images.unsplash.com/photo-1523413307857-ef24c53571ae?auto=format&fit=crop&w=1800&q=80",
-  "heroAlt": "Worker precision-laying floor tiles on site",
+  "heroImage": "/media/illustrative/laying-precision.jpg",
+  "heroAlt": "Installer setting a large-format floor tile",
   "hasRealContent": false,
   "materialColor": "#6b5a45",
   "materialTexture": "cement",
-  "applications": ["Site measurement & estimate", "Tile & stone laying", "Bedding & levelling", "Finish & grouting"],
+  "applications": [
+    "Site measurement & estimate",
+    "Tile & stone laying",
+    "Bedding & levelling",
+    "Finish & grouting"
+  ],
   "enquiryNote": "Ask for a laying estimate. Site measurement first, quote after."
 }

@@ -2,14 +2,14 @@
   "kind": "material",
   "hallId": "sanitaryware",
   "name": "Countertop Basin",
-  "category": "Sanitaryware",
+  "category": "Wash basin",
   "finish": "Ceramic",
-  "order": 2,
+  "order": 8,
   "applications": [
     "Bathrooms",
     "Powder rooms"
   ],
-  "image": "https://images.unsplash.com/photo-1642755623141-23b3cb4284aa?auto=format&fit=crop&w=1200&q=80",
-  "imageAlt": "Ceramic countertop wash basin",
-  "note": "Reference photo, not our stock. Ask us for photos of the current stock, size and finish."
+  "image": "/media/illustrative/countertop-basin.jpg",
+  "imageAlt": "Round white ceramic countertop basin on a dark granite vanity",
+  "note": "Illustrative image, not a photo of our stock. Ask us for photos of the current stock, size and finish."
 }

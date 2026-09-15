@@ -8,6 +8,15 @@ where a working assumption was made by Claude without client sign-off, it is
 labeled as a **working assumption**, not a preference, and lives in
 `docs/DECISIONS.md` instead._
 
+## 2026-09-15 (late night): quartz sinks + fill missing images
+- The client says **quartz sinks and other sinks** are missing. Three
+  quartz sink products were added. The exact models, sizes, colours and
+  what "other sinks" means are still to be confirmed.
+- The user asked to fill the missing catalogue images with image
+  generation. 15 generated images now replace the stock photos. They are
+  always labelled "Illustrative image" and should be replaced with real
+  photos when available.
+
 ## 2026-09-15 (night) — service area + custom tile printing
 - **Service area (client-confirmed):** Coimbatore and the surrounding region
   for site visits, supply and laying. **Pan-India** for custom art products

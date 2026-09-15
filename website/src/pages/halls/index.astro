@@ -2,6 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import MaterialField from "../../components/MaterialField.astro";
 import { getCollection } from "astro:content";
+import { imageBadge } from "../../lib/image-badge";
 
 const halls = (await getCollection("halls")).sort((a, b) => a.data.order - b.data.order);
 ---
@@ -18,14 +19,19 @@ const halls = (await getCollection("halls")).sort((a, b) => a.data.order - b.dat
   <section data-gsap-stagger class="mx-auto grid max-w-6xl gap-6 px-5 pb-24 sm:grid-cols-2 lg:grid-cols-3">
     {halls.map((hall) => (
       <a href={`/halls/${hall.id}/`} data-gsap-spotlight class="group block overflow-hidden rounded-sm shadow-card">
-        <div class="aspect-[4/3]">
+        <div class="relative aspect-[4/3] overflow-hidden">
           {hall.data.heroImage ? (
-            <img
-              src={hall.data.heroImage}
-              alt={hall.data.heroAlt}
-              class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-              loading="lazy"
-            />
+            <>
+              <img
+                src={hall.data.heroImage}
+                alt={hall.data.heroAlt}
+                class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                loading="lazy"
+              />
+              {imageBadge(hall.data.heroImage) && (
+                <span class="absolute bottom-2 left-2 bg-charcoal-deep/75 px-2.5 py-1 text-[0.55rem] uppercase tracking-[0.18em] text-paper">{imageBadge(hall.data.heroImage)}</span>
+              )}
+            </>
           ) : (
             <MaterialField color={hall.data.materialColor} texture={hall.data.materialTexture} label={hall.data.tagline} class="h-full" />
           )}

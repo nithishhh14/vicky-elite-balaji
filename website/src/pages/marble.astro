@@ -5,12 +5,13 @@ import { getCollection } from "astro:content";
 import { waLink, telLink, productEnquiryMessage } from "../lib/business";
 import { mediaLibrary, provenanceLabel } from "../lib/media-library";
 import { stoneCategories } from "../lib/stone-varieties";
+import { imageBadge } from "../lib/image-badge";
 
 // Marble, and the marble look. Real white slabs from our yard, real
 // marble-look tiles from the Mozzato Endless catalogue, marble stonecraft,
 // and the varieties we can source. Stock-photo records are not featured.
 const products = await getCollection("products");
-const isStock = (src: string) => /unsplash/.test(src);
+const isStock = (src: string) => imageBadge(src) !== null;
 const slabs = products.filter((p) => p.data.category === "Natural marble slab" && !isStock(p.data.image)).sort((a, b) => a.data.order - b.data.order);
 const looks = products.filter((p) => /marble-look/i.test(p.data.category ?? "") || (/marble/i.test(p.data.name) && p.data.kind === "tile")).sort((a, b) => a.data.order - b.data.order);
 const craft = mediaLibrary.find((m) => m.slug === "tulsi-madam-white-marble");

@@ -3,11 +3,15 @@
   "order": 7,
   "tagline": "Engineered surfaces for counters",
   "intro": "Engineered quartz surfaces for kitchen counters and heavy-use tops where a consistent, low-porosity finish matters more than natural veining.",
-  "heroImage": "https://images.unsplash.com/photo-1665507279638-5b48073c637b?auto=format&fit=crop&w=1800&q=80",
-  "heroAlt": "White engineered quartz countertop surface",
+  "heroImage": "/media/illustrative/quartz-white.jpg",
+  "heroAlt": "Polished white engineered quartz countertop",
   "hasRealContent": false,
   "materialColor": "#cfcac0",
   "materialTexture": "porcelain",
-  "applications": ["Kitchen counters", "Reception & retail counters", "Heavy-use worktops"],
+  "applications": [
+    "Kitchen counters",
+    "Reception & retail counters",
+    "Heavy-use worktops"
+  ],
   "enquiryNote": "Ask for trade rate. Slab availability varies by colourway."
 }

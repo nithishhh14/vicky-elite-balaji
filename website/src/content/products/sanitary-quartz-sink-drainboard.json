@@ -1,0 +1,14 @@
+{
+  "kind": "material",
+  "hallId": "sanitaryware",
+  "category": "Quartz sink",
+  "name": "Quartz Kitchen Sink with Drainboard",
+  "finish": "Quartz composite, matt",
+  "order": 3,
+  "applications": [
+    "Kitchens"
+  ],
+  "image": "/media/illustrative/quartz-sink-drainboard-beige.jpg",
+  "imageAlt": "Beige quartz kitchen sink with ribbed drainboard in a dark granite counter",
+  "note": "Illustrative image, not a photo of our stock. Ask us for the current quartz sink models, bowl sizes and colours."
+}

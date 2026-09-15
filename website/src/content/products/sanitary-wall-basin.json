@@ -2,11 +2,13 @@
   "kind": "material",
   "hallId": "sanitaryware",
   "name": "Wall-Mounted Wash Basin",
-  "category": "Sanitaryware",
+  "category": "Wash basin",
   "finish": "Ceramic, gloss white",
-  "order": 1,
-  "applications": ["Bathrooms"],
-  "image": "https://images.pexels.com/photos/17461785/pexels-photo-17461785.jpeg?auto=compress&cs=tinysrgb&w=1200",
-  "imageAlt": "Row of wall-mounted ceramic wash basins in a tiled washroom",
-  "note": "Representative style. Partner brand pricing and availability on request."
+  "order": 7,
+  "applications": [
+    "Bathrooms"
+  ],
+  "image": "/media/illustrative/wall-basin.jpg",
+  "imageAlt": "White ceramic wall-mounted wash basin with a chrome tap",
+  "note": "Illustrative image, not a photo of our stock. Ask us for photos of the current stock, size and finish."
 }

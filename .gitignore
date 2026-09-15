@@ -19,3 +19,4 @@ website/.astro/
 website/npm-debug.log*
 /node_modules/
 /.astro/
+website/qa-screens/

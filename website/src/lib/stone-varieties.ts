@@ -167,8 +167,11 @@ export const sanitarywareCategories: StoneCategory[] = [
   {
     slug: "kitchen-sinks",
     label: "Kitchen Sinks",
-    blurb: "Single and double-bowl sinks in stainless steel or granite composite.",
+    blurb: "Single and double-bowl sinks in quartz composite, stainless steel or granite composite.",
     varieties: [
+      { name: "Quartz sink, single bowl" },
+      { name: "Quartz sink, double bowl" },
+      { name: "Quartz sink with drainboard" },
       { name: "Single-bowl stainless steel" },
       { name: "Double-bowl stainless steel" },
       { name: "Granite composite sink" },
