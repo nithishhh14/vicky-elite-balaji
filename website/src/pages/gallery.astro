@@ -1,0 +1,98 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import { getCollection } from "astro:content";
+
+// Gallery: every image already on the site, in one browsable wall. Showroom
+// renders from the client's reference mockup come first, then the real
+// catalogue grouped by hall. Filtering is plain JS on a data attribute.
+const halls = (await getCollection("halls")).sort((a, b) => a.data.order - b.data.order);
+const products = (await getCollection("products")).sort((a, b) => a.data.order - b.data.order);
+
+const renders = [
+  { src: "/media/reference/hero-interior.jpg", alt: "Showroom reception with marble walls and counter", label: "Showroom render" },
+  { src: "/media/reference/card-granite.jpg", alt: "Dark granite surface", label: "Granite" },
+  { src: "/media/reference/card-marble.jpg", alt: "Cream marble with gold veining", label: "Marble" },
+  { src: "/media/reference/card-tiles.jpg", alt: "Glossy marble-look porcelain tiles", label: "Tiles & Ceramics" },
+  { src: "/media/reference/card-bathroom.jpg", alt: "Bathroom with stone walls and vessel basin", label: "Bathroom" },
+  { src: "/media/reference/card-exterior.jpg", alt: "Building entrance with marble cladding", label: "Exterior" },
+];
+
+type Tile = { src: string; alt: string; label: string; group: string; href?: string };
+const seen = new Set<string>();
+const tiles: Tile[] = [];
+const push = (t: Tile) => {
+  if (seen.has(t.src)) return;
+  seen.add(t.src);
+  tiles.push(t);
+};
+renders.forEach((r) => push({ ...r, group: "renders" }));
+for (const hall of halls) {
+  for (const p of products.filter((x) => x.data.hallId === hall.id)) {
+    push({ src: p.data.image, alt: p.data.imageAlt, label: p.data.name, group: hall.id, href: `/products/${p.id}/` });
+    for (const img of p.data.images ?? []) push({ src: img.src, alt: img.alt, label: p.data.name, group: hall.id, href: `/products/${p.id}/` });
+  }
+}
+const groups = [
+  { id: "all", label: "All" },
+  { id: "renders", label: "Showroom" },
+  ...halls.filter((h) => tiles.some((t) => t.group === h.id)).map((h) => ({ id: h.id, label: h.data.name })),
+];
+---
+
+<BaseLayout
+  title="Gallery | Elite Balaji Stones & Ceramics"
+  description="Browse granite, marble, tiles, quartz, Kota, Kadappa and sanitaryware in one gallery."
+>
+  <PageHero
+    eyebrow="Gallery"
+    title="Timeless spaces"
+    intro="Stone, tile and surface imagery from across our halls. Tap any product to see its details."
+  />
+
+  <section class="bg-paper py-12">
+    <div class="mx-auto max-w-7xl px-5 lg:px-8">
+      <div class="flex flex-wrap gap-2" role="group" aria-label="Filter gallery">
+        {groups.map((g, i) => (
+          <button
+            type="button"
+            data-filter={g.id}
+            aria-pressed={i === 0 ? "true" : "false"}
+            class="border border-line px-4 py-2 text-xs uppercase tracking-[0.16em] text-ink-soft transition-colors hover:border-brass aria-pressed:border-brass aria-pressed:bg-brass aria-pressed:text-paper"
+          >
+            {g.label}
+          </button>
+        ))}
+      </div>
+
+      <div id="gallery-grid" class="mt-8 columns-2 gap-3 md:columns-3 lg:columns-4">
+        {tiles.map((t) => {
+          const Tag = t.href ? "a" : "figure";
+          return (
+            <Tag href={t.href} data-group={t.group} class="group relative mb-3 block break-inside-avoid overflow-hidden bg-charcoal-deep">
+              <img src={t.src} alt={t.alt} class="w-full transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+              <span class="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-charcoal-deep/85 to-transparent p-3 pt-8 text-[0.65rem] uppercase tracking-[0.16em] text-paper opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
+                {t.label}
+              </span>
+            </Tag>
+          );
+        })}
+      </div>
+      <p class="mt-6 text-xs text-ink-soft/70">Showroom images are illustrative renders while our Karamadai showroom is renovated. Natural stone varies by batch, so ask us to see current stock.</p>
+    </div>
+  </section>
+
+  <script is:inline>
+    (function () {
+      var buttons = document.querySelectorAll("[data-filter]");
+      var items = document.querySelectorAll("#gallery-grid [data-group]");
+      buttons.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var f = btn.getAttribute("data-filter");
+          buttons.forEach(function (b) { b.setAttribute("aria-pressed", String(b === btn)); });
+          items.forEach(function (el) { el.hidden = f !== "all" && el.getAttribute("data-group") !== f; });
+        });
+      });
+    })();
+  </script>
+</BaseLayout>

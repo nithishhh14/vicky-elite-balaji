@@ -6,6 +6,12 @@
       "runtimeExecutable": "C:\\Program Files\\nodejs\\node.exe",
       "runtimeArgs": ["website/node_modules/astro/astro.js", "dev", "--root", "website"],
       "port": 4321
+    },
+    {
+      "name": "elite-balaji-showroom-prod",
+      "runtimeExecutable": "C:\\Program Files\\nodejs\\node.exe",
+      "runtimeArgs": ["website/node_modules/astro/astro.js", "preview", "--root", "website", "--port", "4322"],
+      "port": 4322
     }
   ]
 }

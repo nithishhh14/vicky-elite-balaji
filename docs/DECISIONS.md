@@ -5,7 +5,52 @@ reconsidering something that may already have been decided.
 
 ---
 
+### Decision: Rebuild the site from the client's AI reference mockup, including its imagery
+**Date:** 2026-09-15
+**Reason:** Explicit client direction, which has the highest priority per
+`CLAUDE.md`'s client feedback override rule. The client wants the mockup's
+look and images on the live site even though they aren't the real showroom,
+because the Karamadai showroom is under renovation.
+**What changed:**
+- **Homepage hero:** now the mockup's own interior render
+  (`public/media/reference/hero-interior.jpg`). It replaces the licensed Adobe
+  Stock lobby photo, which is still on disk as `media/brand/hero-lobby.jpg`
+  but unused on the homepage.
+- **Hero copy:** the mockup's wording ("Natural Beauty / Timeless Spaces",
+  "Premium Surfaces for a Better Tomorrow", "Explore Collection").
+- **Category strip:** the mockup's 5 cards with its imagery and wording.
+- **Trust bar:** the mockup's light layout and wording.
+- **Header nav:** the mockup's full structure. New pages
+  `/applications/`, `/gallery/` and `/resources/` are built only from
+  existing real data.
+- **Header overlay:** transparent over the hero on the homepage.
+**How the images were made:**
+- Cropped from the mockup locally with Pillow.
+- Adobe generative expand was tried to rebuild the card areas that had
+  baked-in labels. The Claude Code permission classifier blocked uploading
+  the crops, so the label strips were replaced locally with a blurred,
+  darkened fill, and the images were upscaled 2×.
+- Scripts are recorded in this session's scratchpad only. Rerun from the
+  reference file if needed.
+**Kept from earlier decisions (not overridden):**
+- The client's exact logo.
+- A small "illustrative render" caption on the hero, plus the gallery
+  footnote.
+- The trust bar's "1000+ Products" is replaced by "Since 2012 / Trusted
+  Supplier" until the client confirms a real count. The other 4 stats in
+  the mockup are true of the business and are used as written.
+**Supersedes:**
+- "License one Adobe Stock photo for the homepage hero" (2026-09-14), for
+  the homepage hero image.
+- The 2026-09-13 photo-free hero.
+- The 2026-09-13 note that the reference was "visual direction only".
+Those entries are kept below for history.
+**Full brief:** `docs/ART_DIRECTION.md`.
+
+---
+
 ### Decision: License one Adobe Stock photo for the homepage hero instead of AI-generating it
+**Status:** SUPERSEDED 2026-09-15 for the homepage (see entry above).
 **Date:** 2026-09-14
 **Reason:** After the photo-free hero (2026-09-13) still didn't match the
 richness of the client's reference image, the client asked for AI image

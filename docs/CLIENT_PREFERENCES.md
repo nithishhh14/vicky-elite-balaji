@@ -8,6 +8,17 @@ where a working assumption was made by Claude without client sign-off, it is
 labeled as a **working assumption**, not a preference, and lives in
 `docs/DECISIONS.md` instead._
 
+## 2026-09-15 (later) — the AI reference mockup IS the design
+Client instruction, relayed by the user: "even if the AI mockups are not
+looking like the actual showroom, that's what the client wants; the showroom
+is under renovation now … pull the design … remake the website."
+- The mockup's layout, copy, navigation and imagery are the approved design.
+  The mockup is `Downloads/ChatGPT Image Sep 13, 2026, 02_11_51 PM.png`.
+- AI-render imagery is acceptable for the hero, category cards and gallery
+  while the showroom is renovated.
+- Implemented the same day; see `docs/DECISIONS.md` and
+  `docs/ART_DIRECTION.md`.
+
 ## 2026-09-15 — exact logo, Kota images, art direction
 - **Logo:** the client supplied their exact emblem: a gold star seal with
   ribbons, and a handshake holding a dark-green marble tile and a white one.

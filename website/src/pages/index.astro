@@ -2,195 +2,144 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import { business, waLink, telLink, defaultEnquiryMessage } from "../lib/business";
-import { materialWorlds as materialWorldsConfig } from "../lib/material-worlds";
 import Magnet from "../components/react-bits/Magnet";
-import SpotlightCard from "../components/react-bits/SpotlightCard";
 
 const halls = (await getCollection("halls")).sort((a, b) => a.data.order - b.data.order);
 const fabricationServices = (await getCollection("services")).sort((a, b) => a.data.order - b.data.order).slice(0, 4);
-const hallByI = (id: string) => halls.find((h) => h.id === id)!;
 
-// Material worlds: the real halls grouped by what a customer is actually
-// looking for (single source of truth in lib/material-worlds.ts, shared
-// with SiteHeader's "Materials" menu and the /materials/[world]/ landing
-// pages), each led by a real or honestly-disclosed photo, not a stock-photo
-// grid of unrelated products.
-const materialWorlds = materialWorldsConfig.map((world) => ({
-  slug: world.slug,
-  label: world.label,
-  flagship: hallByI(world.hallIds[0]),
-  also: world.hallIds.slice(1).map(hallByI),
-}));
-
-// Category strip: the 3 material worlds plus the 2 real halls that aren't
-// grouped into a world (Sanitaryware, Laying Works) -- 5 categories total,
-// each a real hall/world with real content, not a decorative count chosen
-// to match a reference layout. The descriptor line under each label is the
-// flagship hall's own existing tagline (content/halls/*.json), not new
-// marketing copy written to fill the reference's second line.
+// Category strip, reproduced from the client's reference mockup (2026-09-15
+// client direction): same 5 categories, same wording, same imagery -- the
+// photos are cut from that mockup (see docs/ART_DIRECTION.md). Every card
+// links to a real page.
 const categoryStrip = [
-  ...materialWorlds.map((w) => ({ href: `/materials/${w.slug}/`, label: w.label, descriptor: w.flagship.data.tagline, image: w.flagship })),
-  { href: "/halls/sanitaryware/", label: "Sanitaryware", descriptor: hallByI("sanitaryware").data.tagline, image: hallByI("sanitaryware") },
-  { href: "/halls/laying-works/", label: "Laying Works", descriptor: hallByI("laying-works").data.tagline, image: hallByI("laying-works") },
+  { href: "/search/?q=granite", label: "Granite", descriptor: "Natural Strength", image: "/media/reference/card-granite.jpg" },
+  { href: "/search/?q=marble", label: "Marble", descriptor: "Timeless Elegance", image: "/media/reference/card-marble.jpg" },
+  { href: "/materials/tiles-ceramics/", label: "Tiles & Ceramics", descriptor: "Modern Living", image: "/media/reference/card-tiles.jpg" },
+  { href: "/halls/sanitaryware/", label: "Bathroom Solutions", descriptor: "Beauty in Every Detail", image: "/media/reference/card-bathroom.jpg" },
+  { href: "/materials/natural-stone/", label: "Exterior Solutions", descriptor: "Built for Tomorrow", image: "/media/reference/card-exterior.jpg" },
 ];
 
-// Single consolidated stat bar (VISUAL_AUDIT_V2.md #12) -- replaces the two
-// separate facts/stat bars. Every value is counted from real data or is an
-// already-documented business fact; no reference-style invented statistics.
+// Trust bar in the reference's layout and wording. The reference's "1000+
+// Products" is replaced with the real founding year until the client
+// confirms an actual product count; the other four are true of the business
+// (partner brands, site measurement/consultation, India-wide supply,
+// contractor/builder customers -- see business.ts and the About page).
 const stats = [
-  { value: String(business.since), label: "Founded" },
-  { value: String(halls.length), label: "Material halls" },
-  { value: String(business.partnerBrands.length), label: "Partner brands" },
-  { value: String(business.serviceHubs.length), label: "Service hubs" },
-  { value: "India-wide", label: "Transport & supply" },
+  { value: `Since ${business.since}`, label: "Trusted Supplier" },
+  { value: "Premium", label: "Partner Brands" },
+  { value: "Expert", label: "Consultation" },
+  { value: "Pan India", label: "Supply" },
+  { value: "Trusted By", label: "Contractors & Builders" },
 ];
 
-// Real, already-derived facet values (see src/lib/facets.ts / search-index.json.ts)
-// used only as clickable text-search shortcuts into /search/ -- not fabricated categories.
-const discoveryTerms = ["Grey", "White", "Polished", "Glossy", "Flooring", "Kitchen"];
+const heroFeatures = [
+  { title: "Premium", sub: "Quality", icon: "M6 3h12l4 6-10 12L2 9l4-6Zm-4 6h20M9.5 3 12 9l2.5-6M12 9v12" },
+  { title: "Wide", sub: "Range", icon: "M12 2 21 7v10l-9 5-9-5V7l9-5Zm0 0v20M3 7l9 5 9-5" },
+  { title: "Trusted", sub: "Partner", icon: "M12 2 20 5v6c0 5-3.4 9.4-8 11-4.6-1.6-8-6-8-11V5l8-3Z" },
+];
 
+// Real, already-derived facet values used as text-search shortcuts into /search/.
+const discoveryTerms = ["Grey", "White", "Polished", "Glossy", "Flooring", "Kitchen"];
 ---
 
 <BaseLayout
   title="Elite Balaji Stones & Ceramics | Virtual Showroom, Karamadai, Coimbatore"
   description="Granite, marble, tiles, sanitaryware and laying works. Wholesale trade supply from Karamadai since 2012. Walk the virtual showroom, then ask for a trade rate."
+  overlayHeader
 >
-  <!-- 01 — Entrance: no single product photo standing in for the whole
-       business (that was the Athangudi-hero problem this replaces) --
-       instead a licensed, illustrative reception-lobby photo (not a photo
-       of Elite Balaji's own premises -- see the credit line below), colour-
-       graded to the site's charcoal/gold palette, plus a strip of real
-       photography across every hall further down. -->
-  <!-- Text block bottom-weighted (items-end) rather than dead-centre
-       (VISUAL_AUDIT_V2.md #6); photo opacity raised and the bottom overlay
-       lightened so the colour-graded warmth reads through on the right while
-       the left marble panel still carries text contrast (#14). Height is
-       viewport minus the ~8rem two-row header, not min-h-screen: with the
-       text bottom-weighted, a full-screen section put the feature row a
-       header's height below the fold. -->
-  <section class="relative isolate flex min-h-[calc(100svh-8rem)] items-end overflow-hidden bg-charcoal-deep pb-16 pt-24 text-paper">
+  <!-- 01 — Hero, reproduced from the client's reference mockup: dark marble
+       zone on the left carrying the type, lit showroom interior on the right.
+       The interior image is the mockup's own render (client-approved while
+       the real showroom is under renovation). The header floats over it. -->
+  <section class="relative isolate flex min-h-[100svh] items-center overflow-hidden bg-charcoal-deep pb-14 pt-36 text-paper lg:min-h-[max(92svh,760px)] lg:pt-44">
     <img
-      src="/media/brand/hero-lobby.jpg"
+      src="/media/reference/hero-interior.jpg"
       alt=""
       aria-hidden="true"
-      class="absolute inset-0 h-full w-full object-cover opacity-95"
+      width="1630"
+      height="1136"
+      class="absolute inset-y-0 right-0 h-full w-full object-cover object-[70%_center] lg:w-[68%] lg:object-left"
       fetchpriority="high"
     />
-    <div class="marble-veins pointer-events-none absolute inset-y-0 left-0 w-[55%] bg-[linear-gradient(to_right,_var(--color-charcoal-deep)_0%,_var(--color-bottle-dark)_55%,_transparent_100%)]" aria-hidden="true"></div>
-    <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-charcoal-deep/90 via-charcoal-deep/20 to-transparent" aria-hidden="true"></div>
+    <div class="marble-veins pointer-events-none absolute inset-y-0 left-0 w-full bg-[linear-gradient(to_right,_var(--color-charcoal-deep)_0%,_color-mix(in_srgb,var(--color-bottle-dark)_85%,transparent)_45%,_transparent_75%)] lg:w-[62%] lg:bg-[linear-gradient(to_right,_var(--color-charcoal-deep)_0%,_var(--color-bottle-dark)_60%,_transparent_100%)]" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-charcoal-deep/85 via-transparent to-charcoal-deep/60" aria-hidden="true"></div>
 
-    <div data-gsap-hero class="relative z-10 mx-auto w-full max-w-6xl px-5">
-      <p class="text-xs uppercase leading-relaxed tracking-[0.4em] text-brass">
-        Since {business.since}<br />Karamadai, Coimbatore
+    <div data-gsap-hero class="relative z-10 mx-auto w-full max-w-7xl px-5 lg:px-8">
+      <p class="text-xs uppercase leading-[1.9] tracking-[0.45em] text-paper/85 sm:text-sm">
+        Natural Beauty<br />Timeless Spaces
       </p>
-      <h1 class="mt-6 font-display text-7xl font-semibold leading-[0.9] sm:text-8xl lg:text-9xl">
-        <span class="bg-gradient-to-b from-brass to-mustard-dark bg-clip-text text-transparent">Stones &amp;</span><br />
+      <h1 class="mt-6 font-display text-[clamp(2.75rem,13vw,7.5rem)] font-medium uppercase leading-[0.92]">
+        <span class="bg-gradient-to-b from-[#f3d9a4] via-brass to-mustard-dark bg-clip-text text-transparent">Stones &amp;</span><br />
         <span class="text-paper">Ceramics</span>
       </h1>
-      <p class="mt-8 max-w-lg font-display text-xl italic text-paper/80">
-        Granite, marble, natural stone, tiles and surfaces — sourced, supplied and laid from one yard.
-      </p>
-      <div id="hero-cta" class="mt-10">
+      <p class="mt-5 text-lg text-paper/90 sm:text-xl">Premium Surfaces for a Better Tomorrow</p>
+      <div id="hero-cta" class="mt-9">
         <Magnet client:load padding={80} magnetStrength={3}>
-          <a href="#materials" class="inline-block rounded-full border border-brass/70 px-8 py-4 text-sm font-semibold uppercase tracking-wide text-brass hover:bg-brass hover:text-charcoal-deep transition-colors">
-            Explore Materials
+          <a href="#collection" class="inline-flex items-center gap-3 border border-brass px-8 py-4 text-xs font-medium uppercase tracking-[0.2em] text-paper hover:bg-brass hover:text-charcoal-deep transition-colors">
+            Explore Collection
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
         </Magnet>
       </div>
 
-      <!-- Minimal supporting indicators only -- 3 real facts, 2-line
-           stacked to match the reference's rhythm. Trust stats and
-           category imagery now live in their own sections below, not
-           stacked into the hero. -->
-      <div class="mt-14 flex flex-wrap gap-x-12 gap-y-6">
-        <div class="flex items-center gap-3">
-          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" class="flex-shrink-0 text-brass" aria-hidden="true"><path d="M9 12l2 2 4-4M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9Z" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span class="text-xs uppercase leading-snug tracking-wide text-paper/80">Zero-Bubble<br />Laying</span>
-        </div>
-        <div class="flex items-center gap-3">
-          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" class="flex-shrink-0 text-brass" aria-hidden="true"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5L12 3Z" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span class="text-xs uppercase leading-snug tracking-wide text-paper/80">{business.partnerBrands.length} Partner<br />Brands</span>
-        </div>
-        <div class="flex items-center gap-3">
-          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" class="flex-shrink-0 text-brass" aria-hidden="true"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span class="text-xs uppercase leading-snug tracking-wide text-paper/80">Wholesale<br />Rates</span>
-        </div>
-      </div>
+      <ul class="mt-12 flex flex-wrap items-stretch gap-y-6">
+        {heroFeatures.map((f, i) => (
+          <li class:list={["flex flex-col gap-3 pr-8 sm:pr-10", i > 0 && "border-l border-paper/20 pl-8 sm:pl-10"]}>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" class="text-brass" aria-hidden="true"><path d={f.icon} stroke-linejoin="round" stroke-linecap="round"/></svg>
+            <span class="text-xs uppercase leading-snug tracking-[0.15em] text-paper">
+              {f.title}<br /><span class="text-[0.6rem] tracking-[0.25em] text-paper/60">{f.sub}</span>
+            </span>
+          </li>
+        ))}
+      </ul>
     </div>
 
-    <!-- Right-side supporting text panel, mirroring the reference image's
-         layout -- real copy, no border rule (VISUAL_AUDIT_V2.md #9). -->
-    <div class="absolute bottom-32 right-5 hidden max-w-xs text-right text-sm text-paper/75 lg:block xl:right-[max(1.25rem,calc((100vw-72rem)/2))]">
-      <p>From Karamadai's finest stone to world-class ceramics, we bring beauty, strength and style to every space.</p>
-      <p class="mt-4 text-xs uppercase tracking-[0.3em] text-brass">{business.subTagline}</p>
+    <div class="absolute right-8 top-1/2 z-10 hidden max-w-[13rem] -translate-y-[10%] text-left xl:block">
+      <p class="text-[0.7rem] uppercase leading-[2] tracking-[0.2em] text-paper/85">
+        From nature's finest stones to world-class ceramics, we bring beauty, strength and style to every space.
+      </p>
+      <span class="my-6 block h-px w-10 bg-brass" aria-hidden="true"></span>
+      <p class="text-[0.7rem] uppercase leading-[2] tracking-[0.3em] text-paper/85">Build<br />Better Spaces</p>
     </div>
 
-    <p class="absolute bottom-5 left-5 text-[0.6rem] uppercase tracking-[0.15em] text-paper/35">
-      Illustrative photography (licensed stock), not Elite Balaji's own premises
+    <p class="absolute bottom-3 left-5 z-10 text-[0.55rem] uppercase tracking-[0.15em] text-paper/30 lg:left-8">
+      Illustrative showroom render · our Karamadai showroom is being renovated
     </p>
   </section>
 
-  <!-- 02 — Explore: 5 real categories (3 material worlds + Sanitaryware +
-       Laying Works), each a full photographic card with a circular arrow
-       button that appears on hover -- inspired by the client's reference
-       image and Varmora's own category strip, built from real hall photos
-       already used honestly elsewhere on the site. Sits directly under the
-       hero, as in the reference. The former 6-image swatch strip that sat
-       between them was removed (VISUAL_AUDIT_V2.md #15): it repeated the
-       same hall photos this strip already shows, as a second competing band. -->
-  <section id="materials" class="marble-veins scroll-mt-20 bg-charcoal py-24 sm:py-28">
-    <div class="mx-auto max-w-6xl px-5 reveal">
-      <p class="text-xs uppercase tracking-[0.3em] text-mustard">Explore</p>
-      <h2 class="mt-3 max-w-lg font-display text-3xl text-paper sm:text-5xl">Five categories, one yard</h2>
-      <p class="mt-5 max-w-xl text-paper/70">
-        Everything we stock and lay, grouped the way you'd actually go looking for it.
-      </p>
-    </div>
-    <div data-gsap-stagger class="mt-16 grid gap-1 px-1 sm:grid-cols-2 lg:grid-cols-5">
+  <!-- 02 — Category strip + trust bar on the reference's warm ivory ground. -->
+  <section id="collection" class="scroll-mt-24 bg-paper pb-10 pt-6 sm:pt-8">
+    <div data-gsap-stagger class="mx-auto grid max-w-[96rem] gap-3 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-5 lg:gap-4 lg:px-8">
       {categoryStrip.map((cat) => (
-        <SpotlightCard
-          client:visible
-          className="group relative isolate flex aspect-[4/5] flex-col justify-end sm:aspect-[3/4] lg:aspect-[2/3]"
-          spotlightColor="rgba(196, 143, 46, 0.35)"
-        >
-          {cat.image.data.heroImage ? (
-            <img
-              src={cat.image.data.heroImage}
-              alt={cat.image.data.heroAlt}
-              style={cat.href === "/materials/tiles-ceramics/" ? { objectPosition: "85% center" } : undefined}
-              class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-              loading="lazy"
-            />
-          ) : (
-            <div class="absolute inset-0 h-full w-full" style={{ backgroundColor: cat.image.data.materialColor }}></div>
-          )}
-          <div class="absolute inset-0 bg-gradient-to-t from-charcoal-deep/90 via-charcoal-deep/10 to-transparent"></div>
-          <div class="relative flex items-end justify-between gap-3 p-6">
+        <a href={cat.href} class="group relative isolate block aspect-[16/10] overflow-hidden bg-charcoal-deep sm:last:col-span-2 lg:last:col-span-1">
+          <img
+            src={cat.image}
+            alt=""
+            width="562"
+            height="348"
+            class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            loading="lazy"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-charcoal-deep/85 via-charcoal-deep/15 to-transparent"></div>
+          <div class="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-5">
             <div>
-              <h3 class="font-display text-2xl text-paper">{cat.label}</h3>
-              <p class="mt-1.5 text-[0.65rem] uppercase leading-snug tracking-[0.2em] text-brass/90">{cat.descriptor}</p>
+              <h3 class="max-w-[10ch] text-lg font-medium uppercase leading-tight tracking-[0.12em] text-paper">{cat.label}</h3>
+              <p class="mt-1.5 text-[0.6rem] uppercase tracking-[0.22em] text-paper/75">{cat.descriptor}</p>
             </div>
-            <span class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full border border-paper/40 text-paper opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100 -translate-x-2">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-paper/70 text-paper transition-colors duration-300 group-hover:border-brass group-hover:bg-brass group-hover:text-charcoal-deep">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </span>
           </div>
-          <a href={cat.href} class="absolute inset-0" aria-label={`Explore ${cat.label}`}></a>
-        </SpotlightCard>
+        </a>
       ))}
     </div>
-  </section>
 
-  <!-- 02a — The single stat/CTA bar (VISUAL_AUDIT_V2.md #12): 5 real facts +
-       1 CTA, vertical divider rules between items, appearing exactly once.
-       Never the reference's own "1000+ Products / Trusted by Architects"
-       style invented statistics. -->
-  <section class="border-y border-paper/10 bg-charcoal-deep py-10 text-paper">
-    <div class="mx-auto flex max-w-6xl flex-col items-stretch gap-8 px-5 lg:flex-row lg:items-center">
-      <dl class="grid flex-1 grid-cols-2 gap-y-6 sm:grid-cols-3 lg:grid-cols-5 lg:divide-x lg:divide-paper/15">
+    <div class="mx-auto mt-10 flex max-w-7xl flex-col gap-8 px-5 lg:flex-row lg:items-center lg:px-8">
+      <dl class="grid flex-1 grid-cols-2 gap-x-4 gap-y-7 sm:grid-cols-3 lg:grid-cols-5">
         {stats.map((s) => (
-          <div class="flex flex-col-reverse px-4 text-center">
-            <dt class="mt-1.5 text-[0.65rem] uppercase tracking-[0.2em] text-paper/60">{s.label}</dt>
-            <dd class="font-display text-2xl text-brass sm:text-3xl">{s.value}</dd>
+          <div class="flex flex-col-reverse border-l border-brass/50 pl-5">
+            <dt class="mt-1.5 text-[0.6rem] uppercase tracking-[0.22em] text-ink-soft">{s.label}</dt>
+            <dd class="text-lg uppercase tracking-[0.14em] text-mustard-dark sm:text-xl">{s.value}</dd>
           </div>
         ))}
       </dl>
@@ -198,13 +147,14 @@ const discoveryTerms = ["Grey", "White", "Polished", "Glossy", "Flooring", "Kitc
         href={waLink(defaultEnquiryMessage)}
         target="_blank"
         rel="noopener"
-        class="inline-flex flex-shrink-0 items-center justify-center gap-2 self-center rounded-full bg-mustard px-7 py-3.5 text-sm font-semibold uppercase tracking-wide text-ink hover:bg-mustard-dark transition-colors"
+        class="inline-flex flex-shrink-0 items-center justify-center gap-3 self-start bg-gradient-to-r from-brass to-mustard-dark px-8 py-4 text-xs font-medium uppercase tracking-[0.22em] text-paper shadow-lift hover:brightness-110 transition lg:self-center"
       >
         Get a Quote
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
   </section>
+
 
   <!-- 02b — Engraved tagline: the backlit-marble-lettering motif from the
        reference image, built with CSS text-shadow rather than a photo, using

@@ -10,7 +10,41 @@ domain, or set up hosting without new, explicit user permission (the user
 answered "No, not yet" to a direct deployment question on 2026-09-12, and a
 later brief reiterated deployment is out of scope for now).
 
-## Most recent session (2026-09-15)
+## Latest (2026-09-15, afternoon) — site rebuilt from the client's AI mockup
+- **Client direction:** the AI reference mockup IS the design (the showroom
+  is under renovation). See the `docs/DECISIONS.md` top entry.
+- **Homepage:** hero, category strip and trust bar rebuilt to the mockup,
+  with its imagery in `public/media/reference/`.
+- **Header:** mockup nav (Home, About, Products▾, Applications, Gallery,
+  Resources, Contact), sub-strip, a menu drawer at every width, and a
+  transparent overlay on the homepage.
+- **New pages:** `/applications/`, `/gallery/`, `/resources/` (built only from
+  existing data), plus a `PageHero` component.
+- **Favicon:** `favicon-48.png` and `apple-touch-icon.png`, from the client
+  emblem.
+- **Bugs fixed:** the 6px phone header overflow (header call button
+  removed) and the phone hero headline clipping.
+- **Docs:** `docs/ART_DIRECTION.md` rewritten as the full art direction +
+  UX orchestration brief.
+- **Verified:**
+  - `astro check` 0 errors, build 61 pages.
+  - Static crawl: 0 broken links or images.
+  - All 19 page types have no overflow at 375px, and there are no console
+    errors.
+  - Menu, dropdown, header scroll state, gallery filter and search deep
+    links all work.
+- **Launch blockers still open:**
+  1. Real domain for `astro.config.mjs` `site` and `public/robots.txt`.
+     Every canonical URL currently says `elitebalaji.example.in`.
+  2. Hosting decision and permission to deploy.
+- **Not done:**
+  - High-resolution regeneration of the renders. Adobe upload was blocked
+    by the permission classifier, and no text-to-image API exists yet.
+  - A 3-slide hero carousel.
+  - Kota image replacement.
+  - Confirming a real product count for the "1000+" stat.
+
+## Earlier on 2026-09-15
 - Finished `VISUAL_AUDIT_V2.md` phase 2: steps 4–9 (#6, #11, #12, #13, #14,
   #15), all in `website/src/pages/index.astro`. The status section at the
   bottom of that file has the details.

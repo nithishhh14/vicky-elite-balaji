@@ -1,0 +1,118 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import { getCollection } from "astro:content";
+import { business, waLink, telLink, emailQuoteLink } from "../lib/business";
+import { tileSizes, tileFinishes, stoneCategories, quartzCategories, sanitarywareCategories } from "../lib/stone-varieties";
+
+// Resources: buyer reference material built only from content the site
+// already holds -- standard sizes/finishes, the "ask us to source" variety
+// lists, real services, and how enquiries actually work.
+const services = (await getCollection("services")).sort((a, b) => a.data.order - b.data.order);
+const sourcing = [...stoneCategories, ...quartzCategories, ...sanitarywareCategories];
+
+const steps = [
+  { title: "Tell us the job", detail: "Material, room or application, size and approximate quantity." },
+  { title: "Get trade pricing", detail: "We reply by WhatsApp or call with what's in stock today and the rate." },
+  { title: "Site measurement", detail: "Our team can visit to measure and confirm quantities before you order." },
+  { title: "Supply & laying", detail: "We deliver, and our own crews can lay and finish it." },
+];
+---
+
+<BaseLayout
+  title="Resources | Elite Balaji Stones & Ceramics"
+  description="Tile sizes and finishes, commonly sourced stone varieties, laying and fabrication services, and how to get a trade quote from Elite Balaji."
+>
+  <PageHero
+    eyebrow="Resources"
+    title="Buyer's guide"
+    intro="Sizes, finishes, stone varieties and how our quoting works, all in one place before you enquire."
+  />
+
+  <nav aria-label="On this page" class="border-b border-line/60 bg-paper">
+    <div class="mx-auto flex max-w-7xl gap-6 overflow-x-auto px-5 py-3 lg:px-8">
+      <a href="#how-it-works" class="whitespace-nowrap text-xs uppercase tracking-[0.18em] text-ink-soft hover:text-terracotta">How it works</a>
+      <a href="#sizes-finishes" class="whitespace-nowrap text-xs uppercase tracking-[0.18em] text-ink-soft hover:text-terracotta">Sizes &amp; finishes</a>
+      <a href="#sourcing" class="whitespace-nowrap text-xs uppercase tracking-[0.18em] text-ink-soft hover:text-terracotta">Varieties we source</a>
+      <a href="#services" class="whitespace-nowrap text-xs uppercase tracking-[0.18em] text-ink-soft hover:text-terracotta">Services</a>
+    </div>
+  </nav>
+
+  <section id="how-it-works" class="scroll-mt-32 py-16">
+    <div class="mx-auto max-w-7xl px-5 lg:px-8">
+      <h2 class="font-display text-4xl uppercase reveal">How a quote works</h2>
+      <ol data-gsap-stagger class="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        {steps.map((s, i) => (
+          <li class="border-l border-brass/60 pl-5">
+            <span class="font-display text-3xl text-brass">{String(i + 1).padStart(2, "0")}</span>
+            <h3 class="mt-2 text-sm font-semibold uppercase tracking-[0.12em]">{s.title}</h3>
+            <p class="mt-2 text-sm text-ink-soft leading-relaxed">{s.detail}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section id="sizes-finishes" class="scroll-mt-32 bg-card py-16">
+    <div class="mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-2 lg:px-8">
+      <div>
+        <h2 class="font-display text-3xl uppercase">Common tile sizes</h2>
+        <p class="mt-2 text-sm text-ink-soft">Standard formats across our tile brands. Availability varies by series.</p>
+        <ul class="mt-6 flex flex-wrap gap-2">
+          {tileSizes.map((s) => <li class="border border-line bg-paper px-4 py-2 text-sm">{s}</li>)}
+        </ul>
+      </div>
+      <div>
+        <h2 class="font-display text-3xl uppercase">Finishes</h2>
+        <p class="mt-2 text-sm text-ink-soft">Surface finishes you'll see across tiles and stone.</p>
+        <ul class="mt-6 flex flex-wrap gap-2">
+          {tileFinishes.map((f) => <li class="border border-line bg-paper px-4 py-2 text-sm">{f}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="sourcing" class="scroll-mt-32 py-16">
+    <div class="mx-auto max-w-7xl px-5 lg:px-8">
+      <h2 class="font-display text-4xl uppercase">Varieties we can source</h2>
+      <p class="mt-2 max-w-2xl text-ink-soft">Commonly traded varieties we can source on request. Ask us to confirm current availability before you plan around one.</p>
+      <div class="mt-10 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {sourcing.map((cat) => (
+          <div class="border-t border-line pt-5">
+            <h3 class="text-sm font-semibold uppercase tracking-[0.14em]">{cat.label}</h3>
+            <p class="mt-1 text-sm text-ink-soft">{cat.blurb}</p>
+            <ul class="mt-3 flex flex-wrap gap-1.5">
+              {cat.varieties.map((v) => <li class="rounded-full border border-line/70 px-3 py-1 text-xs text-ink-soft">{v.name}</li>)}
+            </ul>
+            <a href={waLink(`Hi Elite Balaji, I'm looking for ${cat.label}. What's available?`)} target="_blank" rel="noopener" class="mt-3 inline-block text-xs font-semibold uppercase tracking-wide text-terracotta hover:text-terracotta-dark">
+              Ask about {cat.label} &rarr;
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="services" class="scroll-mt-32 marble-veins bg-charcoal py-16 text-paper">
+    <div class="mx-auto max-w-7xl px-5 lg:px-8">
+      <h2 class="font-display text-4xl uppercase">Services</h2>
+      <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <a href="/halls/laying-works/" class="border border-paper/15 bg-paper/5 p-5 hover:border-brass transition-colors">
+          <h3 class="text-sm font-semibold uppercase tracking-[0.12em]">Laying Works</h3>
+          <p class="mt-2 text-sm text-paper/70">Site measurement, laying and finishing by our own crews.</p>
+        </a>
+        {services.slice(0, 3).map((s) => (
+          <a href="/custom/" class="border border-paper/15 bg-paper/5 p-5 hover:border-brass transition-colors">
+            <h3 class="text-sm font-semibold uppercase tracking-[0.12em]">{s.data.name}</h3>
+            <p class="mt-2 text-sm text-paper/70">{s.data.description}</p>
+          </a>
+        ))}
+      </div>
+      <div class="mt-12 flex flex-wrap gap-3">
+        <a href={waLink("Hi Elite Balaji, I'd like a trade quote.")} target="_blank" rel="noopener" class="bg-gradient-to-r from-brass to-mustard-dark px-7 py-3.5 text-xs uppercase tracking-[0.2em] text-paper hover:brightness-110">WhatsApp for a quote</a>
+        <a href={telLink()} class="border border-paper/40 px-7 py-3.5 text-xs uppercase tracking-[0.2em] hover:border-brass">Call {business.phoneDisplay}</a>
+        <a href={emailQuoteLink()} class="border border-paper/40 px-7 py-3.5 text-xs uppercase tracking-[0.2em] hover:border-brass">Email a quote request</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
