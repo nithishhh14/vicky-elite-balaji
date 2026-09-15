@@ -1,0 +1,34 @@
+{
+  "kind": "tile",
+  "hallId": "tiles",
+  "name": "Prism Natural Marble-look Tile",
+  "brand": "Mozzato",
+  "series": "Endless Collection",
+  "category": "Marble-look vitrified tile",
+  "size": "600 x 1200mm",
+  "finish": "Matt carving",
+  "order": 22,
+  "applications": [
+    "Living & dining floors",
+    "Kitchen floors",
+    "Open-plan interiors"
+  ],
+  "image": "/media/tiles/mozzato-endless/prism-natural-swatch.jpg",
+  "imageAlt": "Light grey-white marble-look tile with faint veining",
+  "images": [
+    {
+      "src": "/media/tiles/mozzato-endless/prism-natural-swatch.jpg",
+      "alt": "Prism Natural tile face"
+    },
+    {
+      "src": "/media/tiles/mozzato-endless/prism-natural-faces.jpg",
+      "alt": "Prism Natural: large tile and random face set"
+    },
+    {
+      "src": "/media/tiles/mozzato-endless/prism-room.jpg",
+      "alt": "Prism Natural in a catalogue room scene"
+    }
+  ],
+  "sourceCatalogue": "Mozzato Multi Surface, Endless Collection catalogue",
+  "note": "From the Mozzato Endless Collection catalogue shared by our team. Each design comes in 4 random faces. Ask us for current availability and a sample."
+}

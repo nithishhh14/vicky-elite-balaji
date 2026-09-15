@@ -1,0 +1,30 @@
+{
+  "kind": "material",
+  "hallId": "adhesive",
+  "brand": "Somany",
+  "order": 1,
+  "name": "Somany Ezy Fix SEF-333 Tile Adhesive",
+  "category": "Type 1 tile adhesive (IS 15477:2019, EN C1T)",
+  "finish": "Grey (SEF-333) & white (SEF-333W)",
+  "applications": [
+    "Ceramic & non-vitrified wall tiles",
+    "Interior walls in dry areas",
+    "Cement plaster, concrete & screed"
+  ],
+  "image": "/media/adhesive/somany/ezy-fix-sef-333.jpg",
+  "imageAlt": "Somany Ezy Fix SEF-333 and SEF-333W adhesive bags",
+  "images": [
+    {
+      "src": "/media/adhesive/somany/ezy-fix-sef-333.jpg",
+      "alt": "Somany Ezy Fix SEF-333 bags"
+    },
+    {
+      "src": "/media/adhesive/somany/ezy-fix-sef-333-sheet.jpg",
+      "alt": "SEF-333 technical data sheet"
+    }
+  ],
+  "weight": "20 kg & 40 kg bags",
+  "thickness": "4–8 mm bed",
+  "coverageArea": "About 30–35 sq ft per 20 kg at 6 mm",
+  "note": "Polymer-modified, cement-based adhesive for small clay and ceramic tiles on interior walls. Open time over 20 minutes. Specifications from the Somany technical data sheet. Ask us for current stock, bag size and price."
+}

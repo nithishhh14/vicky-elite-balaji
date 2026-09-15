@@ -1,0 +1,18 @@
+{
+  "kind": "material",
+  "hallId": "granite-marbles",
+  "name": "Tan Brown Granite, Leathered",
+  "category": "Natural granite slab",
+  "finish": "Leathered",
+  "order": 12,
+  "applications": [
+    "Kitchen countertops",
+    "Islands",
+    "Vanity tops",
+    "Flooring",
+    "Wall cladding"
+  ],
+  "image": "/media/client/granite/tan-brown-leathered-slab.jpg",
+  "imageAlt": "Black and brown granite slab with a textured leathered finish",
+  "note": "Variety identified from our own stock photo. Leathered finish: a soft textured sheen that hides fingerprints and water marks. Slabs vary by batch, so ask us to confirm the current slab."
+}

@@ -5,8 +5,11 @@
   "category": "Engineered stone surface",
   "finish": "Polished",
   "order": 3,
-  "applications": ["Kitchen counters", "Heavy-use worktops"],
+  "applications": [
+    "Kitchen counters",
+    "Heavy-use worktops"
+  ],
   "image": "https://images.unsplash.com/photo-1640995810700-c0e95a8daf60?auto=format&fit=crop&w=1200&q=80",
   "imageAlt": "Matte black engineered stone surface close-up",
-  "note": "Representative style. Slab availability varies by colourway, confirm with our team."
+  "note": "Reference photo, not our stock. Ask us for photos of the current stock, size and finish."
 }

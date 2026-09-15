@@ -1,0 +1,29 @@
+{
+  "kind": "material",
+  "hallId": "adhesive",
+  "brand": "Somany",
+  "order": 3,
+  "name": "Somany Ezy Fix SEF-666 PLUS Tile Adhesive",
+  "category": "Type 3 tile adhesive (IS 15477:2019, EN C2TE)",
+  "finish": "Grey & white",
+  "applications": [
+    "Large vitrified tiles & natural stone",
+    "Swimming pools, saunas & wet areas",
+    "Demanding substrates"
+  ],
+  "image": "/media/adhesive/somany/ezy-fix-sef-666-plus.jpg",
+  "imageAlt": "Somany Ezy Fix SEF-666 PLUS and SEF-666W PLUS adhesive bags",
+  "images": [
+    {
+      "src": "/media/adhesive/somany/ezy-fix-sef-666-plus.jpg",
+      "alt": "Somany Ezy Fix SEF-666 PLUS bags"
+    },
+    {
+      "src": "/media/adhesive/somany/ezy-fix-sef-666-plus-sheet.jpg",
+      "alt": "SEF-666 PLUS technical data sheet"
+    }
+  ],
+  "weight": "20 kg & 40 kg bags",
+  "thickness": "4–8 mm bed",
+  "note": "Top-grade polymer-modified adhesive for demanding wet environments like pools and saunas. Open time over 30 minutes, full strength after 28 days. Specifications from the Somany technical data sheet. Ask us for current stock, bag size and price."
+}

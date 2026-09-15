@@ -1,0 +1,18 @@
+{
+  "kind": "material",
+  "hallId": "granite-marbles",
+  "name": "Silver Black Granite, Lappato",
+  "category": "Natural granite slab",
+  "finish": "Lappato",
+  "order": 10,
+  "applications": [
+    "Kitchen countertops",
+    "Islands",
+    "Vanity tops",
+    "Flooring",
+    "Wall cladding"
+  ],
+  "image": "/media/client/granite/silver-black-lappato-slabs.jpg",
+  "imageAlt": "Stack of black granite slabs with a textured lappato finish in our yard",
+  "note": "Photographed from our stock and named by our team. Lappato is a semi-matt, textured finish between polished and leathered. Slabs vary by batch, so ask us to confirm the current slab."
+}

@@ -14,11 +14,15 @@ const products = (await getCollection("products"))
   .sort((a, b) => a.data.order - b.data.order);
 
 const families = [
-  { label: "Black", ids: ["granite-black-galaxy", "granite-absolute-black", "granite-absolute-black-leathered", "granite-black-markino"] },
-  { label: "Brown & red", ids: ["granite-tan-brown", "granite-kondagattu"] },
-  { label: "Blue & blue-grey", ids: ["granite-blue-pearl", "granite-black-pearl"] },
+  { label: "Black", ids: ["granite-black-galaxy", "granite-absolute-black", "granite-absolute-black-leathered", "granite-silver-black-lappato", "granite-black-markino"] },
+  { label: "Brown & red", ids: ["granite-tan-brown", "granite-tan-brown-leathered", "granite-kondagattu", "granite-marvel-red-lappato"] },
+  { label: "Blue & blue-grey", ids: ["granite-blue-pearl", "granite-blue-pearl-leathered", "granite-black-pearl"] },
   { label: "Grey", ids: ["granite-steel-grey"] },
 ].map((f) => ({ ...f, items: products.filter((p) => f.ids.includes(p.id)) }));
+
+// Leathered & lappato collection (client photos, 2026-09-15): textured
+// finishes that hide fingerprints and water marks.
+const textured = products.filter((p) => /leather|lappato/i.test(p.data.finish));
 
 const stock = mediaIn("granite", "stock");
 const staircase = mediaIn("granite", "work")[0];
@@ -65,6 +69,34 @@ const hero = stock.find((m) => m.slug === "black-markino-slab") ?? stock[0];
       <p class="mt-10 text-[0.6rem] uppercase tracking-[0.2em] text-paper/45">{provenanceLabel.stock} · {hero.title}</p>
     </div>
   </section>
+
+  <!-- Leathered & lappato collection: the textured finishes, surfaced first. -->
+  {textured.length > 0 && (
+    <section class="bg-charcoal-deep pb-16 pt-4 text-paper">
+      <div class="mx-auto max-w-7xl px-5 lg:px-8">
+        <div class="flex flex-wrap items-end justify-between gap-4 border-t border-paper/10 pt-12">
+          <div>
+            <p class="text-xs uppercase tracking-[0.3em] text-brass">New in our yard</p>
+            <h2 class="mt-3 font-display text-4xl sm:text-5xl">Leathered &amp; lappato collection</h2>
+            <p class="mt-3 max-w-xl text-paper/70">Textured finishes with a soft sheen. They hide fingerprints and water marks, which suits busy kitchen worktops and vanities.</p>
+          </div>
+          <a href={waLink("Hi Elite Balaji, please share photos and rates for your leathered and lappato granite slabs.")} target="_blank" rel="noopener" class="inline-flex min-h-12 items-center border border-brass px-6 py-3 text-xs uppercase tracking-[0.2em] hover:bg-brass hover:text-charcoal-deep transition-colors">Ask about this collection</a>
+        </div>
+        <ul data-gsap-stagger class="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-5">
+          {textured.map((p) => (
+            <li class="group relative">
+              <div class="absolute right-2 top-2 z-10"><SaveButton product={p} hallName="Granite & Marbles" variant="overlay" /></div>
+              <a href={`/products/${p.id}/`} class="block overflow-hidden bg-charcoal">
+                <img src={p.data.image.replace(/\.jpg$/, "-720.jpg")} alt={p.data.imageAlt} class="aspect-[3/4] w-full object-cover transition-transform duration-[900ms] group-hover:scale-105" loading="lazy" />
+              </a>
+              <a href={`/products/${p.id}/`} class="mt-3 block font-display text-xl leading-tight hover:text-brass">{p.data.name.replace(" Granite", "")}</a>
+              <p class="text-[0.6rem] uppercase tracking-[0.18em] text-paper/50">From our stock</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
 
   <!-- Specimens: one large material photograph per variety. -->
   <section id="specimens" class="scroll-mt-24 bg-paper py-20">

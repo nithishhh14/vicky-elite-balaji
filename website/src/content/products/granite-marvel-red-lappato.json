@@ -1,0 +1,18 @@
+{
+  "kind": "material",
+  "hallId": "granite-marbles",
+  "name": "Marvel Red Granite, Lappato",
+  "category": "Natural granite slab",
+  "finish": "Lappato",
+  "order": 11,
+  "applications": [
+    "Kitchen countertops",
+    "Islands",
+    "Vanity tops",
+    "Flooring",
+    "Wall cladding"
+  ],
+  "image": "/media/client/granite/marvel-red-lappato-slab.jpg",
+  "imageAlt": "Red-brown granite slab with dark crystals and a lappato finish",
+  "note": "Photographed from our stock and named by our team. Lappato is a semi-matt, textured finish between polished and leathered. Slabs vary by batch, so ask us to confirm the current slab."
+}

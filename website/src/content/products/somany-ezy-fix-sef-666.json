@@ -1,0 +1,29 @@
+{
+  "kind": "material",
+  "hallId": "adhesive",
+  "brand": "Somany",
+  "order": 2,
+  "name": "Somany Ezy Fix SEF-666 Tile Adhesive",
+  "category": "Type 2 tile adhesive (IS 15477:2019, EN C2TE)",
+  "finish": "Grey (SEF-666) & white (SEF-666W)",
+  "applications": [
+    "Vitrified, ceramic tiles & natural stone",
+    "Wet areas & interior floors and walls",
+    "Exterior floors"
+  ],
+  "image": "/media/adhesive/somany/ezy-fix-sef-666.jpg",
+  "imageAlt": "Somany Ezy Fix SEF-666 and SEF-666W adhesive bags",
+  "images": [
+    {
+      "src": "/media/adhesive/somany/ezy-fix-sef-666.jpg",
+      "alt": "Somany Ezy Fix SEF-666 bags"
+    },
+    {
+      "src": "/media/adhesive/somany/ezy-fix-sef-666-sheet.jpg",
+      "alt": "SEF-666 technical data sheet"
+    }
+  ],
+  "weight": "20 kg & 40 kg bags",
+  "thickness": "4–8 mm bed",
+  "note": "High-strength polymer-modified adhesive with extended open time (over 30 minutes), for all tile types and natural stone, vertical and horizontal. Specifications from the Somany technical data sheet. Ask us for current stock, bag size and price."
+}

@@ -1,0 +1,31 @@
+{
+  "kind": "material",
+  "hallId": "adhesive",
+  "brand": "Somany",
+  "order": 4,
+  "name": "Somany Ezy Grout",
+  "category": "Tile joint filler: epoxy & cement grout",
+  "finish": "Shade card range",
+  "applications": [
+    "Tile joints in floors & walls",
+    "Bathrooms & kitchens",
+    "Stain-resistant joints"
+  ],
+  "image": "/media/adhesive/somany/ezy-grout-cover.jpg",
+  "imageAlt": "Somany Ezy Grout shade card cover: high performance tile joint filler",
+  "images": [
+    {
+      "src": "/media/adhesive/somany/ezy-grout-cover.jpg",
+      "alt": "Somany Ezy Grout cover"
+    },
+    {
+      "src": "/media/adhesive/somany/ezy-grout-shades.jpg",
+      "alt": "Somany Ezy Grout shade card"
+    },
+    {
+      "src": "/media/adhesive/somany/ezy-grout-coverage.jpg",
+      "alt": "Somany Ezy Grout epoxy and cement grout coverage tables"
+    }
+  ],
+  "note": "Non-shrinking, stain-resistant joint filler in epoxy and cement grout types, with a range of shades. From the Somany shade card. Tell us your tile colour and joint width and we'll match a shade."
+}

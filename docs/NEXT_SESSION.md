@@ -10,7 +10,35 @@ domain, or set up hosting without new, explicit user permission (the user
 answered "No, not yet" to a direct deployment question on 2026-09-12, and a
 later brief reiterated deployment is out of scope for now).
 
-## Latest (2026-09-15, late) — discovery & enquiry layer
+## Latest (2026-09-15, night) — customer walkthrough fixes + new client material
+- **New real products:**
+  - **Granite:** 4 leathered and lappato slabs sent by the client today, in
+    `whatsapp vicky pdfs`: Silver Black Lappato and Marvel Red Lappato
+    (client-named), Tan Brown Leathered and Blue Pearl Leathered (visual ID,
+    confirm).
+  - **Tiles:** 7 Mozzato Endless marble-look tiles (Azzuro Crema/Nero, Prism
+    Natural, Marvel Bianco/Grey, Calipso Sage/Light; 600×1200, matt
+    carving) from the client's catalogue pages. One page with a scribbled-out
+    name was skipped.
+  - **Adhesives:** Somany Ezy Fix SEF-333 (T1), SEF-666 (T2), SEF-666 PLUS
+    (T3) and Ezy Grout, with specs from the data sheets. They replace the 2
+    generic stock-photo adhesive products.
+- **New `/marble/` page:**
+  - Content: slabs, marble-look tiles, room scenes, a marble vs tile vs
+    granite guide, and sourceable varieties.
+  - Linked from the Products menu, the drawer and the homepage Marble card.
+- **Gallery:** Marble 2 → 23, Applications + Showroom merged into "Spaces &
+  concepts" (20), counts on the filters, and a "Want to see more?" tile.
+- **Hall pages:**
+  - Legacy terracotta styling replaced sitewide; "samples in-store" removed.
+  - "Reference photo" and "Colour swatch" badges on non-client images.
+  - The Granite & Marbles hall links to `/granite/` and `/marble/`.
+- **Verified:** build 82 pages, 0 errors, 0 broken links or images; 8 changed
+  pages OK at 375px.
+- **Still stock photos:** quartz (4), Kadappa (2), sanitaryware (2), laying
+  works (2), Fantasy Brown marble. They need real client photos.
+
+## Earlier (2026-09-15, late) — discovery & enquiry layer
 See the top entry of `docs/DECISIONS.md`.
 - **New:**
   - `/shortlist/` (My Materials: save / compare / share / enquire all)

@@ -1,0 +1,34 @@
+{
+  "kind": "tile",
+  "hallId": "tiles",
+  "name": "Marvel Bianco Marble-look Tile",
+  "brand": "Mozzato",
+  "series": "Endless Collection",
+  "category": "Marble-look vitrified tile",
+  "size": "600 x 1200mm",
+  "finish": "Matt carving",
+  "order": 23,
+  "applications": [
+    "Feature walls",
+    "Retail & commercial floors",
+    "Living rooms"
+  ],
+  "image": "/media/tiles/mozzato-endless/marvel-bianco-swatch.jpg",
+  "imageAlt": "Pale grey-white marble-look tile with fine white veins",
+  "images": [
+    {
+      "src": "/media/tiles/mozzato-endless/marvel-bianco-swatch.jpg",
+      "alt": "Marvel Bianco tile face"
+    },
+    {
+      "src": "/media/tiles/mozzato-endless/marvel-bianco-faces.jpg",
+      "alt": "Marvel Bianco: large tile and random face set"
+    },
+    {
+      "src": "/media/tiles/mozzato-endless/marvel-room.jpg",
+      "alt": "Marvel Bianco in a catalogue room scene"
+    }
+  ],
+  "sourceCatalogue": "Mozzato Multi Surface, Endless Collection catalogue",
+  "note": "From the Mozzato Endless Collection catalogue shared by our team. Each design comes in 4 random faces. Ask us for current availability and a sample."
+}

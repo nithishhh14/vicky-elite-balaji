@@ -8,7 +8,7 @@ import { waLink } from "../lib/business";
   description="Browse Elite Balaji's real product catalogue by material, colour, look and application, or search directly."
 >
   <section class="mx-auto max-w-6xl px-5 py-16">
-    <p class="text-xs uppercase tracking-[0.3em] text-terracotta">Catalogue discovery</p>
+    <p class="text-xs uppercase tracking-[0.3em] text-mustard-dark">Catalogue discovery</p>
     <h1 class="mt-3 font-display text-4xl">Find a material</h1>
     <p class="mt-3 max-w-xl text-ink-soft">
       Filter by material, colour, look or application, or search directly. Every item here is real
@@ -19,7 +19,7 @@ import { waLink } from "../lib/business";
       id="search-input"
       type="search"
       placeholder="Try “black granite”, “2x4 bathroom tile”, “white marble kitchen”…"
-      class="mt-6 w-full rounded-full border border-line bg-card px-5 py-3 text-sm focus-visible:outline-2 focus-visible:outline-terracotta"
+      class="mt-6 w-full rounded-full border border-line bg-card px-5 py-3 text-sm focus-visible:outline-2 focus-visible:outline-brass"
       autocomplete="off"
     />
 
@@ -31,7 +31,7 @@ import { waLink } from "../lib/business";
         id="clear-filters"
         type="button"
         hidden
-        class="text-xs font-semibold uppercase tracking-wide text-terracotta hover:text-terracotta-dark"
+        class="text-xs font-semibold uppercase tracking-wide text-mustard-dark hover:text-ink"
       >
         Clear filters
       </button>
@@ -49,7 +49,7 @@ import { waLink } from "../lib/business";
         href={waLink("Hi Elite Balaji, I'm looking for a material that isn't in the online catalogue. Here's what I need:")}
         target="_blank"
         rel="noopener"
-        class="mt-4 inline-block rounded-full bg-terracotta px-6 py-3 text-sm font-semibold uppercase tracking-wide text-paper hover:bg-terracotta-dark transition-colors"
+        class="mt-4 inline-block rounded-full bg-gradient-to-r from-brass to-mustard-dark px-6 py-3 text-sm font-semibold uppercase tracking-wide text-paper hover:brightness-110 transition-colors"
       >
         Ask us to source it
       </a>
@@ -155,8 +155,8 @@ import { waLink } from "../lib/business";
             pill.textContent = value;
             const isActive = activeFacets[key].has(value);
             pill.className = isActive
-              ? "rounded-full bg-terracotta px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wide text-paper"
-              : "rounded-full border border-line px-3.5 py-1.5 text-xs uppercase tracking-wide text-ink-soft hover:border-terracotta hover:text-terracotta transition-colors";
+              ? "rounded-full bg-gradient-to-r from-brass to-mustard-dark px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wide text-paper"
+              : "rounded-full border border-line px-3.5 py-1.5 text-xs uppercase tracking-wide text-ink-soft hover:border-brass hover:text-mustard-dark transition-colors";
             pill.addEventListener("click", () => {
               if (activeFacets[key].has(value)) activeFacets[key].delete(value);
               else activeFacets[key].add(value);
@@ -191,11 +191,11 @@ import { waLink } from "../lib/business";
     function appendCard(item: Item) {
       const a = document.createElement("a");
       a.href = item.url;
-      a.className = "flex gap-4 rounded-sm border border-line bg-card p-4 hover:border-terracotta transition-colors";
+      a.className = "flex gap-4 rounded-sm border border-line bg-card p-4 hover:border-brass transition-colors";
       a.innerHTML = `
         ${item.image ? `<img src="${item.image}" alt="" loading="lazy" class="h-16 w-16 flex-shrink-0 rounded object-cover" />` : ""}
         <div>
-          <p class="text-xs uppercase tracking-wide text-terracotta">${item.hall}</p>
+          <p class="text-xs uppercase tracking-wide text-mustard-dark">${item.hall}</p>
           <p class="text-sm font-medium">${item.name}</p>
           <p class="text-xs text-ink-soft">${[item.category, item.finish, item.size].filter(Boolean).join(" · ")}</p>
         </div>

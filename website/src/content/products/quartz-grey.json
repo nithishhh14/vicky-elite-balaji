@@ -5,8 +5,10 @@
   "category": "Engineered stone surface",
   "finish": "Polished",
   "order": 2,
-  "applications": ["Heavy-use worktops"],
+  "applications": [
+    "Heavy-use worktops"
+  ],
   "image": "https://images.unsplash.com/photo-1652305461546-bf0a76934433?auto=format&fit=crop&w=1200&q=80",
   "imageAlt": "Grey speckled engineered stone surface close-up",
-  "note": "Representative style. Slab availability varies by colourway, confirm with our team."
+  "note": "Reference photo, not our stock. Ask us for photos of the current stock, size and finish."
 }

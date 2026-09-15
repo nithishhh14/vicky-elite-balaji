@@ -81,7 +81,7 @@ const categoriesWithStock = world.slug === "natural-stone"
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
 
   <nav aria-label="Breadcrumb" class="mx-auto max-w-6xl px-5 pt-6 text-xs uppercase tracking-wide text-ink-soft">
-    <a href="/halls/" class="hover:text-terracotta">All halls</a>
+    <a href="/halls/" class="hover:text-mustard-dark">All halls</a>
     <span class="mx-2">/</span>
     <span class="text-ink">{world.label}</span>
   </nav>
@@ -114,15 +114,15 @@ const categoriesWithStock = world.slug === "natural-stone"
   {worldColours.length > 1 && (
     <section class="border-b border-line/60 bg-card">
       <div class="mx-auto max-w-6xl px-5 py-10">
-        <p class="text-xs uppercase tracking-[0.25em] text-terracotta">Explore by colour</p>
+        <p class="text-xs uppercase tracking-[0.25em] text-mustard-dark">Explore by colour</p>
         <div class="mt-4 flex flex-wrap gap-3">
           {worldColours.map((colour) => (
             <a
               href={`/search/?colour=${encodeURIComponent(colour)}`}
-              class="group flex items-center gap-2 rounded-full border border-line bg-paper py-1.5 pl-1.5 pr-4 hover:border-terracotta transition-colors"
+              class="group flex items-center gap-2 rounded-full border border-line bg-paper py-1.5 pl-1.5 pr-4 hover:border-brass transition-colors"
             >
               <span class="h-6 w-6 rounded-full border border-line/60" style={{ backgroundColor: COLOUR_SWATCH[colour] ?? "#ccc" }} aria-hidden="true"></span>
-              <span class="text-sm capitalize text-ink-soft group-hover:text-terracotta transition-colors">{colour}</span>
+              <span class="text-sm capitalize text-ink-soft group-hover:text-mustard-dark transition-colors">{colour}</span>
             </a>
           ))}
         </div>
@@ -132,7 +132,7 @@ const categoriesWithStock = world.slug === "natural-stone"
 
   <!-- Featured materials: the real halls in this world -->
   <section class="mx-auto max-w-6xl px-5 py-16">
-    <p class="text-xs uppercase tracking-[0.3em] text-terracotta">Featured in {world.label}</p>
+    <p class="text-xs uppercase tracking-[0.3em] text-mustard-dark">Featured in {world.label}</p>
     <h2 class="mt-2 text-3xl">Browse by hall</h2>
     <div data-gsap-stagger class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {halls.map((hall) => (
@@ -145,7 +145,7 @@ const categoriesWithStock = world.slug === "natural-stone"
             )}
           </div>
           <div class="bg-card p-5">
-            <h3 class="text-xl group-hover:text-terracotta transition-colors">{hall.data.name}</h3>
+            <h3 class="text-xl group-hover:text-mustard-dark transition-colors">{hall.data.name}</h3>
             <p class="mt-1 text-sm text-ink-soft">{hall.data.tagline}</p>
           </div>
         </a>
@@ -159,7 +159,7 @@ const categoriesWithStock = world.slug === "natural-stone"
   {categoriesWithStock.length > 0 && (
     <section class="border-t border-line/60 bg-paper py-16">
       <div class="mx-auto max-w-6xl px-5">
-        <p class="text-xs uppercase tracking-[0.3em] text-terracotta">{world.slug === "surfaces" ? "By colour" : "By stone type"}</p>
+        <p class="text-xs uppercase tracking-[0.3em] text-mustard-dark">{world.slug === "surfaces" ? "By colour" : "By stone type"}</p>
         <h2 class="mt-2 text-3xl">{world.slug === "surfaces" ? "Quartz colours & more" : "Granite, marble & more"}</h2>
         <p class="mt-3 max-w-2xl text-ink-soft">
           Confirmed stock is linked directly below. We can source every other variety here too —
@@ -179,7 +179,7 @@ const categoriesWithStock = world.slug === "natural-stone"
               {cat.matchedProducts.length > 0 && (
                 <div class="mt-4 flex flex-wrap gap-4">
                   {cat.matchedProducts.map((p) => (
-                    <a href={`/products/${p.id}/`} class="flex items-center gap-3 rounded-sm border border-line bg-card p-3 hover:border-terracotta transition-colors">
+                    <a href={`/products/${p.id}/`} class="flex items-center gap-3 rounded-sm border border-line bg-card p-3 hover:border-brass transition-colors">
                       <img src={p.data.image} alt={p.data.imageAlt} class="h-12 w-12 rounded object-cover" loading="lazy" />
                       <span class="text-sm">{p.data.name}</span>
                     </a>
@@ -197,7 +197,7 @@ const categoriesWithStock = world.slug === "natural-stone"
                   href={waLink(`Hi Elite Balaji, I'm interested in ${cat.label}. Please let me know what's currently available.`)}
                   target="_blank"
                   rel="noopener"
-                  class="rounded-full bg-terracotta/10 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wide text-terracotta hover:bg-terracotta hover:text-paper transition-colors"
+                  class="rounded-full bg-brass/10 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wide text-mustard-dark hover:bg-brass hover:text-paper transition-colors"
                 >
                   Ask about {cat.label} &rarr;
                 </a>
@@ -244,7 +244,7 @@ const categoriesWithStock = world.slug === "natural-stone"
   {world.slug === "tiles-ceramics" && (
     <section class="border-t border-line/60 bg-paper py-16">
       <div class="mx-auto max-w-6xl px-5">
-        <p class="text-xs uppercase tracking-[0.3em] text-terracotta">Formats we work with</p>
+        <p class="text-xs uppercase tracking-[0.3em] text-mustard-dark">Formats we work with</p>
         <h2 class="mt-2 text-3xl">Sizes &amp; finishes</h2>
         <div class="mt-6 grid gap-8 sm:grid-cols-2">
           <div>
@@ -268,7 +268,7 @@ const categoriesWithStock = world.slug === "natural-stone"
   <!-- Full catalogue for this world -->
   <section class="border-t border-line/60 bg-card">
     <div class="mx-auto max-w-6xl px-5 py-16">
-      <p class="text-xs uppercase tracking-[0.3em] text-terracotta">Full catalogue</p>
+      <p class="text-xs uppercase tracking-[0.3em] text-mustard-dark">Full catalogue</p>
       <h2 class="mt-2 text-3xl">Everything in {world.label}</h2>
       {products.length > 0 ? (
         <div data-gsap-stagger class="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -281,18 +281,18 @@ const categoriesWithStock = world.slug === "natural-stone"
                 </div>
               </a>
               <div class="p-5">
-                <p class="text-xs uppercase tracking-[0.15em] text-terracotta">{p.data.brand ?? p.data.category}</p>
+                <p class="text-xs uppercase tracking-[0.15em] text-mustard-dark">{p.data.brand ?? p.data.category}</p>
                 <h3 class="mt-1 text-lg">
-                  <a href={`/products/${p.id}/`} class="hover:text-terracotta transition-colors">{p.data.name}</a>
+                  <a href={`/products/${p.id}/`} class="hover:text-mustard-dark transition-colors">{p.data.name}</a>
                 </h3>
                 <p class="mt-2 text-sm text-ink-soft">{[p.data.size, p.data.finish].filter(Boolean).join(" · ")}</p>
                 <div class="mt-4 flex flex-wrap gap-x-4 gap-y-1">
-                  <a href={`/products/${p.id}/`} class="inline-block text-sm font-semibold uppercase tracking-wide text-ink hover:text-terracotta">View details &rarr;</a>
+                  <a href={`/products/${p.id}/`} class="inline-block text-sm font-semibold uppercase tracking-wide text-ink hover:text-mustard-dark">View details &rarr;</a>
                   <a
                     href={waLink(productEnquiryMessage(p.data.name))}
                     target="_blank"
                     rel="noopener"
-                    class="inline-block text-sm font-semibold uppercase tracking-wide text-terracotta hover:text-terracotta-dark"
+                    class="inline-block text-sm font-semibold uppercase tracking-wide text-mustard-dark hover:text-ink"
                   >
                     WhatsApp &rarr;
                   </a>
@@ -304,7 +304,7 @@ const categoriesWithStock = world.slug === "natural-stone"
       ) : (
         <p class="mt-6 text-ink-soft">Photography for this world is being organised. WhatsApp us for what's in stock today.</p>
       )}
-      <a href={`/search/?material=${encodeURIComponent(halls[0]?.data.name ?? "")}`} class="mt-8 inline-block rounded-full bg-terracotta px-6 py-3 text-sm font-semibold uppercase tracking-wide text-paper hover:bg-terracotta-dark transition-colors">
+      <a href={`/search/?material=${encodeURIComponent(halls[0]?.data.name ?? "")}`} class="mt-8 inline-block rounded-full bg-gradient-to-r from-brass to-mustard-dark px-6 py-3 text-sm font-semibold uppercase tracking-wide text-paper hover:brightness-110 transition-colors">
         Filter &amp; search this world
       </a>
     </div>
@@ -313,7 +313,7 @@ const categoriesWithStock = world.slug === "natural-stone"
   <!-- Applications -->
   {applications.length > 0 && (
     <section class="mx-auto max-w-6xl px-5 py-16">
-      <p class="text-xs uppercase tracking-[0.3em] text-terracotta">Applications</p>
+      <p class="text-xs uppercase tracking-[0.3em] text-mustard-dark">Applications</p>
       <h2 class="mt-2 text-3xl">Where {world.label.toLowerCase()} gets used</h2>
       <div class="mt-6 flex flex-wrap gap-2">
         {applications.map((app) => (
@@ -326,11 +326,11 @@ const categoriesWithStock = world.slug === "natural-stone"
   <!-- Related material worlds -->
   <section class="border-t border-line/60 bg-card py-16">
     <div class="mx-auto max-w-6xl px-5">
-      <p class="text-xs uppercase tracking-[0.3em] text-terracotta">Related</p>
+      <p class="text-xs uppercase tracking-[0.3em] text-mustard-dark">Related</p>
       <h2 class="mt-2 text-3xl">Other material worlds</h2>
       <div class="mt-8 flex flex-wrap gap-4">
         {otherWorlds.map((w) => (
-          <a href={`/materials/${w.slug}/`} class="rounded-full border border-line bg-paper px-6 py-3 text-sm font-semibold uppercase tracking-wide text-ink-soft hover:border-terracotta hover:text-terracotta transition-colors">
+          <a href={`/materials/${w.slug}/`} class="rounded-full border border-line bg-paper px-6 py-3 text-sm font-semibold uppercase tracking-wide text-ink-soft hover:border-brass hover:text-mustard-dark transition-colors">
             {w.label} &rarr;
           </a>
         ))}

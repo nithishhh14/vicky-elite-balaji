@@ -1,0 +1,18 @@
+{
+  "kind": "material",
+  "hallId": "granite-marbles",
+  "name": "Blue Pearl Granite, Leathered",
+  "category": "Natural granite slab",
+  "finish": "Leathered",
+  "order": 13,
+  "applications": [
+    "Kitchen countertops",
+    "Islands",
+    "Vanity tops",
+    "Flooring",
+    "Wall cladding"
+  ],
+  "image": "/media/client/granite/blue-pearl-leathered-slab.jpg",
+  "imageAlt": "Blue-black granite slab with blue crystals and a textured leathered finish",
+  "note": "Variety identified from our own stock photo. Leathered finish: a soft textured sheen that hides fingerprints and water marks. Slabs vary by batch, so ask us to confirm the current slab."
+}

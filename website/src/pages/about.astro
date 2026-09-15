@@ -8,7 +8,7 @@ import { business, telLink, waLink, emailQuoteLink, defaultEnquiryMessage } from
   description="Elite Balaji Stones & Ceramics has supplied granite, marble, tiles and sanitaryware, and laid them on site, from Karamadai since 2012."
 >
   <section class="mx-auto max-w-3xl px-5 py-20">
-    <p class="text-xs uppercase tracking-[0.3em] text-terracotta">About</p>
+    <p class="text-xs uppercase tracking-[0.3em] text-mustard-dark">About</p>
     <h1 class="mt-3 text-4xl sm:text-5xl">Elite Balaji Stones &amp; Ceramics</h1>
 
     <p class="mt-8 text-lg leading-relaxed text-ink-soft">
@@ -23,20 +23,20 @@ import { business, telLink, waLink, emailQuoteLink, defaultEnquiryMessage } from
     </p>
 
     <div class="mt-12 rounded-sm border border-line bg-card p-8">
-      <p class="text-xs uppercase tracking-[0.2em] text-terracotta">Visit or call</p>
+      <p class="text-xs uppercase tracking-[0.2em] text-mustard-dark">Visit or call</p>
       <p class="mt-3 text-ink">{business.contactPerson}</p>
       <p class="text-ink-soft">{business.address}</p>
       <p class="mt-1 text-ink-soft">
-        <a href={`mailto:${business.email}`} class="hover:text-terracotta">{business.email}</a>
+        <a href={`mailto:${business.email}`} class="hover:text-mustard-dark">{business.email}</a>
       </p>
       <div class="mt-5 flex flex-wrap gap-3">
-        <a href={telLink()} aria-label="Call our showroom" class="rounded-full bg-terracotta px-5 py-2.5 text-sm font-semibold uppercase tracking-wide text-paper hover:bg-terracotta-dark transition-colors">
-          Call Showroom
+        <a href={telLink()} aria-label="Call our showroom" class="rounded-full bg-gradient-to-r from-brass to-mustard-dark px-5 py-2.5 text-sm font-semibold uppercase tracking-wide text-paper hover:brightness-110 transition-colors">
+          Call our team
         </a>
-        <a href={waLink(defaultEnquiryMessage)} target="_blank" rel="noopener" aria-label="Enquire via WhatsApp" class="rounded-full border border-terracotta/60 px-5 py-2.5 text-sm font-semibold uppercase tracking-wide text-terracotta hover:bg-terracotta hover:text-paper transition-colors">
+        <a href={waLink(defaultEnquiryMessage)} target="_blank" rel="noopener" aria-label="Enquire via WhatsApp" class="rounded-full border border-brass/60 px-5 py-2.5 text-sm font-semibold uppercase tracking-wide text-mustard-dark hover:bg-brass hover:text-paper transition-colors">
           Enquire via WhatsApp
         </a>
-        <a href={emailQuoteLink()} aria-label="Request an email quote" class="rounded-full border border-line px-5 py-2.5 text-sm font-semibold uppercase tracking-wide text-ink-soft hover:border-terracotta hover:text-terracotta transition-colors">
+        <a href={emailQuoteLink()} aria-label="Request an email quote" class="rounded-full border border-line px-5 py-2.5 text-sm font-semibold uppercase tracking-wide text-ink-soft hover:border-brass hover:text-mustard-dark transition-colors">
           Request Email Quote
         </a>
       </div>

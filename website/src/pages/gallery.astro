@@ -3,6 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHero from "../components/PageHero.astro";
 import { getCollection } from "astro:content";
 import { mediaLibrary, provenanceLabel } from "../lib/media-library";
+import { waLink } from "../lib/business";
 
 // Gallery: real client material first, every image visibly labelled with
 // what it is. Stock (Unsplash) product photos and colour swatches are NOT
@@ -17,10 +18,12 @@ const order: Record<string, number> = { work: 0, stock: 1, idea: 3 };
   .forEach((m) => {
     const groups = new Set<string>();
     m.categories.forEach((c) => {
-      if (c === "stonecraft" || c === "engraving" || c === "devotional" || c === "furniture") groups.add("stonecraft");
-      else if (c === "stonecraft-process") groups.add("stonecraft");
+      if (c === "stonecraft" || c === "engraving" || c === "devotional" || c === "furniture" || c === "stonecraft-process") groups.add("stonecraft");
+      else if (c === "applications") groups.add("spaces");
       else groups.add(c);
     });
+    if (/marble/.test(m.slug)) groups.add("marble");
+    if (["granite-staircase", "granite-outdoor-table-set", "granite-garden-bench"].includes(m.slug)) groups.add("spaces");
     tiles.push({
       src: m.thumb,
       alt: m.alt,
@@ -35,30 +38,48 @@ const order: Record<string, number> = { work: 0, stock: 1, idea: 3 };
 const products = (await getCollection("products")).filter((p) => p.data.hallId === "tiles").sort((a, b) => a.data.order - b.data.order);
 const seen = new Set<string>();
 for (const p of products) {
+  const marbleLook = /marble/i.test(`${p.data.name} ${p.data.category ?? ""}`);
   for (const img of [{ src: p.data.image, alt: p.data.imageAlt }, ...(p.data.images ?? [])]) {
     if (seen.has(img.src)) continue;
     seen.add(img.src);
-    tiles.push({ src: img.src, alt: img.alt, title: p.data.name, label: p.data.brand ? `Supplier catalogue · ${p.data.brand}` : "Supplier catalogue", tone: "real", groups: ["tiles"], href: `/products/${p.id}/` });
+    const isRoom = /room|lifestyle/.test(img.src);
+    tiles.push({
+      src: img.src,
+      alt: img.alt,
+      title: isRoom && p.data.series ? `${p.data.series} in a room` : p.data.name,
+      label: p.data.brand ? `Supplier catalogue · ${p.data.brand}` : "Supplier catalogue",
+      tone: "real",
+      groups: ["tiles", ...(marbleLook ? ["marble"] : []), ...(isRoom ? ["spaces"] : []), ...(/bath/i.test(img.alt) ? ["bathroom"] : [])],
+      href: `/products/${p.id}/`,
+    });
   }
 }
 
+// Generated application concepts (always labelled) and the mockup renders.
+[
+  { src: "/media/concepts/living-960.jpg", alt: "Concept: living room with large-format marble-look floor", title: "Living room concept", groups: ["spaces", "marble"] },
+  { src: "/media/concepts/kitchen-960.jpg", alt: "Concept: kitchen with black leathered granite counters", title: "Kitchen concept", groups: ["spaces", "kitchen", "granite"] },
+  { src: "/media/concepts/bathroom-960.jpg", alt: "Concept: bathroom with stone-look tiles and a vessel basin", title: "Bathroom concept", groups: ["spaces", "bathroom"] },
+  { src: "/media/concepts/staircase-960.jpg", alt: "Concept: staircase in polished dark granite", title: "Staircase concept", groups: ["spaces", "granite"] },
+  { src: "/media/concepts/facade-960.jpg", alt: "Concept: villa entrance with granite cladding and stone driveway", title: "Facade concept", groups: ["spaces"] },
+].forEach((r) => tiles.push({ ...r, label: "Application concept", tone: "idea" }));
 [
   { src: "/media/reference/hero-interior.jpg", alt: "Concept render of a marble showroom reception", title: "Showroom concept" },
-  { src: "/media/reference/card-bathroom.jpg", alt: "Concept render of a stone bathroom with a vessel basin", title: "Bathroom concept" },
   { src: "/media/reference/card-exterior.jpg", alt: "Concept render of a marble-clad building entrance", title: "Exterior concept" },
-].forEach((r) => tiles.push({ ...r, label: "Illustrative render", tone: "idea", groups: ["showroom"] }));
+].forEach((r) => tiles.push({ ...r, label: "Illustrative render", tone: "idea", groups: ["spaces"] }));
 
 const groups = [
   { id: "all", label: "All" },
-  { id: "stonecraft", label: "Stonecraft" },
   { id: "granite", label: "Granite" },
   { id: "marble", label: "Marble" },
+  { id: "stonecraft", label: "Stonecraft" },
   { id: "tiles", label: "Tiles" },
   { id: "kitchen", label: "Kitchen" },
   { id: "bathroom", label: "Bathroom" },
-  { id: "applications", label: "Applications" },
-  { id: "showroom", label: "Showroom concept" },
-].filter((g) => g.id === "all" || tiles.some((t) => t.groups.includes(g.id)));
+  { id: "spaces", label: "Spaces & concepts" },
+]
+  .map((g) => ({ ...g, count: g.id === "all" ? tiles.length : tiles.filter((t) => t.groups.includes(g.id)).length }))
+  .filter((g) => g.count > 0);
 ---
 
 <BaseLayout
@@ -82,7 +103,7 @@ const groups = [
               aria-pressed={i === 0 ? "true" : "false"}
               class="min-h-11 whitespace-nowrap border border-line px-4 py-2 text-xs uppercase tracking-[0.16em] text-ink-soft transition-colors hover:border-brass aria-pressed:border-brass aria-pressed:bg-brass aria-pressed:text-paper"
             >
-              {g.label}
+              {g.label} <span class="opacity-60">{g.count}</span>
             </button>
           ))}
         </div>
@@ -101,6 +122,12 @@ const groups = [
             </Tag>
           );
         })}
+        <!-- Always-visible last tile: every filter ends with a way forward. -->
+        <a data-groups="*" href={waLink("Hi Elite Balaji, could you share photos or a video of your current stock?")} target="_blank" rel="noopener" class="mb-3 flex aspect-[4/3] break-inside-avoid flex-col justify-end bg-charcoal-deep p-5 text-paper hover:bg-charcoal">
+          <span class="font-display text-2xl leading-tight">Want to see more?</span>
+          <span class="mt-2 text-sm text-paper/70">Our yard changes every week. Ask for current stock photos or a video.</span>
+          <span class="mt-4 text-[0.6rem] uppercase tracking-[0.2em] text-brass">WhatsApp us &rarr;</span>
+        </a>
       </div>
       <p class="mt-6 max-w-2xl text-xs text-ink-soft/80">
         “Our work” and “From our stock” are Elite Balaji's own photographs. “Application idea”,
@@ -119,7 +146,8 @@ const groups = [
           var f = btn.getAttribute("data-filter");
           buttons.forEach(function (b) { b.setAttribute("aria-pressed", String(b === btn)); });
           items.forEach(function (el) {
-            el.hidden = f !== "all" && el.getAttribute("data-groups").split(" ").indexOf(f) === -1;
+            var g = el.getAttribute("data-groups");
+            el.hidden = g !== "*" && f !== "all" && g.split(" ").indexOf(f) === -1;
           });
         });
       });

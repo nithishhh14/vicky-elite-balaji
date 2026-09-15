@@ -24,7 +24,7 @@ const specRows = [
   { label: "Thickness", value: product.data.thickness },
   { label: "Qty / box", value: product.data.qtyPerBox },
   { label: "Coverage", value: product.data.coverageArea },
-  { label: "Weight / box", value: product.data.weight },
+  { label: product.data.kind === "tile" ? "Weight / box" : "Pack", value: product.data.weight },
 ].filter((row): row is { label: string; value: string } => Boolean(row.value));
 
 const halls = await getCollection("halls");
@@ -80,9 +80,9 @@ const breadcrumbJsonLd = {
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
 
   <nav aria-label="Breadcrumb" class="mx-auto max-w-6xl px-5 pt-6 text-xs uppercase tracking-wide text-ink-soft">
-    <a href="/halls/" class="hover:text-terracotta">All halls</a>
+    <a href="/halls/" class="hover:text-mustard-dark">All halls</a>
     <span class="mx-2">/</span>
-    <a href={`/halls/${hallId}/`} class="hover:text-terracotta">{hallName}</a>
+    <a href={`/halls/${hallId}/`} class="hover:text-mustard-dark">{hallName}</a>
     <span class="mx-2">/</span>
     <span class="text-ink">{name}</span>
   </nav>
@@ -112,7 +112,7 @@ const breadcrumbJsonLd = {
           <button
             type="button"
             class="product-thumb h-16 w-16 overflow-hidden rounded-sm border-2 transition-colors"
-            class:list={[i === 0 ? "border-terracotta" : "border-line"]}
+            class:list={[i === 0 ? "border-brass" : "border-line"]}
             data-src={img.src}
             data-alt={img.alt}
             aria-label={`Show image ${i + 1} of ${name}`}
@@ -134,17 +134,17 @@ const breadcrumbJsonLd = {
           if (!main) return;
           main.src = btn.dataset.src ?? main.src;
           main.alt = btn.dataset.alt ?? main.alt;
-          document.querySelectorAll(".product-thumb").forEach((b) => b.classList.remove("border-terracotta"));
+          document.querySelectorAll(".product-thumb").forEach((b) => b.classList.remove("border-brass"));
           document.querySelectorAll(".product-thumb").forEach((b) => b.classList.add("border-line"));
           btn.classList.remove("border-line");
-          btn.classList.add("border-terracotta");
+          btn.classList.add("border-brass");
         });
       });
     </script>
   )}
 
   <section class="mx-auto max-w-3xl px-5 py-10 text-center">
-    <p class="text-xs uppercase tracking-[0.25em] text-terracotta">{hallName}</p>
+    <p class="text-xs uppercase tracking-[0.25em] text-mustard-dark">{hallName}</p>
     <h1 class="mt-2 font-display text-4xl sm:text-5xl">{name}</h1>
 
     <div class="mt-6 flex flex-wrap justify-center gap-x-8 gap-y-2 text-sm text-ink-soft">

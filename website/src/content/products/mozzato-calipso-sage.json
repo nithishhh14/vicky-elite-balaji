@@ -1,0 +1,34 @@
+{
+  "kind": "tile",
+  "hallId": "tiles",
+  "name": "Calipso Sage Marble-look Tile",
+  "brand": "Mozzato",
+  "series": "Endless Collection",
+  "category": "Marble-look vitrified tile",
+  "size": "600 x 1200mm",
+  "finish": "Matt carving",
+  "order": 25,
+  "applications": [
+    "Café & restaurant floors",
+    "Feature walls",
+    "Living spaces"
+  ],
+  "image": "/media/tiles/mozzato-endless/calipso-sage-swatch.jpg",
+  "imageAlt": "Sage-green marble-look tile with soft veining",
+  "images": [
+    {
+      "src": "/media/tiles/mozzato-endless/calipso-sage-swatch.jpg",
+      "alt": "Calipso Sage tile face"
+    },
+    {
+      "src": "/media/tiles/mozzato-endless/calipso-sage-faces.jpg",
+      "alt": "Calipso Sage: large tile and random face set"
+    },
+    {
+      "src": "/media/tiles/mozzato-endless/calipso-room.jpg",
+      "alt": "Calipso Sage in a catalogue room scene"
+    }
+  ],
+  "sourceCatalogue": "Mozzato Multi Surface, Endless Collection catalogue",
+  "note": "From the Mozzato Endless Collection catalogue shared by our team. Each design comes in 4 random faces. Ask us for current availability and a sample."
+}

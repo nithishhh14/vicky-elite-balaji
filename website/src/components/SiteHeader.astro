@@ -26,7 +26,7 @@ const materialGroups = materialWorlds.map((world) => ({
 }));
 const alsoStocked = alsoStockedHallIds.map(hallLink);
 
-const productPaths = ["/halls/", "/materials/", "/products/", "/search/", "/custom/", "/granite/"];
+const productPaths = ["/halls/", "/materials/", "/products/", "/search/", "/custom/", "/granite/", "/marble/"];
 const isActive = (href: string) =>
   href === "/" ? pathname === "/" : href === "#products" ? productPaths.some((p) => pathname.startsWith(p)) : pathname.startsWith(href);
 
@@ -102,25 +102,29 @@ const secondary = [
               hidden
               class="absolute left-1/2 top-full z-40 mt-5 w-[600px] -translate-x-1/2 rounded-sm border border-line bg-paper p-8 shadow-lift"
             >
-              <div class="mb-6 grid grid-cols-2 gap-3 border-b border-line/60 pb-6">
+              <div class="mb-6 grid grid-cols-3 gap-3 border-b border-line/60 pb-6">
                 <a href="/granite/" class="group flex items-center gap-3">
                   <img src="/media/client/granite/black-galaxy-closeup-720.jpg" alt="" class="h-14 w-14 object-cover" loading="lazy" />
                   <span><span class="block font-display text-xl text-ink group-hover:text-mustard-dark">Granite</span><span class="text-[0.6rem] uppercase tracking-[0.18em] text-ink-soft">From our slab yard</span></span>
                 </a>
+                <a href="/marble/" class="group flex items-center gap-3">
+                  <img src="/media/client/marble/white-slab-veined-720.jpg" alt="" class="h-14 w-14 object-cover" loading="lazy" />
+                  <span><span class="block font-display text-xl text-ink group-hover:text-mustard-dark">Marble</span><span class="text-[0.6rem] uppercase tracking-[0.18em] text-ink-soft">Slabs &amp; marble-look</span></span>
+                </a>
                 <a href="/custom/" class="group flex items-center gap-3">
                   <img src="/media/client/stonecraft/engraved-rose-granite-720.jpg" alt="" class="h-14 w-14 object-cover" loading="lazy" />
-                  <span><span class="block font-display text-xl text-ink group-hover:text-mustard-dark">Custom Stonecraft</span><span class="text-[0.6rem] uppercase tracking-[0.18em] text-ink-soft">Engraving &amp; stone furniture</span></span>
+                  <span><span class="block font-display text-xl text-ink group-hover:text-mustard-dark">Stonecraft</span><span class="text-[0.6rem] uppercase tracking-[0.18em] text-ink-soft">Custom work</span></span>
                 </a>
               </div>
               <div class="grid grid-cols-3 gap-8">
                 {materialGroups.map((group) => (
                   <div>
-                    <a href={`/materials/${group.slug}/`} class="text-[0.65rem] uppercase tracking-[0.2em] text-terracotta hover:text-terracotta-dark">
+                    <a href={`/materials/${group.slug}/`} class="text-[0.65rem] uppercase tracking-[0.2em] text-mustard-dark hover:text-ink">
                       {group.label} &rarr;
                     </a>
                     <ul class="mt-3 space-y-2">
                       {group.items.map((hall) => (
-                        <li><a href={hall.href} class="text-sm text-ink hover:text-terracotta transition-colors">{hall.label}</a></li>
+                        <li><a href={hall.href} class="text-sm text-ink hover:text-mustard-dark transition-colors">{hall.label}</a></li>
                       ))}
                     </ul>
                   </div>
@@ -130,11 +134,11 @@ const secondary = [
                 <div class="flex flex-wrap gap-x-5 gap-y-1">
                   <span class="text-[0.65rem] uppercase tracking-[0.2em] text-ink-soft/60">Also:</span>
                   {alsoStocked.map((hall) => (
-                    <a href={hall.href} class="text-xs text-ink-soft hover:text-terracotta transition-colors">{hall.label}</a>
+                    <a href={hall.href} class="text-xs text-ink-soft hover:text-mustard-dark transition-colors">{hall.label}</a>
                   ))}
-                  <a href="/halls/laying-works/" class="text-xs text-ink-soft hover:text-terracotta transition-colors">Laying Works</a>
+                  <a href="/halls/laying-works/" class="text-xs text-ink-soft hover:text-mustard-dark transition-colors">Laying Works</a>
                 </div>
-                <a href="/search/" class="text-xs font-semibold uppercase tracking-wide text-terracotta hover:text-terracotta-dark whitespace-nowrap">
+                <a href="/search/" class="text-xs font-semibold uppercase tracking-wide text-mustard-dark hover:text-ink whitespace-nowrap">
                   Full catalogue &rarr;
                 </a>
               </div>
@@ -214,6 +218,7 @@ const secondary = [
           <li><a href={item.href} class="text-sm uppercase tracking-[0.14em] text-paper/85 hover:text-brass">{item.label}</a></li>
         ))}
         <li><a href="/granite/" class="text-sm uppercase tracking-[0.14em] text-brass hover:text-paper">Granite</a></li>
+        <li><a href="/marble/" class="text-sm uppercase tracking-[0.14em] text-brass hover:text-paper">Marble</a></li>
         <li><a href="/custom/" class="text-sm uppercase tracking-[0.14em] text-brass hover:text-paper">Custom Stonecraft</a></li>
         <li><a href="/search/" class="text-sm uppercase tracking-[0.14em] text-paper/85 hover:text-brass">Full catalogue</a></li>
         <li><a href="/shortlist/" class="text-sm uppercase tracking-[0.14em] text-paper/85 hover:text-brass">My Materials <span data-shortlist-count hidden class="ml-1 rounded-full bg-brass px-1.5 text-[0.6rem] text-charcoal-deep">0</span></a></li>

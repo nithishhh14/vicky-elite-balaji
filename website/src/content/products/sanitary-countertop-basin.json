@@ -5,8 +5,11 @@
   "category": "Sanitaryware",
   "finish": "Ceramic",
   "order": 2,
-  "applications": ["Bathrooms", "Powder rooms"],
+  "applications": [
+    "Bathrooms",
+    "Powder rooms"
+  ],
   "image": "https://images.unsplash.com/photo-1642755623141-23b3cb4284aa?auto=format&fit=crop&w=1200&q=80",
   "imageAlt": "Ceramic countertop wash basin",
-  "note": "Representative style. Partner brand pricing and availability on request."
+  "note": "Reference photo, not our stock. Ask us for photos of the current stock, size and finish."
 }

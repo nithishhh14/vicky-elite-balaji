@@ -1,0 +1,34 @@
+{
+  "kind": "tile",
+  "hallId": "tiles",
+  "name": "Calipso Light Marble-look Tile",
+  "brand": "Mozzato",
+  "series": "Endless Collection",
+  "category": "Marble-look vitrified tile",
+  "size": "600 x 1200mm",
+  "finish": "Matt carving",
+  "order": 26,
+  "applications": [
+    "Feature walls",
+    "Living & dining floors",
+    "Commercial interiors"
+  ],
+  "image": "/media/tiles/mozzato-endless/calipso-light-swatch.jpg",
+  "imageAlt": "Very light grey marble-look tile with subtle veining",
+  "images": [
+    {
+      "src": "/media/tiles/mozzato-endless/calipso-light-swatch.jpg",
+      "alt": "Calipso Light tile face"
+    },
+    {
+      "src": "/media/tiles/mozzato-endless/calipso-light-faces.jpg",
+      "alt": "Calipso Light: large tile and random face set"
+    },
+    {
+      "src": "/media/tiles/mozzato-endless/calipso-room.jpg",
+      "alt": "Calipso Light in a catalogue room scene"
+    }
+  ],
+  "sourceCatalogue": "Mozzato Multi Surface, Endless Collection catalogue",
+  "note": "From the Mozzato Endless Collection catalogue shared by our team. Each design comes in 4 random faces. Ask us for current availability and a sample."
+}
