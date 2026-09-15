@@ -2,7 +2,8 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import { waLink, telLink, emailQuoteLink, productEnquiryMessage } from "../../lib/business";
-import { deriveColours, deriveCharacterTags, deriveApplicationTags } from "../../lib/facets";
+import { similarGroups } from "../../lib/similarity";
+import SaveButton from "../../components/SaveButton.astro";
 
 export async function getStaticPaths() {
   const products = await getCollection("products");
@@ -30,33 +31,19 @@ const halls = await getCollection("halls");
 const hall = halls.find((h) => h.id === hallId);
 const hallName = hall?.data.name ?? hallId;
 
-// Related: other real products in the same hall, ranked by shared derived
-// facets (colour/character/application) so "related" means genuinely
-// similar, not just "next in the list" -- still entirely computed from
-// real fields, nothing invented.
-function facetSetFor(p: typeof product): Set<string> {
-  return new Set([
-    ...deriveColours(p.data.name, p.data.finish, p.data.imageAlt),
-    ...deriveCharacterTags(p.data.name, p.data.finish, p.data.imageAlt),
-    ...deriveApplicationTags(p.data.applications),
-  ]);
-}
-
-const productFacets = facetSetFor(product);
-function overlapScore(p: typeof product): number {
-  const other = facetSetFor(p);
-  let score = 0;
-  other.forEach((tag) => { if (productFacets.has(tag)) score += 1; });
-  return score;
-}
-
+// Find similar: related materials grouped by why they're related (material,
+// look, colour, size/use), across the whole catalogue, from real fields only.
 const allProducts = await getCollection("products");
-const candidates = allProducts.filter((p) => p.data.hallId === hallId && p.id !== product.id);
-const related = candidates
-  .map((p) => ({ p, score: overlapScore(p) }))
-  .sort((a, b) => b.score - a.score)
-  .slice(0, 3)
-  .map(({ p }) => p);
+const similar = similarGroups(product, allProducts);
+const hallNameOf = (id: string) => halls.find((h) => h.id === id)?.data.name ?? id;
+
+const what = product.data.category ? `${name} (${product.data.category})` : name;
+const intents = [
+  { label: "Do you have this in stock?", message: `Hi Elite Balaji, do you have ${what} in stock right now?` },
+  { label: "Can I see a sample or photos?", message: `Hi Elite Balaji, can I see a sample or current photos of ${what}?` },
+  { label: "Suggest an alternative", message: `Hi Elite Balaji, I'm interested in ${what}. Can you suggest alternatives in a similar look or budget?` },
+  { label: "I need this for my project", message: `Hi Elite Balaji, I need ${what} for my project. Location: ___, area/quantity: ___, timeline: ___.` },
+];
 
 // No "offers" block: this site never publishes prices (trade rates are
 // quoted by WhatsApp/call), and Offer structured data without a real price
@@ -189,46 +176,83 @@ const breadcrumbJsonLd = {
         href={waLink(productEnquiryMessage(name, product.data.category))}
         target="_blank"
         rel="noopener"
-        aria-label={`Request availability for ${name} on WhatsApp`}
+        aria-label={`Ask price and availability for ${name} on WhatsApp`}
         data-gsap-magnetic
         class="inline-flex min-h-12 items-center bg-gradient-to-r from-brass to-mustard-dark px-6 py-3 text-xs font-medium uppercase tracking-[0.18em] text-paper hover:brightness-110 transition"
       >
-        Request availability
+        Ask price &amp; availability
       </a>
-      <a
-        href={telLink()}
-        aria-label="Call our team"
-        class="inline-flex min-h-12 items-center border border-line px-6 py-3 text-xs uppercase tracking-[0.18em] text-ink-soft hover:border-brass hover:text-ink transition-colors"
-      >
-        Call our team
-      </a>
-      <a
-        href={emailQuoteLink(name)}
-        aria-label={`Request an email quote for ${name}`}
-        class="inline-flex min-h-12 items-center border border-line px-6 py-3 text-xs uppercase tracking-[0.18em] text-ink-soft hover:border-brass hover:text-ink transition-colors"
-      >
-        Email a quote request
-      </a>
+      <SaveButton product={product} hallName={hallName} variant="button" />
+      <a href="#similar" class="inline-flex min-h-12 items-center border border-line px-6 py-3 text-xs uppercase tracking-[0.18em] text-ink-soft hover:border-brass hover:text-ink transition-colors">Find similar</a>
+    </div>
+
+    <!-- Contextual enquiries: each opens WhatsApp with a message that already
+         names this product and what the customer wants. -->
+    <div class="mx-auto mt-8 max-w-2xl border-t border-line pt-6">
+      <p class="text-[0.65rem] uppercase tracking-[0.22em] text-ink-soft">Or tell us exactly what you need</p>
+      <ul class="mt-4 grid gap-2 text-left sm:grid-cols-2">
+        {intents.map((intent) => (
+          <li>
+            <a href={waLink(intent.message)} target="_blank" rel="noopener" class="group flex min-h-12 items-center justify-between gap-3 border border-line bg-card px-4 py-3 text-sm transition-colors hover:border-brass">
+              <span>{intent.label}</span>
+              <span aria-hidden="true" class="text-brass transition-transform group-hover:translate-x-1">&rarr;</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <div class="mt-2 flex flex-wrap justify-center gap-x-6 text-xs uppercase tracking-[0.16em] text-ink-soft">
+        <a href={telLink()} class="inline-flex min-h-11 items-center hover:text-ink">Call our team</a>
+        <a href={emailQuoteLink(name)} class="inline-flex min-h-11 items-center hover:text-ink">Email a quote request</a>
+        <a href="/shortlist/" class="inline-flex min-h-11 items-center hover:text-ink">Compare in My Materials</a>
+      </div>
     </div>
   </section>
 
-  {related.length > 0 && (
-    <section class="border-t border-line/60 bg-card">
-      <div class="mx-auto max-w-6xl px-5 py-14">
-        <p class="text-xs uppercase tracking-[0.25em] text-terracotta">Related in {hallName}</p>
-        <div class="mt-6 grid gap-6 sm:grid-cols-3">
-          {related.map((r) => (
-            <a href={`/products/${r.id}/`} class="group block overflow-hidden rounded-sm border border-line bg-paper">
-              <div class="aspect-[4/3] overflow-hidden">
-                <img src={r.data.image} alt={r.data.imageAlt} class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
-              </div>
-              <div class="p-4">
-                <h3 class="text-sm group-hover:text-terracotta transition-colors">{r.data.name}</h3>
-              </div>
-            </a>
-          ))}
+  {similar.length > 0 && (
+    <section id="similar" class="scroll-mt-24 border-t border-line/60 bg-card">
+      <div class="mx-auto max-w-7xl px-5 py-16 lg:px-8">
+        <div class="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p class="text-xs uppercase tracking-[0.3em] text-mustard-dark">Find similar</p>
+            <h2 class="mt-2 font-display text-4xl">If you like {name}</h2>
+          </div>
+          <div class="flex flex-wrap gap-2" role="tablist" aria-label="Ways this is similar">
+            {similar.map((g, i) => (
+              <button type="button" role="tab" id={`tab-${g.key}`} aria-controls={`panel-${g.key}`} aria-selected={i === 0 ? "true" : "false"} data-similar-tab={g.key} class="min-h-11 border border-line px-4 py-2 text-xs uppercase tracking-[0.14em] text-ink-soft transition-colors hover:border-brass aria-selected:border-brass aria-selected:bg-brass aria-selected:text-paper">
+                {g.title}
+              </button>
+            ))}
+          </div>
         </div>
+        {similar.map((g, i) => (
+          <div role="tabpanel" id={`panel-${g.key}`} aria-labelledby={`tab-${g.key}`} data-similar-panel={g.key} hidden={i !== 0} class="mt-8">
+            <p class="text-xs uppercase tracking-[0.18em] text-ink-soft">{g.reason}</p>
+            <ul class="mt-4 grid grid-cols-2 gap-4 lg:grid-cols-4">
+              {g.items.map((r) => (
+                <li class="group relative">
+                  <a href={`/products/${r.id}/`} class="block overflow-hidden bg-charcoal-deep">
+                    <img src={r.data.image} alt={r.data.imageAlt} class="aspect-[4/3] w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+                  </a>
+                  <div class="absolute right-2 top-2"><SaveButton product={r} hallName={hallNameOf(r.data.hallId)} variant="overlay" /></div>
+                  <a href={`/products/${r.id}/`} class="mt-3 block font-display text-xl leading-tight hover:text-mustard-dark">{r.data.name}</a>
+                  <p class="text-xs text-ink-soft">{[hallNameOf(r.data.hallId), r.data.finish].join(" · ")}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+        <a href={waLink(`Hi Elite Balaji, I like ${name}. Can you suggest similar options or alternatives that are available now?`)} target="_blank" rel="noopener" class="mt-10 inline-flex min-h-12 items-center border-b border-brass text-xs uppercase tracking-[0.2em] hover:text-mustard-dark">Ask us for more like this &rarr;</a>
       </div>
     </section>
   )}
+
+  <script>
+    document.querySelectorAll<HTMLButtonElement>("[data-similar-tab]").forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const key = tab.dataset.similarTab;
+        document.querySelectorAll<HTMLButtonElement>("[data-similar-tab]").forEach((t) => t.setAttribute("aria-selected", String(t === tab)));
+        document.querySelectorAll<HTMLElement>("[data-similar-panel]").forEach((p) => (p.hidden = p.dataset.similarPanel !== key));
+      });
+    });
+  </script>
 </BaseLayout>

@@ -4,6 +4,7 @@ import { getCollection } from "astro:content";
 import { waLink, telLink, productEnquiryMessage } from "../lib/business";
 import { mediaIn, provenanceLabel } from "../lib/media-library";
 import { stoneCategories } from "../lib/stone-varieties";
+import SaveButton from "../components/SaveButton.astro";
 
 // Granite as a hero category: every specimen below is a photograph of Elite
 // Balaji's own slab stock (src/lib/media-library.ts). Names were identified
@@ -77,19 +78,34 @@ const hero = stock.find((m) => m.slug === "black-markino-slab") ?? stock[0];
             block, so ask us to confirm the current slab, size and finish.
           </p>
         </div>
-        <nav aria-label="Colour families" class="flex flex-wrap gap-2">
-          {families.map((f) => (
-            <a href={`#family-${f.label.toLowerCase().replace(/[^a-z]+/g, "-")}`} class="border border-line px-4 py-2 text-xs uppercase tracking-[0.16em] text-ink-soft hover:border-brass hover:text-ink transition-colors">{f.label}</a>
-          ))}
-        </nav>
       </div>
 
+      <!-- Explore the real slabs: colour / finish / use filters, no reload. -->
+      <div class="mt-10 grid gap-4 border-y border-line py-5 md:grid-cols-3" data-granite-filters>
+        {[
+          { key: "colour", label: "Colour", options: families.map((f) => f.label) },
+          { key: "finish", label: "Finish", options: [...new Set(products.map((p) => p.data.finish))] },
+          { key: "use", label: "Use", options: ["Kitchen countertops", "Flooring", "Staircases", "Wall cladding", "Vanity tops"] },
+        ].map((g) => (
+          <div role="group" aria-label={`Filter by ${g.label.toLowerCase()}`}>
+            <p class="text-[0.6rem] uppercase tracking-[0.22em] text-ink-soft">{g.label}</p>
+            <div class="mt-2 flex flex-wrap gap-2">
+              {g.options.map((o) => (
+                <button type="button" data-filter-key={g.key} data-filter-value={o} aria-pressed="false" class="min-h-11 border border-line px-3.5 py-2 text-xs uppercase tracking-[0.12em] text-ink-soft transition-colors hover:border-brass aria-pressed:border-brass aria-pressed:bg-brass aria-pressed:text-paper">{o}</button>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+      <p class="mt-3 text-sm text-ink-soft" aria-live="polite"><span data-granite-count>{products.length}</span> of {products.length} slabs shown <button type="button" data-granite-reset hidden class="ml-3 inline-flex min-h-11 items-center text-xs uppercase tracking-[0.16em] underline underline-offset-4 hover:text-ink">Reset</button></p>
+
       {families.map((family) => (
-        <div id={`family-${family.label.toLowerCase().replace(/[^a-z]+/g, "-")}`} class="mt-16 scroll-mt-28">
+        <div id={`family-${family.label.toLowerCase().replace(/[^a-z]+/g, "-")}`} data-family class="mt-16 scroll-mt-28">
           <p class="border-b border-line pb-3 text-xs uppercase tracking-[0.25em] text-ink-soft">{family.label}</p>
           <div data-gsap-stagger class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {family.items.map((p) => (
-              <article class="specimen group relative">
+              <article class="specimen group relative" data-colour={family.label} data-finish={p.data.finish} data-use={p.data.applications.join("|")}>
+                <div class="absolute right-3 top-3 z-10"><SaveButton product={p} hallName="Granite & Marbles" variant="overlay" /></div>
                 <a href={`/products/${p.id}/`} class="block overflow-hidden bg-charcoal-deep" aria-label={`${p.data.name}: view details`}>
                   <img src={p.data.image.replace(/\.jpg$/, "-720.jpg")} alt={p.data.imageAlt} class="aspect-[4/5] w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.04]" loading="lazy" width="720" height="900" />
                 </a>
@@ -184,6 +200,42 @@ const hero = stock.find((m) => m.slug === "black-markino-slab") ?? stock[0];
       </div>
     </section>
   )}
+
+  <script>
+    const state: Record<string, string | null> = { colour: null, finish: null, use: null };
+    const buttons = document.querySelectorAll<HTMLButtonElement>("[data-filter-key]");
+    const cards = document.querySelectorAll<HTMLElement>(".specimen");
+    const reset = document.querySelector<HTMLButtonElement>("[data-granite-reset]");
+    function apply() {
+      let shown = 0;
+      cards.forEach((c) => {
+        const ok =
+          (!state.colour || c.dataset.colour === state.colour) &&
+          (!state.finish || c.dataset.finish === state.finish) &&
+          (!state.use || (c.dataset.use ?? "").split("|").some((u) => u.toLowerCase().includes(state.use!.toLowerCase().replace(/s$/, ""))));
+        c.hidden = !ok;
+        if (ok) shown++;
+      });
+      document.querySelectorAll<HTMLElement>("[data-family]").forEach((f) => (f.hidden = !f.querySelector(".specimen:not([hidden])")));
+      const count = document.querySelector("[data-granite-count]");
+      if (count) count.textContent = String(shown);
+      if (reset) reset.hidden = !Object.values(state).some(Boolean);
+    }
+    buttons.forEach((b) =>
+      b.addEventListener("click", () => {
+        const key = b.dataset.filterKey!;
+        const val = b.dataset.filterValue!;
+        state[key] = state[key] === val ? null : val;
+        buttons.forEach((x) => x.dataset.filterKey === key && x.setAttribute("aria-pressed", String(state[key] === x.dataset.filterValue)));
+        apply();
+      })
+    );
+    reset?.addEventListener("click", () => {
+      Object.keys(state).forEach((k) => (state[k] = null));
+      buttons.forEach((x) => x.setAttribute("aria-pressed", "false"));
+      apply();
+    });
+  </script>
 
   <section class="marble-veins bg-charcoal py-20 text-center text-paper">
     <h2 class="font-display text-4xl sm:text-5xl">Found a granite you like?</h2>

@@ -9,6 +9,41 @@ gsap.registerPlugin(ScrollTrigger);
 // fallback rather than a stripped-down version of the motion.
 const mm = gsap.matchMedia();
 
+// Pinned horizontal story (Custom Stonecraft process): desktop + motion only.
+// The section holds still while the steps travel sideways, one scroll-length
+// per screen of content. On touch/mobile the track stays a native swipe strip.
+mm.add("(min-width: 1024px) and (prefers-reduced-motion: no-preference)", () => {
+  document.querySelectorAll<HTMLElement>("[data-gsap-hscroll]").forEach((section) => {
+    const track = section.querySelector<HTMLElement>("[data-hscroll-track]");
+    const progress = section.querySelector<HTMLElement>("[data-hscroll-progress]");
+    if (!track) return;
+    track.style.overflow = "visible";
+    const distance = () => Math.max(0, track.scrollWidth - track.clientWidth);
+    if (distance() < 40) return;
+    const tween = gsap.to(track, {
+      x: () => -distance(),
+      ease: "none",
+      scrollTrigger: {
+        trigger: section,
+        start: "top top",
+        end: () => `+=${distance()}`,
+        pin: true,
+        scrub: 0.8,
+        invalidateOnRefresh: true,
+        onUpdate: (self) => {
+          if (progress) progress.style.transform = `scaleX(${self.progress})`;
+        },
+      },
+    });
+    return () => {
+      tween.scrollTrigger?.kill();
+      tween.kill();
+      track.style.overflow = "";
+      gsap.set(track, { x: 0 });
+    };
+  });
+});
+
 mm.add("(prefers-reduced-motion: no-preference)", () => {
   // Hero entrance: direct children of [data-gsap-hero] stagger up and in.
   // fromTo (not from) because the CSS pre-hide already sets opacity:0 on

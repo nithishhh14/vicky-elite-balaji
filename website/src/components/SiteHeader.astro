@@ -166,6 +166,16 @@ const secondary = [
           <path d="m21 21-4.3-4.3" stroke-linecap="round" />
         </svg>
       </a>
+      <a
+        href="/shortlist/"
+        class="relative inline-flex h-10 w-10 items-center justify-center text-paper/85 hover:text-brass transition-colors"
+        aria-label="My Materials (saved shortlist)"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+          <path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4.5L5 21V4a1 1 0 0 1 1-1Z" stroke-linejoin="round" />
+        </svg>
+        <span data-shortlist-count hidden class="absolute right-0.5 top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-brass px-1 text-[0.6rem] font-semibold text-charcoal-deep">0</span>
+      </a>
       <button
         id="menu-toggle"
         type="button"
@@ -206,6 +216,7 @@ const secondary = [
         <li><a href="/granite/" class="text-sm uppercase tracking-[0.14em] text-brass hover:text-paper">Granite</a></li>
         <li><a href="/custom/" class="text-sm uppercase tracking-[0.14em] text-brass hover:text-paper">Custom Stonecraft</a></li>
         <li><a href="/search/" class="text-sm uppercase tracking-[0.14em] text-paper/85 hover:text-brass">Full catalogue</a></li>
+        <li><a href="/shortlist/" class="text-sm uppercase tracking-[0.14em] text-paper/85 hover:text-brass">My Materials <span data-shortlist-count hidden class="ml-1 rounded-full bg-brass px-1.5 text-[0.6rem] text-charcoal-deep">0</span></a></li>
       </ul>
       {materialGroups.map((group) => (
         <div>

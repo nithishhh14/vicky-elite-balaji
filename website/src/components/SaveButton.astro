@@ -1,0 +1,39 @@
+---
+// Save-to-My-Materials toggle. Behaviour lives in src/scripts/shortlist.ts
+// (loaded sitewide), so this component is markup only.
+import type { CollectionEntry } from "astro:content";
+import { cardData } from "../lib/similarity";
+
+interface Props {
+  product: CollectionEntry<"products">;
+  hallName: string;
+  variant?: "icon" | "button" | "overlay";
+  class?: string;
+}
+const { product, hallName, variant = "icon", class: className = "" } = Astro.props;
+const data = JSON.stringify(cardData(product, hallName));
+const icon = "M6 3h12a1 1 0 0 1 1 1v17l-7-4.5L5 21V4a1 1 0 0 1 1-1Z";
+---
+
+{variant === "button" ? (
+  <button type="button" data-save={data} data-save-id={product.id} aria-pressed="false" class:list={["save-btn group inline-flex min-h-12 items-center gap-2 border border-line px-5 py-3 text-xs uppercase tracking-[0.18em] text-ink-soft transition-colors hover:border-brass hover:text-ink aria-pressed:border-brass aria-pressed:text-ink", className]}>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" class="group-aria-pressed:fill-brass group-aria-pressed:stroke-brass"><path d={icon} stroke-linejoin="round" /></svg>
+    <span data-save-label>Save</span>
+  </button>
+) : (
+  <button
+    type="button"
+    data-save={data}
+    data-save-id={product.id}
+    aria-pressed="false"
+    aria-label={`Save ${product.data.name} to My Materials`}
+    class:list={[
+      "save-btn group inline-flex h-11 w-11 items-center justify-center transition-colors",
+      variant === "overlay" ? "bg-charcoal-deep/60 text-paper backdrop-blur hover:bg-charcoal-deep/85" : "text-ink-soft hover:text-ink",
+      className,
+    ]}
+  >
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" class="group-aria-pressed:fill-brass group-aria-pressed:stroke-brass"><path d={icon} stroke-linejoin="round" /></svg>
+    <span data-save-label class="sr-only">Save</span>
+  </button>
+)}

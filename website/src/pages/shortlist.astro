@@ -1,0 +1,213 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { business } from "../lib/business";
+---
+
+<BaseLayout
+  title="My Materials | Elite Balaji Stones & Ceramics"
+  description="Your saved granite, marble, tiles and surfaces from Elite Balaji. Compare them side by side and ask about availability in one WhatsApp message."
+>
+  <section class="border-b border-line bg-charcoal-deep text-paper">
+    <div class="mx-auto flex max-w-7xl flex-wrap items-end justify-between gap-6 px-5 pb-12 pt-16 lg:px-8">
+      <div>
+        <p class="text-xs uppercase tracking-[0.45em] text-brass">My Materials</p>
+        <h1 class="mt-4 font-display text-5xl sm:text-6xl">Your shortlist</h1>
+        <p class="mt-4 max-w-xl text-paper/70">Saved on this device, no login needed. Compare up to four, share the list, or ask us about all of them at once.</p>
+      </div>
+      <div class="flex flex-wrap gap-3" data-when-items hidden>
+        <a data-enquire-all target="_blank" rel="noopener" class="inline-flex min-h-12 items-center bg-gradient-to-r from-brass to-mustard-dark px-6 py-3 text-xs uppercase tracking-[0.2em] hover:brightness-110">Ask about all</a>
+        <button type="button" data-share class="inline-flex min-h-12 items-center border border-paper/30 px-6 py-3 text-xs uppercase tracking-[0.2em] hover:border-brass">Share list</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-paper py-12">
+    <div class="mx-auto max-w-7xl px-5 lg:px-8">
+      <div data-empty class="border border-line bg-card p-10 text-center" hidden>
+        <p class="font-display text-3xl">Nothing saved yet</p>
+        <p class="mx-auto mt-2 max-w-md text-ink-soft">Tap the bookmark on any material to keep it here while you decide.</p>
+        <div class="mt-6 flex flex-wrap justify-center gap-3">
+          <a href="/granite/" class="inline-flex min-h-12 items-center border border-brass px-6 py-3 text-xs uppercase tracking-[0.2em] hover:bg-brass hover:text-paper">Browse granite</a>
+          <a href="/search/" class="inline-flex min-h-12 items-center border border-line px-6 py-3 text-xs uppercase tracking-[0.2em] hover:border-brass">Full catalogue</a>
+        </div>
+      </div>
+
+      <div data-when-items hidden>
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <p class="text-sm text-ink-soft" aria-live="polite"><span data-count>0</span> saved · <span data-compare-count>0</span> selected to compare</p>
+          <div class="flex flex-wrap gap-3">
+            <button type="button" data-compare-btn disabled class="inline-flex min-h-11 items-center border border-ink px-5 py-2 text-xs uppercase tracking-[0.18em] disabled:cursor-not-allowed disabled:border-line disabled:text-ink-soft/50">Compare selected</button>
+            <button type="button" data-clear class="inline-flex min-h-11 items-center px-3 text-xs uppercase tracking-[0.18em] text-ink-soft underline underline-offset-4 hover:text-ink">Clear all</button>
+          </div>
+        </div>
+        <ul data-list class="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4"></ul>
+      </div>
+
+      <div data-compare hidden class="mt-14 scroll-mt-28" id="compare">
+        <div class="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p class="text-xs uppercase tracking-[0.3em] text-mustard-dark">Side by side</p>
+            <h2 class="mt-2 font-display text-4xl">Compare</h2>
+          </div>
+          <a data-enquire-compare target="_blank" rel="noopener" class="inline-flex min-h-12 items-center bg-gradient-to-r from-brass to-mustard-dark px-6 py-3 text-xs uppercase tracking-[0.2em] text-paper hover:brightness-110">Ask about these</a>
+        </div>
+        <div class="mt-6 overflow-x-auto border border-line bg-card" tabindex="0" role="region" aria-label="Comparison table">
+          <table class="w-full min-w-[640px] border-collapse text-sm" data-compare-table></table>
+        </div>
+        <p class="mt-3 text-xs text-ink-soft">Only details we actually have are shown. Blank means not yet listed, so ask us.</p>
+      </div>
+    </div>
+  </section>
+
+  <script define:vars={{ phoneWa: business.phoneWa }} is:inline>
+    window.__EB_PHONE = phoneWa;
+  </script>
+  <script>
+    import { readShortlist, removeSaved, replaceShortlist, type SavedItem } from "../scripts/shortlist";
+
+    const phone = (window as unknown as { __EB_PHONE: string }).__EB_PHONE;
+    const $ = <T extends Element>(s: string) => document.querySelector<T>(s)!;
+    const selected = new Set<string>();
+    const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
+    const abs = (u: string) => new URL(u, location.origin).toString();
+    const wa = (items: SavedItem[], intro: string) =>
+      `https://wa.me/${phone}?text=${encodeURIComponent(
+        `${intro}\n${items.map((i, n) => `${n + 1}. ${i.name}${i.category ? ` (${i.category})` : ""} – ${abs(i.url)}`).join("\n")}\nPlease share current availability and price.`
+      )}`;
+
+    async function hydrateFromShare() {
+      const ids = new URLSearchParams(location.search).get("ids");
+      if (!ids) return;
+      try {
+        const all: SavedItem[] = await fetch("/catalogue.json").then((r) => r.json());
+        const wanted = ids.split(",");
+        const items = wanted.map((id) => all.find((a) => a.id === id)).filter(Boolean) as SavedItem[];
+        if (items.length) {
+          const merged = [...items, ...readShortlist().filter((i) => !wanted.includes(i.id))];
+          replaceShortlist(merged);
+        }
+        history.replaceState(null, "", location.pathname);
+      } catch {
+        /* offline: keep existing list */
+      }
+    }
+
+    function render() {
+      const list = readShortlist();
+      [...selected].forEach((id) => { if (!list.some((i) => i.id === id)) selected.delete(id); });
+      document.querySelectorAll<HTMLElement>("[data-when-items]").forEach((el) => (el.hidden = list.length === 0));
+      $<HTMLElement>("[data-empty]").hidden = list.length > 0;
+      $("[data-count]").textContent = String(list.length);
+      $("[data-compare-count]").textContent = String(selected.size);
+      $<HTMLAnchorElement>("[data-enquire-all]").href = wa(list, "Hi Elite Balaji, I've shortlisted these materials on your website:");
+      const compareBtn = $<HTMLButtonElement>("[data-compare-btn]");
+      compareBtn.disabled = selected.size < 2;
+      compareBtn.textContent = selected.size < 2 ? "Select 2–4 to compare" : `Compare ${selected.size}`;
+
+      $("[data-list]").innerHTML = list
+        .map((i) => {
+          const on = selected.has(i.id);
+          const full = !on && selected.size >= 4;
+          return `<li class="group flex flex-col border border-line bg-card">
+            <a href="${i.url}" class="block overflow-hidden bg-charcoal-deep"><img src="${i.image}" alt="" class="aspect-[4/3] w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" /></a>
+            <div class="flex flex-1 flex-col gap-1 p-4">
+              <p class="text-[0.6rem] uppercase tracking-[0.2em] text-mustard-dark">${esc(i.hall)}</p>
+              <a href="${i.url}" class="font-display text-2xl leading-tight hover:text-mustard-dark">${esc(i.name)}</a>
+              <p class="text-xs text-ink-soft">${esc([i.finish, i.size].filter(Boolean).join(" · "))}</p>
+              <div class="mt-auto flex flex-wrap items-center justify-between gap-2 pt-3">
+                <label class="inline-flex min-h-11 cursor-pointer items-center gap-2 text-xs uppercase tracking-[0.14em] ${full ? "opacity-40" : ""}">
+                  <input type="checkbox" data-select="${i.id}" ${on ? "checked" : ""} ${full ? "disabled" : ""} class="h-4 w-4 accent-[#a3822f]" /> Compare
+                </label>
+                <button type="button" data-remove="${i.id}" class="inline-flex min-h-11 items-center text-xs uppercase tracking-[0.14em] text-ink-soft underline underline-offset-4 hover:text-terracotta">Remove</button>
+              </div>
+            </div>
+          </li>`;
+        })
+        .join("");
+      renderCompare(list);
+    }
+
+    function renderCompare(list: SavedItem[]) {
+      const items = list.filter((i) => selected.has(i.id));
+      const box = $<HTMLElement>("[data-compare]");
+      if (items.length < 2 || box.dataset.open !== "true") {
+        box.hidden = true;
+        return;
+      }
+      box.hidden = false;
+      $<HTMLAnchorElement>("[data-enquire-compare]").href = wa(items, "Hi Elite Balaji, I'm comparing these materials:");
+      const rows: [string, (i: SavedItem) => string][] = [
+        ["Material hall", (i) => i.hall],
+        ["Category", (i) => i.category],
+        ["Brand", (i) => i.brand],
+        ["Finish", (i) => i.finish],
+        ["Size", (i) => i.size],
+        ["Thickness", (i) => i.thickness],
+        ["Suits", (i) => i.applications.join(", ")],
+      ];
+      const visible = rows.filter(([, get]) => items.some((i) => get(i)));
+      $("[data-compare-table]").innerHTML = `
+        <thead><tr><th class="w-36 border-b border-line p-3"></th>${items
+          .map((i) => `<th scope="col" class="border-b border-l border-line p-3 text-left align-top font-normal"><img src="${i.image}" alt="" class="aspect-[4/3] w-full object-cover" /><a href="${i.url}" class="mt-2 block font-display text-xl leading-tight hover:text-mustard-dark">${esc(i.name)}</a></th>`)
+          .join("")}</tr></thead>
+        <tbody>${visible
+          .map(([label, get]) => `<tr><th scope="row" class="border-b border-line p-3 text-left align-top text-[0.65rem] font-medium uppercase tracking-[0.16em] text-ink-soft">${label}</th>${items
+            .map((i) => `<td class="border-b border-l border-line p-3 align-top">${esc(get(i)) || '<span class="text-ink-soft/40">–</span>'}</td>`)
+            .join("")}</tr>`)
+          .join("")}</tbody>`;
+    }
+
+    // Selecting for compare updates state in place (no list re-render), so
+    // keyboard focus stays on the checkbox the user just toggled.
+    function syncSelection() {
+      const list = readShortlist();
+      $("[data-compare-count]").textContent = String(selected.size);
+      const compareBtn = $<HTMLButtonElement>("[data-compare-btn]");
+      compareBtn.disabled = selected.size < 2;
+      compareBtn.textContent = selected.size < 2 ? "Select 2–4 to compare" : `Compare ${selected.size}`;
+      document.querySelectorAll<HTMLInputElement>("[data-select]").forEach((b) => {
+        const full = !b.checked && selected.size >= 4;
+        b.disabled = full;
+        b.closest("label")?.classList.toggle("opacity-40", full);
+      });
+      renderCompare(list);
+    }
+
+    document.addEventListener("change", (e) => {
+      const box = (e.target as HTMLElement).closest<HTMLInputElement>("[data-select]");
+      if (!box) return;
+      const id = box.dataset.select!;
+      if (box.checked && selected.size < 4) selected.add(id);
+      else {
+        selected.delete(id);
+        box.checked = false;
+      }
+      syncSelection();
+    });
+    document.addEventListener("click", (e) => {
+      const t = e.target as HTMLElement;
+      const rm = t.closest<HTMLElement>("[data-remove]");
+      if (rm) removeSaved(rm.dataset.remove!);
+      if (t.closest("[data-compare-btn]")) {
+        const box = $<HTMLElement>("[data-compare]");
+        box.dataset.open = "true";
+        syncSelection();
+        box.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+      }
+      if (t.closest("[data-clear]") && confirm("Remove all saved materials?")) {
+        selected.clear();
+        replaceShortlist([]);
+      }
+      if (t.closest("[data-share]")) {
+        const url = `${location.origin}/shortlist/?ids=${readShortlist().map((i) => i.id).join(",")}`;
+        const btn = t.closest<HTMLButtonElement>("[data-share]")!;
+        const done = () => { btn.textContent = "Link copied"; setTimeout(() => (btn.textContent = "Share list"), 2200); };
+        if (navigator.share) navigator.share({ title: "My Materials – Elite Balaji", url }).catch(() => {});
+        else navigator.clipboard?.writeText(url).then(done, () => prompt("Copy this link", url));
+      }
+    });
+    document.addEventListener("shortlist:change", render);
+    hydrateFromShare().then(render);
+    render();
+  </script>
+</BaseLayout>

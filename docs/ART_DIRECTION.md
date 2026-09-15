@@ -61,7 +61,8 @@ Rules:
 | **Reference mockup renders** (`/media/reference/`) | Homepage hero, category strip, page-hero bands, gallery "Showroom" set | Small caption: "Illustrative showroom render · our Karamadai showroom is being renovated" (hero); gallery footnote |
 | **Real supplier catalogue photos** (`/media/tiles/`) | Product cards and detail pages | Brand credit as already shown |
 | **Stock/mood photos** (hall heroes, Unsplash) | Hall pages until replaced | Existing "mood photography" note |
-| **Future AI generations** (Imagen/Veo once connected) | Scenes, heroes, backgrounds, video loops | "Illustrative" caption |
+| **Generated application concepts** (`/media/concepts/`, Runway 2026-09-15) | Room/application sections, homepage applications, Bathroom world card | "Application concept" caption, always |
+| **Future AI video** (needs a paid plan) | Hero, granite, stonecraft loops via `AmbientVideo.astro` | "Illustrative" caption |
 
 **Hard line kept:** a product's *detail-page swatch* (the thing a buyer
 orders from) should be a real photo of that product. Renders set the mood,

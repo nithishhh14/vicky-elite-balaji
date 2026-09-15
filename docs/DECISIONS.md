@@ -5,6 +5,51 @@ reconsidering something that may already have been decided.
 
 ---
 
+### Decision: Discovery & enquiry layer (My Materials, compare, find similar, live finder) + generated application concepts
+**Date:** 2026-09-15
+**Reason:** The "final 30%" brief found the site too static and not using
+the catalogue enough. Build on what exists; don't rebuild.
+
+**Added:**
+- **My Materials** (`/shortlist/`): a localStorage shortlist (no login) with
+  save, remove, compare 2–4 (only fields that exist), share link
+  (`?ids=`, rebuilt from `/catalogue.json`) and one WhatsApp enquiry for
+  everything. Save buttons on all product cards; count in the header.
+- **Product pages:**
+  - Contextual WhatsApp intents: in stock? / sample or photos / suggest an
+    alternative / for my project.
+  - **Find similar**, grouped by material / look / colour / size or use
+    (`src/lib/similarity.ts`, real fields only).
+- **Material Finder:** now shows live real products for the brief (plus a
+  Size group). Matches of the whole brief rank first. Look matching ignores
+  the hall name "Granite & Marbles".
+- **Granite page:** colour / finish / use filters.
+- **Tiles world page:** "Tile types, explained" (GVT, PGVT, double charge,
+  large format, parking…). It links to real tile products only when they
+  exist, otherwise to "Ask us to source".
+- **Search:** tile vocabulary; mood words ("luxury", "beautiful") are
+  ignored rather than required.
+- **Custom Stonecraft:** the process is a pinned horizontal scroll on
+  desktop (GSAP), a swipe strip on mobile, and off under reduced motion.
+
+**Generated imagery (Runway, text-to-image, 5 images):** kitchen, living
+room, bathroom, staircase and facade scenes in `public/media/concepts/`.
+- Used only as room/application visuals, always captioned **"Application
+  concept"**.
+- Never used as product photos; product truth stays with the client's real
+  photos.
+- No client files were uploaded (text prompts only).
+- Cost 100 of 500 free-plan credits.
+
+**Not available (verified, not assumed):**
+- **Video generation:** blocked on the Runway free plan; the other media
+  connector has 0 credits. The site keeps `AmbientVideo.astro`, ready for a
+  real or generated clip later.
+- **Playwright MCP:** not connected to this Claude Code session. QA used the
+  in-app browser with scripted interaction checks instead.
+
+---
+
 ### Decision: Project Maharaja: real client assets first, provenance labels, granite and stonecraft as hero categories
 **Date:** 2026-09-15
 **Reason:** The "Project Maharaja" brief found the redesign too AI-led while

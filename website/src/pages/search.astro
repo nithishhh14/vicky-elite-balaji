@@ -100,7 +100,9 @@ import { waLink } from "../lib/business";
     function haystack(item: Item): string {
       return [
         item.name,
-        item.hall,
+        // "Granite & Marbles" would make every granite match "marble"; the
+        // product's own category already says granite or marble.
+        item.hall === "Granite & Marbles" && item.category !== "Hall" ? "" : item.hall,
         item.category,
         item.finish,
         item.size,

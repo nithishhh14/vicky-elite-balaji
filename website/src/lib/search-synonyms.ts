@@ -21,6 +21,11 @@ const PHRASES: [RegExp, string][] = [
   [/\bone[\s-]?piece\b/g, "one-piece"],
   [/\bhealth faucet\b/g, "health-faucet"],
   [/\bmarble[\s-]?look\b/g, "marble"],
+  [/\bdouble[\s-]?charge[d]?\b/g, "double-charge"],
+  [/\bcar[\s-]?parking\b/g, "parking"],
+  [/\bwood[\s-]?look\b/g, "wood"],
+  [/\bpolished glazed vitrified\b/g, "pgvt"],
+  [/\bglazed vitrified\b/g, "gvt"],
   [/\bstone[\s-]?look\b/g, "stone"],
   // Sizes: feet/inch shorthand -> millimetres. Order matters (longest first).
   [/\b(2\s?x\s?4|24\s?x\s?48)\b/g, "600x1200"],
@@ -82,12 +87,19 @@ const TERM_SYNONYMS: Record<string, string[]> = {
   nameplate: ["name board", "engrav"],
   "wall-hung": ["wall-hung", "wall hung", "wall-mounted", "wall mounted"],
   "large-format": ["large format", "large-format", "1200", "1600", "2400", "slab"],
+  gvt: ["gvt", "glazed vitrified", "vitrified"],
+  pgvt: ["pgvt", "polished glazed", "glossy"],
+  "double-charge": ["double charge", "double-charge", "vitrified"],
+  wood: ["wood"],
+  stone: ["stone", "granite", "kota", "kadappa", "marble", "limestone"],
   // Tamil / Tanglish: seeded conservatively; extend as confirmed.
   tharai: ["floor", "flooring"],
   kal: ["stone", "granite", "kota", "kadappa"],
 };
 
-const STOPWORDS = new Set(["for", "the", "a", "an", "and", "in", "of", "with", "my", "to", "type", "design", "designs", "best", "near", "me"]);
+// Also mood words ("luxury bathroom", "beautiful floor"): they describe taste,
+// not a product attribute, so they must not filter results down to nothing.
+const STOPWORDS = new Set(["for", "the", "a", "an", "and", "in", "of", "with", "my", "to", "type", "design", "designs", "best", "near", "me", "i", "want", "need", "something", "some", "luxury", "luxurious", "premium", "beautiful", "modern", "nice", "good", "new", "latest", "look", "looking"]);
 
 export function expandQuery(raw: string): string[][] {
   let q = raw.toLowerCase().trim();

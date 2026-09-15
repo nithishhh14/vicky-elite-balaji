@@ -4,21 +4,27 @@ import PageHero from "../components/PageHero.astro";
 import { getCollection } from "astro:content";
 import { deriveApplicationTags } from "../lib/facets";
 import { waLink } from "../lib/business";
+import SaveButton from "../components/SaveButton.astro";
+
+const halls = await getCollection("halls");
+const hallNameOf = (id: string) => halls.find((h) => h.id === id)?.data.name ?? id;
 
 // Applications: the real catalogue regrouped by where the material goes.
 // Tags are derived from each product's own `applications` field (lib/facets),
 // so nothing is hand-assigned and every future product lands here on its own.
 const products = (await getCollection("products")).sort((a, b) => a.data.order - b.data.order);
 
+// Room scenes are generated application concepts (Runway, 2026-09-15) and are
+// always captioned as such; the product grids below them are the real catalogue.
 const applications = [
-  { tag: "flooring", label: "Flooring", blurb: "Living rooms, halls, verandas and commercial floors." },
+  { tag: "flooring", label: "Living & Flooring", blurb: "Living rooms, halls, verandas and commercial floors.", scene: "/media/concepts/living", sceneAlt: "Concept: living room floored in large-format white marble-look slabs" },
+  { tag: "kitchen", label: "Kitchens", blurb: "Platforms, backsplashes and kitchen floors.", scene: "/media/concepts/kitchen", sceneAlt: "Concept: kitchen with black leathered granite island and counters" },
+  { tag: "countertop", label: "Countertops", blurb: "Worktops, islands, vanity tops and counters." },
+  { tag: "bathroom", label: "Bathrooms", blurb: "Wall and floor tiles, basins, WCs and fittings.", scene: "/media/concepts/bathroom", sceneAlt: "Concept: bathroom with stone-look tiles, vessel basin on a granite vanity and wall-hung WC" },
+  { tag: "staircase", label: "Staircases", blurb: "Treads, risers and steps.", scene: "/media/concepts/staircase", sceneAlt: "Concept: interior staircase in polished dark granite with a bronze handrail" },
+  { tag: "exterior", label: "Facade, Parking & Outdoor", blurb: "Elevations, porticos, driveways, parking and pathways.", scene: "/media/concepts/facade", sceneAlt: "Concept: villa entrance with granite-clad elevation and a stone-paved driveway" },
   { tag: "walls", label: "Walls & Cladding", blurb: "Feature walls, cladding and backsplashes." },
-  { tag: "kitchen", label: "Kitchens", blurb: "Platforms, backsplashes and kitchen floors." },
-  { tag: "countertop", label: "Countertops", blurb: "Worktops, vanity tops and counters." },
-  { tag: "bathroom", label: "Bathrooms", blurb: "Wall and floor tiles, basins and fittings." },
-  { tag: "staircase", label: "Staircases", blurb: "Treads, risers and steps." },
-  { tag: "exterior", label: "Exteriors", blurb: "Courtyards, driveways, pathways and outdoor areas." },
-  { tag: "commercial", label: "Commercial", blurb: "Lobbies, retail and high-traffic spaces." },
+  { tag: "commercial", label: "Commercial", blurb: "Lobbies, retail and high-traffic spaces.", scene: "/media/reference/hero-interior", sceneAlt: "Concept: marble showroom reception" },
 ]
   .map((app) => ({
     ...app,
@@ -48,25 +54,52 @@ const applications = [
   {applications.map((app, i) => (
     <section id={app.tag} class:list={["scroll-mt-40 py-16", i % 2 === 1 && "bg-card"]}>
       <div class="mx-auto max-w-7xl px-5 lg:px-8">
+        {app.scene && (
+          <figure class="relative mb-10 overflow-hidden bg-charcoal-deep">
+            <img
+              data-gsap-reveal
+              src={`${app.scene}.jpg`}
+              srcset={app.scene.startsWith("/media/concepts/") ? `${app.scene}-960.jpg 960w, ${app.scene}.jpg 1920w` : undefined}
+              sizes="(min-width: 1280px) 1216px, 100vw"
+              alt={app.sceneAlt}
+              class="aspect-[16/9] w-full object-cover sm:aspect-[21/9]"
+              loading="lazy"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-charcoal-deep/80 via-transparent to-transparent" aria-hidden="true"></div>
+            <figcaption class="absolute inset-x-0 bottom-0 flex flex-wrap items-end justify-between gap-3 p-5 text-paper sm:p-8">
+              <span class="font-display text-3xl sm:text-5xl">{app.label}</span>
+              <span class="text-[0.55rem] uppercase tracking-[0.2em] text-paper/60">Application concept · materials below are our real catalogue</span>
+            </figcaption>
+          </figure>
+        )}
         <div class="flex flex-wrap items-end justify-between gap-4">
           <div class="reveal">
-            <p class="text-xs uppercase tracking-[0.3em] text-terracotta">{String(i + 1).padStart(2, "0")}</p>
-            <h2 class="mt-2 font-display text-4xl uppercase">{app.label}</h2>
+            <p class="text-xs uppercase tracking-[0.3em] text-mustard-dark">{app.items.length} material{app.items.length === 1 ? "" : "s"} in our catalogue</p>
+            {!app.scene && <h2 class="mt-2 font-display text-4xl">{app.label}</h2>}
+            {app.scene && <h2 class="sr-only">{app.label}</h2>}
             <p class="mt-2 text-ink-soft">{app.blurb}</p>
           </div>
-          <a href={`/search/?application=${app.tag}`} class="text-xs font-semibold uppercase tracking-[0.18em] text-terracotta hover:text-terracotta-dark">
-            Filter all {app.label.toLowerCase()} &rarr;
-          </a>
+          <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
+            <a href={`/search/?application=${app.tag}`} class="inline-flex min-h-11 items-center text-xs font-medium uppercase tracking-[0.18em] text-ink hover:text-mustard-dark">
+              Filter all &rarr;
+            </a>
+            <a href={waLink(`Hi Elite Balaji, I'm working on ${app.label.toLowerCase()} for my project. Location: ___, area: ___, style I like: ___. What would you suggest?`)} target="_blank" rel="noopener" class="inline-flex min-h-11 items-center bg-gradient-to-r from-brass to-mustard-dark px-5 text-xs uppercase tracking-[0.18em] text-paper hover:brightness-110">
+              Send project requirement
+            </a>
+          </div>
         </div>
         <div data-gsap-stagger class="mt-8 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
           {app.items.slice(0, 10).map((p) => (
-            <a href={`/products/${p.id}/`} class="group block">
-              <div class="aspect-square overflow-hidden bg-charcoal-deep">
-                <img src={p.data.image} alt={p.data.imageAlt} class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" width="400" height="400" />
-              </div>
-              <p class="mt-3 text-[0.65rem] uppercase tracking-[0.18em] text-terracotta">{p.data.brand ?? p.data.category ?? "Elite Balaji"}</p>
-              <h3 class="mt-1 text-sm leading-snug group-hover:text-terracotta transition-colors">{p.data.name}</h3>
-            </a>
+            <div class="group relative">
+              <a href={`/products/${p.id}/`} class="block">
+                <div class="aspect-square overflow-hidden bg-charcoal-deep">
+                  <img src={p.data.image} alt={p.data.imageAlt} class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" width="400" height="400" />
+                </div>
+                <p class="mt-3 text-[0.65rem] uppercase tracking-[0.18em] text-mustard-dark">{p.data.brand ?? p.data.category ?? "Elite Balaji"}</p>
+                <h3 class="mt-1 text-sm leading-snug group-hover:text-mustard-dark transition-colors">{p.data.name}</h3>
+              </a>
+              <div class="absolute right-2 top-2"><SaveButton product={p} hallName={hallNameOf(p.data.hallId)} variant="overlay" /></div>
+            </div>
           ))}
         </div>
       </div>

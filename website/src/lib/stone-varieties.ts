@@ -187,6 +187,30 @@ export const sanitarywareCategories: StoneCategory[] = [
   },
 ];
 
+// Tile types customers search for (industry vocabulary, general explanations
+// only). `match` finds real catalogue products of that type; types with no
+// match are presented as "ask us to source", never as stocked.
+export interface TileType {
+  name: string;
+  also?: string;
+  what: string;
+  bestFor: string;
+  query: string;
+  match: RegExp;
+}
+
+export const tileTypes: TileType[] = [
+  { name: "Large format", also: "600×1200, 800×1600, slabs", what: "Big tiles with few joints for a seamless, spacious look.", bestFor: "Living rooms, halls, feature walls", query: "600x1200", match: /1200|1600|2400|large format/i },
+  { name: "GVT", also: "Glazed vitrified", what: "Vitrified body with a printed glaze, so it can look like marble, stone or wood.", bestFor: "Floors across the home", query: "gvt", match: /\bgvt\b|glazed vitrified/i },
+  { name: "PGVT", also: "Polished glazed vitrified", what: "GVT with a high-gloss polished surface, for mirror-like floors.", bestFor: "Living and dining floors", query: "pgvt", match: /\bpgvt\b|polished glazed/i },
+  { name: "Double charge", what: "Two layers of pigment pressed into the tile, so the design wears well in busy areas.", bestFor: "Commercial and high-traffic floors", query: "double charge", match: /double charge/i },
+  { name: "Ceramic wall tiles", also: "Digital wall", what: "Lighter glazed tiles printed with patterns, for walls rather than floors.", bestFor: "Bathroom and kitchen walls", query: "wall tiles", match: /wall tile|12x18|300 ?x ?450|5213/i },
+  { name: "Heritage & patterned", also: "Athangudi, Moroccan", what: "Handmade or patterned tiles that bring colour and craft to a floor.", bestFor: "Verandas, pooja rooms, accent floors", query: "athangudi", match: /athangudi|moroccan|pattern/i },
+  { name: "Parking & anti-skid", also: "Outdoor, heavy duty", what: "Textured, thicker tiles with grip for wet and vehicle areas.", bestFor: "Car parking, driveways, portico, wash areas", query: "parking", match: /parking|anti.?skid|heavy duty/i },
+  { name: "Elevation tiles", also: "Exterior cladding", what: "Weather-resistant tiles for front walls and building facades.", bestFor: "Front elevation, compound walls", query: "elevation", match: /elevation/i },
+  { name: "Wood-look", what: "Plank-shaped tiles with wood grain, without the upkeep of timber.", bestFor: "Bedrooms, balconies, decks", query: "wood", match: /wood/i },
+];
+
 export const tileSizes = [
   "300 x 300mm", "300 x 600mm", "600 x 600mm", "600 x 1200mm",
   "800 x 800mm", "800 x 1600mm", "1200 x 2400mm",

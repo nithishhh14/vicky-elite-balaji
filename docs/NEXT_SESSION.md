@@ -10,7 +10,34 @@ domain, or set up hosting without new, explicit user permission (the user
 answered "No, not yet" to a direct deployment question on 2026-09-12, and a
 later brief reiterated deployment is out of scope for now).
 
-## Latest (2026-09-15, evening) — Project Maharaja pass
+## Latest (2026-09-15, late) — discovery & enquiry layer
+See the top entry of `docs/DECISIONS.md`.
+- **New:**
+  - `/shortlist/` (My Materials: save / compare / share / enquire all)
+  - `/catalogue.json`
+  - `SaveButton.astro`
+  - `src/lib/similarity.ts`, `src/scripts/shortlist.ts`
+  - `public/media/concepts/` (5 generated application scenes, labelled)
+- **Upgraded:**
+  - product pages (intents + Find similar)
+  - Material Finder (live products)
+  - Granite page (filters)
+  - Tiles world page (tile types)
+  - Applications (room scenes + send-requirement CTA)
+  - Custom Stonecraft (pinned horizontal process)
+  - search vocabulary
+- **Verified:**
+  - build 68 pages, 0 type errors, 0 broken links or images
+  - scripted browser tests of save / shortlist / compare / share,
+    Find similar, finder, granite filters, tile types and search
+  - 12 pages at 375px (touch): no overflow
+  - pinned scroll works on desktop
+- **Still needs the client:** confirm granite IDs; Kota lot photos; quartz,
+  sanitaryware and Kadappa photos; real reviews; the domain.
+- **Optional paid upgrade:** Runway paid plan for hero, granite and
+  stonecraft video.
+
+## Earlier (2026-09-15, evening) — Project Maharaja pass
 Read the top entry of `docs/DECISIONS.md` and `docs/MAHARAJA_AUDIT.md` first.
 - **Real client photos are in:**
   - Media: `public/media/client/`; provenance lives in `src/lib/media-library.ts`.
