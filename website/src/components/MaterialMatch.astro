@@ -107,7 +107,10 @@ const chip = "min-h-11 border border-paper/20 px-4 py-2 text-xs uppercase tracki
     <div data-results hidden class="mm-results">
       <p data-brief class="font-display text-2xl text-paper sm:text-3xl"></p>
       <div data-products-wrap class="mt-6" hidden>
-        <p class="text-[0.65rem] uppercase tracking-[0.22em] text-brass">From our catalogue</p>
+        <p class="flex flex-wrap items-baseline gap-x-3 text-[0.65rem] uppercase tracking-[0.22em] text-brass">
+          From our catalogue
+          <span class="text-paper/60"><span data-mm-count class="font-display text-2xl normal-case tracking-normal text-paper tabular-nums">0</span> <span data-mm-count-label>materials match</span></span>
+        </p>
         <ul data-products class="no-scrollbar -mx-5 mt-4 flex snap-x gap-3 overflow-x-auto px-5 pb-2 lg:mx-0 lg:grid lg:grid-cols-4 lg:overflow-visible lg:px-0"></ul>
       </div>
       <p class="mt-8 text-[0.65rem] uppercase tracking-[0.22em] text-brass">Material categories to explore</p>
@@ -134,6 +137,14 @@ const chip = "min-h-11 border border-paper/20 px-4 py-2 text-xs uppercase tracki
         render();
       }).catch(function () { catalogue = []; });
       return loading;
+    }
+    // Fetch the catalogue as the finder approaches, so the first choice
+    // renders results immediately (no late layout jump after the click).
+    if ("IntersectionObserver" in window) {
+      var preload = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) { loadCatalogue(); preload.disconnect(); }
+      }, { rootMargin: "400px 0px" });
+      preload.observe(root);
     }
     var surfaceTag = { floor: "flooring", wall: "walls", kitchen: "kitchen", bathroom: "bathroom", staircase: "staircase", facade: "exterior", parking: "exterior", countertop: "countertop", feature: "walls" };
     function productScore(p) {
@@ -181,6 +192,19 @@ const chip = "min-h-11 border border-paper/20 px-4 py-2 text-xs uppercase tracki
       var z = state.size[0];
       return (z === "Large format" ? /1200|1600|2400|large/ : z === "Slab" ? /slab/ : /300|600 ?x ?600|standard/).test(text);
     }
+    // The count eases to its new value so narrowing the brief feels live.
+    var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    function tweenCount(el, to) {
+      if (!el) return;
+      var from = Number(el.textContent) || 0;
+      if (reduceMotion || from === to) { el.textContent = String(to); return; }
+      var start = performance.now();
+      (function step(now) {
+        var t = Math.min(1, (now - start) / 450);
+        el.textContent = String(Math.round(from + (to - from) * (1 - Math.pow(1 - t, 3))));
+        if (t < 1) requestAnimationFrame(step);
+      })(start);
+    }
     function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
     root.querySelectorAll("[data-group]").forEach(function (group) {
       var key = group.getAttribute("data-group");
@@ -220,12 +244,15 @@ const chip = "min-h-11 border border-paper/20 px-4 py-2 text-xs uppercase tracki
       var pwrap = root.querySelector("[data-products-wrap]");
       var plist = root.querySelector("[data-products]");
       if (catalogue) {
-        var matches = catalogue.map(function (p) { return { p: p, s: productScore(p) }; }).filter(function (x) { return x.s > 0; })
-          .sort(function (a, b) { return b.s - a.s; }).slice(0, 8);
+        var allMatches = catalogue.map(function (p) { return { p: p, s: productScore(p) }; }).filter(function (x) { return x.s > 0; })
+          .sort(function (a, b) { return b.s - a.s; });
+        var matches = allMatches.slice(0, 8);
         pwrap.hidden = matches.length === 0;
+        tweenCount(root.querySelector("[data-mm-count]"), allMatches.length);
+        root.querySelector("[data-mm-count-label]").textContent = (allMatches.length === 1 ? "material matches" : "materials match") + (allMatches.length > 8 ? " · top 8 shown" : "");
         plist.innerHTML = matches.map(function (x, i) {
           var p = x.p;
-          return '<li class="mm-card w-[62vw] max-w-[15rem] flex-shrink-0 snap-start lg:w-auto lg:max-w-none" style="animation-delay:' + (i * 45) + 'ms"><a href="' + p.url + '" class="group block"><span class="block overflow-hidden bg-charcoal"><img src="' + p.image + '" alt="" loading="lazy" class="aspect-[4/3] w-full object-cover transition-transform duration-700 group-hover:scale-105" /></span><span class="mt-2 block text-sm leading-snug text-paper group-hover:text-brass">' + esc(p.name) + '</span><span class="block text-[0.6rem] uppercase tracking-[0.16em] text-paper/50">' + esc(p.hall) + '</span></a></li>';
+          return '<li class="mm-card w-[62vw] max-w-[15rem] flex-shrink-0 snap-start lg:w-auto lg:max-w-none" style="animation-delay:' + (i * 45) + 'ms"><a href="' + p.url + '" class="group block"><span class="block overflow-hidden bg-charcoal"><img src="' + p.image + '" alt="" loading="lazy" class="aspect-[4/3] w-full object-cover eb-img" /></span><span class="mt-2 block text-sm leading-snug text-paper group-hover:text-brass">' + esc(p.name) + '</span><span class="block text-[0.6rem] uppercase tracking-[0.16em] text-paper/50">' + esc(p.hall) + '</span></a></li>';
         }).join("");
       }
       var score = {};
@@ -236,10 +263,12 @@ const chip = "min-h-11 border border-paper/20 px-4 py-2 text-xs uppercase tracki
       if (state.surface.indexOf("parking") > -1 || state.finish.indexOf("Anti-skid") > -1) add(["kota", "granite", "tiles"], 0.5);
       var top = Object.keys(score).sort(function (a, b) { return score[b] - score[a]; }).slice(0, 6);
       list.innerHTML = "";
-      top.forEach(function (key) {
+      top.forEach(function (key, i) {
         var c = categories[key];
         var li = document.createElement("li");
-        li.innerHTML = '<a class="group block h-full border border-paper/15 p-4 transition-colors hover:border-brass" href="' + c.href + '"><span class="block font-display text-2xl">' + c.label + '</span><span class="mt-1 block text-sm text-paper/65">' + c.why + '</span><span class="mt-3 block text-[0.6rem] uppercase tracking-[0.2em] text-brass">Explore &rarr;</span></a>';
+        li.className = "mm-card";
+        li.style.animationDelay = (120 + i * 50) + "ms";
+        li.innerHTML = '<a class="group block h-full border border-paper/15 p-4 transition-colors hover:border-brass" href="' + c.href + '"><span class="block font-display text-2xl">' + c.label + '</span><span class="mt-1 block text-sm text-paper/65">' + c.why + '</span><span class="mt-3 flex items-center gap-2 text-[0.6rem] uppercase tracking-[0.2em] text-brass">Explore <span class="arrow" aria-hidden="true">&rarr;</span></span></a>';
         list.appendChild(li);
       });
       var parts = [];

@@ -40,10 +40,10 @@ const hallNameOf = (id: string) => halls.find((h) => h.id === id)?.data.name ?? 
 
 const what = product.data.category ? `${name} (${product.data.category})` : name;
 const intents = [
-  { label: "Do you have this in stock?", message: `Hi Elite Balaji, do you have ${what} in stock right now?` },
-  { label: "Can I see a sample or photos?", message: `Hi Elite Balaji, can I see a sample or current photos of ${what}?` },
-  { label: "Suggest an alternative", message: `Hi Elite Balaji, I'm interested in ${what}. Can you suggest alternatives in a similar look or budget?` },
-  { label: "I need this for my project", message: `Hi Elite Balaji, I need ${what} for my project. Location: ___, area/quantity: ___, timeline: ___.` },
+  { label: "Do you have this in stock?", intent: "Ask price & availability", message: `Hi Elite Balaji, do you have ${what} in stock right now?` },
+  { label: "Can I see a sample or photos?", intent: "Request a sample or photos", message: `Hi Elite Balaji, can I see a sample or current photos of ${what}?` },
+  { label: "Suggest an alternative", intent: "Suggest an alternative", message: `Hi Elite Balaji, I'm interested in ${what}. Can you suggest alternatives in a similar look or budget?` },
+  { label: "I need this for my project", intent: "Send my project requirement", message: `Hi Elite Balaji, I need ${what} for my project. Location: ___, area/quantity: ___, timeline: ___.` },
 ];
 
 // No "offers" block: this site never publishes prices (trade rates are
@@ -76,6 +76,7 @@ const breadcrumbJsonLd = {
   title={`${name} | ${hallName} | Elite Balaji Stones & Ceramics`}
   description={`${name}: ${[product.data.category, product.data.finish].filter(Boolean).join(", ")}. Ask for trade rate.`}
   enquiryMessage={productEnquiryMessage(name, product.data.category)}
+  enquiry={{ label: "Ask about this material", shortLabel: "Ask about this", product: name, category: product.data.category ?? hallName }}
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(productJsonLd)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
@@ -95,7 +96,7 @@ const breadcrumbJsonLd = {
        own white borders -- cropping the swatch cards to fill the frame would
        cut off real card content, not just empty space. -->
   <section class="mx-auto max-w-6xl px-5 pt-6">
-    <div class="relative flex h-[50vh] min-h-[340px] items-center justify-center overflow-hidden rounded-sm bg-card">
+    <div data-depth class="relative flex h-[50vh] min-h-[340px] items-center justify-center overflow-hidden rounded-sm bg-card">
       {imageBadge(image) && (
         <span class="absolute bottom-3 left-3 z-10 bg-charcoal-deep/80 px-3 py-1.5 text-[0.6rem] uppercase tracking-[0.18em] text-paper backdrop-blur">
           {imageBadge(image)}, not our stock
@@ -182,14 +183,18 @@ const breadcrumbJsonLd = {
         href={waLink(productEnquiryMessage(name, product.data.category))}
         target="_blank"
         rel="noopener"
-        aria-label={`Ask price and availability for ${name} on WhatsApp`}
+        aria-label={`Ask price and availability for ${name}`}
         data-gsap-magnetic
-        class="inline-flex min-h-12 items-center bg-gradient-to-r from-brass to-mustard-dark px-6 py-3 text-xs font-medium uppercase tracking-[0.18em] text-paper hover:brightness-110 transition"
+        data-enquire="Ask price & availability"
+        data-product={name}
+        data-category={product.data.category ?? hallName}
+        class="btn-arrow inline-flex min-h-12 items-center gap-3 bg-gradient-to-r from-brass to-mustard-dark px-6 py-3 text-xs font-medium uppercase tracking-[0.18em] text-paper hover:brightness-110"
       >
         Ask price &amp; availability
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
       <SaveButton product={product} hallName={hallName} variant="button" />
-      <a href="#similar" class="inline-flex min-h-12 items-center border border-line px-6 py-3 text-xs uppercase tracking-[0.18em] text-ink-soft hover:border-brass hover:text-ink transition-colors">Find similar</a>
+      <a href="#similar" class="inline-flex min-h-12 items-center border border-line px-6 py-3 text-xs uppercase tracking-[0.18em] text-ink-soft hover:border-brass hover:text-ink">Find similar</a>
     </div>
 
     <!-- Contextual enquiries: each opens WhatsApp with a message that already
@@ -199,9 +204,9 @@ const breadcrumbJsonLd = {
       <ul class="mt-4 grid gap-2 text-left sm:grid-cols-2">
         {intents.map((intent) => (
           <li>
-            <a href={waLink(intent.message)} target="_blank" rel="noopener" class="group flex min-h-12 items-center justify-between gap-3 border border-line bg-card px-4 py-3 text-sm transition-colors hover:border-brass">
+            <a href={waLink(intent.message)} target="_blank" rel="noopener" data-enquire={intent.intent} data-product={name} data-category={product.data.category ?? hallName} class="group flex min-h-12 items-center justify-between gap-3 border border-line bg-card px-4 py-3 text-sm hover:border-brass">
               <span>{intent.label}</span>
-              <span aria-hidden="true" class="text-brass transition-transform group-hover:translate-x-1">&rarr;</span>
+              <span aria-hidden="true" class="arrow text-brass">&rarr;</span>
             </a>
           </li>
         ))}
@@ -237,13 +242,14 @@ const breadcrumbJsonLd = {
               {g.items.map((r) => (
                 <li class="group relative">
                   <a href={`/products/${r.id}/`} class="relative block overflow-hidden bg-charcoal-deep">
-                    <img src={r.data.image} alt={r.data.imageAlt} class="aspect-[4/3] w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+                    <img src={r.data.image} alt={r.data.imageAlt} class="eb-img aspect-[4/3] w-full object-cover" loading="lazy" />
                     {imageBadge(r.data.image) && (
                       <span class="absolute bottom-1.5 left-1.5 bg-charcoal-deep/75 px-2 py-0.5 text-[0.5rem] uppercase tracking-[0.16em] text-paper">{imageBadge(r.data.image)}</span>
                     )}
                   </a>
                   <div class="absolute right-2 top-2"><SaveButton product={r} hallName={hallNameOf(r.data.hallId)} variant="overlay" /></div>
-                  <a href={`/products/${r.id}/`} class="mt-3 block font-display text-xl leading-tight hover:text-mustard-dark">{r.data.name}</a>
+                  <span class="eb-rule mt-3" aria-hidden="true"></span>
+                  <a href={`/products/${r.id}/`} class="mt-2 block font-display text-xl leading-tight hover:text-mustard-dark">{r.data.name}</a>
                   <p class="text-xs text-ink-soft">{[hallNameOf(r.data.hallId), r.data.finish].join(" · ")}</p>
                 </li>
               ))}

@@ -1,0 +1,163 @@
+---
+// Contextual enquiry drawer. Any element with [data-enquire] opens it with the
+// product/category/intent already filled in. There is no backend: "Send on
+// WhatsApp" opens WhatsApp with the composed message, "Email instead" opens
+// the mail app. Nothing typed here is stored or sent anywhere else.
+// Trigger links keep their normal wa.me href, so no-JS and modified clicks
+// (new tab) still work.
+import { business } from "../lib/business";
+
+const intents = [
+  "Ask price & availability",
+  "Request a sample or photos",
+  "Suggest an alternative",
+  "Send my project requirement",
+  "Discuss custom work",
+  "Request a quote",
+];
+const field =
+  "mt-1.5 w-full border border-paper/15 bg-paper/[0.04] px-3.5 py-3 text-sm text-paper placeholder:text-paper/30 transition-colors focus:border-brass focus:outline-none";
+const label = "text-[0.6rem] uppercase tracking-[0.2em] text-paper/60";
+---
+
+<div id="enquiry-drawer" hidden data-state="closed" class="eb-dialog eb-drawer fixed inset-0 z-[60]" role="dialog" aria-modal="true" aria-labelledby="enquiry-title">
+  <div data-enquiry-close class="absolute inset-0 bg-charcoal-deep/70 backdrop-blur-sm"></div>
+  <div class="eb-dialog-panel absolute inset-x-0 bottom-0 flex max-h-[92svh] flex-col border-t border-brass/40 bg-charcoal-deep text-paper shadow-lift sm:inset-y-0 sm:left-auto sm:right-0 sm:max-h-none sm:w-[min(30rem,100%)] sm:border-l sm:border-t-0">
+    <div class="flex items-start justify-between gap-4 border-b border-paper/10 px-6 pb-5 pt-6">
+      <div class="min-w-0">
+        <p class="text-[0.6rem] uppercase tracking-[0.26em] text-brass" data-enquiry-intent-label>Enquiry</p>
+        <h2 id="enquiry-title" class="mt-1 font-display text-3xl leading-tight" data-enquiry-heading>Talk to Elite Balaji</h2>
+        <p class="mt-1 truncate text-xs uppercase tracking-[0.16em] text-paper/50" data-enquiry-sub></p>
+      </div>
+      <button type="button" data-enquiry-close class="inline-flex h-11 w-11 flex-shrink-0 items-center justify-center border border-paper/15 text-paper/70 hover:border-brass hover:text-brass" aria-label="Close enquiry">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke-linecap="round" /></svg>
+      </button>
+    </div>
+
+    <form data-enquiry-form class="flex-1 overflow-y-auto px-6 py-5" novalidate>
+      <div class="eb-stagger grid gap-4">
+        <div style="--i:0">
+          <p class={label}>I'd like to</p>
+          <div class="mt-2 flex flex-wrap gap-2" role="group" aria-label="What would you like to do?">
+            {intents.map((i) => (
+              <button type="button" data-intent={i} aria-pressed="false" class="min-h-10 border border-paper/15 px-3 py-2 text-[0.65rem] uppercase tracking-[0.12em] text-paper/75 hover:border-brass aria-pressed:border-brass aria-pressed:bg-brass aria-pressed:text-charcoal-deep">{i}</button>
+            ))}
+          </div>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-2" style="--i:1">
+          <label class="block sm:col-span-2"><span class={label}>Product or material</span><input id="enq-product" name="product" class={field} placeholder="e.g. Black Galaxy granite" /></label>
+          <label class="block"><span class={label}>Your name</span><input id="enq-name" name="name" autocomplete="name" class={field} /></label>
+          <label class="block"><span class={label}>Phone</span><input id="enq-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" class={field} /></label>
+          <label class="block"><span class={label}>Location</span><input id="enq-location" name="location" autocomplete="address-level2" placeholder="e.g. Mettupalayam" class={field} /></label>
+          <label class="block"><span class={label}>Quantity / area</span><input id="enq-qty" name="quantity" placeholder="e.g. 450 sq ft" class={field} /></label>
+        </div>
+        <label class="block" style="--i:2"><span class={label}>Message</span><textarea id="enq-message" name="message" rows="3" class={field} placeholder="Room, timeline, colour you like…"></textarea></label>
+        <input type="hidden" name="category" id="enq-category" />
+        <input type="hidden" name="url" id="enq-url" />
+      </div>
+    </form>
+
+    <div class="border-t border-paper/10 px-6 py-5">
+      <button type="button" data-enquiry-wa class="btn-arrow flex min-h-12 w-full items-center justify-center gap-3 bg-whatsapp px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.2em] text-paper hover:brightness-110">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.36 5.07L2 22l5.06-1.33A9.94 9.94 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2Zm0 18c-1.62 0-3.14-.44-4.44-1.2l-.32-.19-3 .79.8-2.92-.2-.3A7.94 7.94 0 0 1 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8Z"/></svg>
+        Send on WhatsApp
+      </button>
+      <div class="mt-3 flex items-center justify-between gap-3 text-[0.65rem] uppercase tracking-[0.16em] text-paper/50">
+        <a data-enquiry-email href={`mailto:${business.email}`} class="link-gold min-h-11 inline-flex items-center">Email instead</a>
+        <a href={`tel:${business.phoneTel}`} class="link-gold min-h-11 inline-flex items-center">Call {business.phoneDisplay}</a>
+      </div>
+      <p class="text-[0.65rem] leading-relaxed text-paper/40">Opens WhatsApp with your message ready to send. Nothing is stored on this website.</p>
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ phoneWa: business.phoneWa, email: business.email }} is:inline>
+  (function () {
+    var drawer = document.getElementById("enquiry-drawer");
+    if (!drawer) return;
+    var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var $ = function (s) { return drawer.querySelector(s); };
+    var state = { intent: "Ask price & availability", category: "", url: "" };
+    var lastFocus = null;
+    var timer;
+
+    function setIntent(intent) {
+      state.intent = intent;
+      drawer.querySelectorAll("[data-intent]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-intent") === intent)); });
+      $("[data-enquiry-intent-label]").textContent = intent;
+    }
+
+    function compose() {
+      var v = function (id) { return (document.getElementById(id).value || "").trim(); };
+      var product = v("enq-product");
+      var lines = ["Hi Elite Balaji,", "I'd like to: " + state.intent.toLowerCase()];
+      if (product) lines.push("Material: " + product + (state.category ? " (" + state.category + ")" : ""));
+      if (state.url) lines.push("Link: " + state.url);
+      if (v("enq-qty")) lines.push("Quantity / area: " + v("enq-qty"));
+      if (v("enq-location")) lines.push("Location: " + v("enq-location"));
+      if (v("enq-message")) lines.push(v("enq-message"));
+      if (v("enq-name") || v("enq-phone")) lines.push("— " + [v("enq-name"), v("enq-phone")].filter(Boolean).join(", "));
+      return lines.join("\n");
+    }
+
+    function open(trigger) {
+      lastFocus = trigger || document.activeElement;
+      var d = (trigger && trigger.dataset) || {};
+      var product = d.product || "";
+      state.category = d.category || "";
+      state.url = d.url ? new URL(d.url, location.origin).toString() : (d.product ? location.href.split("#")[0] : "");
+      document.getElementById("enq-product").value = product;
+      document.getElementById("enq-category").value = state.category;
+      document.getElementById("enq-url").value = state.url;
+      setIntent(d.enquire && d.enquire !== "" ? d.enquire : "Ask price & availability");
+      $("[data-enquiry-heading]").textContent = product || d.heading || "Talk to Elite Balaji";
+      $("[data-enquiry-sub]").textContent = state.category || (product ? "" : "Karamadai · Coimbatore");
+      clearTimeout(timer);
+      drawer.hidden = false;
+      void drawer.offsetWidth;
+      drawer.setAttribute("data-state", "open");
+      document.documentElement.classList.add("drawer-lock", "overlay-open");
+      setTimeout(function () {
+        var first = product ? document.getElementById("enq-name") : document.getElementById("enq-product");
+        if (window.matchMedia("(pointer: fine)").matches) first.focus({ preventScroll: true });
+        else $("[data-enquiry-close]:not(.absolute)").focus({ preventScroll: true });
+      }, reduce ? 0 : 120);
+    }
+
+    function close() {
+      drawer.setAttribute("data-state", "closed");
+      document.documentElement.classList.remove("drawer-lock", "overlay-open");
+      timer = setTimeout(function () { drawer.hidden = true; }, reduce ? 0 : 450);
+      if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+    }
+
+    document.addEventListener("click", function (e) {
+      var t = e.target.closest("[data-enquire]");
+      if (!t || e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
+      e.preventDefault();
+      open(t);
+    });
+    drawer.addEventListener("click", function (e) {
+      if (e.target.closest("[data-enquiry-close]")) close();
+      var i = e.target.closest("[data-intent]");
+      if (i) setIntent(i.getAttribute("data-intent"));
+      if (e.target.closest("[data-enquiry-wa]")) {
+        window.open("https://wa.me/" + phoneWa + "?text=" + encodeURIComponent(compose()), "_blank", "noopener");
+      }
+    });
+    $("[data-enquiry-email]").addEventListener("click", function (e) {
+      e.preventDefault();
+      var product = document.getElementById("enq-product").value.trim();
+      var subject = state.intent + (product ? ": " + product : "");
+      location.href = "mailto:" + email + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(compose());
+    });
+    drawer.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") { e.preventDefault(); close(); return; }
+      if (e.key !== "Tab") return;
+      var f = Array.prototype.filter.call(drawer.querySelectorAll("button, input:not([type=hidden]), textarea, a[href]"), function (el) { return el.offsetParent !== null; });
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+  })();
+</script>

@@ -1,0 +1,176 @@
+---
+// Search command overlay, opened from the header search icon. The icon stays
+// a plain link to /search/ so everything works without JS; with JS it opens
+// this overlay, which searches the same /search-index.json as the full page.
+const suggestions = ["Black granite", "White marble", "600x1200 tiles", "Bathroom tiles", "Quartz countertop", "Quartz sink", "Wood-look granite", "Tulsi madam"];
+---
+
+<div id="search-overlay" hidden data-state="closed" class="eb-dialog fixed inset-0 z-[60]" role="dialog" aria-modal="true" aria-labelledby="search-overlay-title">
+  <div data-search-close class="absolute inset-0 bg-charcoal-deep/80 backdrop-blur-md"></div>
+  <div class="eb-dialog-panel relative mx-auto mt-[max(4rem,10vh)] w-[min(46rem,calc(100%-2rem))] border border-brass/30 bg-charcoal-deep text-paper shadow-lift">
+    <form action="/search/" method="get" class="flex items-center gap-4 border-b border-paper/10 px-5 py-4 sm:px-7" role="search">
+      <svg class="flex-shrink-0 text-brass" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" stroke-linecap="round" /></svg>
+      <label for="search-overlay-input" id="search-overlay-title" class="sr-only">Search granite, marble, tiles and more</label>
+      <input
+        id="search-overlay-input"
+        name="q"
+        type="search"
+        autocomplete="off"
+        spellcheck="false"
+        placeholder="Search granite, marble, tiles…"
+        class="min-w-0 flex-1 bg-transparent font-display text-2xl text-paper placeholder:text-paper/35 focus:outline-none sm:text-3xl"
+        aria-controls="search-overlay-results"
+      />
+      <button type="button" data-search-close class="inline-flex h-10 flex-shrink-0 items-center px-2 text-[0.6rem] uppercase tracking-[0.2em] text-paper/55 hover:text-brass">Esc</button>
+    </form>
+
+    <div class="max-h-[min(60svh,34rem)] overflow-y-auto px-5 py-5 sm:px-7">
+      <div data-search-suggest>
+        <p class="text-[0.6rem] uppercase tracking-[0.24em] text-brass">Try</p>
+        <ul class="eb-stagger mt-3 flex flex-wrap gap-2">
+          {suggestions.map((s, i) => (
+            <li style={`--i:${i}`}><button type="button" data-suggest={s} class="min-h-10 border border-paper/15 px-3.5 py-2 text-xs uppercase tracking-[0.14em] text-paper/80 hover:border-brass hover:text-brass">{s}</button></li>
+          ))}
+        </ul>
+      </div>
+      <p data-search-status class="mt-1 text-xs text-paper/50" aria-live="polite"></p>
+      <ul id="search-overlay-results" data-search-results class="mt-3 divide-y divide-paper/10" role="listbox"></ul>
+      <a data-search-all href="/search/" class="btn-arrow mt-5 inline-flex min-h-11 items-center gap-3 text-xs uppercase tracking-[0.2em] text-brass hover:text-paper">
+        Open the full catalogue search
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { expandQuery, matchesQuery } from "../lib/search-synonyms";
+
+  type Item = { id: string; url: string; name: string; hall: string; category: string; finish: string; size: string; applications: string[]; image: string; colours: string[]; character: string[]; applicationTags: string[] };
+
+  const overlay = document.getElementById("search-overlay") as HTMLElement | null;
+  const input = document.getElementById("search-overlay-input") as HTMLInputElement | null;
+
+  if (overlay && input) {
+    const results = overlay.querySelector<HTMLElement>("[data-search-results]")!;
+    const status = overlay.querySelector<HTMLElement>("[data-search-status]")!;
+    const suggest = overlay.querySelector<HTMLElement>("[data-search-suggest]")!;
+    const all = overlay.querySelector<HTMLAnchorElement>("[data-search-all]")!;
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let items: Item[] | null = null;
+    let lastFocus: HTMLElement | null = null;
+    let active = -1;
+    let timer: number | undefined;
+
+    const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
+    const haystack = (i: Item) =>
+      [i.name, i.hall === "Granite & Marbles" && i.category !== "Hall" ? "" : i.hall, i.category, i.finish, i.size, ...i.applications, ...i.colours, ...i.character, ...i.applicationTags].join(" ").toLowerCase();
+
+    const load = () =>
+      items
+        ? Promise.resolve(items)
+        : fetch("/search-index.json").then((r) => r.json()).then((d: Item[]) => (items = d)).catch(() => (items = []));
+
+    function open() {
+      lastFocus = document.activeElement as HTMLElement;
+      clearTimeout(timer);
+      overlay!.hidden = false;
+      void overlay!.offsetWidth;
+      overlay!.setAttribute("data-state", "open");
+      document.documentElement.classList.add("drawer-lock", "overlay-open");
+      input!.focus();
+      load();
+    }
+    function close() {
+      overlay!.setAttribute("data-state", "closed");
+      document.documentElement.classList.remove("drawer-lock", "overlay-open");
+      timer = window.setTimeout(() => (overlay!.hidden = true), reduce ? 0 : 400);
+      lastFocus?.focus();
+    }
+
+    function render() {
+      const q = input!.value.trim();
+      all.href = q ? `/search/?q=${encodeURIComponent(q)}` : "/search/";
+      suggest.hidden = q.length > 0;
+      active = -1;
+      if (!q) {
+        results.innerHTML = "";
+        status.textContent = "";
+        return;
+      }
+      if (!items) {
+        status.textContent = "Loading the catalogue…";
+        load().then(render);
+        return;
+      }
+      const groups = expandQuery(q);
+      let list = items.filter((i) => groups.length && matchesQuery(haystack(i), groups));
+      let closest = false;
+      if (!list.length && groups.length > 1) {
+        list = items
+          .map((i) => ({ i, s: groups.filter((g) => matchesQuery(haystack(i), [g])).length }))
+          .filter((x) => x.s > 0)
+          .sort((a, b) => b.s - a.s)
+          .map((x) => x.i);
+        closest = list.length > 0;
+      }
+      const shown = list.slice(0, 6);
+      status.textContent = list.length
+        ? `${closest ? "Closest matches" : `${list.length} match${list.length === 1 ? "" : "es"}`}${list.length > 6 ? " · showing 6" : ""}`
+        : "No match yet. Try another word, or ask us to source it.";
+      results.innerHTML = shown
+        .map(
+          (i, n) => `<li role="option" id="so-${n}" style="--i:${n}" class="so-row"><a href="${i.url}" class="group flex items-center gap-4 py-3">
+            ${i.image ? `<span class="block h-14 w-14 flex-shrink-0 overflow-hidden bg-charcoal"><img src="${i.image}" alt="" loading="lazy" class="eb-img h-full w-full object-cover" /></span>` : `<span class="h-14 w-14 flex-shrink-0 border border-paper/10"></span>`}
+            <span class="min-w-0 flex-1"><span class="block text-[0.6rem] uppercase tracking-[0.18em] text-brass">${esc(i.category === "Hall" ? "Showroom hall" : i.hall)}</span><span class="block truncate font-display text-xl text-paper group-hover:text-brass">${esc(i.name)}</span><span class="block truncate text-xs text-paper/50">${esc([i.finish, i.size].filter(Boolean).join(" · "))}</span></span>
+            <span class="arrow text-brass" aria-hidden="true">&rarr;</span></a></li>`
+        )
+        .join("");
+      results.classList.remove("is-in");
+      results.classList.add("eb-stagger");
+      requestAnimationFrame(() => results.classList.add("is-in"));
+    }
+
+    function move(delta: number) {
+      const rows = [...results.querySelectorAll<HTMLElement>("li a")];
+      if (!rows.length) return;
+      active = (active + delta + rows.length) % rows.length;
+      rows[active].focus();
+    }
+
+    document.addEventListener("click", (e) => {
+      const trigger = (e.target as HTMLElement).closest<HTMLAnchorElement>("[data-search-open]");
+      if (!trigger || e.metaKey || e.ctrlKey || e.shiftKey) return;
+      e.preventDefault();
+      open();
+    });
+    overlay.addEventListener("click", (e) => {
+      const t = e.target as HTMLElement;
+      if (t.closest("[data-search-close]")) close();
+      const s = t.closest<HTMLElement>("[data-suggest]");
+      if (s) {
+        input.value = s.dataset.suggest!;
+        render();
+        input.focus();
+      }
+    });
+    input.addEventListener("input", render);
+    overlay.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") { e.preventDefault(); close(); }
+      else if (e.key === "ArrowDown") { e.preventDefault(); move(1); }
+      else if (e.key === "ArrowUp") { e.preventDefault(); move(-1); }
+      else if (e.key === "Tab") {
+        const f = [...overlay.querySelectorAll<HTMLElement>("input, button:not([hidden]), a[href]")].filter((el) => el.offsetParent !== null);
+        const first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "/" && overlay.hidden && !(e.target as HTMLElement).closest("input, textarea, select, [contenteditable]")) {
+        e.preventDefault();
+        open();
+      }
+    });
+  }
+</script>

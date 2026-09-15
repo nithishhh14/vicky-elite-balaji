@@ -9,6 +9,7 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "qa": "node scripts/qa.mjs",
+    "qa:experience": "node scripts/experience.mjs",
     "astro": "astro"
   },
   "dependencies": {

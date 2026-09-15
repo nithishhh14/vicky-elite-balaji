@@ -3,17 +3,21 @@ import Seo from "../components/Seo.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import EnquiryBar from "../components/EnquiryBar.astro";
+import EnquiryDrawer from "../components/EnquiryDrawer.astro";
+import SearchOverlay from "../components/SearchOverlay.astro";
 import "../styles/global.css";
 
 interface Props {
   title: string;
   description: string;
   enquiryMessage?: string;
+  // Floating CTA context, e.g. { label: "Ask about granite", category: "Granite" }.
+  enquiry?: { label?: string; shortLabel?: string; product?: string; category?: string; intent?: string };
   // Homepage: header floats transparent over the full-bleed hero.
   overlayHeader?: boolean;
 }
 
-const { title, description, enquiryMessage, overlayHeader = false } = Astro.props;
+const { title, description, enquiryMessage, enquiry = {}, overlayHeader = false } = Astro.props;
 ---
 
 <!doctype html>
@@ -40,7 +44,9 @@ const { title, description, enquiryMessage, overlayHeader = false } = Astro.prop
       <slot />
     </main>
     <SiteFooter />
-    <EnquiryBar message={enquiryMessage} />
+    <EnquiryBar message={enquiryMessage} {...enquiry} />
+    <EnquiryDrawer />
+    <SearchOverlay />
     <script is:inline>
       (function () {
         document.documentElement.classList.add("js-reveal-ready");

@@ -25,7 +25,7 @@ const halls = (await getCollection("halls")).sort((a, b) => a.data.order - b.dat
               <img
                 src={hall.data.heroImage}
                 alt={hall.data.heroAlt}
-                class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                class="h-full w-full object-cover eb-img"
                 loading="lazy"
               />
               {imageBadge(hall.data.heroImage) && (

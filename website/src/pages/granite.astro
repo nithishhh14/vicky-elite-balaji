@@ -5,6 +5,8 @@ import { waLink, telLink, productEnquiryMessage } from "../lib/business";
 import { mediaIn, provenanceLabel } from "../lib/media-library";
 import { stoneCategories } from "../lib/stone-varieties";
 import SaveButton from "../components/SaveButton.astro";
+import AmbientVideo from "../components/AmbientVideo.astro";
+import { videoZones } from "../lib/video-zones";
 
 // Granite as a hero category: every specimen below is a photograph of Elite
 // Balaji's own slab stock (src/lib/media-library.ts). Names were identified
@@ -18,8 +20,10 @@ const families = [
   { label: "Brown & red", ids: ["granite-tan-brown", "granite-tan-brown-leathered", "granite-kondagattu", "granite-marvel-red-lappato"] },
   { label: "Blue & blue-grey", ids: ["granite-blue-pearl", "granite-blue-pearl-leathered", "granite-black-pearl"] },
   { label: "Grey", ids: ["granite-steel-grey"] },
-  { label: "Wood-grain & sandstone", ids: ["granite-wooden", "granite-teakwood", "granite-sandstone"] },
+  { label: "Wood-grain", ids: ["granite-wooden", "granite-teakwood"] },
+  { label: "Sandstone", ids: ["granite-sandstone"] },
 ].map((f) => ({ ...f, items: products.filter((p) => f.ids.includes(p.id)) }));
+const stageFirst = families[0].items[0];
 
 // Leathered & lappato collection (client photos, 2026-09-15): textured
 // finishes that hide fingerprints and water marks.
@@ -52,9 +56,16 @@ const hero = stock.find((m) => m.slug === "black-markino-slab") ?? stock[0];
   title="Granite Slabs in Coimbatore & Karamadai | Elite Balaji Stones & Ceramics"
   description="Black Galaxy, Absolute Black, Tan Brown, Steel Grey, Blue Pearl and more granite slabs from our Karamadai yard, for kitchen countertops, flooring, staircases and cladding across Coimbatore."
   enquiryMessage="Hi Elite Balaji, I'm looking for granite. Please share photos of the slabs in your yard today."
+  enquiry={{ label: "Ask about granite", shortLabel: "Granite", category: "Granite", intent: "Request a sample or photos" }}
 >
   <section class="relative isolate flex min-h-[78svh] items-end overflow-hidden bg-charcoal-deep text-paper">
-    <img src={hero.src} alt={hero.alt} width={hero.width} height={hero.height} class="absolute inset-0 h-full w-full object-cover opacity-70" fetchpriority="high" />
+    <div data-depth="12" class="absolute inset-0 overflow-hidden">
+      {videoZones.granite ? (
+        <AmbientVideo poster={videoZones.granite.poster} posterAlt={hero.alt} src={videoZones.granite.src} webm={videoZones.granite.webm} mobileSrc={videoZones.granite.mobileSrc} eager aspectClass="h-full w-full" class="absolute inset-0 opacity-70" />
+      ) : (
+        <img src={hero.src} alt={hero.alt} width={hero.width} height={hero.height} class="absolute inset-0 h-full w-full object-cover opacity-70" fetchpriority="high" />
+      )}
+    </div>
     <div class="absolute inset-0 bg-gradient-to-t from-charcoal-deep via-charcoal-deep/55 to-charcoal-deep/20" aria-hidden="true"></div>
     <div data-gsap-hero class="relative mx-auto w-full max-w-7xl px-5 pb-16 pt-40 lg:px-8">
       <p class="text-xs uppercase tracking-[0.45em] text-brass">01 · Material world</p>
@@ -88,7 +99,7 @@ const hero = stock.find((m) => m.slug === "black-markino-slab") ?? stock[0];
             <li class="group relative">
               <div class="absolute right-2 top-2 z-10"><SaveButton product={p} hallName="Granite & Marbles" variant="overlay" /></div>
               <a href={`/products/${p.id}/`} class="block overflow-hidden bg-charcoal">
-                <img src={p.data.image.replace(/\.jpg$/, "-720.jpg")} alt={p.data.imageAlt} class="aspect-[3/4] w-full object-cover transition-transform duration-[900ms] group-hover:scale-105" loading="lazy" />
+                <img src={p.data.image.replace(/\.jpg$/, "-720.jpg")} alt={p.data.imageAlt} class="aspect-[3/4] w-full object-cover eb-img" loading="lazy" />
               </a>
               <a href={`/products/${p.id}/`} class="mt-3 block font-display text-xl leading-tight hover:text-brass">{p.data.name.replace(" Granite", "")}</a>
               <p class="text-[0.6rem] uppercase tracking-[0.18em] text-paper/50">From our stock</p>
@@ -113,42 +124,68 @@ const hero = stock.find((m) => m.slug === "black-markino-slab") ?? stock[0];
         </div>
       </div>
 
-      <!-- Explore the real slabs: colour / finish / use filters, no reload. -->
-      <div class="mt-10 grid gap-4 border-y border-line py-5 md:grid-cols-3" data-granite-filters>
-        {[
-          { key: "colour", label: "Colour", options: families.map((f) => f.label) },
-          { key: "finish", label: "Finish", options: [...new Set(products.map((p) => p.data.finish))] },
-          { key: "use", label: "Use", options: ["Kitchen countertops", "Flooring", "Staircases", "Wall cladding", "Vanity tops"] },
-        ].map((g) => (
-          <div role="group" aria-label={`Filter by ${g.label.toLowerCase()}`}>
-            <p class="text-[0.6rem] uppercase tracking-[0.22em] text-ink-soft">{g.label}</p>
-            <div class="mt-2 flex flex-wrap gap-2">
-              {g.options.map((o) => (
-                <button type="button" data-filter-key={g.key} data-filter-value={o} aria-pressed="false" class="min-h-11 border border-line px-3.5 py-2 text-xs uppercase tracking-[0.12em] text-ink-soft transition-colors hover:border-brass aria-pressed:border-brass aria-pressed:bg-brass aria-pressed:text-paper">{o}</button>
-              ))}
+      <!-- Slab stage: choose a colour family, then finish, then use. The large
+           real photograph crossfades to the first matching slab; the strip
+           below it holds every match, like walking along a rack of slabs. -->
+      {stageFirst && (
+        <div data-family-stage class="mt-10 grid grid-cols-1 overflow-hidden bg-charcoal-deep text-paper lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)]">
+          <div class="relative aspect-[4/3] overflow-hidden bg-charcoal lg:aspect-auto lg:min-h-[34rem]">
+            <img data-stage-img data-active="true" src={stageFirst.data.image} alt={stageFirst.data.imageAlt} class="stage-img absolute inset-0 h-full w-full object-cover" loading="lazy" />
+            <img data-stage-img data-active="false" src={stageFirst.data.image} alt="" aria-hidden="true" class="stage-img absolute inset-0 h-full w-full object-cover" loading="lazy" />
+            <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-charcoal-deep/80 via-transparent to-transparent"></div>
+            <div class="absolute inset-x-0 bottom-0 p-5 sm:p-7">
+              <p class="text-[0.55rem] uppercase tracking-[0.22em] text-paper/55">{provenanceLabel.stock} · <span data-stage-family>{families[0].label}</span></p>
+              <p data-stage-name class="mt-1 font-display text-3xl leading-tight sm:text-5xl">{stageFirst.data.name.replace(" Granite", "")}</p>
+              <p data-stage-meta class="mt-1 text-xs uppercase tracking-[0.16em] text-paper/70">{stageFirst.data.finish} · {stageFirst.data.applications.slice(0, 2).join(" · ")}</p>
             </div>
           </div>
-        ))}
-      </div>
-      <p class="mt-3 text-sm text-ink-soft" aria-live="polite"><span data-granite-count>{products.length}</span> of {products.length} slabs shown <button type="button" data-granite-reset hidden class="ml-3 inline-flex min-h-11 items-center text-xs uppercase tracking-[0.16em] underline underline-offset-4 hover:text-ink">Reset</button></p>
+          <div class="flex flex-col gap-6 p-5 sm:p-7 lg:p-9" data-granite-filters>
+            {[
+              { key: "colour", label: "1 · Colour family", options: families.map((f) => f.label) },
+              { key: "finish", label: "2 · Finish", options: [...new Set(products.map((p) => p.data.finish))] },
+              { key: "use", label: "3 · Where it goes", options: ["Kitchen countertops", "Flooring", "Staircases", "Wall cladding", "Vanity tops"] },
+            ].map((g) => (
+              <div role="group" aria-label={`Filter by ${g.label.replace(/^\d · /, "").toLowerCase()}`}>
+                <p class="text-[0.6rem] uppercase tracking-[0.24em] text-brass">{g.label}</p>
+                <div class="mt-2.5 flex flex-wrap gap-2">
+                  {g.options.map((o) => (
+                    <button type="button" data-filter-key={g.key} data-filter-value={o} data-family-pick={g.key === "colour" ? "" : undefined} aria-pressed="false" class="min-h-10 border border-paper/20 px-3 py-2 text-[0.65rem] uppercase tracking-[0.12em] text-paper/75 hover:border-brass aria-pressed:border-brass aria-pressed:bg-brass aria-pressed:text-charcoal-deep">{o}</button>
+                  ))}
+                </div>
+              </div>
+            ))}
+            <div class="mt-auto">
+              <ul data-stage-thumbs class="no-scrollbar flex gap-2 overflow-x-auto pb-1" aria-label="Matching slabs"></ul>
+              <div class="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2">
+                <p class="text-sm text-paper/70" aria-live="polite"><span data-granite-count class="font-display text-2xl text-brass tabular-nums">{products.length}</span> of {products.length} slabs</p>
+                <button type="button" data-granite-reset hidden class="inline-flex min-h-11 items-center text-xs uppercase tracking-[0.16em] text-paper/70 underline underline-offset-4 hover:text-brass">Reset</button>
+                <a data-stage-link href={`/products/${stageFirst.id}/`} class="btn-arrow ml-auto inline-flex min-h-11 items-center gap-2 text-xs uppercase tracking-[0.18em] text-brass hover:text-paper">
+                  View slab
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {families.map((family) => (
         <div id={`family-${family.label.toLowerCase().replace(/[^a-z]+/g, "-")}`} data-family class="mt-16 scroll-mt-28">
           <p class="border-b border-line pb-3 text-xs uppercase tracking-[0.25em] text-ink-soft">{family.label}</p>
           <div data-gsap-stagger class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {family.items.map((p) => (
-              <article class="specimen group relative" data-colour={family.label} data-finish={p.data.finish} data-use={p.data.applications.join("|")}>
+              <article class="specimen group relative" data-colour={family.label} data-finish={p.data.finish} data-use={p.data.applications.join("|")} data-name={p.data.name.replace(" Granite", "")} data-img={p.data.image} data-thumb={p.data.image.replace(/\.jpg$/, "-720.jpg")} data-href={`/products/${p.id}/`} data-meta={`${p.data.finish} · ${p.data.applications.slice(0, 2).join(" · ")}`}>
                 <div class="absolute right-3 top-3 z-10"><SaveButton product={p} hallName="Granite & Marbles" variant="overlay" /></div>
                 <a href={`/products/${p.id}/`} class="block overflow-hidden bg-charcoal-deep" aria-label={`${p.data.name}: view details`}>
-                  <img src={p.data.image.replace(/\.jpg$/, "-720.jpg")} alt={p.data.imageAlt} class="aspect-[4/5] w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.04]" loading="lazy" width="720" height="900" />
+                  <img src={p.data.image.replace(/\.jpg$/, "-720.jpg")} alt={p.data.imageAlt} class="aspect-[4/5] w-full object-cover eb-img" loading="lazy" width="720" height="900" />
                 </a>
                 <div class="relative pt-4">
-                  <span class="absolute left-0 top-0 h-px w-0 bg-brass transition-all duration-500 group-hover:w-16" aria-hidden="true"></span>
+                  <span class="eb-rule absolute left-0 top-0" aria-hidden="true"></span>
                   <h3 class="font-display text-2xl leading-tight"><a href={`/products/${p.id}/`} class="hover:text-mustard-dark transition-colors">{p.data.name.replace(" Granite", "")}</a></h3>
                   <p class="mt-1 text-xs uppercase tracking-[0.16em] text-ink-soft">{p.data.finish} · {p.data.applications.slice(0, 2).join(" · ")}</p>
                   <div class="mt-1 flex flex-wrap gap-x-5 text-xs font-medium uppercase tracking-[0.14em]">
                     <a href={`/products/${p.id}/`} class="inline-flex min-h-11 items-center text-ink hover:text-mustard-dark">Details</a>
-                    <a href={waLink(productEnquiryMessage(p.data.name, p.data.category))} target="_blank" rel="noopener" class="inline-flex min-h-11 items-center text-mustard-dark hover:text-ink">Check availability</a>
+                    <a href={waLink(productEnquiryMessage(p.data.name, p.data.category))} target="_blank" rel="noopener" data-enquire="Ask price & availability" data-product={p.data.name} data-category={p.data.category} data-url={`/products/${p.id}/`} class="inline-flex min-h-11 items-center text-mustard-dark hover:text-ink">Check availability</a>
                   </div>
                 </div>
               </article>
@@ -168,7 +205,7 @@ const hero = stock.find((m) => m.slug === "black-markino-slab") ?? stock[0];
         {applications.map((app) => app.image && (
           <a href={app.href} class="group block">
             <div class="overflow-hidden">
-              <img src={app.image.thumb} alt={app.image.alt} class="aspect-[4/3] w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+              <img src={app.image.thumb} alt={app.image.alt} class="aspect-[4/3] w-full object-cover eb-img" loading="lazy" />
             </div>
             <p class="mt-4 text-sm uppercase tracking-[0.14em]">{app.label}</p>
             <p class="mt-1 text-[0.6rem] uppercase tracking-[0.2em] text-paper/45">{provenanceLabel[app.image.provenance]}</p>
@@ -239,21 +276,89 @@ const hero = stock.find((m) => m.slug === "black-markino-slab") ?? stock[0];
     const buttons = document.querySelectorAll<HTMLButtonElement>("[data-filter-key]");
     const cards = document.querySelectorAll<HTMLElement>(".specimen");
     const reset = document.querySelector<HTMLButtonElement>("[data-granite-reset]");
+    const stage = document.querySelector<HTMLElement>("[data-family-stage]");
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
+    let current = "";
+
+    // Crossfade the large slab photo: load the next image into the hidden
+    // layer, then swap which layer is active.
+    function showSlab(card: HTMLElement) {
+      if (!stage || card.dataset.img === current) return;
+      current = card.dataset.img!;
+      const [a, b] = stage.querySelectorAll<HTMLImageElement>("[data-stage-img]");
+      const incoming = a.dataset.active === "true" ? b : a;
+      const outgoing = incoming === a ? b : a;
+      const swap = () => {
+        incoming.dataset.active = "true";
+        outgoing.dataset.active = "false";
+        incoming.alt = card.querySelector("img")?.alt ?? "";
+        incoming.removeAttribute("aria-hidden");
+        outgoing.alt = "";
+        outgoing.setAttribute("aria-hidden", "true");
+      };
+      incoming.src = card.dataset.img!;
+      incoming.decode().then(swap, swap);
+      stage.querySelector("[data-stage-name]")!.textContent = card.dataset.name ?? "";
+      stage.querySelector("[data-stage-meta]")!.textContent = card.dataset.meta ?? "";
+      stage.querySelector("[data-stage-family]")!.textContent = card.dataset.colour ?? "";
+      stage.querySelector<HTMLAnchorElement>("[data-stage-link]")!.href = card.dataset.href ?? "#";
+      stage.querySelectorAll<HTMLElement>("[data-stage-thumb]").forEach((t) => t.setAttribute("aria-pressed", String(t.dataset.stageThumb === card.dataset.img)));
+    }
+
+    function renderThumbs(matches: HTMLElement[]) {
+      if (!stage) return;
+      const list = stage.querySelector<HTMLElement>("[data-stage-thumbs]")!;
+      list.innerHTML = matches
+        .map((c, i) => `<li style="--i:${i}"><button type="button" data-stage-thumb="${c.dataset.img}" aria-pressed="false" aria-label="Show ${esc(c.dataset.name ?? "")}" class="group block h-16 w-14 flex-shrink-0 overflow-hidden border border-paper/15 opacity-70 hover:opacity-100 aria-pressed:border-brass aria-pressed:opacity-100"><img src="${c.dataset.thumb}" alt="" loading="lazy" class="eb-img h-full w-full object-cover" /></button></li>`)
+        .join("");
+      list.classList.remove("is-in");
+      list.classList.add("eb-stagger");
+      requestAnimationFrame(() => list.classList.add("is-in"));
+    }
+
+    function tweenCount(el: Element, to: number) {
+      const from = Number(el.textContent) || 0;
+      if (reduce || from === to) { el.textContent = String(to); return; }
+      const start = performance.now();
+      const step = (now: number) => {
+        const t = Math.min(1, (now - start) / 420);
+        el.textContent = String(Math.round(from + (to - from) * (1 - Math.pow(1 - t, 3))));
+        if (t < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }
+
     function apply() {
-      let shown = 0;
+      const matches: HTMLElement[] = [];
       cards.forEach((c) => {
         const ok =
           (!state.colour || c.dataset.colour === state.colour) &&
           (!state.finish || c.dataset.finish === state.finish) &&
           (!state.use || (c.dataset.use ?? "").split("|").some((u) => u.toLowerCase().includes(state.use!.toLowerCase().replace(/s$/, ""))));
         c.hidden = !ok;
-        if (ok) shown++;
+        if (ok) matches.push(c);
       });
       document.querySelectorAll<HTMLElement>("[data-family]").forEach((f) => (f.hidden = !f.querySelector(".specimen:not([hidden])")));
       const count = document.querySelector("[data-granite-count]");
-      if (count) count.textContent = String(shown);
+      if (count) tweenCount(count, matches.length);
       if (reset) reset.hidden = !Object.values(state).some(Boolean);
+      renderThumbs(matches);
+      if (matches[0]) showSlab(matches[0]);
+      else if (stage) {
+        stage.querySelector("[data-stage-name]")!.textContent = "No slab matches yet";
+        stage.querySelector("[data-stage-meta]")!.textContent = "Try another finish or use, or ask us what's in the yard today";
+      }
     }
+    stage?.addEventListener("click", (e) => {
+      const t = (e.target as HTMLElement).closest<HTMLElement>("[data-stage-thumb]");
+      if (!t) return;
+      const card = [...cards].find((c) => c.dataset.img === t.dataset.stageThumb);
+      if (card) showSlab(card);
+    });
+    stage && renderThumbs([...cards]);
+    stage?.querySelector<HTMLElement>("[data-stage-thumb]")?.setAttribute("aria-pressed", "true");
+    if (cards[0]) current = cards[0].dataset.img ?? "";
     buttons.forEach((b) =>
       b.addEventListener("click", () => {
         const key = b.dataset.filterKey!;

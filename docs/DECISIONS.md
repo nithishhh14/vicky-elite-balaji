@@ -5,6 +5,43 @@ reconsidering something that may already have been decided.
 
 ---
 
+### Decision: Motion & interaction refinement (no rebuild)
+**Date:** 2026-09-15 (late night)
+**Reason:** Brief: "luxury architectural showroom + cinematic digital
+material library". Refine what exists; high-motion moments only where they
+earn it (hero, material worlds, stonecraft story, big image moments), medium
+for cards/filters/dialogs, quiet for copy.
+
+**Calls made:**
+- **Header is `fixed` on every page**, with a `.header-spacer` reserving its
+  resting height on non-overlay pages. The scroll "convergence" (one
+  `data-scrolled` flip at 40px) can then change bar height, logo scale, nav
+  spacing and fold the sub-strip without moving content (CLS stays ~0).
+  Secondary strip option chosen: it **folds up into the bar and a brass
+  hairline draws across**; the three secondary destinations stay reachable
+  through the Products panel and the drawer.
+- **Products menu is a full-width dark panel** (real client photos as
+  previews), hover-intent open on fine pointers, click/Esc everywhere.
+- **Enquiry drawer** (`EnquiryDrawer.astro`) opens from any `[data-enquire]`
+  trigger with product/category/intent pre-filled. No backend: WhatsApp (primary)
+  or email. Trigger links keep their wa.me href as the no-JS fallback.
+- **Search overlay** (`SearchOverlay.astro`) from the header icon, same
+  `/search-index.json` + synonym matching as `/search/`.
+- **Floating WhatsApp CTA is contextual** (BaseLayout `enquiry` prop) and has
+  one entrance, no endless pulse.
+- **CSS owns micro-interactions** (global.css "Interaction language"), using
+  the individual `scale`/`translate` properties so they never fight GSAP
+  transforms. GSAP owns scroll/entrance choreography. No Framer Motion.
+- **Video zones** (`src/lib/video-zones.ts`) are all empty until real,
+  approved footage exists; `AmbientVideo` is production-ready (lazy,
+  poster-first, mobile fallback, reduced-motion, failure fallback).
+- **Granite colour families**: "Wood-grain & sandstone" split into
+  "Wood-grain" (Wooden, Teakwood) and "Sandstone" for the slab stage.
+- **QA:** `npm run qa:experience` (Playwright) drives the interactions at
+  1366px and 375px, including reduced motion, and records CLS.
+
+---
+
 ### Decision: Discovery & enquiry layer (My Materials, compare, find similar, live finder) + generated application concepts
 **Date:** 2026-09-15
 **Reason:** The "final 30%" brief found the site too static and not using

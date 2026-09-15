@@ -56,6 +56,7 @@ export function replaceShortlist(items: SavedItem[]) {
   write(items);
 }
 
+let lastCount = -1;
 function syncButtons() {
   const ids = new Set(readShortlist().map((i) => i.id));
   document.querySelectorAll<HTMLElement>("[data-save]").forEach((btn) => {
@@ -69,7 +70,57 @@ function syncButtons() {
   document.querySelectorAll<HTMLElement>("[data-shortlist-count]").forEach((el) => {
     el.textContent = String(count);
     el.hidden = count === 0;
+    if (lastCount >= 0 && count > lastCount) {
+      el.classList.remove("count-bump");
+      void el.offsetWidth;
+      el.classList.add("count-bump");
+    }
   });
+  lastCount = count;
+}
+
+const reduceMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// Saved: the material's own photo travels to the My Materials bookmark in
+// the header, which then acknowledges it. Small, quick, no confetti.
+function flyToShortlist(btn: HTMLElement) {
+  if (reduceMotion()) return;
+  const target = document.querySelector<HTMLElement>("[data-shortlist-target]");
+  const card = btn.parentElement?.closest("article, li, figure, .group");
+  const source = card?.querySelector<HTMLImageElement>("img") ?? document.getElementById("product-main-image") as HTMLImageElement | null;
+  if (!target || !source || !source.complete) return;
+  const from = source.getBoundingClientRect();
+  const to = target.getBoundingClientRect();
+  if (!from.width || from.bottom < 0 || from.top > innerHeight) return;
+  const size = Math.min(from.width, from.height, 140);
+  const ghost = source.cloneNode() as HTMLImageElement;
+  ghost.removeAttribute("id");
+  ghost.alt = "";
+  Object.assign(ghost.style, {
+    position: "fixed",
+    left: `${from.left + from.width / 2 - size / 2}px`,
+    top: `${from.top + from.height / 2 - size / 2}px`,
+    width: `${size}px`,
+    height: `${size}px`,
+    objectFit: "cover",
+    zIndex: "70",
+    pointerEvents: "none",
+    boxShadow: "0 18px 40px -12px rgba(0,0,0,.5)",
+    border: "1px solid rgba(163,130,47,.7)",
+  });
+  document.body.appendChild(ghost);
+  const dx = to.left + to.width / 2 - (from.left + from.width / 2);
+  const dy = to.top + to.height / 2 - (from.top + from.height / 2);
+  ghost
+    .animate(
+      [
+        { transform: "translate(0,0) scale(1)", opacity: 1 },
+        { transform: `translate(${dx * 0.55}px, ${dy * 0.55 - 40}px) scale(0.55)`, opacity: 0.95, offset: 0.55 },
+        { transform: `translate(${dx}px, ${dy}px) scale(0.12)`, opacity: 0.2 },
+      ],
+      { duration: 720, easing: "cubic-bezier(0.22, 0.61, 0.36, 1)" }
+    )
+    .finished.finally(() => ghost.remove());
 }
 
 let toastTimer: number | undefined;
@@ -98,6 +149,13 @@ document.addEventListener("click", (e) => {
   try {
     const item = JSON.parse(btn.dataset.save ?? "{}") as SavedItem;
     const nowSaved = toggleSaved(item);
+    if (nowSaved) {
+      flyToShortlist(btn);
+      btn.classList.remove("just-saved");
+      void btn.offsetWidth;
+      btn.classList.add("just-saved");
+      window.setTimeout(() => btn.classList.remove("just-saved"), 600);
+    }
     toast(nowSaved ? `Saved to <a href="/shortlist/" class="underline decoration-brass underline-offset-4">My Materials</a>` : "Removed from My Materials");
   } catch {
     /* malformed data attribute: ignore */

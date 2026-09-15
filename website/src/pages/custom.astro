@@ -3,6 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import { waLink, telLink, productEnquiryMessage } from "../lib/business";
 import { mediaLibrary, mediaIn, provenanceLabel } from "../lib/media-library";
+import AmbientVideo from "../components/AmbientVideo.astro";
 
 // Custom Stonecraft: built around Elite Balaji's own finished work
 // (provenance "work" in media-library.ts). The two process photos from the
@@ -11,7 +12,9 @@ import { mediaLibrary, mediaIn, provenanceLabel } from "../lib/media-library";
 const services = (await getCollection("services")).sort((a, b) => a.data.order - b.data.order);
 const bySlug = (slug: string) => mediaLibrary.find((m) => m.slug === slug)!;
 
-const process = [
+// `video` (optional): real process footage for a step, when the client
+// supplies it. Never stock or generated footage.
+const process: { step: string; title: string; detail: string; media: ReturnType<typeof bySlug>; label: string; video?: string }[] = [
   { step: "01", title: "Raw stone", detail: "Choose the granite or marble from our yard, or we source the block you want.", media: bySlug("black-galaxy-slabs"), label: provenanceLabel.stock },
   { step: "02", title: "Design", detail: "Bring a pattern, drawing, photo or lettering. We work out size, depth and layout with you.", media: bySlug("house-name-plate"), label: provenanceLabel.work },
   { step: "03", title: "CNC & engraving", detail: "Motifs, lettering and profiles are cut and engraved into the stone.", media: bySlug("idea-cnc-engraving"), label: "Process reference" },
@@ -32,6 +35,7 @@ const hero = bySlug("tulsi-madam-engraved-black");
   title="Custom Stonecraft, Granite Engraving & Name Plates | Elite Balaji, Coimbatore"
   description="Custom granite and marble work from Elite Balaji, Karamadai: engraved name plates and signs, tulsi madams, pooja units, granite tables and benches, made to order for Coimbatore homes."
   enquiryMessage="Hi Elite Balaji, I have an idea for a custom stone piece. Here are the details:"
+  enquiry={{ label: "Discuss custom work", shortLabel: "Custom work", category: "Custom stonecraft", intent: "Discuss custom work" }}
 >
   <section class="relative isolate overflow-hidden bg-charcoal-deep text-paper">
     <div class="mx-auto grid max-w-7xl gap-10 px-5 pb-16 pt-32 lg:grid-cols-[1.1fr_0.9fr] lg:items-end lg:px-8 lg:pt-40">
@@ -44,13 +48,15 @@ const hero = bySlug("tulsi-madam-engraved-black");
           across India.
         </p>
         <div class="mt-9 flex flex-wrap gap-3">
-          <a href={waLink("Hi Elite Balaji, I have an idea for a custom stone piece (photo/sketch attached):")} target="_blank" rel="noopener" class="bg-gradient-to-r from-brass to-mustard-dark px-7 py-3.5 text-xs uppercase tracking-[0.2em] hover:brightness-110">Share your idea</a>
+          <a href={waLink("Hi Elite Balaji, I have an idea for a custom stone piece (photo/sketch attached):")} target="_blank" rel="noopener" data-enquire="Discuss custom work" data-category="Custom stonecraft" data-heading="Share your idea" class="bg-gradient-to-r from-brass to-mustard-dark px-7 py-3.5 text-xs uppercase tracking-[0.2em] hover:brightness-110">Share your idea</a>
           <a href="#work" class="border border-paper/40 px-7 py-3.5 text-xs uppercase tracking-[0.2em] hover:border-brass">See our work</a>
           <a href="#tile-printing" class="border border-paper/40 px-7 py-3.5 text-xs uppercase tracking-[0.2em] hover:border-brass">Custom tile printing</a>
         </div>
       </div>
       <figure class="relative">
-        <img src={hero.src} alt={hero.alt} width={hero.width} height={hero.height} class="max-h-[70svh] w-full object-cover" fetchpriority="high" />
+        <div data-depth="8" class="overflow-hidden">
+          <img src={hero.src} alt={hero.alt} width={hero.width} height={hero.height} class="max-h-[70svh] w-full object-cover" fetchpriority="high" />
+        </div>
         <figcaption class="mt-3 text-[0.6rem] uppercase tracking-[0.2em] text-paper/45">{provenanceLabel.work} · {hero.title}</figcaption>
       </figure>
     </div>
@@ -137,20 +143,27 @@ const hero = bySlug("tulsi-madam-engraved-black");
         <p class="text-xs uppercase tracking-[0.3em] text-brass">How a piece is made</p>
         <h2 id="process-title" class="mt-3 font-display text-4xl sm:text-6xl">From raw stone to final piece</h2>
       </div>
-      <div class="hidden h-px w-48 bg-paper/15 lg:block" aria-hidden="true"><span data-hscroll-progress class="block h-px w-full origin-left scale-x-0 bg-brass"></span></div>
+      <div class="hidden items-center gap-4 lg:flex" aria-hidden="true">
+        <span class="font-display text-3xl text-brass tabular-nums"><span data-hscroll-counter>01</span><span class="text-paper/35"> / {String(process.length).padStart(2, "0")}</span></span>
+        <span class="block h-px w-48 bg-paper/15"><span data-hscroll-progress class="block h-px w-full origin-left scale-x-0 bg-brass"></span></span>
+      </div>
     </div>
     <ol data-hscroll-track class="no-scrollbar mt-12 flex w-full snap-x snap-mandatory gap-6 overflow-x-auto px-5 pb-6 lg:gap-10 lg:px-[max(2rem,calc((100vw-80rem)/2+2rem))]">
       {process.map((s) => (
         <li class="w-[78vw] max-w-[22rem] flex-shrink-0 snap-start lg:w-[26rem] lg:max-w-none">
-          <div class="overflow-hidden bg-charcoal-deep">
-            <img src={s.media.thumb} alt={s.media.alt} class="aspect-[4/5] w-full object-cover lg:aspect-[4/3]" loading="lazy" />
+          <div data-step-frame class="overflow-hidden bg-charcoal-deep">
+            {s.video ? (
+              <AmbientVideo poster={s.media.thumb} posterAlt={s.media.alt} src={s.video} aspectClass="aspect-[4/5] lg:aspect-[4/3]" />
+            ) : (
+              <img src={s.media.thumb} alt={s.media.alt} class="aspect-[4/5] w-full object-cover lg:aspect-[4/3]" loading="lazy" />
+            )}
           </div>
-          <p class="mt-2 text-[0.55rem] uppercase tracking-[0.2em] text-paper/45">{s.label}</p>
-          <div class="mt-3 flex items-baseline gap-3">
+          <p data-step-text class="mt-2 text-[0.55rem] uppercase tracking-[0.2em] text-paper/45">{s.label}</p>
+          <div data-step-text class="mt-3 flex items-baseline gap-3">
             <span class="font-display text-3xl text-brass">{s.step}</span>
             <h3 class="text-sm font-semibold uppercase tracking-[0.14em]">{s.title}</h3>
           </div>
-          <p class="mt-2 text-sm text-paper/70 leading-relaxed">{s.detail}</p>
+          <p data-step-text class="mt-2 text-sm text-paper/70 leading-relaxed">{s.detail}</p>
         </li>
       ))}
     </ol>
@@ -171,7 +184,7 @@ const hero = bySlug("tulsi-madam-engraved-black");
             {c.items.map((m) => (
               <figure class="group">
                 <div class="overflow-hidden">
-                  <img src={m.thumb} alt={m.alt} class="aspect-square w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+                  <img src={m.thumb} alt={m.alt} class="aspect-square w-full object-cover eb-img" loading="lazy" />
                 </div>
                 <figcaption class:list={["mt-2 text-xs uppercase tracking-[0.12em]", i % 2 === 1 ? "text-paper/70" : "text-ink-soft"]}>{m.title}</figcaption>
               </figure>
@@ -181,9 +194,12 @@ const hero = bySlug("tulsi-madam-engraved-black");
             href={waLink(`Hi Elite Balaji, I'm interested in ${c.title.toLowerCase()}. Here's what I have in mind:`)}
             target="_blank"
             rel="noopener"
-            class:list={["mt-8 inline-flex min-h-11 items-center border-b text-xs uppercase tracking-[0.2em]", i % 2 === 1 ? "border-brass text-paper hover:text-brass" : "border-mustard-dark hover:text-mustard-dark"]}
+            data-enquire="Discuss custom work"
+            data-product={c.title}
+            data-category="Custom stonecraft"
+            class:list={["mt-8 inline-flex min-h-11 items-center gap-2 border-b text-xs uppercase tracking-[0.2em]", i % 2 === 1 ? "border-brass text-paper hover:text-brass" : "border-mustard-dark hover:text-mustard-dark"]}
           >
-            Ask about {c.title.toLowerCase()} &rarr;
+            Ask about {c.title.toLowerCase()} <span class="arrow" aria-hidden="true">&rarr;</span>
           </a>
         </div>
       </section>
@@ -211,7 +227,7 @@ const hero = bySlug("tulsi-madam-engraved-black");
     <h2 class="font-display text-4xl sm:text-5xl">Have a drawing or a photo?</h2>
     <p class="mx-auto mt-4 max-w-xl text-paper/75">Send it on WhatsApp with the size and where it will go. We'll tell you what's possible in stone and what it will take.</p>
     <div class="mt-8 flex flex-wrap justify-center gap-3">
-      <a href={waLink("Hi Elite Balaji, here's my custom stone idea (photo/sketch, size, location):")} target="_blank" rel="noopener" class="bg-gradient-to-r from-brass to-mustard-dark px-8 py-4 text-xs uppercase tracking-[0.2em] hover:brightness-110">Send your idea</a>
+      <a href={waLink("Hi Elite Balaji, here's my custom stone idea (photo/sketch, size, location):")} target="_blank" rel="noopener" data-enquire="Discuss custom work" data-category="Custom stonecraft" data-heading="Share your idea" class="bg-gradient-to-r from-brass to-mustard-dark px-8 py-4 text-xs uppercase tracking-[0.2em] hover:brightness-110">Send your idea</a>
       <a href={telLink()} class="border border-paper/40 px-8 py-4 text-xs uppercase tracking-[0.2em] hover:border-brass">Call us</a>
     </div>
   </section>

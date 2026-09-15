@@ -10,7 +10,26 @@ domain, or set up hosting without new, explicit user permission (the user
 answered "No, not yet" to a direct deployment question on 2026-09-12, and a
 later brief reiterated deployment is out of scope for now).
 
-## Latest (2026-09-15, late night): quartz sinks, illustrative images, Playwright
+## Latest (2026-09-15, later still): motion & interaction refinement
+- Header convergence on scroll (fixed header + spacer, no layout shift),
+  animated Products panel, full-height drawer with staggered links.
+- Homepage: choreographed hero (line → image → texture → headline lines →
+  support → CTAs → trust panel, then slow drift + pointer depth); material
+  worlds expand/recede on hover (xl+); application tiles reveal "what you
+  could use"; granite strip has subtle scroll momentum.
+- Enquiry drawer (`[data-enquire]`) on product pages, granite/marble/hall/
+  world cards, custom page; search overlay; contextual floating CTA.
+- Save flies the photo to the header bookmark; compare tray on /shortlist/.
+- Granite slab stage (family → finish → use, crossfading real photos).
+- Custom stonecraft story: step counter, masked image entries, text rises.
+- Material Match: live match count, staggered category cards, catalogue
+  preloads before the first click.
+- `AmbientVideo` + `src/lib/video-zones.ts` ready; all zones empty.
+- Verified: astro check 0 errors, build 88 pages, `npm run qa` 87 pages × 2
+  viewports 0 problems, `npm run qa:experience` all interactions pass,
+  homepage CLS 0.45 → ~0.005, reduced-motion shows everything.
+
+## Earlier (2026-09-15, late night): quartz sinks, illustrative images, Playwright
 - **Quartz sinks** (the client asked about missing quartz sinks and other
   sinks): 3 new Sanitaryware products (Single Bowl, Double Bowl, With
   Drainboard). The old "Kitchen Sink" is now "Stainless Steel Kitchen Sink".

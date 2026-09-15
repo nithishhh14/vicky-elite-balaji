@@ -5,7 +5,7 @@ import { materialWorlds, alsoStockedHallIds } from "../lib/material-worlds";
 
 interface Props {
   // Homepage only: header floats transparent over the hero and gains its
-  // dark bar once the page scrolls (reference mockup layout).
+  // glass bar once the page scrolls (reference mockup layout).
   overlay?: boolean;
 }
 const { overlay = false } = Astro.props;
@@ -18,7 +18,7 @@ const hallLink = (id: string) => {
 };
 
 // Material-first grouping of the real halls, from the single shared config
-// in lib/material-worlds.ts -- this powers the PRODUCTS dropdown.
+// in lib/material-worlds.ts -- this powers the PRODUCTS menu.
 const materialGroups = materialWorlds.map((world) => ({
   slug: world.slug,
   label: world.label,
@@ -47,18 +47,28 @@ const secondary = [
   { href: "/materials/surfaces/", label: "Premium Surfaces" },
   { href: "/gallery/", label: "Timeless Spaces" },
 ];
+
+// Products menu previews: real client photographs only.
+const previews = [
+  { href: "/granite/", label: "Granite", note: "From our slab yard", image: "/media/client/granite/black-galaxy-closeup-720.jpg" },
+  { href: "/marble/", label: "Marble", note: "Slabs & marble-look", image: "/media/client/marble/white-slab-veined-720.jpg" },
+  { href: "/custom/", label: "Stonecraft", note: "Our custom work", image: "/media/client/stonecraft/engraved-rose-granite-720.jpg" },
+];
 ---
 
+<!-- Fixed on every page. Non-overlay pages reserve the header's resting
+     height with a spacer, so the scroll convergence below never moves content
+     (no layout shift). -->
 <header
   id="site-header"
-  data-overlay={overlay ? "true" : undefined}
-  class:list={[
-    "z-40 transition-colors duration-300",
-    overlay ? "fixed inset-x-0 top-0 bg-transparent" : "sticky top-0 border-b border-paper/10 bg-charcoal-deep/95 backdrop-blur",
-  ]}
+  data-overlay={overlay ? "true" : "false"}
+  data-scrolled="false"
+  class="site-header fixed inset-x-0 top-0 z-40 text-paper"
 >
-  <div class="mx-auto flex max-w-7xl items-center justify-between gap-3 px-5 py-4 lg:px-8">
-    <a href="/" class="flex min-w-0 items-center gap-3 leading-none">
+  <div class="header-glass" aria-hidden="true"></div>
+
+  <div class="header-bar mx-auto flex max-w-7xl items-center justify-between gap-3 px-5 lg:px-8">
+    <a href="/" class="header-brand flex min-w-0 items-center gap-3 leading-none" aria-label="Elite Balaji Stones & Ceramics, home">
       <!-- The client's exact emblem (supplied 2026-09-15), used as-is: only
            cropped, scaled, and the outer teal backdrop made transparent.
            Never redraw or restyle it (client instruction). Full-resolution
@@ -69,90 +79,34 @@ const secondary = [
         aria-hidden="true"
         width="59"
         height="56"
-        class="h-12 w-auto flex-shrink-0 sm:h-14"
+        class="header-logo h-12 w-auto flex-shrink-0 sm:h-14"
       />
-      <span class="flex min-w-0 flex-col">
+      <span class="header-wordmark flex min-w-0 flex-col">
         <span class="bg-gradient-to-b from-brass to-mustard-dark bg-clip-text font-display text-2xl italic text-transparent whitespace-nowrap sm:text-3xl">Elite Balaji</span>
         <span class="text-[0.55rem] uppercase tracking-[0.3em] text-brass whitespace-nowrap sm:text-[0.6rem]">Stones &amp; Ceramics</span>
-        <span class="hidden text-[0.48rem] uppercase tracking-[0.25em] text-paper/50 whitespace-nowrap sm:block">— {business.subTagline} —</span>
+        <span class="header-subtag hidden text-[0.48rem] uppercase tracking-[0.25em] text-paper/50 whitespace-nowrap sm:block">— {business.subTagline} —</span>
       </span>
     </a>
 
-    <nav aria-label="Primary" class="relative hidden items-center gap-7 xl:flex">
+    <nav aria-label="Primary" class="header-nav relative hidden items-center xl:flex">
       {primary.map((item) =>
         item.dropdown ? (
-          <div class="relative">
+          <div class="relative" data-mega>
             <button
               id="materials-toggle"
               type="button"
               aria-expanded="false"
               aria-controls="materials-menu"
-              class:list={[
-                "flex items-center gap-1.5 whitespace-nowrap py-1 text-xs font-medium uppercase tracking-[0.14em] transition-colors hover:text-brass",
-                isActive(item.href) ? "text-brass" : "text-paper/85",
-              ]}
+              class:list={["nav-link flex items-center gap-1.5", isActive(item.href) && "is-active"]}
             >
               {item.label}
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+              <svg class="nav-caret" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
                 <path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
             </button>
-            <div
-              id="materials-menu"
-              hidden
-              class="absolute left-1/2 top-full z-40 mt-5 w-[600px] -translate-x-1/2 rounded-sm border border-line bg-paper p-8 shadow-lift"
-            >
-              <div class="mb-6 grid grid-cols-3 gap-3 border-b border-line/60 pb-6">
-                <a href="/granite/" class="group flex items-center gap-3">
-                  <img src="/media/client/granite/black-galaxy-closeup-720.jpg" alt="" class="h-14 w-14 object-cover" loading="lazy" />
-                  <span><span class="block font-display text-xl text-ink group-hover:text-mustard-dark">Granite</span><span class="text-[0.6rem] uppercase tracking-[0.18em] text-ink-soft">From our slab yard</span></span>
-                </a>
-                <a href="/marble/" class="group flex items-center gap-3">
-                  <img src="/media/client/marble/white-slab-veined-720.jpg" alt="" class="h-14 w-14 object-cover" loading="lazy" />
-                  <span><span class="block font-display text-xl text-ink group-hover:text-mustard-dark">Marble</span><span class="text-[0.6rem] uppercase tracking-[0.18em] text-ink-soft">Slabs &amp; marble-look</span></span>
-                </a>
-                <a href="/custom/" class="group flex items-center gap-3">
-                  <img src="/media/client/stonecraft/engraved-rose-granite-720.jpg" alt="" class="h-14 w-14 object-cover" loading="lazy" />
-                  <span><span class="block font-display text-xl text-ink group-hover:text-mustard-dark">Stonecraft</span><span class="text-[0.6rem] uppercase tracking-[0.18em] text-ink-soft">Custom work</span></span>
-                </a>
-              </div>
-              <div class="grid grid-cols-3 gap-8">
-                {materialGroups.map((group) => (
-                  <div>
-                    <a href={`/materials/${group.slug}/`} class="text-[0.65rem] uppercase tracking-[0.2em] text-mustard-dark hover:text-ink">
-                      {group.label} &rarr;
-                    </a>
-                    <ul class="mt-3 space-y-2">
-                      {group.items.map((hall) => (
-                        <li><a href={hall.href} class="text-sm text-ink hover:text-mustard-dark transition-colors">{hall.label}</a></li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-              <div class="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-line/60 pt-5">
-                <div class="flex flex-wrap gap-x-5 gap-y-1">
-                  <span class="text-[0.65rem] uppercase tracking-[0.2em] text-ink-soft/60">Also:</span>
-                  {alsoStocked.map((hall) => (
-                    <a href={hall.href} class="text-xs text-ink-soft hover:text-mustard-dark transition-colors">{hall.label}</a>
-                  ))}
-                  <a href="/halls/laying-works/" class="text-xs text-ink-soft hover:text-mustard-dark transition-colors">Laying Works</a>
-                </div>
-                <a href="/search/" class="text-xs font-semibold uppercase tracking-wide text-mustard-dark hover:text-ink whitespace-nowrap">
-                  Full catalogue &rarr;
-                </a>
-              </div>
-            </div>
           </div>
         ) : (
-          <a
-            href={item.href}
-            aria-current={isActive(item.href) ? "page" : undefined}
-            class:list={[
-              "relative whitespace-nowrap py-1 text-xs font-medium uppercase tracking-[0.14em] transition-colors hover:text-brass",
-              isActive(item.href) ? "text-brass after:absolute after:inset-x-0 after:-bottom-1.5 after:h-px after:bg-brass" : "text-paper/85",
-            ]}
-          >
+          <a href={item.href} aria-current={isActive(item.href) ? "page" : undefined} class:list={["nav-link", isActive(item.href) && "is-active"]}>
             {item.label}
           </a>
         )
@@ -162,7 +116,8 @@ const secondary = [
     <div class="flex flex-shrink-0 items-center gap-1 sm:gap-3">
       <a
         href="/search/"
-        class="inline-flex h-10 w-10 items-center justify-center text-paper/85 hover:text-brass transition-colors"
+        data-search-open
+        class="icon-btn inline-flex h-10 w-10 items-center justify-center text-paper/85"
         aria-label="Search the catalogue"
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
@@ -172,136 +127,232 @@ const secondary = [
       </a>
       <a
         href="/shortlist/"
-        class="relative inline-flex h-10 w-10 items-center justify-center text-paper/85 hover:text-brass transition-colors"
+        data-shortlist-target
+        class="icon-btn relative inline-flex h-10 w-10 items-center justify-center text-paper/85"
         aria-label="My Materials (saved shortlist)"
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
           <path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4.5L5 21V4a1 1 0 0 1 1-1Z" stroke-linejoin="round" />
         </svg>
-        <span data-shortlist-count hidden class="absolute right-0.5 top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-brass px-1 text-[0.6rem] font-semibold text-charcoal-deep">0</span>
+        <span data-shortlist-count hidden class="count-badge absolute right-0.5 top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-brass px-1 text-[0.6rem] font-semibold text-charcoal-deep">0</span>
       </a>
       <button
         id="menu-toggle"
         type="button"
         aria-expanded="false"
         aria-controls="site-menu"
-        class="inline-flex h-10 w-10 items-center justify-center text-paper hover:text-brass transition-colors"
+        class="icon-btn menu-toggle inline-flex h-10 w-10 items-center justify-center text-paper"
       >
         <span class="sr-only">Open menu</span>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
-          <path d="M3 7h18M3 12h18M3 17h18" stroke-linecap="round" />
-        </svg>
+        <span class="menu-lines" aria-hidden="true"><span></span><span></span><span></span></span>
       </button>
     </div>
   </div>
 
-  <!-- Secondary strip, reference wording, real destinations. -->
-  <div class="hidden lg:block">
-    <div class="mx-auto flex max-w-7xl items-center justify-end gap-5 px-8 pb-3">
-      {secondary.map((link, i) => (
-        <>
-          {i > 0 && <span class="text-paper/25" aria-hidden="true">|</span>}
-          <a href={link.href} class="whitespace-nowrap text-[0.62rem] uppercase tracking-[0.25em] text-paper/55 hover:text-brass transition-colors">
-            {link.label}
+  <!-- Secondary strip, reference wording, real destinations. On scroll it
+       folds up into the bar while a brass hairline draws across. -->
+  <div class="header-sub hidden lg:grid">
+    <div class="header-sub-inner overflow-hidden">
+      <div class="mx-auto flex h-full max-w-7xl items-start justify-end gap-5 px-8">
+        {secondary.map((link, i) => (
+          <>
+            {i > 0 && <span class="sub-sep text-paper/25" aria-hidden="true">|</span>}
+            <a href={link.href} class="sub-link whitespace-nowrap text-[0.62rem] uppercase tracking-[0.25em] text-paper/55" style={`--i:${i}`}>
+              {link.label}
+            </a>
+          </>
+        ))}
+      </div>
+    </div>
+  </div>
+  <span class="header-rule" aria-hidden="true"></span>
+
+  <!-- Products: an architectural material panel, not a dropdown. -->
+  <div id="materials-menu" hidden data-state="closed" class="mega-panel hidden xl:block" role="region" aria-label="Products">
+    <div class="mega-inner mx-auto max-w-7xl px-8">
+      <div class="grid grid-cols-[1.35fr_1fr] gap-10 py-8">
+        <div>
+          <p class="mega-item text-[0.6rem] uppercase tracking-[0.28em] text-brass">Explore by material</p>
+          <span class="mega-rule mt-3 block h-px bg-brass/50" aria-hidden="true"></span>
+          <div class="mt-5 grid grid-cols-3 gap-4">
+            {previews.map((p, i) => (
+              <a href={p.href} class="mega-item mega-preview group block" style={`--i:${i + 1}`}>
+                <span class="relative block overflow-hidden bg-charcoal">
+                  <img src={p.image} alt="" class="aspect-[4/5] w-full object-cover" loading="lazy" />
+                  <span class="absolute inset-0 bg-gradient-to-t from-charcoal-deep/85 via-transparent to-transparent"></span>
+                  <span class="absolute inset-x-0 bottom-0 p-3">
+                    <span class="block font-display text-2xl text-paper">{p.label}</span>
+                    <span class="flex items-center justify-between text-[0.55rem] uppercase tracking-[0.18em] text-paper/65">{p.note}<span class="arrow text-brass" aria-hidden="true">&rarr;</span></span>
+                  </span>
+                </span>
+              </a>
+            ))}
+          </div>
+        </div>
+        <div>
+          <p class="mega-item text-[0.6rem] uppercase tracking-[0.28em] text-brass" style="--i:1">Showroom halls</p>
+          <span class="mega-rule mt-3 block h-px bg-brass/50" aria-hidden="true"></span>
+          <div class="mt-5 grid grid-cols-2 gap-x-8 gap-y-6">
+            {materialGroups.map((group, gi) => (
+              <div class="mega-item" style={`--i:${gi + 2}`}>
+                <a href={`/materials/${group.slug}/`} class="link-gold text-[0.62rem] uppercase tracking-[0.2em] text-paper/60">{group.label}</a>
+                <ul class="mt-2 space-y-1.5">
+                  {group.items.map((hall) => (
+                    <li><a href={hall.href} class="link-gold text-sm text-paper/90">{hall.label}</a></li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+            <div class="mega-item" style={`--i:${materialGroups.length + 2}`}>
+              <p class="text-[0.62rem] uppercase tracking-[0.2em] text-paper/60">Also</p>
+              <ul class="mt-2 space-y-1.5">
+                {alsoStocked.map((hall) => (
+                  <li><a href={hall.href} class="link-gold text-sm text-paper/90">{hall.label}</a></li>
+                ))}
+                <li><a href="/halls/laying-works/" class="link-gold text-sm text-paper/90">Laying Works</a></li>
+              </ul>
+            </div>
+          </div>
+          <a href="/search/" class="mega-item btn-arrow mt-8 inline-flex items-center gap-3 border border-brass/70 px-5 py-3 text-[0.62rem] uppercase tracking-[0.22em] text-paper hover:bg-brass hover:text-charcoal-deep" style={`--i:${materialGroups.length + 3}`}>
+            Full catalogue
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
-        </>
-      ))}
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- Menu drawer: the reference shows a hamburger at every width, so this
-       is available on desktop too (it carries the full hall list). -->
-  <nav id="site-menu" aria-label="Site menu" hidden class="max-h-[calc(100svh-5rem)] overflow-y-auto border-t border-paper/10 bg-charcoal-deep px-5 py-6 lg:px-8">
-    <div class="mx-auto grid max-w-7xl gap-8 sm:grid-cols-2 lg:grid-cols-4">
-      <ul class="flex flex-col gap-3">
+  <!-- Menu drawer: available at every width (the reference shows a
+       hamburger everywhere); full-height on phones. -->
+  <nav id="site-menu" aria-label="Site menu" hidden data-state="closed" class="drawer">
+    <div class="drawer-inner mx-auto grid max-w-7xl gap-8 px-5 py-8 sm:grid-cols-2 lg:grid-cols-4 lg:px-8">
+      <ul class="flex flex-col gap-1">
         {primary.filter((p) => !p.dropdown).map((item) => (
-          <li><a href={item.href} class="text-sm uppercase tracking-[0.14em] text-paper/85 hover:text-brass">{item.label}</a></li>
+          <li class="drawer-item"><a href={item.href} class="drawer-link font-display text-3xl text-paper lg:text-2xl">{item.label}</a></li>
         ))}
-        <li><a href="/granite/" class="text-sm uppercase tracking-[0.14em] text-brass hover:text-paper">Granite</a></li>
-        <li><a href="/marble/" class="text-sm uppercase tracking-[0.14em] text-brass hover:text-paper">Marble</a></li>
-        <li><a href="/custom/#tile-printing" class="text-sm uppercase tracking-[0.14em] text-brass hover:text-paper">Custom tile printing</a></li>
-        <li><a href="/custom/" class="text-sm uppercase tracking-[0.14em] text-brass hover:text-paper">Custom Stonecraft</a></li>
-        <li><a href="/search/" class="text-sm uppercase tracking-[0.14em] text-paper/85 hover:text-brass">Full catalogue</a></li>
-        <li><a href="/shortlist/" class="text-sm uppercase tracking-[0.14em] text-paper/85 hover:text-brass">My Materials <span data-shortlist-count hidden class="ml-1 rounded-full bg-brass px-1.5 text-[0.6rem] text-charcoal-deep">0</span></a></li>
+        <li class="drawer-item mt-3"><a href="/granite/" class="drawer-link text-sm uppercase tracking-[0.16em] text-brass">Granite</a></li>
+        <li class="drawer-item"><a href="/marble/" class="drawer-link text-sm uppercase tracking-[0.16em] text-brass">Marble</a></li>
+        <li class="drawer-item"><a href="/custom/" class="drawer-link text-sm uppercase tracking-[0.16em] text-brass">Custom Stonecraft</a></li>
+        <li class="drawer-item"><a href="/custom/#tile-printing" class="drawer-link text-sm uppercase tracking-[0.16em] text-brass">Custom tile printing</a></li>
+        <li class="drawer-item"><a href="/search/" class="drawer-link text-sm uppercase tracking-[0.16em] text-paper/85">Full catalogue</a></li>
+        <li class="drawer-item"><a href="/shortlist/" class="drawer-link text-sm uppercase tracking-[0.16em] text-paper/85">My Materials <span data-shortlist-count hidden class="ml-1 rounded-full bg-brass px-1.5 text-[0.6rem] text-charcoal-deep">0</span></a></li>
       </ul>
       {materialGroups.map((group) => (
-        <div>
+        <div class="drawer-item">
           <a href={`/materials/${group.slug}/`} class="text-[0.65rem] uppercase tracking-[0.2em] text-brass">{group.label}</a>
-          <ul class="mt-3 flex flex-col gap-2">
+          <ul class="mt-3 flex flex-col">
             {group.items.map((hall) => (
-              <li><a href={hall.href} class="text-sm text-paper/80 hover:text-brass">{hall.label}</a></li>
+              <li><a href={hall.href} class="drawer-link text-sm text-paper/80">{hall.label}</a></li>
             ))}
           </ul>
         </div>
       ))}
-      <div>
+      <div class="drawer-item">
         <p class="text-[0.65rem] uppercase tracking-[0.2em] text-brass">Also stocked &amp; services</p>
-        <ul class="mt-3 flex flex-col gap-2">
+        <ul class="mt-3 flex flex-col">
           {alsoStocked.map((hall) => (
-            <li><a href={hall.href} class="text-sm text-paper/80 hover:text-brass">{hall.label}</a></li>
+            <li><a href={hall.href} class="drawer-link text-sm text-paper/80">{hall.label}</a></li>
           ))}
-          <li><a href="/halls/laying-works/" class="text-sm text-paper/80 hover:text-brass">Laying Works</a></li>
-          <li><a href="/custom/" class="text-sm text-paper/80 hover:text-brass">Custom &amp; Fabrication</a></li>
-          <li><a href="/halls/" class="text-sm text-paper/80 hover:text-brass">All halls</a></li>
+          <li><a href="/halls/laying-works/" class="drawer-link text-sm text-paper/80">Laying Works</a></li>
+          <li><a href="/halls/" class="drawer-link text-sm text-paper/80">All halls</a></li>
         </ul>
       </div>
     </div>
   </nav>
 </header>
+{!overlay && <div class="header-spacer" aria-hidden="true"></div>}
 
 <script is:inline>
   (function () {
-    const header = document.getElementById("site-header");
-    const toggle = document.getElementById("menu-toggle");
-    const menu = document.getElementById("site-menu");
+    var header = document.getElementById("site-header");
+    if (!header) return;
+    var toggle = document.getElementById("menu-toggle");
+    var menu = document.getElementById("site-menu");
+    var megaToggle = document.getElementById("materials-toggle");
+    var mega = document.getElementById("materials-menu");
+    var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var CLOSE_MS = reduce ? 0 : 420;
 
-    // Overlay header: transparent over the hero, solid once scrolled or
-    // whenever a menu is open (so menu text never sits on the photo).
-    function syncHeader() {
-      if (!header || header.dataset.overlay !== "true") return;
-      const solid = window.scrollY > 40 || (menu && !menu.hidden);
-      header.classList.toggle("bg-charcoal-deep/95", solid);
-      header.classList.toggle("backdrop-blur", solid);
-      header.classList.toggle("bg-transparent", !solid);
+    // Convergence: one attribute flip at 40px drives every CSS transition
+    // (glass, blur, bar height, logo scale, nav spacing, sub-strip fold).
+    var scrolled = null;
+    function sync() {
+      var next = window.scrollY > 40;
+      if (next === scrolled) return;
+      scrolled = next;
+      header.setAttribute("data-scrolled", String(next));
     }
-    window.addEventListener("scroll", syncHeader, { passive: true });
-    syncHeader();
+    sync();
+    // Arriving mid-page (reload, back button): settle without animating.
+    header.classList.add("no-anim");
+    requestAnimationFrame(function () { requestAnimationFrame(function () { header.classList.remove("no-anim"); }); });
+    window.addEventListener("scroll", sync, { passive: true });
+
+    // Shared open/close with an exit transition before [hidden] returns.
+    function openPanel(panel) {
+      clearTimeout(panel._t);
+      panel.hidden = false;
+      void panel.offsetWidth;
+      panel.setAttribute("data-state", "open");
+    }
+    function closePanel(panel) {
+      if (panel.hidden) return;
+      panel.setAttribute("data-state", "closed");
+      clearTimeout(panel._t);
+      panel._t = setTimeout(function () { panel.hidden = true; }, CLOSE_MS);
+    }
+    function anyOpen() {
+      return (menu && menu.getAttribute("data-state") === "open") || (mega && mega.getAttribute("data-state") === "open");
+    }
+    function syncOpen() {
+      header.toggleAttribute("data-panel-open", !!anyOpen());
+    }
 
     if (toggle && menu) {
-      toggle.addEventListener("click", () => {
-        const isOpen = !menu.hidden;
-        menu.hidden = isOpen;
-        toggle.setAttribute("aria-expanded", String(!isOpen));
-        syncHeader();
-      });
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && !menu.hidden) {
-          menu.hidden = true;
-          toggle.setAttribute("aria-expanded", "false");
-          syncHeader();
-        }
+      menu.querySelectorAll(".drawer-item").forEach(function (el, i) { el.style.setProperty("--i", String(i)); });
+      function setMenu(open) {
+        if (open) {
+          if (mega) { closePanel(mega); megaToggle && megaToggle.setAttribute("aria-expanded", "false"); }
+          openPanel(menu);
+        } else closePanel(menu);
+        toggle.setAttribute("aria-expanded", String(open));
+        toggle.querySelector(".sr-only").textContent = open ? "Close menu" : "Open menu";
+        document.documentElement.classList.toggle("drawer-lock", open);
+        header.toggleAttribute("data-drawer-open", open);
+        syncOpen();
+      }
+      toggle.addEventListener("click", function () { setMenu(menu.getAttribute("data-state") !== "open"); });
+      menu.addEventListener("click", function (e) { if (e.target.closest("a")) setMenu(false); });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && menu.getAttribute("data-state") === "open") { setMenu(false); toggle.focus(); }
       });
     }
-  })();
 
-  (function () {
-    const toggle = document.getElementById("materials-toggle");
-    const menu = document.getElementById("materials-menu");
-    if (!toggle || !menu) return;
-
-    function close() {
-      menu.hidden = true;
-      toggle.setAttribute("aria-expanded", "false");
+    if (megaToggle && mega) {
+      var hoverTimer;
+      var fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+      function setMega(open) {
+        clearTimeout(hoverTimer);
+        if (open) openPanel(mega); else closePanel(mega);
+        megaToggle.setAttribute("aria-expanded", String(open));
+        syncOpen();
+      }
+      megaToggle.addEventListener("click", function () { setMega(mega.getAttribute("data-state") !== "open"); });
+      if (fine) {
+        var wrap = megaToggle.closest("[data-mega]");
+        var enter = function () { clearTimeout(hoverTimer); hoverTimer = setTimeout(function () { setMega(true); }, 140); };
+        var leave = function () { clearTimeout(hoverTimer); hoverTimer = setTimeout(function () { setMega(false); }, 260); };
+        wrap.addEventListener("mouseenter", enter);
+        wrap.addEventListener("mouseleave", leave);
+        mega.addEventListener("mouseenter", function () { clearTimeout(hoverTimer); });
+        mega.addEventListener("mouseleave", leave);
+      }
+      document.addEventListener("click", function (e) {
+        if (mega.getAttribute("data-state") === "open" && !mega.contains(e.target) && !megaToggle.contains(e.target)) setMega(false);
+      });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && mega.getAttribute("data-state") === "open") { setMega(false); megaToggle.focus(); }
+      });
     }
-    toggle.addEventListener("click", () => {
-      menu.hidden = !menu.hidden;
-      toggle.setAttribute("aria-expanded", String(!menu.hidden));
-    });
-    document.addEventListener("click", (e) => {
-      if (!menu.hidden && !menu.contains(e.target) && !toggle.contains(e.target)) close();
-    });
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && !menu.hidden) close();
-    });
   })();
 </script>

@@ -44,7 +44,7 @@ const applications = [
     intro="Start from the space you're building. Every material below is in our catalogue. WhatsApp us for stock and trade rates."
   />
 
-  <nav aria-label="Applications" class="sticky top-[5.5rem] z-30 border-b border-line/60 bg-paper/95 backdrop-blur lg:top-[7.5rem]">
+  <nav aria-label="Applications" class="sticky top-[var(--hdr-bar-compact)] z-30 border-b border-line/60 bg-paper/95 backdrop-blur">
     <div class="mx-auto flex max-w-7xl gap-6 overflow-x-auto px-5 py-3 lg:px-8">
       {applications.map((app) => (
         <a href={`#${app.tag}`} class="whitespace-nowrap text-xs uppercase tracking-[0.18em] text-ink-soft hover:text-mustard-dark transition-colors">{app.label}</a>
@@ -94,7 +94,7 @@ const applications = [
             <div class="group relative">
               <a href={`/products/${p.id}/`} class="block">
                 <div class="relative aspect-square overflow-hidden bg-charcoal-deep">
-                  <img src={p.data.image} alt={p.data.imageAlt} class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" width="400" height="400" />
+                  <img src={p.data.image} alt={p.data.imageAlt} class="h-full w-full object-cover eb-img" loading="lazy" width="400" height="400" />
                   {imageBadge(p.data.image) && (
                     <span class="absolute bottom-1.5 left-1.5 bg-charcoal-deep/75 px-2 py-0.5 text-[0.5rem] uppercase tracking-[0.16em] text-paper">{imageBadge(p.data.image)}</span>
                   )}

@@ -1,47 +1,101 @@
 ---
-// Reusable ambient background video slot. Not used on any page yet.
+// Production-ready ambient video layer.
 //
-// Drop a real video file (a phone recording of an actual install, a real
-// yard walkthrough, etc.) into public/media/video/ and pass its path as
-// `src` to activate it. Until then, or if `src` is omitted, this renders
-// only the poster image, so it is safe to leave unused indefinitely.
+// Renders the poster image immediately (so layout, LCP and no-JS all work),
+// then a small script attaches the video only when it is useful:
+//   • never under prefers-reduced-motion (the poster stays)
+//   • on phones only if a lighter `mobileSrc` is given (otherwise poster)
+//   • sources are set lazily when the slot nears the viewport (or at once
+//     with `eager`, for the hero)
+//   • autoplay/muted/loop/playsinline; paused while off-screen
+//   • any load or play failure removes the video and leaves the poster
 //
-// Deliberately does not fetch or generate synthetic "installation footage" --
-// see docs/DECISIONS.md. Real footage only.
+// Real footage only (see src/lib/video-zones.ts and docs/DECISIONS.md).
 interface Props {
   poster: string;
   posterAlt: string;
   src?: string;
+  webm?: string;
+  mobileSrc?: string;
+  eager?: boolean;
   aspectClass?: string;
   class?: string;
+  imgClass?: string;
 }
 
-const { poster, posterAlt, src, aspectClass = "aspect-video", class: className = "" } = Astro.props;
+const {
+  poster,
+  posterAlt,
+  src,
+  webm,
+  mobileSrc,
+  eager = false,
+  aspectClass = "aspect-video",
+  class: className = "",
+  imgClass = "",
+} = Astro.props;
 ---
 
-<div class:list={["relative isolate overflow-hidden", aspectClass, className]}>
-  <img src={poster} alt={posterAlt} class="absolute inset-0 h-full w-full object-cover" loading="lazy" />
-  {src && (
-    <video
-      class="ambient-video absolute inset-0 h-full w-full object-cover"
-      poster={poster}
-      autoplay
-      muted
-      loop
-      playsinline
-      preload="none"
-      aria-hidden="true"
-    >
-      <source src={src} type="video/mp4" />
-    </video>
-  )}
+<div class:list={["relative isolate overflow-hidden", aspectClass, className]} data-ambient={src ? "" : undefined} data-src={src} data-webm={webm} data-mobile-src={mobileSrc} data-eager={eager ? "true" : undefined}>
+  <img src={poster} alt={posterAlt} class:list={["absolute inset-0 h-full w-full object-cover", imgClass]} loading={eager ? "eager" : "lazy"} fetchpriority={eager ? "high" : undefined} />
 </div>
 
-<style>
-  /* Respect reduced-motion: freeze on the poster frame instead of playing. */
-  @media (prefers-reduced-motion: reduce) {
-    .ambient-video {
-      display: none;
+<script>
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const slots = document.querySelectorAll<HTMLElement>("[data-ambient]:not([data-ambient-ready])");
+
+  function attach(slot: HTMLElement) {
+    if (slot.dataset.ambientReady || reduce.matches) return;
+    const phone = window.matchMedia("(max-width: 767px)").matches;
+    const src = phone ? slot.dataset.mobileSrc : slot.dataset.src;
+    if (!src) return;
+    slot.dataset.ambientReady = "true";
+
+    const img = slot.querySelector("img");
+    const video = document.createElement("video");
+    video.className = "absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-1000";
+    video.muted = true;
+    video.loop = true;
+    video.playsInline = true;
+    video.autoplay = true;
+    video.preload = "metadata";
+    video.setAttribute("aria-hidden", "true");
+    if (img) video.poster = img.currentSrc || img.src;
+    if (!phone && slot.dataset.webm) {
+      const s = document.createElement("source");
+      s.src = slot.dataset.webm;
+      s.type = "video/webm";
+      video.appendChild(s);
     }
+    const mp4 = document.createElement("source");
+    mp4.src = src;
+    mp4.type = "video/mp4";
+    video.appendChild(mp4);
+
+    const fail = () => video.remove();
+    mp4.addEventListener("error", fail);
+    video.addEventListener("error", fail);
+    video.addEventListener("playing", () => video.classList.remove("opacity-0"), { once: true });
+    slot.appendChild(video);
+    video.play().catch(fail);
+
+    new IntersectionObserver(([entry]) => {
+      if (!video.isConnected) return;
+      if (entry.isIntersecting) video.play().catch(() => {});
+      else video.pause();
+    }).observe(slot);
   }
-</style>
+
+  if (slots.length && !reduce.matches) {
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => {
+        if (e.isIntersecting) {
+          attach(e.target as HTMLElement);
+          io.unobserve(e.target);
+        }
+      }),
+      { rootMargin: "200px 0px" }
+    );
+    slots.forEach((slot) => (slot.dataset.eager ? attach(slot) : io.observe(slot)));
+  }
+</script>
