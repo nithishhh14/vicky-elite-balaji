@@ -26,6 +26,15 @@ Astro 5 + TypeScript + Tailwind v4 site with content collections. See
 Build (`npm run build`) and typecheck (`astro check`) both pass; browser-QA'd
 at desktop/tablet/mobile.
 
+**Status 2026-09-16:** design, catalogue and interaction layers are
+feature-complete for launch (89 pages, Playwright QA passing). What remains:
+- **Client input:** confirm which marbles and sinks are stocked; real photos
+  to replace illustrative images.
+- **Launch:** domain, hosting, deploy permission, GitHub push.
+
+Marketing and Email agents stay blocked until the site is live. The dated
+handoff is in `docs/NEXT_SESSION.md`.
+
 **DONE:** homepage; `/halls/` index; all 8 hall pages (Tiles has a real
 7-series product grid sourced from `catalogue_extract/`; the other 7 use the
 `MaterialField` colour/texture placeholder); `/about/`; `/contact/`

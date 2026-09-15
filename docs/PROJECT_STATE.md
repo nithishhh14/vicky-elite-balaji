@@ -2,6 +2,35 @@
 
 _Last updated: 2026-09-13 — homepage/Tiles-hero rebuilt away from Athangudi, honest sourcing layer extended to Quartz/Sanitaryware, real React Bits component integration, Athangudi catalogue depth expansion (product image galleries + spec fields), SEO structured-data gap closed on hall/material pages. See `docs/DECISIONS.md` for each._
 
+## 2026-09-16 — end-of-day snapshot (latest commit `a5510e9`, main, not pushed, not deployed)
+
+- **Site:** 89 pages, 64 products. Checks passing: astro check shows 0
+  errors, `npm run qa` finds 0 problems across 89 pages at 2 viewports, and
+  `npm run qa:experience` passes.
+- **Built since the last snapshot:**
+  - **Catalogue:**
+    - Quartz sinks (3), plus a stainless steel sink.
+    - 15 illustrative images replace every stock product photo.
+    - Black Gold and Emerald Gold statement marbles (illustrative) on /marble/.
+  - **Interaction layer:**
+    - Scroll-converging fixed header with an engraved-gold wordmark.
+    - Animated Products panel and full-height drawer.
+    - Choreographed hero.
+    - Material worlds that expand on hover.
+    - Enquiry drawer (`[data-enquire]`), search overlay, contextual WhatsApp
+      CTA.
+    - Save-flight animation and compare tray.
+    - Granite slab stage.
+    - Custom stonecraft step counter.
+    - Material Match live count.
+    - Production-ready `AmbientVideo` and `src/lib/video-zones.ts` (all zones
+      empty).
+  - **QA tooling:** Playwright installed locally; `scripts/qa.mjs`,
+    `scripts/experience.mjs` and `scripts/shots.mjs`.
+- **Image generation:** Runway 0 credits, Higgsfield 0 credits (free plans).
+  More images need a paid plan or real client photos.
+- **Launch blockers:** unchanged (see below and `docs/NEXT_SESSION.md`).
+
 ## 2026-09-15 — Project Maharaja: real client assets, granite and stonecraft hero categories
 
 - **Content from real client material:**

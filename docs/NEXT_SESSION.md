@@ -10,7 +10,38 @@ domain, or set up hosting without new, explicit user permission (the user
 answered "No, not yet" to a direct deployment question on 2026-09-12, and a
 later brief reiterated deployment is out of scope for now).
 
-## Latest (2026-09-15, later still): motion & interaction refinement
+## Pick up here (end of day 2026-09-16)
+- **State:**
+  - Working tree clean. Latest commit `a5510e9` on main.
+  - Never pushed or deployed.
+  - Dev server on 4321, prod preview on 4322 (rebuild with `npx astro build`
+    before QA).
+- **Last changes:**
+  - Engraved-gold header wordmark with a larger exact emblem.
+  - The hero eyebrow is now "Natural beauty / Timeless spaces" (no repeated
+    brand name).
+  - Gold-veined marble section.
+  - Header spacer gap fixed.
+- **Playwright MCP:** configured (local scope) but not loaded in the old
+  session. A fresh session should expose the tools; the local scripts work
+  regardless.
+- **Open questions for the user/client:**
+  1. Which statement marbles are actually stocked (Black Gold, Emerald Gold,
+     Calacatta Gold…), and slab photos for them.
+  2. Quartz sink brands, sizes and colours, and what "other sinks" means.
+  3. Real photos to replace the illustrative images (quartz, Kadappa, sinks,
+     basins, laying, marbles, tile-printing jobs, Kota lots).
+  4. Whether to keep the hero headline "STONES & CERAMICS" (it matches the
+     reference) or change it.
+  5. The client's wordmark as an image file, if they want an exact match of
+     the reference's gold lettering.
+  6. Paid image-generation plan: yes or no.
+- **Launch blockers:**
+  - Real domain (placeholder `elitebalaji.example.in`).
+  - Hosting choice and explicit deploy permission.
+  - Push to GitHub.
+
+## Earlier (2026-09-15, later still): motion & interaction refinement
 - Header convergence on scroll (fixed header + spacer, no layout shift),
   animated Products panel, full-height drawer with staggered links.
 - Homepage: choreographed hero (line → image → texture → headline lines →
