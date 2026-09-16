@@ -6,6 +6,7 @@ import { getCollection } from "astro:content";
 import { materialWorlds } from "../../lib/material-worlds";
 import { deriveColours } from "../../lib/facets";
 import { imageBadge } from "../../lib/image-badge";
+import { metaText, pageTitle } from "../../lib/seo";
 import { stoneCategories, quartzCategories, tileSizes, tileFinishes, tileTypes } from "../../lib/stone-varieties";
 import { waLink, emailQuoteLink, productEnquiryMessage } from "../../lib/business";
 
@@ -75,8 +76,8 @@ const categoriesWithStock = world.slug === "natural-stone"
 ---
 
 <BaseLayout
-  title={`${world.label} | Elite Balaji Stones & Ceramics`}
-  description={`Explore ${world.label} at Elite Balaji: ${halls.map((h) => h.data.name).join(", ")}. Real stock, honestly labelled, with trade rates on enquiry.`}
+  title={pageTitle(world.label)}
+  description={metaText(`${world.label} at Elite Balaji, Karamadai: ${halls.map((h) => h.data.name).join(", ")}. Real stock, honestly labelled, trade rates on enquiry.`)}
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(collectionJsonLd)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />

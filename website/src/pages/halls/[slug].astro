@@ -6,6 +6,7 @@ import { getCollection } from "astro:content";
 import { waLink, telLink, emailQuoteLink, productEnquiryMessage } from "../../lib/business";
 import { deriveColours } from "../../lib/facets";
 import { imageBadge } from "../../lib/image-badge";
+import { metaText, pageTitle } from "../../lib/seo";
 import { sanitarywareCategories } from "../../lib/stone-varieties";
 
 export async function getStaticPaths() {
@@ -96,8 +97,8 @@ const breadcrumbJsonLd = {
 ---
 
 <BaseLayout
-  title={`${name} | Elite Balaji Stones & Ceramics`}
-  description={intro}
+  title={pageTitle(`${name} in Coimbatore`)}
+  description={metaText(intro)}
   enquiryMessage={productEnquiryMessage(name)}
   enquiry={{ label: "Ask for trade rate", category: name }}
 >

@@ -10,7 +10,8 @@
     "preview": "astro preview",
     "qa": "node scripts/qa.mjs",
     "qa:experience": "node scripts/experience.mjs",
-    "astro": "astro"
+    "astro": "astro",
+    "preflight": "node scripts/preflight.mjs"
   },
   "dependencies": {
     "@astrojs/react": "^6.0.5",

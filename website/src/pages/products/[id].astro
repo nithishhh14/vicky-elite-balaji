@@ -4,6 +4,7 @@ import { getCollection } from "astro:content";
 import { waLink, telLink, emailQuoteLink, productEnquiryMessage } from "../../lib/business";
 import { similarGroups } from "../../lib/similarity";
 import { imageBadge } from "../../lib/image-badge";
+import { metaText, pageTitle } from "../../lib/seo";
 import SaveButton from "../../components/SaveButton.astro";
 
 export async function getStaticPaths() {
@@ -73,8 +74,8 @@ const breadcrumbJsonLd = {
 ---
 
 <BaseLayout
-  title={`${name} | ${hallName} | Elite Balaji Stones & Ceramics`}
-  description={`${name}: ${[product.data.category, product.data.finish].filter(Boolean).join(", ")}. Ask for trade rate.`}
+  title={pageTitle(name)}
+  description={metaText(`${name}: ${[product.data.category, product.data.size, product.data.finish].filter(Boolean).join(", ")}. ${product.data.applications.join(", ")}. Ask us for current availability and the trade rate from our Karamadai showroom.`)}
   enquiryMessage={productEnquiryMessage(name, product.data.category)}
   enquiry={{ label: "Ask about this material", shortLabel: "Ask about this", product: name, category: product.data.category ?? hallName }}
 >

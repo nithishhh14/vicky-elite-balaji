@@ -3,11 +3,15 @@
   "order": 6,
   "tagline": "Tile adhesive, epoxy & fixing systems",
   "intro": "Tile adhesive, tile epoxy and the fixing accessories that go with every laying job, supplied to match the material you buy from us, so coverage and cure times are right for the job.",
-  "heroImage": "https://images.unsplash.com/photo-1521459467264-802e2ef3141f?auto=format&fit=crop&w=1800&q=80",
-  "heroAlt": "Cement-based tile adhesive texture",
+  "heroImage": "/media/adhesive/somany/ezy-fix-sef-333.jpg",
+  "heroAlt": "Somany Ezy Fix SEF-333 and SEF-333W adhesive bags",
   "hasRealContent": false,
   "materialColor": "#8a8580",
   "materialTexture": "cement",
-  "applications": ["Tile fixing", "Grout & epoxy jointing", "Waterproofing accessories"],
+  "applications": [
+    "Tile fixing",
+    "Grout & epoxy jointing",
+    "Waterproofing accessories"
+  ],
   "enquiryNote": "Ask for trade rate. Bundled with your material order."
 }
