@@ -2,7 +2,17 @@
 
 _Last updated: 2026-09-13 — homepage/Tiles-hero rebuilt away from Athangudi, honest sourcing layer extended to Quartz/Sanitaryware, real React Bits component integration, Athangudi catalogue depth expansion (product image galleries + spec fields), SEO structured-data gap closed on hall/material pages. See `docs/DECISIONS.md` for each._
 
-## 2026-09-16 — end-of-day snapshot (latest commit `a5510e9`, main, not pushed, not deployed)
+## 2026-09-16 (evening) — latest snapshot (commit `2390a2e`)
+
+- **129 pages, 89 products, 390 media files.** `npm run preflight` = 20/20
+  with a domain set. Not deployed, not pushed.
+- Added today: the two wash basin catalogues (25 series, 192 photos, prices
+  stripped), security headers + preflight gate + SEO meta pass, security /
+  legal / launch-QA / data-architecture docs, 14 local search landing pages,
+  the premium floating action dial, and free site measurement booking.
+- Waiting on: the domain, supplier photo permission, the two 0-byte PDFs.
+
+## 2026-09-16 (morning) — end-of-day snapshot (latest commit `a5510e9`, main, not pushed, not deployed)
 
 - **Site:** 89 pages, 64 products. Checks passing: astro check shows 0
   errors, `npm run qa` finds 0 problems across 89 pages at 2 viewports, and

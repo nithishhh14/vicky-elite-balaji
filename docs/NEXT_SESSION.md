@@ -10,7 +10,38 @@ domain, or set up hosting without new, explicit user permission (the user
 answered "No, not yet" to a direct deployment question on 2026-09-12, and a
 later brief reiterated deployment is out of scope for now).
 
-## Pick up here (end of day 2026-09-16)
+## Pick up here (2026-09-16, evening — latest)
+- **State:** working tree clean, latest commit `2390a2e` on `main`. Never
+  pushed, never deployed. 129 pages, 89 products.
+- **Deploy gate:** `cd website && npm run preflight` → **20/20 "Ready to
+  deploy"** when `SITE_URL` is set. With no domain it fails on the
+  placeholder, by design.
+- **Host decided:** Cloudflare Pages (user's choice). Domain still pending —
+  the user was discussing it with the client. Once you have it:
+  1. Set `SITE_URL` in the Pages build environment (or edit the fallback in
+     `astro.config.mjs`); robots.txt and the sitemap follow automatically.
+  2. Push to GitHub, connect the repo in Pages (build `npm ci && npm run
+     build`, output `website/dist`, root `website`).
+  3. Then Search Console + sitemap + Google Business Profile — see
+     `docs/LAUNCH_QA.md` §4.
+- **Built today (2026-09-16):**
+  - Golden + Marble wash basin catalogues: 25 series products, 192 supplier
+    photos, every price cropped out. Gallery gained a "Basins" filter.
+  - Security headers (`public/_headers`) verified under a real server;
+    `npm run preflight` as the 20-check deploy gate; SEO title/description
+    pass; `docs/SECURITY.md`, `docs/LEGAL_LICENCES.md`, `docs/LAUNCH_QA.md`,
+    `docs/DATA_ARCHITECTURE.md`.
+  - 14 local landing pages (`src/lib/guides.ts` + `src/pages/[guide].astro`)
+    answering the searches The Tile Bros ranks for — with real products, FAQ
+    schema and honest "we source it" notes.
+  - QuickActions floating dial (replaces the old green WhatsApp pill) and the
+    free site measurement booking flow.
+- **Open questions for the client:** unchanged list below, plus: re-send the
+  two 0-byte PDFs (`ART BASIN NEW.pdf`, `Helix_Moroccan_NEW 2026.pdf`);
+  confirm supplier permission for catalogue photos; GSTIN/legal entity for
+  the footer; whether to state a measurement-visit timeline.
+
+## Earlier (2026-09-16, morning)
 - **State:**
   - Working tree clean. Latest commit `a5510e9` on main.
   - Never pushed or deployed.
