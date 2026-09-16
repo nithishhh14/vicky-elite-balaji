@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import { business } from "../lib/business";
 import { materialWorlds, alsoStockedHallIds } from "../lib/material-worlds";
+import { guides } from "../lib/guides";
 
 interface Props {
   // Homepage only: header floats transparent over the hero and gains its
@@ -79,11 +80,11 @@ const previews = [
         aria-hidden="true"
         width="59"
         height="56"
-        class="header-logo h-14 w-auto flex-shrink-0 sm:h-[4.4rem] xl:h-[5rem]"
+        class="header-logo h-14 w-auto flex-shrink-0 sm:h-[4.4rem] xl:h-[4.1rem] 2xl:h-[5rem]"
       />
       <!-- Wordmark set in engraved metallic gold, after the reference mockup. -->
       <span class="header-wordmark flex min-w-0 flex-col items-center">
-        <span class="gold-engraved font-display text-[1.6rem] font-semibold leading-[0.95] whitespace-nowrap sm:text-[2.55rem] xl:text-[2.95rem]">Elite Balaji</span>
+        <span class="gold-engraved font-display text-[1.6rem] font-semibold leading-[0.95] whitespace-nowrap sm:text-[2.55rem] xl:text-[2.4rem] 2xl:text-[2.9rem]">Elite Balaji</span>
         <span class="mt-1 flex items-center gap-2 text-[0.5rem] uppercase tracking-[0.34em] text-[#d6ad5f] whitespace-nowrap sm:text-[0.6rem]">
           <span class="hidden h-px w-4 bg-gradient-to-r from-transparent to-[#d6ad5f] sm:block" aria-hidden="true"></span>
           Stones &amp; Ceramics
@@ -119,6 +120,12 @@ const previews = [
     </nav>
 
     <div class="flex flex-shrink-0 items-center gap-1 sm:gap-3">
+      <a
+        href="/contact/"
+        class="quote-cta hidden min-h-10 items-center border border-brass/70 px-4 text-[0.62rem] uppercase tracking-[0.18em] text-brass hover:bg-brass hover:text-charcoal-deep 2xl:inline-flex"
+      >
+        Get a quote
+      </a>
       <a
         href="/search/"
         data-search-open
@@ -218,7 +225,15 @@ const previews = [
               </ul>
             </div>
           </div>
-          <a href="/search/" class="mega-item btn-arrow mt-8 inline-flex items-center gap-3 border border-brass/70 px-5 py-3 text-[0.62rem] uppercase tracking-[0.22em] text-paper hover:bg-brass hover:text-charcoal-deep" style={`--i:${materialGroups.length + 3}`}>
+          <div class="mega-item mt-8" style={`--i:${materialGroups.length + 3}`}>
+            <p class="text-[0.62rem] uppercase tracking-[0.2em] text-paper/60">Popular searches</p>
+            <ul class="mt-2 grid grid-cols-2 gap-x-6 gap-y-1">
+              {guides.slice(0, 8).map((g) => (
+                <li><a href={`/${g.slug}/`} class="link-gold text-sm text-paper/90">{g.h1}</a></li>
+              ))}
+            </ul>
+          </div>
+          <a href="/search/" class="mega-item btn-arrow mt-8 inline-flex items-center gap-3 border border-brass/70 px-5 py-3 text-[0.62rem] uppercase tracking-[0.22em] text-paper hover:bg-brass hover:text-charcoal-deep" style={`--i:${materialGroups.length + 4}`}>
             Full catalogue
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>

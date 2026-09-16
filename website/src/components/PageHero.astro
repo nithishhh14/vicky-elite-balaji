@@ -6,15 +6,22 @@ interface Props {
   eyebrow: string;
   title: string;
   intro?: string;
+  // A real photo for this page (a product or client image). Falls back to the
+  // client-approved showroom render, which is labelled as such.
+  image?: string;
+  imageAlt?: string;
+  credit?: string;
 }
-const { eyebrow, title, intro } = Astro.props;
+const { eyebrow, title, intro, image, imageAlt = "", credit } = Astro.props;
+const src = image ?? "/media/reference/hero-interior.jpg";
+const label = credit ?? (image ? undefined : "Illustrative showroom concept");
 ---
 
 <section class="relative isolate overflow-hidden bg-charcoal-deep text-paper">
   <img
-    src="/media/reference/hero-interior.jpg"
-    alt=""
-    aria-hidden="true"
+    src={src}
+    alt={imageAlt}
+    aria-hidden={imageAlt ? undefined : "true"}
     class="absolute inset-y-0 right-0 h-full w-full object-cover object-center opacity-60 lg:w-[55%]"
     loading="eager"
   />
@@ -24,4 +31,5 @@ const { eyebrow, title, intro } = Astro.props;
     <h1 class="mt-5 max-w-3xl font-display text-5xl font-medium uppercase leading-[0.95] sm:text-6xl">{title}</h1>
     {intro && <p class="mt-6 max-w-xl text-paper/80 leading-relaxed">{intro}</p>}
   </div>
+  {label && <p class="absolute bottom-3 right-4 text-[0.55rem] uppercase tracking-[0.18em] text-paper/40">{label}</p>}
 </section>
