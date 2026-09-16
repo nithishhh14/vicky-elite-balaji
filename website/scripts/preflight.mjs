@@ -36,7 +36,9 @@ const htmlFiles = (function walk(dir) {
   });
 })(DIST);
 const pageUrl = (f) => "/" + relative(DIST, f).split(sep).join("/").replace(/index\.html$/, "").replace(/\.html$/, "/");
-const site = readFileSync(join(ROOT, "astro.config.mjs"), "utf8").match(/site:\s*"([^"]+)"/)?.[1] ?? "";
+// The live domain comes from the build (SITE_URL / astro.config.mjs), read
+// back from the canonical URL of the built homepage.
+const site = (readFileSync(join(DIST, "index.html"), "utf8").match(/rel="canonical" href="([^"]+)"/)?.[1] ?? "").replace(/\/$/, "");
 
 ok("pages built", htmlFiles.length > 50, `${htmlFiles.length} pages`);
 ok("real domain configured (no placeholder)", !!site && !/example\./.test(site), site || "site missing");
