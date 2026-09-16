@@ -1,0 +1,45 @@
+{
+  "kind": "material",
+  "hallId": "sanitaryware",
+  "name": "Vita Art Basin",
+  "series": "Vita · Golden collection",
+  "category": "Art basin",
+  "size": "18\" x 14\"",
+  "finish": "Glazed ceramic, patterned",
+  "order": 22,
+  "applications": [
+    "Bathrooms",
+    "Powder rooms",
+    "Countertop basins"
+  ],
+  "image": "/media/basins/golden/vita-2002.jpg",
+  "imageAlt": "VITA-2002 table-top wash basin from the Vita series",
+  "images": [
+    {
+      "src": "/media/basins/golden/vita-2002.jpg",
+      "alt": "VITA-2002 table-top wash basin from the Vita series"
+    },
+    {
+      "src": "/media/basins/golden/vita-2003.jpg",
+      "alt": "VITA-2003 table-top wash basin from the Vita series"
+    },
+    {
+      "src": "/media/basins/golden/vita-2005.jpg",
+      "alt": "VITA-2005 table-top wash basin from the Vita series"
+    },
+    {
+      "src": "/media/basins/golden/vita-2009.jpg",
+      "alt": "VITA-2009 table-top wash basin from the Vita series"
+    },
+    {
+      "src": "/media/basins/golden/vita-2018.jpg",
+      "alt": "VITA-2018 table-top wash basin from the Vita series"
+    },
+    {
+      "src": "/media/basins/golden/vita-2021.jpg",
+      "alt": "VITA-2021 table-top wash basin from the Vita series"
+    }
+  ],
+  "sourceCatalogue": "Golden wash basin collection, 2026 (supplier catalogue)",
+  "note": "Supplier catalogue photos (Golden wash basin collection, 2026). 6 designs in this series; 6 shown. Ask us for the full shade card, current availability and the trade rate."
+}

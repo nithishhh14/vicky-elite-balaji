@@ -1,0 +1,53 @@
+{
+  "kind": "material",
+  "hallId": "sanitaryware",
+  "name": "Bliss Marble Basin",
+  "series": "Bliss · Marble collection",
+  "category": "Marble-finish basin",
+  "size": "24\" x 14\"",
+  "finish": "Polished, marble-look",
+  "order": 32,
+  "applications": [
+    "Bathrooms",
+    "Powder rooms",
+    "Countertop basins"
+  ],
+  "image": "/media/basins/marble/bliss-1903.jpg",
+  "imageAlt": "BLISS-1903 table-top wash basin from the Bliss series",
+  "images": [
+    {
+      "src": "/media/basins/marble/bliss-1903.jpg",
+      "alt": "BLISS-1903 table-top wash basin from the Bliss series"
+    },
+    {
+      "src": "/media/basins/marble/bliss-1902.jpg",
+      "alt": "BLISS-1902 table-top wash basin from the Bliss series"
+    },
+    {
+      "src": "/media/basins/marble/bliss-1906.jpg",
+      "alt": "BLISS-1906 table-top wash basin from the Bliss series"
+    },
+    {
+      "src": "/media/basins/marble/bliss-1901.jpg",
+      "alt": "BLISS-1901 table-top wash basin from the Bliss series"
+    },
+    {
+      "src": "/media/basins/marble/bliss-1907.jpg",
+      "alt": "BLISS-1907 table-top wash basin from the Bliss series"
+    },
+    {
+      "src": "/media/basins/marble/bliss-1904.jpg",
+      "alt": "BLISS-1904 table-top wash basin from the Bliss series"
+    },
+    {
+      "src": "/media/basins/marble/bliss-1910.jpg",
+      "alt": "BLISS-1910 table-top wash basin from the Bliss series"
+    },
+    {
+      "src": "/media/basins/marble/bliss-1909.jpg",
+      "alt": "BLISS-1909 table-top wash basin from the Bliss series"
+    }
+  ],
+  "sourceCatalogue": "Marble wash basin collection, 2026 (supplier catalogue)",
+  "note": "Supplier catalogue photos (Marble wash basin collection, 2026). 10 designs in this series; 8 shown. The collection is catalogued as “Marble” — ask us to confirm the material (natural stone or marble-finish ceramic), availability and the trade rate."
+}

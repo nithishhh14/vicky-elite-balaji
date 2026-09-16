@@ -1,0 +1,53 @@
+{
+  "kind": "material",
+  "hallId": "sanitaryware",
+  "name": "Radon Marble Basin",
+  "series": "Radon · Marble collection",
+  "category": "Marble-finish basin",
+  "size": "20\" x 16\"",
+  "finish": "Polished, marble-look",
+  "order": 33,
+  "applications": [
+    "Bathrooms",
+    "Powder rooms",
+    "Countertop basins"
+  ],
+  "image": "/media/basins/marble/radon-2001.jpg",
+  "imageAlt": "RADON-2001 table-top wash basin from the Radon series",
+  "images": [
+    {
+      "src": "/media/basins/marble/radon-2001.jpg",
+      "alt": "RADON-2001 table-top wash basin from the Radon series"
+    },
+    {
+      "src": "/media/basins/marble/radon-2002.jpg",
+      "alt": "RADON-2002 table-top wash basin from the Radon series"
+    },
+    {
+      "src": "/media/basins/marble/radon-2003.jpg",
+      "alt": "RADON-2003 table-top wash basin from the Radon series"
+    },
+    {
+      "src": "/media/basins/marble/radon-2006.jpg",
+      "alt": "RADON-2006 table-top wash basin from the Radon series"
+    },
+    {
+      "src": "/media/basins/marble/radon-2004.jpg",
+      "alt": "RADON-2004 table-top wash basin from the Radon series"
+    },
+    {
+      "src": "/media/basins/marble/radon-2007.jpg",
+      "alt": "RADON-2007 table-top wash basin from the Radon series"
+    },
+    {
+      "src": "/media/basins/marble/radon-2008.jpg",
+      "alt": "RADON-2008 table-top wash basin from the Radon series"
+    },
+    {
+      "src": "/media/basins/marble/radon-2009.jpg",
+      "alt": "RADON-2009 table-top wash basin from the Radon series"
+    }
+  ],
+  "sourceCatalogue": "Marble wash basin collection, 2026 (supplier catalogue)",
+  "note": "Supplier catalogue photos (Marble wash basin collection, 2026). 9 designs in this series; 8 shown. The collection is catalogued as “Marble” — ask us to confirm the material (natural stone or marble-finish ceramic), availability and the trade rate."
+}

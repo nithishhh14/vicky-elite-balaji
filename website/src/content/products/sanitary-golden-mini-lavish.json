@@ -1,0 +1,53 @@
+{
+  "kind": "material",
+  "hallId": "sanitaryware",
+  "name": "Mini Lavish Art Basin",
+  "series": "Mini Lavish · Golden collection",
+  "category": "Art basin",
+  "size": "16\" x 12\"",
+  "finish": "Glazed ceramic, patterned",
+  "order": 16,
+  "applications": [
+    "Bathrooms",
+    "Powder rooms",
+    "Countertop basins"
+  ],
+  "image": "/media/basins/golden/mini-lavish-2000-s.jpg",
+  "imageAlt": "MINI LAVISH-2000-S table-top wash basin from the Mini Lavish series",
+  "images": [
+    {
+      "src": "/media/basins/golden/mini-lavish-2000-s.jpg",
+      "alt": "MINI LAVISH-2000-S table-top wash basin from the Mini Lavish series"
+    },
+    {
+      "src": "/media/basins/golden/mini-lavish-2003.jpg",
+      "alt": "MINI LAVISH-2003 table-top wash basin from the Mini Lavish series"
+    },
+    {
+      "src": "/media/basins/golden/mini-lavish-2021.jpg",
+      "alt": "MINI LAVISH-2021 table-top wash basin from the Mini Lavish series"
+    },
+    {
+      "src": "/media/basins/golden/mini-lavish-2038.jpg",
+      "alt": "MINI LAVISH-2038 table-top wash basin from the Mini Lavish series"
+    },
+    {
+      "src": "/media/basins/golden/mini-recta-2001.jpg",
+      "alt": "MINI RECTA-2001 table-top wash basin from the Mini Lavish series"
+    },
+    {
+      "src": "/media/basins/golden/mini-recta-2006.jpg",
+      "alt": "MINI RECTA-2006 table-top wash basin from the Mini Lavish series"
+    },
+    {
+      "src": "/media/basins/golden/mini-recta-2010.jpg",
+      "alt": "MINI RECTA-2010 table-top wash basin from the Mini Lavish series"
+    },
+    {
+      "src": "/media/basins/golden/mini-recta-2043.jpg",
+      "alt": "MINI RECTA-2043 table-top wash basin from the Mini Lavish series"
+    }
+  ],
+  "sourceCatalogue": "Golden wash basin collection, 2026 (supplier catalogue)",
+  "note": "Supplier catalogue photos (Golden wash basin collection, 2026). 69 designs in this series; 8 shown. Ask us for the full shade card, current availability and the trade rate."
+}

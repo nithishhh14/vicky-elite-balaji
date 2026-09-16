@@ -1,0 +1,53 @@
+{
+  "kind": "material",
+  "hallId": "sanitaryware",
+  "name": "Softy Art Basin",
+  "series": "Softy · Golden collection",
+  "category": "Art basin",
+  "size": "16\" x 12\"",
+  "finish": "Glazed ceramic, patterned",
+  "order": 20,
+  "applications": [
+    "Bathrooms",
+    "Powder rooms",
+    "Countertop basins"
+  ],
+  "image": "/media/basins/golden/softy-2000-rg.jpg",
+  "imageAlt": "SOFTY-2000-RG table-top wash basin from the Softy series",
+  "images": [
+    {
+      "src": "/media/basins/golden/softy-2000-rg.jpg",
+      "alt": "SOFTY-2000-RG table-top wash basin from the Softy series"
+    },
+    {
+      "src": "/media/basins/golden/softy-2001.jpg",
+      "alt": "SOFTY-2001 table-top wash basin from the Softy series"
+    },
+    {
+      "src": "/media/basins/golden/softy-2015.jpg",
+      "alt": "SOFTY-2015 table-top wash basin from the Softy series"
+    },
+    {
+      "src": "/media/basins/golden/softy-2003.jpg",
+      "alt": "SOFTY-2003 table-top wash basin from the Softy series"
+    },
+    {
+      "src": "/media/basins/golden/softy-2005.jpg",
+      "alt": "SOFTY-2005 table-top wash basin from the Softy series"
+    },
+    {
+      "src": "/media/basins/golden/softy-2013.jpg",
+      "alt": "SOFTY-2013 table-top wash basin from the Softy series"
+    },
+    {
+      "src": "/media/basins/golden/softy-2018.jpg",
+      "alt": "SOFTY-2018 table-top wash basin from the Softy series"
+    },
+    {
+      "src": "/media/basins/golden/softy-2020.jpg",
+      "alt": "SOFTY-2020 table-top wash basin from the Softy series"
+    }
+  ],
+  "sourceCatalogue": "Golden wash basin collection, 2026 (supplier catalogue)",
+  "note": "Supplier catalogue photos (Golden wash basin collection, 2026). 22 designs in this series; 8 shown. Ask us for the full shade card, current availability and the trade rate."
+}

@@ -1,0 +1,53 @@
+{
+  "kind": "material",
+  "hallId": "sanitaryware",
+  "name": "Lava Marble Basin",
+  "series": "Lava · Marble collection",
+  "category": "Marble-finish basin",
+  "size": "16\" x 12\"",
+  "finish": "Polished, marble-look",
+  "order": 27,
+  "applications": [
+    "Bathrooms",
+    "Powder rooms",
+    "Countertop basins"
+  ],
+  "image": "/media/basins/marble/lava-1201.jpg",
+  "imageAlt": "LAVA-1201 table-top wash basin from the Lava series",
+  "images": [
+    {
+      "src": "/media/basins/marble/lava-1201.jpg",
+      "alt": "LAVA-1201 table-top wash basin from the Lava series"
+    },
+    {
+      "src": "/media/basins/marble/lava-1202.jpg",
+      "alt": "LAVA-1202 table-top wash basin from the Lava series"
+    },
+    {
+      "src": "/media/basins/marble/lava-1204.jpg",
+      "alt": "LAVA-1204 table-top wash basin from the Lava series"
+    },
+    {
+      "src": "/media/basins/marble/lava-1205.jpg",
+      "alt": "LAVA-1205 table-top wash basin from the Lava series"
+    },
+    {
+      "src": "/media/basins/marble/lava-1206.jpg",
+      "alt": "LAVA-1206 table-top wash basin from the Lava series"
+    },
+    {
+      "src": "/media/basins/marble/lava-1207.jpg",
+      "alt": "LAVA-1207 table-top wash basin from the Lava series"
+    },
+    {
+      "src": "/media/basins/marble/lava-1208.jpg",
+      "alt": "LAVA-1208 table-top wash basin from the Lava series"
+    },
+    {
+      "src": "/media/basins/marble/lava-1209.jpg",
+      "alt": "LAVA-1209 table-top wash basin from the Lava series"
+    }
+  ],
+  "sourceCatalogue": "Marble wash basin collection, 2026 (supplier catalogue)",
+  "note": "Supplier catalogue photos (Marble wash basin collection, 2026). 12 designs in this series; 8 shown. The collection is catalogued as “Marble” — ask us to confirm the material (natural stone or marble-finish ceramic), availability and the trade rate."
+}

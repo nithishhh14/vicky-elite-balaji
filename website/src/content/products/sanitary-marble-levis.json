@@ -1,0 +1,53 @@
+{
+  "kind": "material",
+  "hallId": "sanitaryware",
+  "name": "Levis Marble Basin",
+  "series": "Levis · Marble collection",
+  "category": "Marble-finish basin",
+  "size": "22\" x 15\"",
+  "finish": "Polished, marble-look",
+  "order": 31,
+  "applications": [
+    "Bathrooms",
+    "Powder rooms",
+    "Countertop basins"
+  ],
+  "image": "/media/basins/marble/levis-1801.jpg",
+  "imageAlt": "LEVIS-1801 table-top wash basin from the Levis series",
+  "images": [
+    {
+      "src": "/media/basins/marble/levis-1801.jpg",
+      "alt": "LEVIS-1801 table-top wash basin from the Levis series"
+    },
+    {
+      "src": "/media/basins/marble/levis-1803.jpg",
+      "alt": "LEVIS-1803 table-top wash basin from the Levis series"
+    },
+    {
+      "src": "/media/basins/marble/levis-1804.jpg",
+      "alt": "LEVIS-1804 table-top wash basin from the Levis series"
+    },
+    {
+      "src": "/media/basins/marble/levis-1805.jpg",
+      "alt": "LEVIS-1805 table-top wash basin from the Levis series"
+    },
+    {
+      "src": "/media/basins/marble/levis-1806.jpg",
+      "alt": "LEVIS-1806 table-top wash basin from the Levis series"
+    },
+    {
+      "src": "/media/basins/marble/levis-1807.jpg",
+      "alt": "LEVIS-1807 table-top wash basin from the Levis series"
+    },
+    {
+      "src": "/media/basins/marble/levis-1808.jpg",
+      "alt": "LEVIS-1808 table-top wash basin from the Levis series"
+    },
+    {
+      "src": "/media/basins/marble/levis-1809.jpg",
+      "alt": "LEVIS-1809 table-top wash basin from the Levis series"
+    }
+  ],
+  "sourceCatalogue": "Marble wash basin collection, 2026 (supplier catalogue)",
+  "note": "Supplier catalogue photos (Marble wash basin collection, 2026). 10 designs in this series; 8 shown. The collection is catalogued as “Marble” — ask us to confirm the material (natural stone or marble-finish ceramic), availability and the trade rate."
+}

@@ -1,0 +1,53 @@
+{
+  "kind": "material",
+  "hallId": "sanitaryware",
+  "name": "Recta Art Basin",
+  "series": "Recta · Golden collection",
+  "category": "Art basin",
+  "size": "19\" x 15\"",
+  "finish": "Glazed ceramic, patterned",
+  "order": 18,
+  "applications": [
+    "Bathrooms",
+    "Powder rooms",
+    "Countertop basins"
+  ],
+  "image": "/media/basins/golden/recta-2000-g.jpg",
+  "imageAlt": "RECTA-2000-G table-top wash basin from the Recta series",
+  "images": [
+    {
+      "src": "/media/basins/golden/recta-2000-g.jpg",
+      "alt": "RECTA-2000-G table-top wash basin from the Recta series"
+    },
+    {
+      "src": "/media/basins/golden/recta-2001.jpg",
+      "alt": "RECTA-2001 table-top wash basin from the Recta series"
+    },
+    {
+      "src": "/media/basins/golden/recta-2005.jpg",
+      "alt": "RECTA-2005 table-top wash basin from the Recta series"
+    },
+    {
+      "src": "/media/basins/golden/recta-2008.jpg",
+      "alt": "RECTA-2008 table-top wash basin from the Recta series"
+    },
+    {
+      "src": "/media/basins/golden/recta-2012.jpg",
+      "alt": "RECTA-2012 table-top wash basin from the Recta series"
+    },
+    {
+      "src": "/media/basins/golden/recta-2021.jpg",
+      "alt": "RECTA-2021 table-top wash basin from the Recta series"
+    },
+    {
+      "src": "/media/basins/golden/recta-2025.jpg",
+      "alt": "RECTA-2025 table-top wash basin from the Recta series"
+    },
+    {
+      "src": "/media/basins/golden/recta-2037.jpg",
+      "alt": "RECTA-2037 table-top wash basin from the Recta series"
+    }
+  ],
+  "sourceCatalogue": "Golden wash basin collection, 2026 (supplier catalogue)",
+  "note": "Supplier catalogue photos (Golden wash basin collection, 2026). 31 designs in this series; 8 shown. Ask us for the full shade card, current availability and the trade rate."
+}

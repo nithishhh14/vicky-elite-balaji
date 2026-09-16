@@ -1,0 +1,53 @@
+{
+  "kind": "material",
+  "hallId": "sanitaryware",
+  "name": "Toro Marble Basin",
+  "series": "Toro · Marble collection",
+  "category": "Marble-finish basin",
+  "size": "18\" x 13\"",
+  "finish": "Polished, marble-look",
+  "order": 25,
+  "applications": [
+    "Bathrooms",
+    "Powder rooms",
+    "Countertop basins"
+  ],
+  "image": "/media/basins/marble/toro-1001.jpg",
+  "imageAlt": "TORO-1001 table-top wash basin from the Toro series",
+  "images": [
+    {
+      "src": "/media/basins/marble/toro-1001.jpg",
+      "alt": "TORO-1001 table-top wash basin from the Toro series"
+    },
+    {
+      "src": "/media/basins/marble/toro-1005.jpg",
+      "alt": "TORO-1005 table-top wash basin from the Toro series"
+    },
+    {
+      "src": "/media/basins/marble/toro-1010.jpg",
+      "alt": "TORO-1010 table-top wash basin from the Toro series"
+    },
+    {
+      "src": "/media/basins/marble/toro-1015.jpg",
+      "alt": "TORO-1015 table-top wash basin from the Toro series"
+    },
+    {
+      "src": "/media/basins/marble/toro-1017.jpg",
+      "alt": "TORO-1017 table-top wash basin from the Toro series"
+    },
+    {
+      "src": "/media/basins/marble/toro-1024.jpg",
+      "alt": "TORO-1024 table-top wash basin from the Toro series"
+    },
+    {
+      "src": "/media/basins/marble/toro-1032.jpg",
+      "alt": "TORO-1032 table-top wash basin from the Toro series"
+    },
+    {
+      "src": "/media/basins/marble/toro-1025.jpg",
+      "alt": "TORO-1025 table-top wash basin from the Toro series"
+    }
+  ],
+  "sourceCatalogue": "Marble wash basin collection, 2026 (supplier catalogue)",
+  "note": "Supplier catalogue photos (Marble wash basin collection, 2026). 34 designs in this series; 8 shown. The collection is catalogued as “Marble” — ask us to confirm the material (natural stone or marble-finish ceramic), availability and the trade rate."
+}

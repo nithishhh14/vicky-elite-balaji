@@ -1,0 +1,29 @@
+{
+  "kind": "material",
+  "hallId": "sanitaryware",
+  "name": "Zesti Art Basin",
+  "series": "Zesti · Golden collection",
+  "category": "Art basin",
+  "size": "18\" x 13\"",
+  "finish": "Glazed ceramic, patterned",
+  "order": 24,
+  "applications": [
+    "Bathrooms",
+    "Powder rooms",
+    "Countertop basins"
+  ],
+  "image": "/media/basins/golden/zesti-2002.jpg",
+  "imageAlt": "ZESTI-2002 table-top wash basin from the Zesti series",
+  "images": [
+    {
+      "src": "/media/basins/golden/zesti-2002.jpg",
+      "alt": "ZESTI-2002 table-top wash basin from the Zesti series"
+    },
+    {
+      "src": "/media/basins/golden/zesti-2008.jpg",
+      "alt": "ZESTI-2008 table-top wash basin from the Zesti series"
+    }
+  ],
+  "sourceCatalogue": "Golden wash basin collection, 2026 (supplier catalogue)",
+  "note": "Supplier catalogue photos (Golden wash basin collection, 2026). 2 designs in this series; 2 shown. Ask us for the full shade card, current availability and the trade rate."
+}

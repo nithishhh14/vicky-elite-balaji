@@ -1,0 +1,53 @@
+{
+  "kind": "material",
+  "hallId": "sanitaryware",
+  "name": "Oval Art Basin",
+  "series": "Oval · Golden collection",
+  "category": "Art basin",
+  "size": "23\" x 16\"",
+  "finish": "Glazed ceramic, patterned",
+  "order": 23,
+  "applications": [
+    "Bathrooms",
+    "Powder rooms",
+    "Countertop basins"
+  ],
+  "image": "/media/basins/golden/oval-3001.jpg",
+  "imageAlt": "OVAL-3001 table-top wash basin from the Oval series",
+  "images": [
+    {
+      "src": "/media/basins/golden/oval-3001.jpg",
+      "alt": "OVAL-3001 table-top wash basin from the Oval series"
+    },
+    {
+      "src": "/media/basins/golden/oval-3012.jpg",
+      "alt": "OVAL-3012 table-top wash basin from the Oval series"
+    },
+    {
+      "src": "/media/basins/golden/oval-2049.jpg",
+      "alt": "OVAL-2049 table-top wash basin from the Oval series"
+    },
+    {
+      "src": "/media/basins/golden/oval-2006.jpg",
+      "alt": "OVAL-2006 table-top wash basin from the Oval series"
+    },
+    {
+      "src": "/media/basins/golden/oval-2009.jpg",
+      "alt": "OVAL-2009 table-top wash basin from the Oval series"
+    },
+    {
+      "src": "/media/basins/golden/oval-2012.jpg",
+      "alt": "OVAL-2012 table-top wash basin from the Oval series"
+    },
+    {
+      "src": "/media/basins/golden/oval-2013.jpg",
+      "alt": "OVAL-2013 table-top wash basin from the Oval series"
+    },
+    {
+      "src": "/media/basins/golden/oval-2017.jpg",
+      "alt": "OVAL-2017 table-top wash basin from the Oval series"
+    }
+  ],
+  "sourceCatalogue": "Golden wash basin collection, 2026 (supplier catalogue)",
+  "note": "Supplier catalogue photos (Golden wash basin collection, 2026). 9 designs in this series; 8 shown. Ask us for the full shade card, current availability and the trade rate."
+}

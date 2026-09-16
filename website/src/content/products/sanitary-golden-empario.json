@@ -1,0 +1,53 @@
+{
+  "kind": "material",
+  "hallId": "sanitaryware",
+  "name": "Empario Art Basin",
+  "series": "Empario · Golden collection",
+  "category": "Art basin",
+  "size": "24\" x 14\"",
+  "finish": "Glazed ceramic, patterned",
+  "order": 14,
+  "applications": [
+    "Bathrooms",
+    "Powder rooms",
+    "Countertop basins"
+  ],
+  "image": "/media/basins/golden/empario-2002.jpg",
+  "imageAlt": "EMPARIO-2002 table-top wash basin from the Empario series",
+  "images": [
+    {
+      "src": "/media/basins/golden/empario-2002.jpg",
+      "alt": "EMPARIO-2002 table-top wash basin from the Empario series"
+    },
+    {
+      "src": "/media/basins/golden/empario-2005.jpg",
+      "alt": "EMPARIO-2005 table-top wash basin from the Empario series"
+    },
+    {
+      "src": "/media/basins/golden/empario-2007.jpg",
+      "alt": "EMPARIO-2007 table-top wash basin from the Empario series"
+    },
+    {
+      "src": "/media/basins/golden/empario-2010.jpg",
+      "alt": "EMPARIO-2010 table-top wash basin from the Empario series"
+    },
+    {
+      "src": "/media/basins/golden/empario-2014.jpg",
+      "alt": "EMPARIO-2014 table-top wash basin from the Empario series"
+    },
+    {
+      "src": "/media/basins/golden/empario-2018.jpg",
+      "alt": "EMPARIO-2018 table-top wash basin from the Empario series"
+    },
+    {
+      "src": "/media/basins/golden/empario-2023.jpg",
+      "alt": "EMPARIO-2023 table-top wash basin from the Empario series"
+    },
+    {
+      "src": "/media/basins/golden/empario-2034.jpg",
+      "alt": "EMPARIO-2034 table-top wash basin from the Empario series"
+    }
+  ],
+  "sourceCatalogue": "Golden wash basin collection, 2026 (supplier catalogue)",
+  "note": "Supplier catalogue photos (Golden wash basin collection, 2026). 8 designs in this series; 8 shown. Ask us for the full shade card, current availability and the trade rate."
+}

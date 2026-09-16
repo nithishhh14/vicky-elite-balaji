@@ -1,0 +1,53 @@
+{
+  "kind": "material",
+  "hallId": "sanitaryware",
+  "name": "Strom Marble Basin",
+  "series": "Strom · Marble collection",
+  "category": "Marble-finish basin",
+  "size": "16\" x 12\"",
+  "finish": "Polished, marble-look",
+  "order": 29,
+  "applications": [
+    "Bathrooms",
+    "Powder rooms",
+    "Countertop basins"
+  ],
+  "image": "/media/basins/marble/strom-1401.jpg",
+  "imageAlt": "STROM-1401 table-top wash basin from the Strom series",
+  "images": [
+    {
+      "src": "/media/basins/marble/strom-1401.jpg",
+      "alt": "STROM-1401 table-top wash basin from the Strom series"
+    },
+    {
+      "src": "/media/basins/marble/strom-1405.jpg",
+      "alt": "STROM-1405 table-top wash basin from the Strom series"
+    },
+    {
+      "src": "/media/basins/marble/strom-1404.jpg",
+      "alt": "STROM-1404 table-top wash basin from the Strom series"
+    },
+    {
+      "src": "/media/basins/marble/strom-1406.jpg",
+      "alt": "STROM-1406 table-top wash basin from the Strom series"
+    },
+    {
+      "src": "/media/basins/marble/strom-1403.jpg",
+      "alt": "STROM-1403 table-top wash basin from the Strom series"
+    },
+    {
+      "src": "/media/basins/marble/strom-1408.jpg",
+      "alt": "STROM-1408 table-top wash basin from the Strom series"
+    },
+    {
+      "src": "/media/basins/marble/strom-1412.jpg",
+      "alt": "STROM-1412 table-top wash basin from the Strom series"
+    },
+    {
+      "src": "/media/basins/marble/strom-1414.jpg",
+      "alt": "STROM-1414 table-top wash basin from the Strom series"
+    }
+  ],
+  "sourceCatalogue": "Marble wash basin collection, 2026 (supplier catalogue)",
+  "note": "Supplier catalogue photos (Marble wash basin collection, 2026). 15 designs in this series; 8 shown. The collection is catalogued as “Marble” — ask us to confirm the material (natural stone or marble-finish ceramic), availability and the trade rate."
+}

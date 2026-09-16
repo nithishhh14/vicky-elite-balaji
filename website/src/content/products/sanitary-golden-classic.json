@@ -1,0 +1,53 @@
+{
+  "kind": "material",
+  "hallId": "sanitaryware",
+  "name": "Classic Art Basin",
+  "series": "Classic · Golden collection",
+  "category": "Art basin",
+  "size": "25\" x 15\"",
+  "finish": "Glazed ceramic, patterned",
+  "order": 11,
+  "applications": [
+    "Bathrooms",
+    "Powder rooms",
+    "Countertop basins"
+  ],
+  "image": "/media/basins/golden/classic-2001.jpg",
+  "imageAlt": "CLASSIC-2001 table-top wash basin from the Classic series",
+  "images": [
+    {
+      "src": "/media/basins/golden/classic-2001.jpg",
+      "alt": "CLASSIC-2001 table-top wash basin from the Classic series"
+    },
+    {
+      "src": "/media/basins/golden/classic-2002.jpg",
+      "alt": "CLASSIC-2002 table-top wash basin from the Classic series"
+    },
+    {
+      "src": "/media/basins/golden/classic-2003.jpg",
+      "alt": "CLASSIC-2003 table-top wash basin from the Classic series"
+    },
+    {
+      "src": "/media/basins/golden/classic-2004.jpg",
+      "alt": "CLASSIC-2004 table-top wash basin from the Classic series"
+    },
+    {
+      "src": "/media/basins/golden/classic-2005.jpg",
+      "alt": "CLASSIC-2005 table-top wash basin from the Classic series"
+    },
+    {
+      "src": "/media/basins/golden/classic-2009.jpg",
+      "alt": "CLASSIC-2009 table-top wash basin from the Classic series"
+    },
+    {
+      "src": "/media/basins/golden/classic-2012.jpg",
+      "alt": "CLASSIC-2012 table-top wash basin from the Classic series"
+    },
+    {
+      "src": "/media/basins/golden/classic-2021.jpg",
+      "alt": "CLASSIC-2021 table-top wash basin from the Classic series"
+    }
+  ],
+  "sourceCatalogue": "Golden wash basin collection, 2026 (supplier catalogue)",
+  "note": "Supplier catalogue photos (Golden wash basin collection, 2026). 9 designs in this series; 8 shown. Ask us for the full shade card, current availability and the trade rate."
+}

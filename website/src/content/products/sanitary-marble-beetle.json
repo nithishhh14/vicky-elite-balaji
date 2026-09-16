@@ -1,0 +1,53 @@
+{
+  "kind": "material",
+  "hallId": "sanitaryware",
+  "name": "Beetle Marble Basin",
+  "series": "Beetle · Marble collection",
+  "category": "Marble-finish basin",
+  "size": "20\" x 13\"",
+  "finish": "Polished, marble-look",
+  "order": 28,
+  "applications": [
+    "Bathrooms",
+    "Powder rooms",
+    "Countertop basins"
+  ],
+  "image": "/media/basins/marble/beetle-1302.jpg",
+  "imageAlt": "BEETLE-1302 table-top wash basin from the Beetle series",
+  "images": [
+    {
+      "src": "/media/basins/marble/beetle-1302.jpg",
+      "alt": "BEETLE-1302 table-top wash basin from the Beetle series"
+    },
+    {
+      "src": "/media/basins/marble/beetle-1301.jpg",
+      "alt": "BEETLE-1301 table-top wash basin from the Beetle series"
+    },
+    {
+      "src": "/media/basins/marble/beetle-1304.jpg",
+      "alt": "BEETLE-1304 table-top wash basin from the Beetle series"
+    },
+    {
+      "src": "/media/basins/marble/beetle-1306.jpg",
+      "alt": "BEETLE-1306 table-top wash basin from the Beetle series"
+    },
+    {
+      "src": "/media/basins/marble/beetle-1305.jpg",
+      "alt": "BEETLE-1305 table-top wash basin from the Beetle series"
+    },
+    {
+      "src": "/media/basins/marble/beetle-1303.jpg",
+      "alt": "BEETLE-1303 table-top wash basin from the Beetle series"
+    },
+    {
+      "src": "/media/basins/marble/beetle-1310.jpg",
+      "alt": "BEETLE-1310 table-top wash basin from the Beetle series"
+    },
+    {
+      "src": "/media/basins/marble/beetle-1311.jpg",
+      "alt": "BEETLE-1311 table-top wash basin from the Beetle series"
+    }
+  ],
+  "sourceCatalogue": "Marble wash basin collection, 2026 (supplier catalogue)",
+  "note": "Supplier catalogue photos (Marble wash basin collection, 2026). 14 designs in this series; 8 shown. The collection is catalogued as “Marble” — ask us to confirm the material (natural stone or marble-finish ceramic), availability and the trade rate."
+}

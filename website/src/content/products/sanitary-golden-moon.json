@@ -1,0 +1,53 @@
+{
+  "kind": "material",
+  "hallId": "sanitaryware",
+  "name": "Moon Art Basin",
+  "series": "Moon · Golden collection",
+  "category": "Art basin",
+  "size": "14\" x 14\"",
+  "finish": "Glazed ceramic, patterned",
+  "order": 17,
+  "applications": [
+    "Bathrooms",
+    "Powder rooms",
+    "Countertop basins"
+  ],
+  "image": "/media/basins/golden/moon-2002.jpg",
+  "imageAlt": "MOON-2002 table-top wash basin from the Moon series",
+  "images": [
+    {
+      "src": "/media/basins/golden/moon-2002.jpg",
+      "alt": "MOON-2002 table-top wash basin from the Moon series"
+    },
+    {
+      "src": "/media/basins/golden/moon-2008.jpg",
+      "alt": "MOON-2008 table-top wash basin from the Moon series"
+    },
+    {
+      "src": "/media/basins/golden/moon-2017.jpg",
+      "alt": "MOON-2017 table-top wash basin from the Moon series"
+    },
+    {
+      "src": "/media/basins/golden/moon-2023.jpg",
+      "alt": "MOON-2023 table-top wash basin from the Moon series"
+    },
+    {
+      "src": "/media/basins/golden/moon-2027.jpg",
+      "alt": "MOON-2027 table-top wash basin from the Moon series"
+    },
+    {
+      "src": "/media/basins/golden/moon-2028.jpg",
+      "alt": "MOON-2028 table-top wash basin from the Moon series"
+    },
+    {
+      "src": "/media/basins/golden/moon-2030.jpg",
+      "alt": "MOON-2030 table-top wash basin from the Moon series"
+    },
+    {
+      "src": "/media/basins/golden/moon-2031.jpg",
+      "alt": "MOON-2031 table-top wash basin from the Moon series"
+    }
+  ],
+  "sourceCatalogue": "Golden wash basin collection, 2026 (supplier catalogue)",
+  "note": "Supplier catalogue photos (Golden wash basin collection, 2026). 13 designs in this series; 8 shown. Ask us for the full shade card, current availability and the trade rate."
+}

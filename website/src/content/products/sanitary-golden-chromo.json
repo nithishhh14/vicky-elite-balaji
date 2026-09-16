@@ -1,0 +1,53 @@
+{
+  "kind": "material",
+  "hallId": "sanitaryware",
+  "name": "Chromo Art Basin",
+  "series": "Chromo · Golden collection",
+  "category": "Art basin",
+  "size": "19\" x 16\"",
+  "finish": "Glazed ceramic, patterned",
+  "order": 12,
+  "applications": [
+    "Bathrooms",
+    "Powder rooms",
+    "Countertop basins"
+  ],
+  "image": "/media/basins/golden/chromo-2000-g.jpg",
+  "imageAlt": "CHROMO-2000-G table-top wash basin from the Chromo series",
+  "images": [
+    {
+      "src": "/media/basins/golden/chromo-2000-g.jpg",
+      "alt": "CHROMO-2000-G table-top wash basin from the Chromo series"
+    },
+    {
+      "src": "/media/basins/golden/chromo-2000-s.jpg",
+      "alt": "CHROMO-2000-S table-top wash basin from the Chromo series"
+    },
+    {
+      "src": "/media/basins/golden/chromo-2003.jpg",
+      "alt": "CHROMO-2003 table-top wash basin from the Chromo series"
+    },
+    {
+      "src": "/media/basins/golden/chromo-2005.jpg",
+      "alt": "CHROMO-2005 table-top wash basin from the Chromo series"
+    },
+    {
+      "src": "/media/basins/golden/chromo-2007.jpg",
+      "alt": "CHROMO-2007 table-top wash basin from the Chromo series"
+    },
+    {
+      "src": "/media/basins/golden/chromo-2015.jpg",
+      "alt": "CHROMO-2015 table-top wash basin from the Chromo series"
+    },
+    {
+      "src": "/media/basins/golden/chromo-2013.jpg",
+      "alt": "CHROMO-2013 table-top wash basin from the Chromo series"
+    },
+    {
+      "src": "/media/basins/golden/chromo-2019.jpg",
+      "alt": "CHROMO-2019 table-top wash basin from the Chromo series"
+    }
+  ],
+  "sourceCatalogue": "Golden wash basin collection, 2026 (supplier catalogue)",
+  "note": "Supplier catalogue photos (Golden wash basin collection, 2026). 21 designs in this series; 8 shown. Ask us for the full shade card, current availability and the trade rate."
+}

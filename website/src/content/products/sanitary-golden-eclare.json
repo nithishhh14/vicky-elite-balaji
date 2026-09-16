@@ -1,0 +1,53 @@
+{
+  "kind": "material",
+  "hallId": "sanitaryware",
+  "name": "Eclare Art Basin",
+  "series": "Eclare · Golden collection",
+  "category": "Art basin",
+  "size": "19\" x 12\"",
+  "finish": "Glazed ceramic, patterned",
+  "order": 13,
+  "applications": [
+    "Bathrooms",
+    "Powder rooms",
+    "Countertop basins"
+  ],
+  "image": "/media/basins/golden/eclare-2000-g.jpg",
+  "imageAlt": "ECLARE-2000-G table-top wash basin from the Eclare series",
+  "images": [
+    {
+      "src": "/media/basins/golden/eclare-2000-g.jpg",
+      "alt": "ECLARE-2000-G table-top wash basin from the Eclare series"
+    },
+    {
+      "src": "/media/basins/golden/eclare-2000-s.jpg",
+      "alt": "ECLARE-2000-S table-top wash basin from the Eclare series"
+    },
+    {
+      "src": "/media/basins/golden/eclare-2001.jpg",
+      "alt": "ECLARE-2001 table-top wash basin from the Eclare series"
+    },
+    {
+      "src": "/media/basins/golden/eclare-2003.jpg",
+      "alt": "ECLARE-2003 table-top wash basin from the Eclare series"
+    },
+    {
+      "src": "/media/basins/golden/eclare-2005.jpg",
+      "alt": "ECLARE-2005 table-top wash basin from the Eclare series"
+    },
+    {
+      "src": "/media/basins/golden/eclare-2012.jpg",
+      "alt": "ECLARE-2012 table-top wash basin from the Eclare series"
+    },
+    {
+      "src": "/media/basins/golden/eclare-2018.jpg",
+      "alt": "ECLARE-2018 table-top wash basin from the Eclare series"
+    },
+    {
+      "src": "/media/basins/golden/eclare-2021.jpg",
+      "alt": "ECLARE-2021 table-top wash basin from the Eclare series"
+    }
+  ],
+  "sourceCatalogue": "Golden wash basin collection, 2026 (supplier catalogue)",
+  "note": "Supplier catalogue photos (Golden wash basin collection, 2026). 18 designs in this series; 8 shown. Ask us for the full shade card, current availability and the trade rate."
+}

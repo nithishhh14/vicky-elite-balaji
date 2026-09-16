@@ -1,0 +1,53 @@
+{
+  "kind": "material",
+  "hallId": "sanitaryware",
+  "name": "Lavish Art Basin",
+  "series": "Lavish · Golden collection",
+  "category": "Art basin",
+  "size": "18\" x 13\"",
+  "finish": "Glazed ceramic, patterned",
+  "order": 15,
+  "applications": [
+    "Bathrooms",
+    "Powder rooms",
+    "Countertop basins"
+  ],
+  "image": "/media/basins/golden/lavish-2000-g.jpg",
+  "imageAlt": "LAVISH-2000-G table-top wash basin from the Lavish series",
+  "images": [
+    {
+      "src": "/media/basins/golden/lavish-2000-g.jpg",
+      "alt": "LAVISH-2000-G table-top wash basin from the Lavish series"
+    },
+    {
+      "src": "/media/basins/golden/lavish-2003.jpg",
+      "alt": "LAVISH-2003 table-top wash basin from the Lavish series"
+    },
+    {
+      "src": "/media/basins/golden/lavish-2015.jpg",
+      "alt": "LAVISH-2015 table-top wash basin from the Lavish series"
+    },
+    {
+      "src": "/media/basins/golden/lavish-2018.jpg",
+      "alt": "LAVISH-2018 table-top wash basin from the Lavish series"
+    },
+    {
+      "src": "/media/basins/golden/lavish-2022.jpg",
+      "alt": "LAVISH-2022 table-top wash basin from the Lavish series"
+    },
+    {
+      "src": "/media/basins/golden/lavish-2030.jpg",
+      "alt": "LAVISH-2030 table-top wash basin from the Lavish series"
+    },
+    {
+      "src": "/media/basins/golden/lavish-2040.jpg",
+      "alt": "LAVISH-2040 table-top wash basin from the Lavish series"
+    },
+    {
+      "src": "/media/basins/golden/lavish-3006.jpg",
+      "alt": "LAVISH-3006 table-top wash basin from the Lavish series"
+    }
+  ],
+  "sourceCatalogue": "Golden wash basin collection, 2026 (supplier catalogue)",
+  "note": "Supplier catalogue photos (Golden wash basin collection, 2026). 42 designs in this series; 8 shown. Ask us for the full shade card, current availability and the trade rate."
+}

@@ -35,10 +35,15 @@ const order: Record<string, number> = { work: 0, stock: 1, supply: 2, idea: 3 };
     });
   });
 
-const products = (await getCollection("products")).filter((p) => p.data.hallId === "tiles").sort((a, b) => a.data.order - b.data.order);
+// Tiles and the supplier basin catalogues: every image is a supplier
+// catalogue photo, labelled as such.
+const products = (await getCollection("products"))
+  .filter((p) => p.data.hallId === "tiles" || (p.data.hallId === "sanitaryware" && (p.data.images?.length ?? 0) > 0))
+  .sort((a, b) => a.data.order - b.data.order);
 const seen = new Set<string>();
 for (const p of products) {
-  const marbleLook = /marble/i.test(`${p.data.name} ${p.data.category ?? ""}`);
+  const isBasin = p.data.hallId === "sanitaryware";
+  const marbleLook = !isBasin && /marble/i.test(`${p.data.name} ${p.data.category ?? ""}`);
   for (const img of [{ src: p.data.image, alt: p.data.imageAlt }, ...(p.data.images ?? [])]) {
     if (seen.has(img.src)) continue;
     seen.add(img.src);
@@ -46,10 +51,12 @@ for (const p of products) {
     tiles.push({
       src: img.src,
       alt: img.alt,
-      title: isRoom && p.data.series ? `${p.data.series} in a room` : p.data.name,
+      title: isBasin ? `${p.data.series ?? p.data.name}` : isRoom && p.data.series ? `${p.data.series} in a room` : p.data.name,
       label: p.data.brand ? `Supplier catalogue · ${p.data.brand}` : "Supplier catalogue",
       tone: "real",
-      groups: ["tiles", ...(marbleLook ? ["marble"] : []), ...(isRoom ? ["spaces"] : []), ...(/bath/i.test(img.alt) ? ["bathroom"] : [])],
+      groups: isBasin
+        ? ["basins", "bathroom"]
+        : ["tiles", ...(marbleLook ? ["marble"] : []), ...(isRoom ? ["spaces"] : []), ...(/bath/i.test(img.alt) ? ["bathroom"] : [])],
       href: `/products/${p.id}/`,
     });
   }
@@ -81,6 +88,7 @@ const groups = [
   { id: "marble", label: "Marble" },
   { id: "stonecraft", label: "Stonecraft" },
   { id: "tiles", label: "Tiles" },
+  { id: "basins", label: "Basins" },
   { id: "kitchen", label: "Kitchen" },
   { id: "bathroom", label: "Bathroom" },
   { id: "spaces", label: "Spaces & concepts" },

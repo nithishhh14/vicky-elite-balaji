@@ -1,0 +1,53 @@
+{
+  "kind": "material",
+  "hallId": "sanitaryware",
+  "name": "Armani Art Basin",
+  "series": "Armani · Golden collection",
+  "category": "Art basin",
+  "size": "22\" x 14\"",
+  "finish": "Glazed ceramic, patterned",
+  "order": 10,
+  "applications": [
+    "Bathrooms",
+    "Powder rooms",
+    "Countertop basins"
+  ],
+  "image": "/media/basins/golden/armani-2007.jpg",
+  "imageAlt": "ARMANI-2007 table-top wash basin from the Armani series",
+  "images": [
+    {
+      "src": "/media/basins/golden/armani-2007.jpg",
+      "alt": "ARMANI-2007 table-top wash basin from the Armani series"
+    },
+    {
+      "src": "/media/basins/golden/armani-2002.jpg",
+      "alt": "ARMANI-2002 table-top wash basin from the Armani series"
+    },
+    {
+      "src": "/media/basins/golden/armani-2000-g.jpg",
+      "alt": "ARMANI-2000-G table-top wash basin from the Armani series"
+    },
+    {
+      "src": "/media/basins/golden/armani-2016.jpg",
+      "alt": "ARMANI-2016 table-top wash basin from the Armani series"
+    },
+    {
+      "src": "/media/basins/golden/armani-2018.jpg",
+      "alt": "ARMANI-2018 table-top wash basin from the Armani series"
+    },
+    {
+      "src": "/media/basins/golden/armani-2023.jpg",
+      "alt": "ARMANI-2023 table-top wash basin from the Armani series"
+    },
+    {
+      "src": "/media/basins/golden/armani-2004-b.jpg",
+      "alt": "ARMANI-2004-B table-top wash basin from the Armani series"
+    },
+    {
+      "src": "/media/basins/golden/armani-2038.jpg",
+      "alt": "ARMANI-2038 table-top wash basin from the Armani series"
+    }
+  ],
+  "sourceCatalogue": "Golden wash basin collection, 2026 (supplier catalogue)",
+  "note": "Supplier catalogue photos (Golden wash basin collection, 2026). 32 designs in this series; 8 shown. Ask us for the full shade card, current availability and the trade rate."
+}

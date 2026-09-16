@@ -1,0 +1,53 @@
+{
+  "kind": "material",
+  "hallId": "sanitaryware",
+  "name": "Vinus Art Basin",
+  "series": "Vinus · Golden collection",
+  "category": "Art basin",
+  "size": "21\" x 15\"",
+  "finish": "Glazed ceramic, patterned",
+  "order": 21,
+  "applications": [
+    "Bathrooms",
+    "Powder rooms",
+    "Countertop basins"
+  ],
+  "image": "/media/basins/golden/vinus-2002.jpg",
+  "imageAlt": "VINUS-2002 table-top wash basin from the Vinus series",
+  "images": [
+    {
+      "src": "/media/basins/golden/vinus-2002.jpg",
+      "alt": "VINUS-2002 table-top wash basin from the Vinus series"
+    },
+    {
+      "src": "/media/basins/golden/vinus-2015.jpg",
+      "alt": "VINUS-2015 table-top wash basin from the Vinus series"
+    },
+    {
+      "src": "/media/basins/golden/vinus-3006.jpg",
+      "alt": "VINUS-3006 table-top wash basin from the Vinus series"
+    },
+    {
+      "src": "/media/basins/golden/vinus-2003-b.jpg",
+      "alt": "VINUS-2003-B table-top wash basin from the Vinus series"
+    },
+    {
+      "src": "/media/basins/golden/vinus-2033.jpg",
+      "alt": "VINUS-2033 table-top wash basin from the Vinus series"
+    },
+    {
+      "src": "/media/basins/golden/vinus-3001.jpg",
+      "alt": "VINUS-3001 table-top wash basin from the Vinus series"
+    },
+    {
+      "src": "/media/basins/golden/vinus-2004-b.jpg",
+      "alt": "VINUS-2004-B table-top wash basin from the Vinus series"
+    },
+    {
+      "src": "/media/basins/golden/vinus-2012-b.jpg",
+      "alt": "VINUS-2012-B table-top wash basin from the Vinus series"
+    }
+  ],
+  "sourceCatalogue": "Golden wash basin collection, 2026 (supplier catalogue)",
+  "note": "Supplier catalogue photos (Golden wash basin collection, 2026). 27 designs in this series; 8 shown. Ask us for the full shade card, current availability and the trade rate."
+}

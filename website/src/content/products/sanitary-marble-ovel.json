@@ -1,0 +1,53 @@
+{
+  "kind": "material",
+  "hallId": "sanitaryware",
+  "name": "Ovel Marble Basin",
+  "series": "Ovel · Marble collection",
+  "category": "Marble-finish basin",
+  "size": "25\" x 17\"",
+  "finish": "Polished, marble-look",
+  "order": 34,
+  "applications": [
+    "Bathrooms",
+    "Powder rooms",
+    "Countertop basins"
+  ],
+  "image": "/media/basins/marble/ovel-2101.jpg",
+  "imageAlt": "OVEL-2101 table-top wash basin from the Ovel series",
+  "images": [
+    {
+      "src": "/media/basins/marble/ovel-2101.jpg",
+      "alt": "OVEL-2101 table-top wash basin from the Ovel series"
+    },
+    {
+      "src": "/media/basins/marble/ovel-2102.jpg",
+      "alt": "OVEL-2102 table-top wash basin from the Ovel series"
+    },
+    {
+      "src": "/media/basins/marble/ovel-2103.jpg",
+      "alt": "OVEL-2103 table-top wash basin from the Ovel series"
+    },
+    {
+      "src": "/media/basins/marble/ovel-2104.jpg",
+      "alt": "OVEL-2104 table-top wash basin from the Ovel series"
+    },
+    {
+      "src": "/media/basins/marble/ovel-2105.jpg",
+      "alt": "OVEL-2105 table-top wash basin from the Ovel series"
+    },
+    {
+      "src": "/media/basins/marble/ovel-2107.jpg",
+      "alt": "OVEL-2107 table-top wash basin from the Ovel series"
+    },
+    {
+      "src": "/media/basins/marble/ovel-2108.jpg",
+      "alt": "OVEL-2108 table-top wash basin from the Ovel series"
+    },
+    {
+      "src": "/media/basins/marble/ovel-2109.jpg",
+      "alt": "OVEL-2109 table-top wash basin from the Ovel series"
+    }
+  ],
+  "sourceCatalogue": "Marble wash basin collection, 2026 (supplier catalogue)",
+  "note": "Supplier catalogue photos (Marble wash basin collection, 2026). 11 designs in this series; 8 shown. The collection is catalogued as “Marble” — ask us to confirm the material (natural stone or marble-finish ceramic), availability and the trade rate."
+}

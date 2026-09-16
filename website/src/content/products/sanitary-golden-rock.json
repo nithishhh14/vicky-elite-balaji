@@ -1,0 +1,53 @@
+{
+  "kind": "material",
+  "hallId": "sanitaryware",
+  "name": "Rock Art Basin",
+  "series": "Rock · Golden collection",
+  "category": "Art basin",
+  "size": "14\" x 14\"",
+  "finish": "Glazed ceramic, patterned",
+  "order": 19,
+  "applications": [
+    "Bathrooms",
+    "Powder rooms",
+    "Countertop basins"
+  ],
+  "image": "/media/basins/golden/rock-2000-s.jpg",
+  "imageAlt": "ROCK-2000-S table-top wash basin from the Rock series",
+  "images": [
+    {
+      "src": "/media/basins/golden/rock-2000-s.jpg",
+      "alt": "ROCK-2000-S table-top wash basin from the Rock series"
+    },
+    {
+      "src": "/media/basins/golden/rock-2002.jpg",
+      "alt": "ROCK-2002 table-top wash basin from the Rock series"
+    },
+    {
+      "src": "/media/basins/golden/rock-2004.jpg",
+      "alt": "ROCK-2004 table-top wash basin from the Rock series"
+    },
+    {
+      "src": "/media/basins/golden/rock-2006.jpg",
+      "alt": "ROCK-2006 table-top wash basin from the Rock series"
+    },
+    {
+      "src": "/media/basins/golden/rock-2012.jpg",
+      "alt": "ROCK-2012 table-top wash basin from the Rock series"
+    },
+    {
+      "src": "/media/basins/golden/rock-2019.jpg",
+      "alt": "ROCK-2019 table-top wash basin from the Rock series"
+    },
+    {
+      "src": "/media/basins/golden/rock-2021-b.jpg",
+      "alt": "ROCK-2021-B table-top wash basin from the Rock series"
+    },
+    {
+      "src": "/media/basins/golden/rock-2033.jpg",
+      "alt": "ROCK-2033 table-top wash basin from the Rock series"
+    }
+  ],
+  "sourceCatalogue": "Golden wash basin collection, 2026 (supplier catalogue)",
+  "note": "Supplier catalogue photos (Golden wash basin collection, 2026). 28 designs in this series; 8 shown. Ask us for the full shade card, current availability and the trade rate."
+}

@@ -1,0 +1,53 @@
+{
+  "kind": "material",
+  "hallId": "sanitaryware",
+  "name": "Latra Marble Basin",
+  "series": "Latra · Marble collection",
+  "category": "Marble-finish basin",
+  "size": "24\" x 14\"",
+  "finish": "Polished, marble-look",
+  "order": 30,
+  "applications": [
+    "Bathrooms",
+    "Powder rooms",
+    "Countertop basins"
+  ],
+  "image": "/media/basins/marble/latra-1701.jpg",
+  "imageAlt": "LATRA-1701 table-top wash basin from the Latra series",
+  "images": [
+    {
+      "src": "/media/basins/marble/latra-1701.jpg",
+      "alt": "LATRA-1701 table-top wash basin from the Latra series"
+    },
+    {
+      "src": "/media/basins/marble/latra-1703.jpg",
+      "alt": "LATRA-1703 table-top wash basin from the Latra series"
+    },
+    {
+      "src": "/media/basins/marble/latra-1706.jpg",
+      "alt": "LATRA-1706 table-top wash basin from the Latra series"
+    },
+    {
+      "src": "/media/basins/marble/latra-1708.jpg",
+      "alt": "LATRA-1708 table-top wash basin from the Latra series"
+    },
+    {
+      "src": "/media/basins/marble/latra-1710.jpg",
+      "alt": "LATRA-1710 table-top wash basin from the Latra series"
+    },
+    {
+      "src": "/media/basins/marble/latra-1711.jpg",
+      "alt": "LATRA-1711 table-top wash basin from the Latra series"
+    },
+    {
+      "src": "/media/basins/marble/latra-1714.jpg",
+      "alt": "LATRA-1714 table-top wash basin from the Latra series"
+    },
+    {
+      "src": "/media/basins/marble/latra-1716.jpg",
+      "alt": "LATRA-1716 table-top wash basin from the Latra series"
+    }
+  ],
+  "sourceCatalogue": "Marble wash basin collection, 2026 (supplier catalogue)",
+  "note": "Supplier catalogue photos (Marble wash basin collection, 2026). 19 designs in this series; 8 shown. The collection is catalogued as “Marble” — ask us to confirm the material (natural stone or marble-finish ceramic), availability and the trade rate."
+}

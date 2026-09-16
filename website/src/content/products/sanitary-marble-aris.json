@@ -1,0 +1,53 @@
+{
+  "kind": "material",
+  "hallId": "sanitaryware",
+  "name": "Aris Marble Basin",
+  "series": "Aris · Marble collection",
+  "category": "Marble-finish basin",
+  "size": "18\" x 14\"",
+  "finish": "Polished, marble-look",
+  "order": 26,
+  "applications": [
+    "Bathrooms",
+    "Powder rooms",
+    "Countertop basins"
+  ],
+  "image": "/media/basins/marble/aris-1104.jpg",
+  "imageAlt": "ARIS-1104 table-top wash basin from the Aris series",
+  "images": [
+    {
+      "src": "/media/basins/marble/aris-1104.jpg",
+      "alt": "ARIS-1104 table-top wash basin from the Aris series"
+    },
+    {
+      "src": "/media/basins/marble/aris-1101.jpg",
+      "alt": "ARIS-1101 table-top wash basin from the Aris series"
+    },
+    {
+      "src": "/media/basins/marble/aris-1106.jpg",
+      "alt": "ARIS-1106 table-top wash basin from the Aris series"
+    },
+    {
+      "src": "/media/basins/marble/aris-1110.jpg",
+      "alt": "ARIS-1110 table-top wash basin from the Aris series"
+    },
+    {
+      "src": "/media/basins/marble/aris-1111.jpg",
+      "alt": "ARIS-1111 table-top wash basin from the Aris series"
+    },
+    {
+      "src": "/media/basins/marble/aris-1114.jpg",
+      "alt": "ARIS-1114 table-top wash basin from the Aris series"
+    },
+    {
+      "src": "/media/basins/marble/aris-1116.jpg",
+      "alt": "ARIS-1116 table-top wash basin from the Aris series"
+    },
+    {
+      "src": "/media/basins/marble/aris-1118.jpg",
+      "alt": "ARIS-1118 table-top wash basin from the Aris series"
+    }
+  ],
+  "sourceCatalogue": "Marble wash basin collection, 2026 (supplier catalogue)",
+  "note": "Supplier catalogue photos (Marble wash basin collection, 2026). 16 designs in this series; 8 shown. The collection is catalogued as “Marble” — ask us to confirm the material (natural stone or marble-finish ceramic), availability and the trade rate."
+}
