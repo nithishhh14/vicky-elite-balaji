@@ -120,7 +120,16 @@ const browser = await chromium.launch();
   } else {
     note("no [data-enquire] triggers on product page");
   }
-  note(`floating CTA label="${(await p2.locator(".enquiry-cta").innerText()).trim()}"`);
+  note(`floating CTA label="${(await p2.locator(".quick-pill").innerText()).trim()}"`);
+  await p2.locator("#quick-toggle").click();
+  await p2.waitForTimeout(600);
+  note(`quick menu open=${await p2.locator("#quick-menu").isVisible()} items=${await p2.locator("#quick-menu [role=menuitem]").count()}`);
+  await p2.locator('[data-enquire="Book a free site measurement"]').first().click();
+  await p2.waitForTimeout(800);
+  await shot(p2, "d09b-measure-booking");
+  note(`measure booking fields=${await p2.locator("[data-measure-only]").isVisible()} cta="${(await p2.locator("[data-enquiry-wa-label]").textContent())?.trim()}"`);
+  await p2.keyboard.press("Escape");
+  await p2.waitForTimeout(500);
   await p2.evaluate(() => window.scrollTo(0, 400));
   await p2.waitForTimeout(700);
   note(`product CLS=${await cls(p2)} errors=${p2.errors.length}`);

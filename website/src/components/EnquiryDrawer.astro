@@ -8,6 +8,7 @@
 import { business } from "../lib/business";
 
 const intents = [
+  "Book a free site measurement",
   "Ask price & availability",
   "Request a sample or photos",
   "Suggest an alternative",
@@ -51,7 +52,26 @@ const label = "text-[0.6rem] uppercase tracking-[0.2em] text-paper/60";
           <label class="block"><span class={label}>Location</span><input id="enq-location" name="location" autocomplete="address-level2" placeholder="e.g. Mettupalayam" class={field} /></label>
           <label class="block"><span class={label}>Quantity / area</span><input id="enq-qty" name="quantity" placeholder="e.g. 450 sq ft" class={field} /></label>
         </div>
-        <label class="block" style="--i:2"><span class={label}>Message</span><textarea id="enq-message" name="message" rows="3" class={field} placeholder="Room, timeline, colour you like…"></textarea></label>
+        <!-- Only for the free measurement booking. -->
+        <div data-measure-only hidden class="border border-brass/30 bg-brass/[0.06] p-4" style="--i:2">
+          <p class="text-[0.6rem] uppercase tracking-[0.2em] text-brass">When suits you?</p>
+          <div class="mt-3 grid gap-4 sm:grid-cols-2">
+            <label class="block"><span class={label}>Preferred day</span><input id="enq-day" name="day" type="date" class={field} /></label>
+            <label class="block"><span class={label}>Time of day</span>
+              <select id="enq-slot" name="slot" class={field}>
+                <option value="">No preference</option>
+                <option>Morning</option>
+                <option>Afternoon</option>
+                <option>Evening</option>
+              </select>
+            </label>
+          </div>
+          <p class="mt-3 text-[0.7rem] leading-relaxed text-paper/55">
+            Free across Coimbatore and the surrounding region. We measure every room, work out exact
+            quantities, and the estimate is yours to keep — buy from us or not.
+          </p>
+        </div>
+        <label class="block" style="--i:3"><span class={label}>Message</span><textarea id="enq-message" name="message" rows="3" class={field} placeholder="Room, timeline, colour you like…"></textarea></label>
         <input type="hidden" name="category" id="enq-category" />
         <input type="hidden" name="url" id="enq-url" />
       </div>
@@ -60,7 +80,7 @@ const label = "text-[0.6rem] uppercase tracking-[0.2em] text-paper/60";
     <div class="border-t border-paper/10 px-6 py-5">
       <button type="button" data-enquiry-wa class="btn-arrow flex min-h-12 w-full items-center justify-center gap-3 bg-whatsapp px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.2em] text-paper hover:brightness-110">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.36 5.07L2 22l5.06-1.33A9.94 9.94 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2Zm0 18c-1.62 0-3.14-.44-4.44-1.2l-.32-.19-3 .79.8-2.92-.2-.3A7.94 7.94 0 0 1 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8Z"/></svg>
-        Send on WhatsApp
+        <span data-enquiry-wa-label>Send on WhatsApp</span>
       </button>
       <div class="mt-3 flex items-center justify-between gap-3 text-[0.65rem] uppercase tracking-[0.16em] text-paper/50">
         <a data-enquiry-email href={`mailto:${business.email}`} class="link-gold min-h-11 inline-flex items-center">Email instead</a>
@@ -85,6 +105,9 @@ const label = "text-[0.6rem] uppercase tracking-[0.2em] text-paper/60";
       state.intent = intent;
       drawer.querySelectorAll("[data-intent]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-intent") === intent)); });
       $("[data-enquiry-intent-label]").textContent = intent;
+      var measuring = intent === "Book a free site measurement";
+      $("[data-measure-only]").hidden = !measuring;
+      $("[data-enquiry-wa-label]").textContent = measuring ? "Book on WhatsApp" : "Send on WhatsApp";
     }
 
     function compose() {
@@ -93,6 +116,10 @@ const label = "text-[0.6rem] uppercase tracking-[0.2em] text-paper/60";
       var lines = ["Hi Elite Balaji,", "I'd like to: " + state.intent.toLowerCase()];
       if (product) lines.push("Material: " + product + (state.category ? " (" + state.category + ")" : ""));
       if (state.url) lines.push("Link: " + state.url);
+      if (state.intent === "Book a free site measurement") {
+        var when = [v("enq-day"), v("enq-slot")].filter(Boolean).join(", ");
+        if (when) lines.push("Preferred visit: " + when);
+      }
       if (v("enq-qty")) lines.push("Quantity / area: " + v("enq-qty"));
       if (v("enq-location")) lines.push("Location: " + v("enq-location"));
       if (v("enq-message")) lines.push(v("enq-message"));

@@ -1,8 +1,8 @@
 {
   "name": "Laying Works",
   "order": 8,
-  "tagline": "Site measurement, laying & finishing",
-  "intro": "Site measurement and estimation, then laying by our own specialist crews: precision tile and stone laying aimed at a clean, bubble-free finish, sized to keep your project timeline moving.",
+  "tagline": "Free site measurement, supply & laying",
+  "intro": "It starts with a free site measurement: we come to you, measure room by room and work out exactly what the job needs — material, adhesive, grout and wastage. Then our own crews lay and finish it, so the material and the workmanship answer to one team.",
   "heroImage": "/media/illustrative/laying-precision.jpg",
   "heroAlt": "Installer setting a large-format floor tile",
   "hasRealContent": false,
@@ -14,5 +14,5 @@
     "Bedding & levelling",
     "Finish & grouting"
   ],
-  "enquiryNote": "Ask for a laying estimate. Site measurement first, quote after."
+  "enquiryNote": "Free site measurement across Coimbatore and the surrounding region. Ask for a visit."
 }

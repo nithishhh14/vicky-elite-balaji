@@ -8,6 +8,20 @@ where a working assumption was made by Claude without client sign-off, it is
 labeled as a **working assumption**, not a preference, and lives in
 `docs/DECISIONS.md` instead._
 
+## 2026-09-16 (evening): free site measurement + premium floating CTA
+- **Client offer (confirmed by the user):** a **free site measurement**. Now
+  bookable from the floating actions, a homepage band, the contact page
+  (`/contact/#measure`), the footer, the mobile drawer and the Laying Works
+  hall. The enquiry drawer has a "Book a free site measurement" intent with
+  preferred day and time-of-day fields.
+- **Wording used:** "We bring the tape. You keep the estimate." — free across
+  Coimbatore and the surrounding region, estimate yours to keep, no
+  obligation to buy. No timeline promised (nothing confirmed by the client).
+- **Feedback:** the old floating WhatsApp pill "looked cheap". Replaced with a
+  brass-on-charcoal pill that opens a panel of four real actions
+  (measurement, WhatsApp, call, visit). The bright WhatsApp green is gone from
+  the floating CTA; the glyph stays inside the panel in brass.
+
 ## 2026-09-16: statement marbles, gold header, no repeated brand in hero
 - The marble range needs gold-veined statement marbles ("black gold, emerald
   gold and all"). Added Black Gold (the last Runway image) and Emerald Gold

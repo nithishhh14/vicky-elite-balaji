@@ -1,0 +1,159 @@
+---
+// Floating actions. Replaces the old bright-green WhatsApp pill: a quiet
+// brass-on-charcoal pill that opens a small panel of real next steps, with
+// the client's free site measurement offered first.
+//
+// Every action either opens the enquiry drawer (with context pre-filled) or
+// is a plain link, so nothing here depends on JavaScript to be reachable.
+import { business, waLink, telLink, defaultEnquiryMessage } from "../lib/business";
+
+interface Props {
+  message?: string;
+  label?: string;
+  shortLabel?: string;
+  product?: string;
+  category?: string;
+  intent?: string;
+}
+
+const {
+  message = defaultEnquiryMessage,
+  label = "Talk to our team",
+  shortLabel = "Talk to us",
+  product,
+  category,
+  intent = "Ask price & availability",
+} = Astro.props;
+
+const measureMessage = `Hi Elite Balaji, I'd like to book a free site measurement.${
+  product ? ` I'm looking at ${product}.` : ""
+} Location: ___, rooms/areas: ___, preferred day: ___.`;
+---
+
+<div class="quick-actions fixed bottom-5 right-5 z-40 flex flex-col items-end gap-3">
+  <div
+    id="quick-menu"
+    hidden
+    data-state="closed"
+    class="quick-panel w-[min(21rem,calc(100vw-2.5rem))] border border-brass/35 bg-charcoal-deep/95 text-paper shadow-lift backdrop-blur"
+    role="menu"
+    aria-labelledby="quick-toggle"
+  >
+    <div class="border-b border-paper/10 px-5 py-3">
+      <p class="text-[0.6rem] uppercase tracking-[0.24em] text-brass">How can we help?</p>
+      {product && <p class="mt-0.5 truncate text-xs text-paper/45">{product}</p>}
+    </div>
+    <div class="eb-stagger divide-y divide-paper/10">
+      <a
+        href={waLink(measureMessage)}
+        target="_blank"
+        rel="noopener"
+        role="menuitem"
+        style="--i:0"
+        data-enquire="Book a free site measurement"
+        data-product={product}
+        data-category={category}
+        class="quick-item group relative flex items-start gap-3.5 px-5 py-4"
+      >
+        <span class="quick-accent" aria-hidden="true"></span>
+        <svg class="mt-0.5 flex-shrink-0 text-brass" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M3 8.5h18v7H3z" stroke-linejoin="round" /><path d="M7 8.5v3M11 8.5v4M15 8.5v3M19 8.5v4" stroke-linecap="round" />
+        </svg>
+        <span class="min-w-0">
+          <span class="flex items-center gap-2">
+            <span class="font-display text-xl leading-tight group-hover:text-brass">Book a free site measurement</span>
+            <span class="flex-shrink-0 border border-brass/60 px-1.5 py-0.5 text-[0.5rem] uppercase tracking-[0.16em] text-brass">Free</span>
+          </span>
+          <span class="mt-0.5 block text-xs text-paper/55">We bring the tape. You keep the estimate.</span>
+        </span>
+      </a>
+
+      <a
+        href={waLink(message)}
+        target="_blank"
+        rel="noopener"
+        role="menuitem"
+        style="--i:1"
+        data-enquire={intent}
+        data-product={product}
+        data-category={category}
+        class="quick-item group flex items-start gap-3.5 px-5 py-4"
+      >
+        <svg class="mt-0.5 flex-shrink-0 text-brass" width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.36 5.07L2 22l5.06-1.33A9.94 9.94 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2Zm0 18c-1.62 0-3.14-.44-4.44-1.2l-.32-.19-3 .79.8-2.92-.2-.3A7.94 7.94 0 0 1 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8Z"/>
+        </svg>
+        <span class="min-w-0">
+          <span class="block font-display text-xl leading-tight group-hover:text-brass">{product ? "Ask about this material" : "Message us on WhatsApp"}</span>
+          <span class="mt-0.5 block text-xs text-paper/55">Photos, sizes and today's rate</span>
+        </span>
+      </a>
+
+      <a href={telLink()} role="menuitem" style="--i:2" class="quick-item group flex items-start gap-3.5 px-5 py-4">
+        <svg class="mt-0.5 flex-shrink-0 text-brass" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1.1 1A16 16 0 0 1 4 5.1 1 1 0 0 1 5 4Z" stroke-linejoin="round" />
+        </svg>
+        <span class="min-w-0">
+          <span class="block font-display text-xl leading-tight group-hover:text-brass">Call the showroom</span>
+          <span class="mt-0.5 block text-xs tabular-nums text-paper/55">{business.phoneDisplay}</span>
+        </span>
+      </a>
+
+      <a href={business.mapLink} target="_blank" rel="noopener" role="menuitem" style="--i:3" class="quick-item group flex items-start gap-3.5 px-5 py-4">
+        <svg class="mt-0.5 flex-shrink-0 text-brass" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11Z" stroke-linejoin="round" /><circle cx="12" cy="10" r="2.5" />
+        </svg>
+        <span class="min-w-0">
+          <span class="block font-display text-xl leading-tight group-hover:text-brass">Visit the yard</span>
+          <span class="mt-0.5 block text-xs text-paper/55">Karamadai, Mettupalayam Main Road</span>
+        </span>
+      </a>
+    </div>
+  </div>
+
+  <button
+    id="quick-toggle"
+    type="button"
+    aria-expanded="false"
+    aria-controls="quick-menu"
+    class="quick-pill group inline-flex items-center gap-3 border border-brass/60 bg-charcoal-deep/95 py-3 pl-5 pr-4 text-paper shadow-lift backdrop-blur"
+  >
+    <span class="quick-dot" aria-hidden="true"></span>
+    <span class="hidden text-[0.62rem] uppercase tracking-[0.2em] text-brass sm:inline">{label}</span>
+    <span class="text-[0.62rem] uppercase tracking-[0.2em] text-brass sm:hidden">{shortLabel}</span>
+    <svg class="quick-caret text-brass/70" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <path d="m6 15 6-6 6 6" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  </button>
+</div>
+
+<script is:inline>
+  (function () {
+    var wrap = document.querySelector(".quick-actions");
+    if (!wrap) return;
+    var toggle = document.getElementById("quick-toggle");
+    var menu = document.getElementById("quick-menu");
+    var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var timer;
+
+    function setOpen(open) {
+      clearTimeout(timer);
+      if (open) {
+        menu.hidden = false;
+        void menu.offsetWidth;
+        menu.setAttribute("data-state", "open");
+      } else {
+        menu.setAttribute("data-state", "closed");
+        timer = setTimeout(function () { menu.hidden = true; }, reduce ? 0 : 380);
+      }
+      toggle.setAttribute("aria-expanded", String(open));
+    }
+    toggle.addEventListener("click", function () { setOpen(menu.getAttribute("data-state") !== "open"); });
+    menu.addEventListener("click", function (e) { if (e.target.closest("a")) setOpen(false); });
+    document.addEventListener("click", function (e) {
+      if (menu.getAttribute("data-state") === "open" && !wrap.contains(e.target)) setOpen(false);
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && menu.getAttribute("data-state") === "open") { setOpen(false); toggle.focus(); }
+    });
+  })();
+</script>

@@ -2,7 +2,7 @@
 import Seo from "../components/Seo.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
-import EnquiryBar from "../components/EnquiryBar.astro";
+import QuickActions from "../components/QuickActions.astro";
 import EnquiryDrawer from "../components/EnquiryDrawer.astro";
 import SearchOverlay from "../components/SearchOverlay.astro";
 import "../styles/global.css";
@@ -44,7 +44,7 @@ const { title, description, enquiryMessage, enquiry = {}, overlayHeader = false 
       <slot />
     </main>
     <SiteFooter />
-    <EnquiryBar message={enquiryMessage} {...enquiry} />
+    <QuickActions message={enquiryMessage} {...enquiry} />
     <EnquiryDrawer />
     <SearchOverlay />
     <script is:inline>

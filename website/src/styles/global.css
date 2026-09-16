@@ -676,16 +676,80 @@
     animation: eb-pop 0.5s var(--ease-arch);
   }
 
-  /* Floating WhatsApp CTA: one calm entrance, no endless pulse. */
+  /* Floating actions: a quiet brass-on-charcoal pill that opens a panel of
+     real next steps. One calm entrance, no pulsing, no bright green. */
   @keyframes cta-enter {
     from { opacity: 0; translate: 0 14px; }
     to { opacity: 1; translate: 0 0; }
   }
-  .enquiry-cta {
+  .quick-actions {
     animation: cta-enter 0.7s var(--ease-settle) 1.2s backwards;
   }
-  html.overlay-open .enquiry-cta,
-  html.tray-open .enquiry-cta {
+  .quick-pill {
+    transition: border-color 0.4s var(--ease-arch), translate 0.4s var(--ease-arch), box-shadow 0.4s var(--ease-arch), background-color 0.4s var(--ease-arch);
+  }
+  .quick-pill:hover {
+    border-color: var(--color-brass);
+    translate: 0 -2px;
+  }
+  .quick-dot {
+    position: relative;
+    display: block;
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: var(--color-brass);
+    flex: none;
+  }
+  .quick-dot::after {
+    content: "";
+    position: absolute;
+    inset: -5px;
+    border-radius: 999px;
+    border: 1px solid rgba(163, 130, 47, 0.45);
+    opacity: 0;
+    transition: opacity 0.45s var(--ease-arch), scale 0.45s var(--ease-arch);
+    scale: 0.7;
+  }
+  .quick-pill:hover .quick-dot::after {
+    opacity: 1;
+    scale: 1;
+  }
+  .quick-caret {
+    transition: rotate 0.45s var(--ease-arch);
+  }
+  .quick-pill[aria-expanded="true"] .quick-caret {
+    rotate: 180deg;
+  }
+  .quick-panel {
+    transform-origin: bottom right;
+    opacity: 0;
+    translate: 0 10px;
+    scale: 0.98;
+    transition: opacity 0.35s var(--ease-arch), translate 0.45s var(--ease-settle), scale 0.45s var(--ease-settle);
+  }
+  .quick-panel[data-state="open"] {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+  }
+  .quick-item {
+    transition: background-color 0.35s var(--ease-arch);
+  }
+  .quick-item:hover,
+  .quick-item:focus-visible {
+    background-color: rgba(163, 130, 47, 0.08);
+  }
+  .quick-accent {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--color-brass), var(--color-mustard-dark));
+  }
+  html.overlay-open .quick-actions,
+  html.tray-open .quick-actions {
     opacity: 0 !important;
     pointer-events: none;
     translate: 0 14px;

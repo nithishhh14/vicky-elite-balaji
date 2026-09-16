@@ -255,6 +255,58 @@ const localHubs = ["Karamadai", "Coimbatore", "Mettupalayam", "Annur", "Sirumuga
     </div>
   </section>
 
+  <!-- 06b — Free site measurement (client offer, 2026-09-16) -->
+  <section class="relative isolate overflow-hidden bg-charcoal py-20 text-paper">
+    <img src="/media/illustrative/laying-measurement.jpg" alt="" aria-hidden="true" class="absolute inset-0 h-full w-full object-cover opacity-20" loading="lazy" />
+    <div class="absolute inset-0 bg-gradient-to-r from-charcoal via-charcoal/90 to-charcoal/40" aria-hidden="true"></div>
+    <div class="relative mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:px-8">
+      <div>
+        <div class="flex items-center gap-4">
+          <span data-gsap-line class="block h-px w-12 bg-brass" aria-hidden="true"></span>
+          <p class="text-xs uppercase tracking-[0.3em] text-brass">Free site measurement</p>
+          <span class="border border-brass/60 px-2 py-0.5 text-[0.55rem] uppercase tracking-[0.18em] text-brass">No charge</span>
+        </div>
+        <h2 class="mt-5 max-w-xl font-display text-4xl leading-tight sm:text-6xl">We bring the tape.<br /><span class="gold-engraved">You keep the estimate.</span></h2>
+        <p class="mt-6 max-w-lg text-paper/75 leading-relaxed">
+          Guessing quantities is how a job ends up short on the last row, or paying for boxes nobody
+          opens. Our team comes to your site, measures room by room and works out exactly what you
+          need — tiles, stone, adhesive, grout and wastage.
+        </p>
+        <p class="mt-3 max-w-lg text-paper/60 leading-relaxed">
+          Free across Coimbatore and the surrounding region. The estimate is yours to keep, whether
+          you buy from us or not.
+        </p>
+        <div class="mt-9 flex flex-wrap gap-3">
+          <a
+            href={waLink("Hi Elite Balaji, I'd like to book a free site measurement. Location: ___, rooms/areas: ___, preferred day: ___.")}
+            target="_blank"
+            rel="noopener"
+            data-enquire="Book a free site measurement"
+            data-heading="Book a free site measurement"
+            class="btn-arrow inline-flex min-h-12 items-center gap-3 bg-gradient-to-r from-brass to-mustard-dark px-8 text-xs uppercase tracking-[0.2em] text-paper hover:brightness-110"
+          >
+            Book my measurement
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="/halls/laying-works/" class="inline-flex min-h-12 items-center border border-paper/35 px-7 text-xs uppercase tracking-[0.2em] hover:border-brass">See how we lay</a>
+        </div>
+      </div>
+      <ul data-gsap-stagger class="grid gap-px bg-paper/10 sm:grid-cols-2">
+        {[
+          { t: "Room by room", d: "Exact square feet for every space, not a rounded guess." },
+          { t: "Full material list", d: "Tile or stone, adhesive, grout and skirting, with wastage allowed for." },
+          { t: "Layout advice", d: "Where the first row starts and where the cuts land, before you buy." },
+          { t: "Yours to keep", d: "No charge and no obligation to order from us." },
+        ].map((f) => (
+          <li class="bg-charcoal p-6">
+            <p class="font-display text-2xl text-brass">{f.t}</p>
+            <p class="mt-2 text-sm text-paper/70 leading-relaxed">{f.d}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
   <!-- 07 — Why Elite Balaji -->
   <section class="bg-paper py-20">
     <div class="mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-[0.8fr_1.2fr] lg:px-8">
