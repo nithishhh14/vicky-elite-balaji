@@ -1,0 +1,40 @@
+# Runs the website's deploy gate on every push and pull request that touches
+# the website. Cloudflare Pages deploys main on its own; protect main in GitHub
+# (require this check to pass) so a failing change can never reach production.
+name: website-preflight
+
+on:
+  push:
+    paths: ["website/**", ".github/workflows/website-preflight.yml"]
+  pull_request:
+    paths: ["website/**"]
+
+permissions:
+  contents: read
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: website
+    env:
+      SITE_URL: https://www.elitebalaji.com
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: website/.node-version
+          cache: npm
+          cache-dependency-path: website/package-lock.json
+      - run: npm ci
+      - run: npm audit --audit-level=high
+      - run: npx playwright install --with-deps chromium
+      - run: npm run preflight
+      - if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qa-screens
+          path: website/qa-screens
+          if-no-files-found: ignore

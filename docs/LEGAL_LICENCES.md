@@ -8,7 +8,7 @@ what the site uses, what it needs permission for, and what is still open._
 |---|---|---|
 | Astro, React, Tailwind CSS, Vite, TypeScript | MIT | Keep the licence text in `node_modules`; nothing to display |
 | GSAP + ScrollTrigger | GreenSock standard "no-charge" licence | Free for this use. **Verify current terms** at gsap.com/licensing before launch and keep a dated screenshot |
-| Cormorant Garamond, Outfit (Google Fonts) | SIL Open Font Licence | Free commercially. Optional: self-host to avoid a third-party request |
+| Cormorant Garamond, Outfit (self-hosted via Fontsource) | SIL Open Font Licence | Free commercially; bundled with the site since 2026-09-17 |
 | Playwright, Pillow, PyMuPDF | Apache-2.0 / MIT-CMU / AGPL-3.0 | Build/QA tools only, never shipped to visitors. PyMuPDF's AGPL applies to distributed software — we only ran it locally to crop images |
 
 No paid plugin, template or theme is used.

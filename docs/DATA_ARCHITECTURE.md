@@ -1,6 +1,6 @@
 # Data architecture — Vicky / Elite Balaji
 
-_Last updated: 2026-09-16. A map of every place data lives, how it flows, and
+_Last updated: 2026-09-17. A map of every place data lives, how it flows, and
 who owns it. Numbers are counted from the repo on that date._
 
 ## 1. The two halves of the system
@@ -11,7 +11,7 @@ who owns it. Numbers are counted from the repo on that date._
    WhatsApp photos, catalogue PDFs  --+
    Client instructions (via user)     +--> WEBSITE  (static, public)
    Supplier data sheets             --+         Astro content collections
-                                                -> 114 pages on a static host
+                                                -> 129 pages on Cloudflare Pages
 
    Google Maps / Search listings  ------> AGENTS   (internal, private)
                                                 lead_agent + shared_memory
@@ -56,8 +56,10 @@ Kota 4 · Adhesive 4 · Kadappa 2 · Laying works 2. Product images in total: 32
   (powers search, the search overlay and Material Match)
 - `/catalogue.json` — card data for rebuilding a shared shortlist from `?ids=`
 - `/halls.json` — hall summary
-- `/robots.txt` — generated from the configured site URL
-- `/sitemap-index.xml` + `/sitemap-0.xml` — 114 URLs
+- `/robots.txt` — generated from the configured site URL (`https://www.elitebalaji.com`)
+- `/.well-known/security.txt` — security contact
+- `/sitemap-index.xml` + `/sitemap-0.xml` — 128 URLs
+- 14 local search landing pages (`src/lib/guides.ts` → `src/pages/[guide].astro`)
 
 ### Client-side state (never leaves the device)
 
@@ -102,7 +104,7 @@ product JSON.
 | `experience.mjs` | `npm run qa:experience` | drives header convergence, menus, search, Material Match, save, compare, enquiry drawer, granite stage, reduced motion; records CLS |
 | `serve-headers.mjs` | manual / preflight | serves `dist/` with the production security headers so the CSP is verified before deploy |
 | `shots.mjs` | manual | fixed screenshots for visual review |
-| `preflight.mjs` | `npm run preflight` | all of the above plus SEO, sitemap, robots, price-leak and structured-data checks. **20 checks — the gate before deploy** |
+| `preflight.mjs` | `npm run preflight` | all of the above plus SEO, sitemap, robots, price-leak and structured-data checks. **23 checks — the gate before deploy** (also run in GitHub Actions) |
 
 ## 5. Agent side (Phase 1, live but separate)
 
@@ -124,7 +126,10 @@ and `google_creds.json`, both gitignored and never committed.
 superseded ones kept) · `CLIENT_PREFERENCES.md` (client feedback, dated) ·
 `NEXT_SESSION.md` (handoff) · `WEBSITE_ARCHITECTURE.md` · `ART_DIRECTION.md` ·
 `COMPETITOR_ANALYSIS.md` · `MAHARAJA_AUDIT.md` · `SECURITY.md` ·
-`LEGAL_LICENCES.md` · `LAUNCH_QA.md` · this file.
+`LEGAL_LICENCES.md` · `LAUNCH_QA.md` · `OPERATIONS_PLAN.md` · `MARKET_WINNING_PRODUCTS.md` · this file.
+
+For who owns what, how updates flow and the client-PC migration, see
+`OPERATIONS_PLAN.md`.
 
 Rule from `CLAUDE.md`: a new session reads these before changing anything and
 updates them before finishing. They are the project's memory.

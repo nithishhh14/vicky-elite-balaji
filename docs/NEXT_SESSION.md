@@ -10,7 +10,23 @@ domain, or set up hosting without new, explicit user permission (the user
 answered "No, not yet" to a direct deployment question on 2026-09-12, and a
 later brief reiterated deployment is out of scope for now).
 
-## Pick up here (2026-09-16, evening — latest)
+## Pick up here (2026-09-17 — latest)
+- **Domain bought:** `www.elitebalaji.com` (Cloudflare). Site config points at
+  it. **Not yet pushed or deployed** — the launch steps (who does what) are in
+  `docs/OPERATIONS_PLAN.md` §7; pushing needs the user's go-ahead.
+- **Security:** Astro 7.3.3, `npm audit` 0 vulnerabilities, fonts self-hosted,
+  tighter CSP, security.txt, CI workflow `.github/workflows/website-preflight.yml`.
+  `npm run preflight` → **23/23 Ready to deploy**.
+- **New docs:** `OPERATIONS_PLAN.md` (data ownership, update flow, agents,
+  admin roles, client-PC migration, launch steps, costs) and
+  `MARKET_WINNING_PRODUCTS.md` (ranked demand vs catalogue gaps).
+- **Next build:** the Website agent (GitHub branch + PR + approval), per the
+  operating model in `docs/DECISIONS.md` (2026-09-17).
+- **Ask the client:** the 6 questions in `MARKET_WINNING_PRODUCTS.md` §4
+  (wood-look planks, 800×1600 slabs, wall-hung WCs, cool roof/parking/elevation
+  tiles, fittings, real photos), plus the earlier open list below.
+
+## Earlier (2026-09-16, evening)
 - **State:** working tree clean, latest commit `2390a2e` on `main`. Never
   pushed, never deployed. 129 pages, 89 products.
 - **Deploy gate:** `cd website && npm run preflight` → **20/20 "Ready to

@@ -18,19 +18,26 @@ _Last updated: 2026-09-16._
 ## 2. Shipped protections
 - **Security headers** in `website/public/_headers` (works on Cloudflare
   Pages and Netlify), verified locally with `scripts/serve-headers.mjs`:
-  - `Content-Security-Policy` — self-only scripts/styles/images/connections,
-    fonts from Google Fonts, the Maps iframe allowed, `frame-ancestors 'none'`
+  - `Content-Security-Policy` — self-only scripts/styles/images/fonts/connections
+    (fonts are self-hosted since 2026-09-17), the Maps iframe allowed, `frame-ancestors 'none'`
     (no clickjacking), `object-src 'none'`, `upgrade-insecure-requests`.
   - `Strict-Transport-Security` (1 year, includeSubDomains) — HTTPS only.
   - `X-Content-Type-Options: nosniff`, `Referrer-Policy:
     strict-origin-when-cross-origin`, `X-Frame-Options: DENY`,
-    `Cross-Origin-Opener-Policy: same-origin`,
+    `Cross-Origin-Opener-Policy: same-origin`, `Cross-Origin-Resource-Policy: same-origin`,
     `Permissions-Policy` denying geolocation, camera, mic, payment, USB.
 - **External links** use `target="_blank" rel="noopener"` (no tabnabbing).
 - **No inline user HTML**: values rendered into markup are escaped
   (`esc()` helpers in the shortlist, search overlay and Material Match).
 - **No secrets in the repo**: `.env`, `google_creds.json` and
   `chrome_profile/` are gitignored, and the site build needs no secrets at all.
+
+- **No third-party requests on page load** (fonts self-hosted via Fontsource);
+  preflight fails if a third-party script or stylesheet appears.
+- **`/.well-known/security.txt`** (RFC 9116) names the security contact.
+- **Dependencies:** Astro 7.3.3; `npm audit` = 0 vulnerabilities (2026-09-17).
+  CI (`.github/workflows/website-preflight.yml`) runs `npm audit --audit-level=high`
+  and the full preflight on every push.
 
 ## 3. Accounts to protect (the real attack surface)
 | Account | Risk if lost | Required |

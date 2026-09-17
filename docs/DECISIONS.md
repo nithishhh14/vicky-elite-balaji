@@ -5,6 +5,31 @@ reconsidering something that may already have been decided.
 
 ---
 
+### Decision: Production operating model, Astro 7, self-hosted fonts
+**Date:** 2026-09-17
+**Reason:** Domain `www.elitebalaji.com` bought on Cloudflare; the site is
+going live and future changes should come from Vicky, not ad-hoc edits.
+
+**Calls made:**
+- **Hosting:** Cloudflare Pages, built from GitHub `main`. Canonical host is
+  `www`; the apex redirects via a Cloudflare Redirect Rule. `SITE_URL`
+  overrides the `astro.config.mjs` fallback.
+- **Change flow:** every change (human or Vicky) goes branch → pull request →
+  `website-preflight` GitHub Action → Cloudflare preview → owner approval →
+  merge. `main` to be branch-protected. Vicky never publishes on its own.
+- **No separate CMS/admin panel** for now: the Vicky dashboard is the admin
+  surface; a Git-based CMS can be added later on the same files.
+- **Accounts belong to the client** (GitHub, Cloudflare, Google); operators
+  are members. Secrets are recreated, not copied, when moving to the client PC.
+- **Astro 5 → 7.3.3** (plus sharp 0.35, Playwright 1.63) to clear npm audit
+  advisories, including a critical AVIF optimisation RCE; audit = 0.
+- **Fonts self-hosted** via Fontsource; CSP drops Google Fonts hosts.
+- **Agent build order:** Website agent → SEO agent (Search Console) →
+  Marketing agent (drafts) → Email agent (drafts) → Executive routing +
+  approval queue. Migrate `google.generativeai` → `google-genai` while building.
+
+---
+
 ### Decision: Motion & interaction refinement (no rebuild)
 **Date:** 2026-09-15 (late night)
 **Reason:** Brief: "luxury architectural showroom + cinematic digital

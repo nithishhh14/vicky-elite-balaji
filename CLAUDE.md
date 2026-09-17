@@ -42,7 +42,10 @@ significant changes, read in this order:
 4. `docs/DECISIONS.md` — architectural decisions already made; don't re-litigate them
 5. `docs/NEXT_SESSION.md` — the last session's practical handoff
 6. `docs/WEBSITE_ARCHITECTURE.md` — website technical architecture
-7. `docs/COMPETITOR_ANALYSIS.md` — who we're up against (Lakshmi Ceramics,
+7. `docs/OPERATIONS_PLAN.md` — where everything lives, how updates flow
+   (branch → preflight → preview → approval → live), the agent build order,
+   roles, and the client-PC migration
+8. `docs/COMPETITOR_ANALYSIS.md` — who we're up against (Lakshmi Ceramics,
    The Tile Bros, Kandhaas, Kurinji, Karamadai/Mettupalayam shops) and the
    goal: dominate them online, on truth and stone specialism
 

@@ -2,7 +2,16 @@
 
 _Last updated: 2026-09-13 — homepage/Tiles-hero rebuilt away from Athangudi, honest sourcing layer extended to Quartz/Sanitaryware, real React Bits component integration, Athangudi catalogue depth expansion (product image galleries + spec fields), SEO structured-data gap closed on hall/material pages. See `docs/DECISIONS.md` for each._
 
-## 2026-09-16 (evening) — latest snapshot (commit `2390a2e`)
+## 2026-09-17 — ready to launch on www.elitebalaji.com
+
+- 129 pages, 89 products. Astro 7.3.3, 0 npm vulnerabilities, fonts
+  self-hosted, `npm run preflight` 23/23 with the real domain, CI workflow in
+  place. Not pushed or deployed yet (awaiting go-ahead).
+- Operating model, roles, migration and launch procedure:
+  `docs/OPERATIONS_PLAN.md`. Market demand vs catalogue:
+  `docs/MARKET_WINNING_PRODUCTS.md`.
+
+## 2026-09-16 (evening) — snapshot (commit `2390a2e`)
 
 - **129 pages, 89 products, 390 media files.** `npm run preflight` = 20/20
   with a domain set. Not deployed, not pushed.
