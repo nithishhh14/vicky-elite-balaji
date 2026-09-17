@@ -1,0 +1,5 @@
+# Security contact for www.elitebalaji.com (RFC 9116)
+Contact: mailto:elitebalajistonesandceramics@gmail.com
+Expires: 2027-09-17T00:00:00.000Z
+Preferred-Languages: en, ta
+Canonical: https://www.elitebalaji.com/.well-known/security.txt

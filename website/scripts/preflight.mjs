@@ -85,6 +85,29 @@ ok("every page declares a language", !problems.lang.length, show(problems.lang))
 ok("no placeholder text or example domain in content", !problems.placeholder.length, show(problems.placeholder));
 ok("no prices published", !problems.price.length, show(problems.price));
 
+// Internal links: every href="/..." in the built HTML must resolve to a file.
+const missing = new Map();
+const external = new Set();
+for (const f of htmlFiles) {
+  const html = readFileSync(f, "utf8");
+  for (const m of html.matchAll(/\s(?:href|src)="([^"#?]+)[^"]*"/g)) {
+    const ref = m[1];
+    if (/^https?:\/\//.test(ref)) {
+      const host = new URL(ref).host;
+      if (site && host === new URL(site).host) continue; // canonical / OG links to our own domain
+      if (/<(script|link)[^>]+(?:src|href)="https?:/.test(m.input.slice(Math.max(0, m.index - 80), m.index + ref.length + 10))) external.add(host);
+      continue;
+    }
+    if (!ref.startsWith("/") || ref.startsWith("//")) continue;
+    const target = join(DIST, decodeURIComponent(ref));
+    const ok = [target, join(target, "index.html")].some((p) => { try { return statSync(p).isFile(); } catch { return false; } });
+    if (!ok) missing.set(ref, (missing.get(ref) ?? 0) + 1);
+  }
+}
+ok("no broken internal links or assets", missing.size === 0, [...missing.keys()].slice(0, 6).join(", "));
+ok("no third-party scripts or stylesheets", external.size === 0, [...external].join(", "));
+ok("security.txt published", statSync(join(DIST, ".well-known", "security.txt"), { throwIfNoEntry: false })?.isFile() ?? false, "");
+
 const home = readFileSync(join(DIST, "index.html"), "utf8");
 let ld = [];
 for (const m of home.matchAll(/<script type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)) {

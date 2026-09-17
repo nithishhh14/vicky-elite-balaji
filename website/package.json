@@ -14,20 +14,22 @@
     "preflight": "node scripts/preflight.mjs"
   },
   "dependencies": {
-    "@astrojs/react": "^6.0.5",
-    "@astrojs/sitemap": "^3.2.1",
+    "@astrojs/react": "^6.0.6",
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource/cormorant-garamond": "^5.3.0",
+    "@fontsource/outfit": "^5.3.0",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
-    "astro": "^5.6.1",
+    "astro": "^7.3.3",
     "gsap": "^3.15.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
-    "sharp": "^0.33.5"
+    "sharp": "^0.35.4"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.4",
+    "@astrojs/check": "^0.9.10",
     "@tailwindcss/vite": "^4.0.9",
-    "playwright": "^1.55.0",
+    "playwright": "^1.63.0",
     "tailwindcss": "^4.0.9",
     "typescript": "^5.7.3",
     "vite": "^6.4.1"
