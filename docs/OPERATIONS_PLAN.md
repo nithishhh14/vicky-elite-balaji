@@ -96,8 +96,8 @@ matters for running Vicky. If the PC is off, the site stays up.
 Technical notes for when building starts:
 - The agents use `google.generativeai`, which Google has deprecated in favour
   of the `google-genai` SDK. Migrate while building the new agents.
-- Keep the **approval queue** as a Sheet tab (`Approvals`) so it works from a
-  phone without extra infrastructure.
+- The **approval queue** is now `vicky_data/state/approvals/`, read and decided
+  in the dashboard's Operations panel — see `docs/DAILY_OPS_AND_DASHBOARD.md`.
 - Order matters: the Website agent first, because the other agents' outputs
   (new pages, offers) all end up as website changes.
 
@@ -114,7 +114,8 @@ Technical notes for when building starts:
 | **Vicky** | Software | Prepares changes and drafts; **cannot publish on its own** |
 
 - **No separate CMS/admin panel is needed now.** The Vicky dashboard *is* the
-  admin screen, and GitHub + Cloudflare keep a full history with one-click
+  admin screen — its Operations panel holds the approvals queue, the daily SEO
+  numbers, the campaign drafts and the agent run log — and GitHub + Cloudflare keep a full history with one-click
   rollback.
 - **Optional later:** if the client wants to edit text and photos in a browser
   without Vicky, add a Git-based CMS (e.g. Sveltia or Decap CMS) on top of the

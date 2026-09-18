@@ -10,6 +10,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 import shared_memory as mem
+import vicky_store as store
 from agents import vicky_executive as vicky
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -283,6 +284,98 @@ def run_vicky(command: str, speak: bool = True) -> None:
         speak_browser(msg)
 
 
+def ops_panel() -> None:
+    """The admin surface: one queue, one SEO line, one campaign list, one log.
+
+    Everything here reads `vicky_data/` through `vicky_store`, so the panel works
+    before any agent exists — it simply shows empty sections until the agents
+    start writing. The only write it makes is a decision on an approval, which
+    stays local; publishing still happens in GitHub/Cloudflare.
+    """
+    st.markdown('<div class="panel"><h3>Operations</h3></div>', unsafe_allow_html=True)
+    s = store.stats()
+
+    m1, m2, m3, m4 = st.columns(4)
+    m1.metric("Waiting for you", s["pendingApprovals"])
+    m2.metric("Campaign drafts", s["campaignsDraft"])
+    m3.metric(
+        "SEO last pulled",
+        s["seoLastRun"] or "—",
+        f'{s["seoClicks7dChangePct"]:+.1f}% clicks' if s["seoClicks7dChangePct"] is not None else None,
+    )
+    m4.metric("Files in inbox", s["inboxPhotos"] + s["inboxCatalogues"])
+
+    tab_a, tab_s, tab_c, tab_l = st.tabs(["Approvals", "SEO", "Campaigns", "Agent runs"])
+
+    with tab_a:
+        pending = store.list_approvals("pending")
+        if not pending:
+            st.caption("Nothing waiting. Vicky files a request here whenever it wants to change the website or post something.")
+        for item in pending:
+            with st.container(border=True):
+                st.markdown(f'**{item["title"]}**')
+                st.write(item["summary"])
+                st.caption(f'{item["kind"]} · asked {item["created"][:16].replace("T", " ")}')
+                if item.get("previewUrl"):
+                    st.markdown(f'[Open the preview]({item["previewUrl"]})')
+                note = st.text_input("Note (optional)", key=f'note-{item["id"]}', label_visibility="collapsed", placeholder="Note back to Vicky (optional)")
+                yes, no = st.columns(2)
+                if yes.button("Approve", key=f'ok-{item["id"]}', use_container_width=True):
+                    store.decide_approval(item["id"], "approved", note=note)
+                    store.log_run("owner", f'approved {item["id"]}', True, item["title"])
+                    st.rerun()
+                if no.button("Reject", key=f'no-{item["id"]}', use_container_width=True):
+                    store.decide_approval(item["id"], "rejected", note=note)
+                    store.log_run("owner", f'rejected {item["id"]}', True, item["title"])
+                    st.rerun()
+
+    with tab_s:
+        history = store.seo_history(30)
+        if history:
+            rows = {
+                "date": [h["date"] for h in history],
+                "clicks": [h.get("totals", {}).get("clicks") for h in history],
+                "impressions": [h.get("totals", {}).get("impressions") for h in history],
+                "indexed": [h.get("health", {}).get("indexed") for h in history],
+            }
+            st.dataframe(rows, use_container_width=True, hide_index=True)
+            flags = (history[-1].get("flags") or [])
+            for flag in flags:
+                st.warning(flag)
+        else:
+            st.caption(
+                "No snapshots yet. The SEO agent writes one file a day from Google Search Console "
+                "once the site is live and verified — see docs/DAILY_OPS_AND_DASHBOARD.md."
+            )
+
+    with tab_c:
+        campaigns = store.list_campaigns()
+        if not campaigns:
+            st.caption("No campaigns yet. The Marketing agent drafts these; a person posts them.")
+        for c in campaigns:
+            with st.expander(f'{c["channel"].upper()} · {c["name"]} · {c["status"]}'):
+                st.text(c["body"])
+                if c.get("scheduledFor"):
+                    st.caption(f'Scheduled for {c["scheduledFor"]}')
+
+    with tab_l:
+        runs = store.recent_runs(25)
+        if runs:
+            st.dataframe(
+                {
+                    "when": [r["ts"][:16].replace("T", " ") for r in runs],
+                    "agent": [r["agent"] for r in runs],
+                    "action": [r["action"] for r in runs],
+                    "ok": [r["ok"] for r in runs],
+                    "detail": [r.get("detail", "") for r in runs],
+                },
+                use_container_width=True,
+                hide_index=True,
+            )
+        else:
+            st.caption("No agent runs logged yet.")
+
+
 def main() -> None:
     st.set_page_config(
         page_title="Vicky | Elite Balaji Command",
@@ -374,6 +467,8 @@ def main() -> None:
         push_message("user", prompt)
         run_vicky(prompt)
         st.rerun()
+
+    ops_panel()
 
     # Lead ledger panel
     st.markdown('<div class="panel"><h3>Shared lead memory</h3></div>', unsafe_allow_html=True)

@@ -20,3 +20,20 @@ website/npm-debug.log*
 /node_modules/
 /.astro/
 website/qa-screens/
+
+# Vicky data: runtime state, client media and backups stay on the machine.
+# Only vicky_data/config/** and the folder skeleton (.gitkeep) are tracked.
+# The `!.../` lines keep git descending into the folders, so the .gitkeep
+# files survive and a fresh clone gets the same empty skeleton.
+vicky_data/state/**
+!vicky_data/state/**/
+!vicky_data/state/**/.gitkeep
+vicky_data/inbox/**
+!vicky_data/inbox/**/
+!vicky_data/inbox/**/.gitkeep
+vicky_data/outbox/**
+!vicky_data/outbox/**/
+!vicky_data/outbox/**/.gitkeep
+vicky_data/backups/**
+!vicky_data/backups/**/
+!vicky_data/backups/**/.gitkeep

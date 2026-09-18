@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "note": "Skeletons the Marketing agent fills. Every {{placeholder}} must be filled from something real — a product file in the repo, a photo in public/media, or an offer the owner confirmed. A template with an unfilled placeholder stays a draft and cannot reach the approvals queue.",
+  "rules": [
+    "No prices, no discounts, no stock counts unless the owner supplies them in writing.",
+    "No review quotes, no ratings, no 'authorised dealer' claims.",
+    "Only photos already in the repo, with their existing provenance label.",
+    "Tamil + English is fine; keep the English line first for Search.",
+    "Every post ends with one action: WhatsApp, call, or book the free site measurement."
+  ],
+  "templates": [
+    {
+      "id": "gbp-new-arrival",
+      "channel": "gbp",
+      "cadence": "weekly",
+      "title": "New in the showroom",
+      "body": "{{product_name}} — {{finish}} finish, {{size}}. Now on the floor at our Karamadai showroom.\n\nSee it in person, or ask us on WhatsApp for sizes and availability.\n{{page_url}}",
+      "needs": ["product_name", "finish", "size", "page_url", "photo"],
+      "source": "website/src/content/products/*.json"
+    },
+    {
+      "id": "gbp-free-measurement",
+      "channel": "gbp",
+      "cadence": "monthly",
+      "title": "Free site measurement",
+      "body": "Not sure how much you need? We come to your site, measure it, and leave you the estimate. No charge, no obligation.\n\nBook a visit: {{whatsapp_link}}",
+      "needs": ["whatsapp_link"],
+      "source": "website/src/lib/business.ts"
+    },
+    {
+      "id": "whatsapp-broadcast",
+      "channel": "whatsapp",
+      "cadence": "monthly",
+      "title": "Broadcast to past enquirers",
+      "body": "Elite Balaji Stones & Ceramics, Karamadai.\n\n{{one_line_news}}\n\nShowroom open {{hours}}. Reply here and we'll send photos of what you're looking for.",
+      "needs": ["one_line_news", "hours"],
+      "source": "owner-confirmed"
+    },
+    {
+      "id": "instagram-material-story",
+      "channel": "instagram",
+      "cadence": "weekly",
+      "title": "One material, one caption",
+      "body": "{{material_name}}.\n{{one_true_detail}}\n\nKaramadai showroom · link in bio\n#coimbatore #karamadai #{{hashtag}}",
+      "needs": ["material_name", "one_true_detail", "hashtag", "photo"],
+      "source": "website/src/content/products/*.json"
+    },
+    {
+      "id": "website-landing-page",
+      "channel": "website",
+      "cadence": "as needed",
+      "title": "New landing page from a real search query",
+      "body": "Create website/src/content/guides/{{slug}}-coimbatore.json following docs/CONTENT_EDITING.md §2, matched to products that already exist.",
+      "needs": ["slug", "query_evidence"],
+      "source": "state/seo/daily (Search Console queries)"
+    },
+    {
+      "id": "email-enquiry-reply",
+      "channel": "email",
+      "cadence": "as needed",
+      "title": "Reply to an enquiry",
+      "body": "Draft only. Answer what was asked, name the materials we actually stock, offer the free site measurement, sign off with the showroom address and phone.",
+      "needs": ["enquiry_text"],
+      "source": "Google Sheet leads"
+    }
+  ]
+}

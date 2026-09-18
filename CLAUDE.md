@@ -9,6 +9,10 @@ website is the public virtual showroom.
 
 - `app.py` — Streamlit dashboard, entry point. Loads env, configures Gemini,
   routes voice/text through `agents/vicky_executive.py`.
+- `vicky_store.py` — the local data layer over `vicky_data/`: approvals,
+  daily SEO snapshots, campaigns, run logs. Standard library only, atomic
+  JSON writes. Every agent and the dashboard go through it — nothing reads
+  or writes `vicky_data/` directly.
 - `shared_memory.py` — the shared state layer: Google Sheet I/O (leads,
   council log, SEO audits), lead cleaning/dedup rules, `.cursorrules` loader.
   This is the closest thing to "shared memory" right now — it's a live
@@ -45,7 +49,10 @@ significant changes, read in this order:
 7. `docs/OPERATIONS_PLAN.md` — where everything lives, how updates flow
    (branch → preflight → preview → approval → live), the agent build order,
    roles, and the client-PC migration
-8. `docs/COMPETITOR_ANALYSIS.md` — who we're up against (Lakshmi Ceramics,
+8. `docs/DAILY_OPS_AND_DASHBOARD.md` — the daily rhythm (SEO, campaigns),
+   the `vicky_data/` directory, the admin dashboard, and when a database
+   would finally be warranted
+9. `docs/COMPETITOR_ANALYSIS.md` — who we're up against (Lakshmi Ceramics,
    The Tile Bros, Kandhaas, Kurinji, Karamadai/Mettupalayam shops) and the
    goal: dominate them online, on truth and stone specialism
 

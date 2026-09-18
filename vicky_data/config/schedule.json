@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "timezone": "Asia/Kolkata",
+  "note": "What Vicky does on its own, and what it may never do on its own. Every job writes a run-log line; anything with 'approval': true stops at the approvals queue and waits for a person.",
+  "jobs": [
+    {
+      "id": "seo-daily",
+      "agent": "seo",
+      "runs": "daily 07:30",
+      "does": "Pull yesterday's Search Console rows for the tracked pages, save one snapshot to state/seo/daily, flag pages that lost clicks or impressions and queries we rank 11-20 for.",
+      "writes": ["state/seo/daily/<date>.json", "state/logs"],
+      "approval": false
+    },
+    {
+      "id": "seo-health",
+      "agent": "seo",
+      "runs": "daily 07:40",
+      "does": "Fetch the live sitemap and 8 sample pages; check they return 200, the canonical matches, the title and description are still within limits, and no page shows a price.",
+      "writes": ["state/seo/daily/<date>.json (health block)"],
+      "approval": false
+    },
+    {
+      "id": "seo-opportunities",
+      "agent": "seo",
+      "runs": "weekly Mon 08:00",
+      "does": "Group the week's real Search Console queries that have impressions but no matching page, and propose new landing pages or copy edits.",
+      "writes": ["approvals (kind: seo)"],
+      "approval": true
+    },
+    {
+      "id": "campaign-weekly",
+      "agent": "marketing",
+      "runs": "weekly Fri 10:00",
+      "does": "Draft next week's posts from config/campaign_templates.json using real stock and real offers only; attach photos already in the repo.",
+      "writes": ["state/campaigns", "approvals (kind: campaign)"],
+      "approval": true
+    },
+    {
+      "id": "campaign-post-reminder",
+      "agent": "marketing",
+      "runs": "daily 09:00",
+      "does": "List approved campaigns scheduled for today so a person can post them. Vicky never posts to a public account itself.",
+      "writes": ["outbox/drafts", "state/logs"],
+      "approval": false
+    },
+    {
+      "id": "website-inbox",
+      "agent": "website",
+      "runs": "daily 18:00",
+      "does": "Check inbox/photos and inbox/catalogues for new client files; prepare a branch that adds them (prices stripped) and open a pull request with the preview link.",
+      "writes": ["a git branch + PR", "approvals (kind: website)"],
+      "approval": true
+    },
+    {
+      "id": "leads-digest",
+      "agent": "executive",
+      "runs": "daily 20:00",
+      "does": "Summarise new leads and enquiries from the Sheet into one message for the owner.",
+      "writes": ["state/logs"],
+      "approval": false
+    },
+    {
+      "id": "backup",
+      "agent": "executive",
+      "runs": "weekly Sun 22:00",
+      "does": "Export the Google Sheet tabs to backups/ as CSV and prune records older than the retention window.",
+      "writes": ["backups/"],
+      "approval": false
+    },
+    {
+      "id": "security-monthly",
+      "agent": "executive",
+      "runs": "monthly 1st 09:00",
+      "does": "Run npm audit and npm run preflight on a fresh clone; report anything that fails.",
+      "writes": ["approvals (kind: website) if a fix is needed"],
+      "approval": true
+    }
+  ],
+  "neverAutomatic": [
+    "Publishing to the live website (a person merges the pull request)",
+    "Posting to Google Business Profile, Instagram or WhatsApp",
+    "Sending email to a customer",
+    "Changing business facts: phone, address, GSTIN, brands, offers",
+    "Publishing any price",
+    "Presenting a supplier or generated photo as Elite Balaji's own work"
+  ]
+}
