@@ -23,6 +23,10 @@ function pages(dir) {
 const routes = pages(DIST).map((r) => (r === "/" ? "/" : r.replace(/\/?$/, "/")));
 
 const viewports = [
+  // 1920 covers the 2xl breakpoint. Without it a header that only breaks on a
+  // wide monitor ships unseen — which is exactly how the logo once grew into
+  // the nav.
+  { name: "wide", width: 1920, height: 1080 },
   { name: "desktop", width: 1366, height: 900 },
   { name: "phone", width: 375, height: 812 },
 ];
@@ -46,6 +50,9 @@ for (const vp of viewports) {
     await page.goto(BASE + route, { waitUntil: "load" });
     // Load lazy images before checking them.
     await page.evaluate(async () => {
+      // Measure after the webfonts land: the fallback serif is wider, so the
+      // wordmark reads as overlapping for the split second before the swap.
+      await document.fonts.ready;
       document.querySelectorAll("img[loading=lazy]").forEach((i) => (i.loading = "eager"));
       await Promise.all([...document.images].map((i) => (i.complete ? null : new Promise((r) => { i.onload = i.onerror = r; }))));
     });
@@ -64,10 +71,38 @@ for (const vp of viewports) {
           return !/illustrative/i.test(frame?.textContent ?? "") && !/illustrative/i.test(frame?.parentElement?.textContent ?? "");
         })
         .map((img) => img.getAttribute("src"));
-      return { broken, overflow, unlabelled };
+      // The wordmark is nowrap inside a shrinkable flex item, so when it
+      // outgrows its box it silently paints over the nav instead of pushing.
+      const brand = document.querySelector("header .header-brand");
+      const navLink = document.querySelector("header .header-nav a");
+      let headerOverlap = 0;
+      if (brand && navLink) {
+        // The link's box carries line-height padding well above and below the
+        // glyphs; measure the text itself so a hairline grazing that padding
+        // isn't reported as the logo sitting on the nav.
+        const inkRect = (el) => {
+          const range = document.createRange();
+          range.selectNodeContents(el);
+          const r = range.getBoundingClientRect();
+          return r.width ? r : el.getBoundingClientRect();
+        };
+        const n = inkRect(navLink);
+        // A real collision needs both axes: the tagline under the wordmark is
+        // wider than the wordmark but sits below the nav's line, so comparing
+        // right edges alone cries wolf.
+        for (const el of [brand, ...brand.querySelectorAll("*")]) {
+          const r = el.getBoundingClientRect();
+          if (!r.width || !n.width) continue;
+          const x = Math.min(r.right, n.right) - Math.max(r.left, n.left);
+          const y = Math.min(r.bottom, n.bottom) - Math.max(r.top, n.top);
+          if (x > 0 && y > 0) headerOverlap = Math.max(headerOverlap, Math.round(x));
+        }
+      }
+      return { broken, overflow, unlabelled, headerOverlap };
     });
     result.broken.forEach((s) => issues.push(`broken image: ${s}`));
     if (result.overflow > 1) issues.push(`horizontal overflow: ${result.overflow}px`);
+    if (result.headerOverlap > 0) issues.push(`logo overlaps the nav by ${result.headerOverlap}px`);
     result.unlabelled.forEach((s) => issues.push(`generated image without label: ${s}`));
     if (screenshotRoutes.has(route)) {
       const file = `${vp.name}${route.replace(/\//g, "_") || "_home"}.png`;
