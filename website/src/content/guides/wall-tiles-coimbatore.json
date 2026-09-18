@@ -1,0 +1,44 @@
+{
+  "h1": "Wall tiles in Coimbatore",
+  "title": "Wall Tiles in Coimbatore | Elite Balaji",
+  "description": "Ceramic and vitrified wall tiles, marble-look large formats and stone cladding for bathrooms, kitchens and feature walls, from our Karamadai showroom.",
+  "eyebrow": "Tiles · Walls",
+  "intro": [
+    "Wall tiles are lighter and more decorative than floor tiles, and they are where a bathroom or kitchen gets its character. We stock glazed ceramic wall tiles, marble-look large formats for feature walls, and natural stone cladding when you want real material on the wall.",
+    "Tell us the wall size and the look you are after and we will show you what is in the showroom this week."
+  ],
+  "match": {
+    "pattern": "wall|cladding|backsplash",
+    "flags": "i"
+  },
+  "choose": [
+    {
+      "title": "Wall tiles are not floor tiles",
+      "detail": "Wall tiles are thinner and glazed for looks, not for foot traffic. Ask us before using a wall tile on a floor."
+    },
+    {
+      "title": "One feature wall, one plain",
+      "detail": "A patterned or marble-look wall works best when the other walls stay quiet."
+    },
+    {
+      "title": "Check the batch",
+      "detail": "Shade varies between production batches, so buy the full wall in one lot with a little extra."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can I use the same tile on the wall and the floor?",
+      "a": "Some vitrified tiles work on both; glazed ceramic wall tiles do not belong on a floor. We will tell you which is which for the tile you like."
+    },
+    {
+      "q": "Do you supply marble-look tiles for feature walls?",
+      "a": "Yes, the Mozzato Endless 600 × 1200 mm range is marble-look and works well on walls, along with real marble and granite cladding."
+    }
+  ],
+  "related": [
+    "bathroom-tiles-coimbatore",
+    "elevation-tiles-coimbatore",
+    "vitrified-tiles-coimbatore"
+  ],
+  "enquiry": "Hi Elite Balaji, I'm looking for wall tiles. Room: ___, wall size: ___, location: ___."
+}

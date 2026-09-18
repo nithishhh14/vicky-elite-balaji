@@ -1,0 +1,44 @@
+{
+  "h1": "Large format tiles (600 × 1200 and up)",
+  "title": "Large Format Tiles in Coimbatore | Elite Balaji",
+  "description": "600 × 1200 mm and larger tiles for seamless floors and feature walls, with the laying care big formats need, from Elite Balaji, Karamadai.",
+  "eyebrow": "Tiles · Large format",
+  "intro": [
+    "Large format means fewer joints: a calmer floor, less grout to clean and a room that reads bigger. The trade-off is that big tiles are less forgiving to lay, so the floor has to be level and the adhesive right.",
+    "We stock 600 × 1200 mm as standard and can source larger slabs on request."
+  ],
+  "match": {
+    "pattern": "1200|1600|2400|large format",
+    "flags": "i"
+  },
+  "choose": [
+    {
+      "title": "Level the floor first",
+      "detail": "A large tile telegraphs every dip in the base. Levelling before laying is not an extra, it is the job."
+    },
+    {
+      "title": "Use the right adhesive",
+      "detail": "Large formats need a C2-class adhesive with full back coverage, not spot fixing."
+    },
+    {
+      "title": "Plan the layout",
+      "detail": "Set the first row against the main sightline so cut tiles land where nobody looks."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Do large tiles work in small rooms?",
+      "a": "Often yes: fewer joints make a small room look larger. We can lay out the tile sizes against your room dimensions."
+    },
+    {
+      "q": "Can you supply tiles bigger than 600 × 1200 mm?",
+      "a": "We can source 800 × 1600 mm and 1200 × 2400 mm formats. Ask us for the current options and lead time."
+    }
+  ],
+  "related": [
+    "vitrified-tiles-coimbatore",
+    "floor-tiles-coimbatore",
+    "marble-look-tiles-coimbatore"
+  ],
+  "enquiry": "Hi Elite Balaji, I'm interested in large format tiles for: ___ (area ___ sq ft)."
+}

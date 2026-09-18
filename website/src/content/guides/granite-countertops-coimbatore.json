@@ -1,0 +1,53 @@
+{
+  "h1": "Granite countertops in Coimbatore",
+  "title": "Granite Countertops in Coimbatore | Elite Balaji",
+  "description": "Black Galaxy, Absolute Black, Tan Brown and leathered granite kitchen countertops, cut and fitted from our own slab yard in Karamadai.",
+  "eyebrow": "Granite · Countertops",
+  "intro": [
+    "A kitchen countertop is the hardest-working surface in the house. Granite handles heat, knives and turmeric better than almost anything else, and we photograph our slabs in our own yard so you see the actual stone.",
+    "We cut, edge and fit, including the sink cut-out, so the counter, the sink and the fitting are one job."
+  ],
+  "match": {
+    "pattern": "counter|worktop|kitchen",
+    "flags": "i",
+    "halls": [
+      "granite-marbles",
+      "quartz",
+      "kadappa"
+    ]
+  },
+  "choose": [
+    {
+      "title": "Leathered hides everything",
+      "detail": "A leathered black granite hides fingerprints and water marks that polished black shows all day."
+    },
+    {
+      "title": "Check the actual slab",
+      "detail": "Granite changes from block to block. Photos narrow it down; the slab in the yard decides it."
+    },
+    {
+      "title": "Plan the sink with the stone",
+      "detail": "An undermount quartz or steel sink needs its cut-out planned before the counter is cut."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Which granite is best for a kitchen platform?",
+      "a": "Black Galaxy and Absolute Black are the usual choices in Coimbatore for their hardness and looks. Tan Brown suits warmer kitchens. Leathered finishes hide marks best."
+    },
+    {
+      "q": "Do you make the sink cut-out?",
+      "a": "Yes. Bring the sink or buy it with the counter, and we cut, polish the edge and fit on site."
+    },
+    {
+      "q": "Granite or quartz?",
+      "a": "Granite is natural, heat-proof and unique per slab. Quartz is engineered, non-porous and perfectly consistent. We stock both and will show you the difference side by side."
+    }
+  ],
+  "related": [
+    "kitchen-sinks-coimbatore",
+    "marble-look-tiles-coimbatore",
+    "elevation-tiles-coimbatore"
+  ],
+  "enquiry": "Hi Elite Balaji, I need a granite kitchen countertop. Running feet: ___, location: ___."
+}

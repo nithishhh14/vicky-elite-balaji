@@ -1,0 +1,48 @@
+{
+  "h1": "Wash basins in Coimbatore",
+  "title": "Wash Basins in Coimbatore | Elite Balaji",
+  "description": "Table-top art basins, marble-finish basins and ceramic wash basins in many shapes and sizes, from Elite Balaji, Karamadai, Coimbatore.",
+  "eyebrow": "Sanitaryware · Basins",
+  "intro": [
+    "Table-top basins changed bathrooms: the basin sits on the counter as an object rather than disappearing into it. We carry two full collections, one patterned and gold-detailed, one in marble finishes, in sizes from 14 to 25 inches.",
+    "Because we also supply the counter stone, the basin and the cut-out get planned together."
+  ],
+  "match": {
+    "pattern": "basin",
+    "flags": "i"
+  },
+  "choose": [
+    {
+      "title": "Size to the counter",
+      "detail": "Measure the counter depth first. A 22-inch basin needs a deeper counter than a 16-inch one."
+    },
+    {
+      "title": "Tap height matters",
+      "detail": "Table-top basins sit high, so they need a tall basin mixer or a wall-mounted spout."
+    },
+    {
+      "title": "Shape follows cleaning",
+      "detail": "Rounded interiors wipe clean faster than sharp-cornered rectangles."
+    }
+  ],
+  "faq": [
+    {
+      "q": "What sizes do the basins come in?",
+      "a": "From about 14 × 14 inches up to 25 × 17 inches across the collections. Each range page on this site lists its size."
+    },
+    {
+      "q": "Are the marble basins real stone?",
+      "a": "The collection is catalogued as “Marble”. Ask us to confirm the exact material of a specific model before you order — we will not guess on your behalf."
+    },
+    {
+      "q": "Do you supply the tap and waste too?",
+      "a": "We supply basins and can arrange the fittings with them. Tell us the model you like and we will put a set together."
+    }
+  ],
+  "related": [
+    "bathroom-tiles-coimbatore",
+    "kitchen-sinks-coimbatore",
+    "granite-countertops-coimbatore"
+  ],
+  "enquiry": "Hi Elite Balaji, I'm looking for a wash basin. Counter size: ___, style: ___, location: ___."
+}

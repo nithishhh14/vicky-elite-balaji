@@ -1,0 +1,49 @@
+{
+  "h1": "Custom printed tiles",
+  "title": "Custom Printed Tiles in Coimbatore | Elite Balaji",
+  "description": "Your image printed on vitrified tile: pooja room murals, kitchen backsplashes and feature walls, made to order and delivered across India.",
+  "eyebrow": "Custom · Printed tiles",
+  "intro": [
+    "Send us an image and a wall size, and it can be printed across vitrified or ceramic tiles: deity art for a pooja room, a landscape behind the kitchen counter, a heritage pattern recreated, or a shop's own artwork.",
+    "We confirm the tile, the size and the layout with you before anything is printed, and we deliver across India."
+  ],
+  "match": {
+    "pattern": "athangudi|moroccan|pattern|print",
+    "flags": "i",
+    "kind": "tile"
+  },
+  "choose": [
+    {
+      "title": "Resolution decides the size",
+      "detail": "A phone photo prints well up to a certain wall size. Send the image first and we will tell you honestly how large it can go."
+    },
+    {
+      "title": "Plan around the joints",
+      "detail": "The design is split across tiles, so we place the joints away from faces and focal points."
+    },
+    {
+      "title": "Approve the layout",
+      "detail": "You see the tile layout before printing starts. Nothing is printed on a guess."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can you print a family photo on tiles?",
+      "a": "Yes, as long as the image is sharp enough for the wall size. Send it on WhatsApp and we will check it before quoting."
+    },
+    {
+      "q": "How long does it take?",
+      "a": "It depends on the size and the tile. We confirm the timeline when we confirm the layout."
+    },
+    {
+      "q": "Do you deliver outside Coimbatore?",
+      "a": "Yes, custom art products including printed tiles are delivered across India."
+    }
+  ],
+  "related": [
+    "athangudi-tiles-coimbatore",
+    "wall-tiles-coimbatore",
+    "floor-tiles-coimbatore"
+  ],
+  "enquiry": "Hi Elite Balaji, I'd like custom printed tiles. Image: (attached). Wall size: ___. Room: ___."
+}

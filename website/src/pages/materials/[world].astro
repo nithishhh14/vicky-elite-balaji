@@ -9,6 +9,7 @@ import { imageBadge } from "../../lib/image-badge";
 import { metaText, pageTitle } from "../../lib/seo";
 import { stoneCategories, quartzCategories, tileSizes, tileFinishes, tileTypes } from "../../lib/stone-varieties";
 import { waLink, emailQuoteLink, productEnquiryMessage } from "../../lib/business";
+import { byOrder } from "../../lib/order";
 
 export async function getStaticPaths() {
   return materialWorlds.map((world) => ({ params: { world: world.slug }, props: { world } }));
@@ -20,7 +21,7 @@ const flagship = halls.find((h) => h.id === world.hallIds[0]) ?? halls[0];
 const allProducts = await getCollection("products");
 const products = allProducts
   .filter((p) => (world.hallIds as readonly string[]).includes(p.data.hallId))
-  .sort((a, b) => a.data.order - b.data.order);
+  .sort(byOrder);
 
 const COLOUR_SWATCH: Record<string, string> = {
   white: "#f4f1ea", black: "#1c1a17", grey: "#8a8580", beige: "#cdbfa0",

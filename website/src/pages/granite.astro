@@ -7,13 +7,14 @@ import { stoneCategories } from "../lib/stone-varieties";
 import SaveButton from "../components/SaveButton.astro";
 import AmbientVideo from "../components/AmbientVideo.astro";
 import { videoZones } from "../lib/video-zones";
+import { byOrder } from "../lib/order";
 
 // Granite as a hero category: every specimen below is a photograph of Elite
 // Balaji's own slab stock (src/lib/media-library.ts). Names were identified
 // visually and are shown with a confirm-availability note.
 const products = (await getCollection("products"))
   .filter((p) => p.data.hallId === "granite-marbles" && /granite|sandstone/i.test(p.data.category ?? ""))
-  .sort((a, b) => a.data.order - b.data.order);
+  .sort(byOrder);
 
 const families = [
   { label: "Black", ids: ["granite-black-galaxy", "granite-absolute-black", "granite-absolute-black-leathered", "granite-silver-black-lappato", "granite-black-markino"] },

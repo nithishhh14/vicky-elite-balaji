@@ -1,0 +1,47 @@
+{
+  "h1": "Quartz & steel kitchen sinks",
+  "title": "Quartz & Steel Kitchen Sinks in Coimbatore | Elite Balaji",
+  "description": "Quartz composite and stainless steel kitchen sinks in single bowl, double bowl and drainboard versions, supplied with your counter from Karamadai.",
+  "eyebrow": "Sanitaryware · Sinks",
+  "intro": [
+    "Quartz composite sinks have taken over Coimbatore kitchens: matt finish, quieter than steel, and they hide water marks. Stainless steel still wins on price and on taking abuse.",
+    "We supply both, and because the counter comes from our own yard the cut-out is planned with the stone rather than after it."
+  ],
+  "match": {
+    "pattern": "sink",
+    "flags": "i",
+    "halls": [
+      "sanitaryware"
+    ]
+  },
+  "choose": [
+    {
+      "title": "Single, double or drainboard",
+      "detail": "A single large bowl suits big vessels; a drainboard keeps water off the counter; double bowls suit washing and rinsing apart."
+    },
+    {
+      "title": "Undermount needs planning",
+      "detail": "Undermounting looks cleaner and wipes straight into the bowl, but the cut-out must be made before the counter is polished."
+    },
+    {
+      "title": "Quartz colour",
+      "detail": "Black and grey hide marks best; lighter shades show them but keep a small kitchen brighter."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Is a quartz sink better than stainless steel?",
+      "a": "It is quieter, hides scratches and looks more finished. Steel is cheaper, lighter and handles rough use. Both are stocked, so come and feel the difference."
+    },
+    {
+      "q": "Can you fit the sink into my existing counter?",
+      "a": "Often yes, depending on the current cut-out size and the counter material. Send us a photo and the measurements on WhatsApp."
+    }
+  ],
+  "related": [
+    "granite-countertops-coimbatore",
+    "wash-basins-coimbatore",
+    "bathroom-tiles-coimbatore"
+  ],
+  "enquiry": "Hi Elite Balaji, I'm looking for a kitchen sink. Counter: ___, single/double bowl: ___, location: ___."
+}

@@ -64,13 +64,15 @@ matters for running Vicky. If the PC is off, the site stays up.
 | Change | Where | Risk | Approval |
 |---|---|---|---|
 | Add/edit a product, size, finish | `src/content/products/*.json` | Low | Owner |
+| New landing page | `src/content/guides/*.json` | Low | Owner |
 | Replace an illustrative image with a real photo | `public/media/…` + the product JSON | Low | Owner |
 | Import a supplier catalogue PDF | extraction script → media + product JSON (**prices stripped**) | Medium | Owner + check photos |
-| New landing page ("wood-look tiles Coimbatore") | `src/lib/guides.ts` | Low | Owner |
 | Business facts (phone, address, offers) | `src/lib/business.ts` | **High** (legal/claims) | Owner only |
 | Design / layout / code | `src/components`, `src/pages` | Higher | Developer review |
 
 ### Soon: through Vicky (the Website agent)
+- The editable surface and the recipes are fixed in `docs/CONTENT_EDITING.md`;
+  `npm run check:content` enforces them.
 - Vicky gets a **GitHub token limited to this one repository** (contents +
   pull requests only; no settings, no deleting, no pushing to `main`).
 - It works on a branch, opens a pull request with a plain-English summary and

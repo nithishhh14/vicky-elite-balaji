@@ -10,7 +10,19 @@ domain, or set up hosting without new, explicit user permission (the user
 answered "No, not yet" to a direct deployment question on 2026-09-12, and a
 later brief reiterated deployment is out of scope for now).
 
-## Pick up here (2026-09-17 — latest)
+## Pick up here (2026-09-18 — latest)
+- **Data structure made update-ready** before launch: landing pages moved from
+  `src/lib/guides.ts` to a schema-validated `guides` collection (14 JSON
+  files); all schemas are `.strict()`; `order` is optional with a
+  name tie-break (`src/lib/order.ts`); `npm run check:content` validates
+  cross-record integrity; `public/_redirects` + a no-rename rule protect URLs.
+  Recipes: `docs/CONTENT_EDITING.md`. Preflight is now **24/24**.
+- **Still TypeScript:** `src/lib/media-library.ts` (51 client photos). Planned
+  as the first change to go through the branch → preview → approval flow.
+- **Deploy:** everything is prepared; the push to GitHub and the Cloudflare
+  Pages setup still need the user's go-ahead (steps in `OPERATIONS_PLAN.md` §7).
+
+## Earlier (2026-09-17)
 - **Domain bought:** `www.elitebalaji.com` (Cloudflare). Site config points at
   it. **Not yet pushed or deployed** — the launch steps (who does what) are in
   `docs/OPERATIONS_PLAN.md` §7; pushing needs the user's go-ahead.

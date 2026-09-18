@@ -1,0 +1,48 @@
+{
+  "h1": "Floor tiles in Coimbatore",
+  "title": "Floor Tiles in Coimbatore | Elite Balaji",
+  "description": "Vitrified, ceramic, heritage and large-format floor tiles from our Karamadai showroom, with sizes, finishes and laying by our own crews across Coimbatore.",
+  "eyebrow": "Tiles · Floors",
+  "intro": [
+    "Floor tiles carry the whole house: they take the traffic, the water and the cleaning. What we stock ranges from 600 × 1200 mm vitrified tiles for a seamless hall floor to handmade Athangudi tiles for a veranda or pooja room.",
+    "Everything below is in our catalogue with its real size and finish. We also lay what we supply, so the tile, the adhesive and the crew come from one team."
+  ],
+  "match": {
+    "pattern": "floor|flooring",
+    "flags": "i"
+  },
+  "choose": [
+    {
+      "title": "Room first, tile second",
+      "detail": "Living and dining floors suit large-format vitrified tiles; bathrooms and wash areas need an anti-skid surface; verandas take patterned or stone floors."
+    },
+    {
+      "title": "Fewer joints looks calmer",
+      "detail": "A 600 × 1200 mm tile halves the grout lines of a 600 × 600 mm floor in the same room."
+    },
+    {
+      "title": "Match the adhesive to the tile",
+      "detail": "Large and vitrified tiles need the right adhesive class, not river sand and cement, or they hollow and lift later."
+    }
+  ],
+  "faq": [
+    {
+      "q": "What is the best tile size for a hall in Coimbatore?",
+      "a": "For most halls we suggest 600 × 1200 mm vitrified tiles: fewer joints, easier cleaning and a more spacious look. Smaller rooms often look better with 600 × 600 mm."
+    },
+    {
+      "q": "Do you lay the tiles as well?",
+      "a": "Yes. Our own crews measure, lay and finish across Coimbatore, Mettupalayam, Karamadai and the surrounding areas. Supply-only is fine too."
+    },
+    {
+      "q": "How do I get a rate?",
+      "a": "Rates move with stock, so we quote on WhatsApp or by phone once we know the tile, the area in square feet and where the job is."
+    }
+  ],
+  "related": [
+    "bathroom-tiles-coimbatore",
+    "vitrified-tiles-coimbatore",
+    "athangudi-tiles-coimbatore"
+  ],
+  "enquiry": "Hi Elite Balaji, I'm looking for floor tiles. Room: ___, area: ___ sq ft, location: ___."
+}

@@ -25,6 +25,7 @@ const run = (cmd, args, label) => {
 };
 
 // 1 — typecheck + build
+run("node", ["scripts/check-content.mjs"], "content references resolve (hallIds, images, landing pages)");
 run("npx", ["astro", "check"], "astro check (0 type errors)");
 run("npx", ["astro", "build"], "production build");
 

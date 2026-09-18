@@ -1,0 +1,44 @@
+{
+  "h1": "Kota stone in Coimbatore",
+  "title": "Kota Stone in Coimbatore | Elite Balaji",
+  "description": "Kota stone flooring in blue, green and beige shades for homes, parking, corridors and temples, supplied and laid from Karamadai, Coimbatore.",
+  "eyebrow": "Natural stone · Kota",
+  "intro": [
+    "Kota is a fine-grained limestone from Rajasthan that has floored South Indian homes for generations: hard, cool underfoot, cheap to maintain and repairable one piece at a time.",
+    "It comes rough and is polished on site, which is why the same stone can look rustic or glassy depending on the finish you ask for."
+  ],
+  "match": {
+    "pattern": "kota|kadappa|limestone",
+    "flags": "i"
+  },
+  "choose": [
+    {
+      "title": "Honed for grip, polished for shine",
+      "detail": "Honed or natural finishes suit parking, corridors and wet areas; mirror polish suits interior floors."
+    },
+    {
+      "title": "Shade varies",
+      "detail": "Blue, green and beige lots differ. See the actual lot before ordering a large area."
+    },
+    {
+      "title": "It ages well",
+      "detail": "Kota can be re-polished years later instead of being replaced."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Is Kota stone good for parking areas?",
+      "a": "Yes, it is one of the most common choices in Coimbatore for driveways and open areas because it is hard and repairable."
+    },
+    {
+      "q": "How is Kota different from Kadappa?",
+      "a": "Kadappa is a darker, almost black limestone from Andhra, usually used for kitchen platforms, steps and borders. Kota is lighter, in blue, green and beige shades, and used mainly for floors."
+    }
+  ],
+  "related": [
+    "parking-tiles-coimbatore",
+    "floor-tiles-coimbatore",
+    "granite-countertops-coimbatore"
+  ],
+  "enquiry": "Hi Elite Balaji, I'm looking for Kota stone. Area: ___ sq ft, finish: ___, location: ___."
+}

@@ -1,6 +1,8 @@
 ---
 import { business, telLink, waLink, emailQuoteLink, defaultEnquiryMessage } from "../lib/business";
-import { guides } from "../lib/guides";
+import { loadGuides } from "../lib/guides";
+
+const guides = await loadGuides();
 
 // Service area (client-confirmed, 2026-09-15): site visits, supply and laying
 // across Coimbatore and the surrounding region; custom art products
@@ -76,7 +78,7 @@ const explore = [
     <div class="mx-auto max-w-7xl px-5 py-8 lg:px-8">
       <p class="text-[0.65rem] uppercase tracking-[0.22em] text-brass">Popular in Coimbatore</p>
       <ul class="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-sm text-paper/70">
-        {guides.map((g) => <li><a href={`/${g.slug}/`} class="inline-flex min-h-10 items-center hover:text-brass">{g.h1}</a></li>)}
+        {guides.map((g) => <li><a href={`/${g.id}/`} class="inline-flex min-h-10 items-center hover:text-brass">{g.data.h1}</a></li>)}
       </ul>
     </div>
   </div>

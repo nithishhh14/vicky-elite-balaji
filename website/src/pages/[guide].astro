@@ -10,20 +10,25 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHero from "../components/PageHero.astro";
 import SaveButton from "../components/SaveButton.astro";
 import { getCollection } from "astro:content";
-import { guides } from "../lib/guides";
+import { loadGuides, guideMatcher, type Guide } from "../lib/guides";
 import { business, waLink, telLink } from "../lib/business";
 import { imageBadge } from "../lib/image-badge";
 import { metaText } from "../lib/seo";
+import { byOrder } from "../lib/order";
 
 export async function getStaticPaths() {
-  return guides.map((guide) => ({ params: { guide: guide.slug }, props: { guide } }));
+  const guides = await loadGuides();
+  return guides.map((guide) => ({ params: { guide: guide.id }, props: { guide } }));
 }
 
-const { guide } = Astro.props;
+const { guide } = Astro.props as { guide: Guide };
+const data = guide.data;
+const allGuides = await loadGuides();
+const matcher = guideMatcher(guide);
 
 const halls = await getCollection("halls");
 const hallName = (id: string) => halls.find((h) => h.id === id)?.data.name ?? id;
-const all = (await getCollection("products")).sort((a, b) => a.data.order - b.data.order);
+const all = (await getCollection("products")).sort(byOrder);
 
 const haystack = (p: (typeof all)[number]) =>
   [p.data.name, p.data.category, p.data.finish, p.data.size, p.data.series, p.data.imageAlt, ...p.data.applications]
@@ -31,13 +36,13 @@ const haystack = (p: (typeof all)[number]) =>
     .join(" ");
 
 const matches = all.filter((p) => {
-  if (guide.match.halls && !guide.match.halls.includes(p.data.hallId)) return false;
-  if (guide.match.kind && p.data.kind !== guide.match.kind) return false;
-  return guide.match.rx.test(haystack(p));
+  if (data.match.halls && !data.match.halls.includes(p.data.hallId)) return false;
+  if (data.match.kind && p.data.kind !== data.match.kind) return false;
+  return matcher.test(haystack(p));
 });
 const shown = matches.slice(0, 12);
 const byHall = [...new Set(matches.map((p) => p.data.hallId))].map((id) => ({ id, name: hallName(id), count: matches.filter((p) => p.data.hallId === id).length }));
-const related = guide.related.map((slug) => guides.find((g) => g.slug === slug)).filter(Boolean);
+const related = data.related.map((slug) => allGuides.find((g) => g.id === slug)).filter(Boolean) as Guide[];
 
 // Hero image: the first real (non-illustrative) product photo on this page,
 // so each landing page opens with material we actually hold.
@@ -46,11 +51,11 @@ const heroCredit = heroProduct
   ? imageBadge(heroProduct.data.image) ?? (heroProduct.data.sourceCatalogue ? "Supplier catalogue" : "From our stock")
   : undefined;
 
-const url = new URL(`/${guide.slug}/`, Astro.site).toString();
+const url = new URL(`/${guide.id}/`, Astro.site).toString();
 const faqJsonLd = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  mainEntity: guide.faq.map((f) => ({
+  mainEntity: data.faq.map((f) => ({
     "@type": "Question",
     name: f.q,
     acceptedAnswer: { "@type": "Answer", text: f.a },
@@ -61,24 +66,24 @@ const breadcrumbJsonLd = {
   "@type": "BreadcrumbList",
   itemListElement: [
     { "@type": "ListItem", position: 1, name: "Home", item: new URL("/", Astro.site).toString() },
-    { "@type": "ListItem", position: 2, name: guide.h1, item: url },
+    { "@type": "ListItem", position: 2, name: data.h1, item: url },
   ],
 };
 ---
 
 <BaseLayout
-  title={guide.title}
-  description={metaText(guide.description)}
-  enquiryMessage={guide.enquiry}
-  enquiry={{ label: "Ask about this", category: guide.eyebrow.split("·").pop()?.trim(), intent: "Ask price & availability" }}
+  title={data.title}
+  description={metaText(data.description)}
+  enquiryMessage={data.enquiry}
+  enquiry={{ label: "Ask about this", category: data.eyebrow.split("·").pop()?.trim(), intent: "Ask price & availability" }}
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
 
   <PageHero
-    eyebrow={guide.eyebrow}
-    title={guide.h1}
-    intro={guide.intro[0]}
+    eyebrow={data.eyebrow}
+    title={data.h1}
+    intro={data.intro[0]}
     image={heroProduct?.data.image}
     imageAlt={heroProduct?.data.imageAlt ?? ""}
     credit={heroCredit}
@@ -87,14 +92,14 @@ const breadcrumbJsonLd = {
   <section class="bg-paper py-14">
     <div class="mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-[1.15fr_0.85fr] lg:px-8">
       <div>
-        {guide.intro.slice(1).map((p) => <p class="mt-4 text-lg leading-relaxed text-ink-soft first:mt-0">{p}</p>)}
+        {data.intro.slice(1).map((p) => <p class="mt-4 text-lg leading-relaxed text-ink-soft first:mt-0">{p}</p>)}
         <div class="mt-8 flex flex-wrap gap-3">
           <a
-            href={waLink(guide.enquiry)}
+            href={waLink(data.enquiry)}
             target="_blank"
             rel="noopener"
             data-enquire="Ask price & availability"
-            data-category={guide.eyebrow.split("·").pop()?.trim()}
+            data-category={data.eyebrow.split("·").pop()?.trim()}
             class="btn-arrow inline-flex min-h-12 items-center gap-3 bg-gradient-to-r from-brass to-mustard-dark px-7 text-xs uppercase tracking-[0.2em] text-paper hover:brightness-110"
           >
             Ask for availability &amp; rate
@@ -174,7 +179,7 @@ const breadcrumbJsonLd = {
       <div>
         <div class="flex items-center gap-4"><span data-gsap-line class="block h-px w-12 bg-brass" aria-hidden="true"></span><p class="text-xs uppercase tracking-[0.3em] text-mustard-dark">How to choose</p></div>
         <dl class="mt-8 divide-y divide-line border-y border-line">
-          {guide.choose.map((c) => (
+          {data.choose.map((c) => (
             <div class="py-5">
               <dt class="font-display text-2xl">{c.title}</dt>
               <dd class="mt-1 text-ink-soft leading-relaxed">{c.detail}</dd>
@@ -185,7 +190,7 @@ const breadcrumbJsonLd = {
       <div>
         <div class="flex items-center gap-4"><span data-gsap-line class="block h-px w-12 bg-brass" aria-hidden="true"></span><p class="text-xs uppercase tracking-[0.3em] text-mustard-dark">Questions we get asked</p></div>
         <div class="mt-8 divide-y divide-line border-y border-line">
-          {guide.faq.map((f, i) => (
+          {data.faq.map((f, i) => (
             <details class="group py-4" open={i === 0}>
               <summary class="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 font-display text-xl">
                 {f.q}
@@ -205,9 +210,9 @@ const breadcrumbJsonLd = {
         <p class="text-xs uppercase tracking-[0.3em] text-mustard-dark">Also worth a look</p>
         <div class="mt-6 grid gap-4 sm:grid-cols-3">
           {related.map((r) => (
-            <a href={`/${r!.slug}/`} class="eb-card group block border border-line bg-paper p-5">
-              <p class="text-[0.6rem] uppercase tracking-[0.2em] text-mustard-dark">{r!.eyebrow}</p>
-              <p class="mt-2 font-display text-2xl leading-tight group-hover:text-mustard-dark">{r!.h1}</p>
+            <a href={`/${r!.id}/`} class="eb-card group block border border-line bg-paper p-5">
+              <p class="text-[0.6rem] uppercase tracking-[0.2em] text-mustard-dark">{r!.data.eyebrow}</p>
+              <p class="mt-2 font-display text-2xl leading-tight group-hover:text-mustard-dark">{r!.data.h1}</p>
               <span class="eb-rule mt-3" aria-hidden="true"></span>
             </a>
           ))}
@@ -221,7 +226,7 @@ const breadcrumbJsonLd = {
       <h2 class="font-display text-4xl sm:text-5xl">Tell us the room and the size</h2>
       <p class="mt-4 text-paper/75">We'll reply with what's in the showroom this week and a current rate. Fastest on WhatsApp.</p>
       <div class="mt-8 flex flex-wrap justify-center gap-3">
-        <a href={waLink(guide.enquiry)} target="_blank" rel="noopener" data-enquire="Ask price & availability" class="inline-flex min-h-12 items-center bg-gradient-to-r from-brass to-mustard-dark px-8 text-xs uppercase tracking-[0.2em] hover:brightness-110">Send your requirement</a>
+        <a href={waLink(data.enquiry)} target="_blank" rel="noopener" data-enquire="Ask price & availability" class="inline-flex min-h-12 items-center bg-gradient-to-r from-brass to-mustard-dark px-8 text-xs uppercase tracking-[0.2em] hover:brightness-110">Send your requirement</a>
         <a href="/contact/" class="inline-flex min-h-12 items-center border border-paper/40 px-8 text-xs uppercase tracking-[0.2em] hover:border-brass">Visit the showroom</a>
       </div>
     </div>

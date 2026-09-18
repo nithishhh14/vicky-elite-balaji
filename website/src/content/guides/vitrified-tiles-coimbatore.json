@@ -1,0 +1,48 @@
+{
+  "h1": "Vitrified tiles: GVT, PGVT & double charge",
+  "title": "Vitrified Tiles (GVT & PGVT) in Coimbatore | Elite Balaji",
+  "description": "GVT, PGVT and double-charge vitrified tiles explained, with the sizes and finishes we stock in Karamadai and supply across Coimbatore.",
+  "eyebrow": "Tiles · Vitrified",
+  "intro": [
+    "Vitrified tiles are pressed and fired hard enough to absorb very little water, which is why they suit Indian floors. The confusing part is the labels, so here they are in plain words.",
+    "GVT is a vitrified tile with a printed glaze, so it can look like marble, wood or stone. PGVT is the same thing polished to a mirror finish. Double charge presses two layers of pigment deep into the body, so the pattern survives heavy traffic but comes in plainer designs."
+  ],
+  "match": {
+    "pattern": "vitrified|gvt|pgvt|double charge",
+    "flags": "i"
+  },
+  "choose": [
+    {
+      "title": "GVT for looks",
+      "detail": "The best marble, wood and stone reproductions are GVT, because the design is printed rather than pressed."
+    },
+    {
+      "title": "PGVT for shine",
+      "detail": "Polished glazed tiles reflect light and make a room feel larger, but show scratches and footprints sooner."
+    },
+    {
+      "title": "Double charge for traffic",
+      "detail": "Showrooms, offices and busy homes: the design goes deep into the tile, so wear does not erase it."
+    }
+  ],
+  "faq": [
+    {
+      "q": "What is the difference between GVT and PGVT?",
+      "a": "Both are glazed vitrified tiles. PGVT has a polished, glossy surface; plain GVT is usually matt or satin. The body underneath is the same."
+    },
+    {
+      "q": "Is double charge better than GVT?",
+      "a": "It is tougher, not prettier. Choose double charge for heavy traffic and GVT when you want a marble, wood or stone look."
+    },
+    {
+      "q": "Which sizes do you stock?",
+      "a": "Commonly 600 × 600 mm and 600 × 1200 mm, with larger formats on request. Ask us what is in the showroom this week."
+    }
+  ],
+  "related": [
+    "large-format-tiles-coimbatore",
+    "floor-tiles-coimbatore",
+    "wall-tiles-coimbatore"
+  ],
+  "enquiry": "Hi Elite Balaji, I'm comparing GVT, PGVT and double charge tiles for: ___."
+}

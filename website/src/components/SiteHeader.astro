@@ -2,7 +2,9 @@
 import { getCollection } from "astro:content";
 import { business } from "../lib/business";
 import { materialWorlds, alsoStockedHallIds } from "../lib/material-worlds";
-import { guides } from "../lib/guides";
+import { loadGuides } from "../lib/guides";
+
+const guides = await loadGuides();
 
 interface Props {
   // Homepage only: header floats transparent over the hero and gains its
@@ -229,7 +231,7 @@ const previews = [
             <p class="text-[0.62rem] uppercase tracking-[0.2em] text-paper/60">Popular searches</p>
             <ul class="mt-2 grid grid-cols-2 gap-x-6 gap-y-1">
               {guides.slice(0, 8).map((g) => (
-                <li><a href={`/${g.slug}/`} class="link-gold text-sm text-paper/90">{g.h1}</a></li>
+                <li><a href={`/${g.id}/`} class="link-gold text-sm text-paper/90">{g.data.h1}</a></li>
               ))}
             </ul>
           </div>

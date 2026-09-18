@@ -1,0 +1,44 @@
+{
+  "h1": "Bathroom tiles in Coimbatore",
+  "title": "Bathroom Tiles in Coimbatore | Elite Balaji",
+  "description": "Anti-skid floor tiles, wall tiles, wash basins and fittings for bathrooms, supplied and laid from our Karamadai showroom across Coimbatore.",
+  "eyebrow": "Tiles · Bathrooms",
+  "intro": [
+    "A bathroom needs three decisions together: a floor tile with grip, a wall tile that suits it, and the basin and fittings. We keep all three, so the shades and sizes are chosen in one visit instead of three shops.",
+    "Wet areas are also where bad laying shows fastest, which is why we prefer to supply the adhesive and grout with the tile."
+  ],
+  "match": {
+    "pattern": "bath|basin|wash|sanitary",
+    "flags": "i"
+  },
+  "choose": [
+    {
+      "title": "Grip on the floor",
+      "detail": "Choose a matt or anti-skid floor tile for the wet area. Polished tiles belong outside the shower."
+    },
+    {
+      "title": "Plan the basin early",
+      "detail": "The counter cut-out depends on the basin. Choosing the basin with the counter stone avoids re-cutting."
+    },
+    {
+      "title": "Grout matters",
+      "detail": "Epoxy grout resists staining in wet areas much better than cement grout."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Which tile is best for a bathroom floor?",
+      "a": "A matt or anti-skid vitrified tile in 300 × 300 mm or 600 × 600 mm. We can show you the texture in the showroom so you can feel the grip."
+    },
+    {
+      "q": "Do you supply wash basins too?",
+      "a": "Yes. We carry art basins and marble-finish basin collections in many shapes and sizes, plus quartz and steel kitchen sinks."
+    }
+  ],
+  "related": [
+    "wash-basins-coimbatore",
+    "wall-tiles-coimbatore",
+    "floor-tiles-coimbatore"
+  ],
+  "enquiry": "Hi Elite Balaji, I'm doing a bathroom. Floor area: ___, wall height: ___, location: ___."
+}

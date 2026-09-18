@@ -1,6 +1,6 @@
 # Data architecture — Vicky / Elite Balaji
 
-_Last updated: 2026-09-17. A map of every place data lives, how it flows, and
+_Last updated: 2026-09-18. A map of every place data lives, how it flows, and
 who owns it. Numbers are counted from the repo on that date._
 
 ## 1. The two halves of the system
@@ -31,6 +31,11 @@ Marketing/SEO agents reading the live site, which stays blocked until launch.
 | `products` | **89** | kind, hallId, name, brand?, series?, code?, category?, size?, finish, order, applications[], image, imageAlt, images[]?, sourceCatalogue?, note?, thickness?, qtyPerBox?, coverageArea?, weight? | One canonical shape for tiles and materials alike |
 | `halls` | **8** | name, order, tagline, intro, heroImage, heroAlt, hasRealContent, materialColor, materialTexture, applications[], enquiryNote | The eight showroom halls |
 | `services` | **4** | hallId, name, category, description, capabilities[]?, order | Made-to-order capabilities |
+| `guides` | **14** | h1, title, description, eyebrow, intro[], match{pattern,flags,halls?,kind?}, choose[], faq[], related[], enquiry | Local search landing pages; the filename is the URL slug |
+
+All four schemas are **strict** (an unknown or misspelled field fails the
+build instead of vanishing), and `order` is optional — listings sort by
+`order` then name (`src/lib/order.ts`), so records can share a number.
 
 Products by hall: Sanitaryware 31 · Granite & Marbles 21 · Tiles 21 · Quartz 4 ·
 Kota 4 · Adhesive 4 · Kadappa 2 · Laying works 2. Product images in total: 324.
@@ -104,7 +109,8 @@ product JSON.
 | `experience.mjs` | `npm run qa:experience` | drives header convergence, menus, search, Material Match, save, compare, enquiry drawer, granite stage, reduced motion; records CLS |
 | `serve-headers.mjs` | manual / preflight | serves `dist/` with the production security headers so the CSP is verified before deploy |
 | `shots.mjs` | manual | fixed screenshots for visual review |
-| `preflight.mjs` | `npm run preflight` | all of the above plus SEO, sitemap, robots, price-leak and structured-data checks. **23 checks — the gate before deploy** (also run in GitHub Actions) |
+| `check-content.mjs` | `npm run check:content` | cross-record integrity: hallIds, image files on disk, alt text, landing-page patterns and `related` links, media-library references |
+| `preflight.mjs` | `npm run preflight` | all of the above plus SEO, sitemap, robots, price-leak and structured-data checks. **24 checks — the gate before deploy** (also run in GitHub Actions) |
 
 ## 5. Agent side (Phase 1, live but separate)
 

@@ -1,0 +1,9 @@
+# URL stability. A page's URL comes from its filename, so renaming a product
+# or landing page changes its address and breaks Google's index and any link
+# the client has shared. Rule: do not rename a live slug. If a rename is
+# unavoidable, keep the old address working by adding a line here:
+#
+#   /products/old-slug/   /products/new-slug/   301
+#
+# (Cloudflare Pages reads this file. The apex -> www redirect is a Cloudflare
+# Redirect Rule in the dashboard, not here.)

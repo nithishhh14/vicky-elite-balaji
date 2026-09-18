@@ -1,0 +1,44 @@
+{
+  "h1": "Car parking & anti-skid tiles",
+  "title": "Car Parking & Anti-skid Tiles in Coimbatore | Elite Balaji",
+  "description": "Heavy-duty parking tiles, anti-skid outdoor surfaces and Kota stone for driveways, porticos and wash areas, from Elite Balaji, Karamadai.",
+  "eyebrow": "Tiles · Parking & outdoor",
+  "intro": [
+    "A parking floor takes vehicle weight, turning tyres, rain and sun. It needs a thicker, textured surface, and the base under it matters as much as the tile.",
+    "Alongside heavy-duty parking tiles we supply Kota stone, which many Coimbatore homes still prefer for driveways and open areas because it is hard, cool underfoot and repairable piece by piece."
+  ],
+  "match": {
+    "pattern": "parking|anti.?skid|driveway|outdoor|pathway|veranda|courtyard",
+    "flags": "i"
+  },
+  "choose": [
+    {
+      "title": "Texture over polish",
+      "detail": "Anything polished becomes a skating rink when wet. Parking and open areas want a rough or structured face."
+    },
+    {
+      "title": "The base carries the car",
+      "detail": "Tiles do not take the load, the bed under them does. Skimping there cracks the best tile."
+    },
+    {
+      "title": "Think about repairs",
+      "detail": "Kota and stone can be lifted and replaced piece by piece; a printed tile has to match a batch that may be gone."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Which is better for parking: tiles or Kota stone?",
+      "a": "Both work. Kota is hard, repairable and cool; parking tiles offer more patterns and a flatter finish. We will quote both for your area."
+    },
+    {
+      "q": "Do you supply paver blocks?",
+      "a": "We can source paver blocks and outdoor stone on request. Tell us the area and the vehicle load and we will suggest the option."
+    }
+  ],
+  "related": [
+    "kota-stone-coimbatore",
+    "elevation-tiles-coimbatore",
+    "floor-tiles-coimbatore"
+  ],
+  "enquiry": "Hi Elite Balaji, I need parking or outdoor flooring. Area: ___ sq ft, location: ___."
+}

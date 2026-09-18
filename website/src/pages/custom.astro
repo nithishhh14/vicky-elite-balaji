@@ -4,12 +4,13 @@ import { getCollection } from "astro:content";
 import { waLink, telLink, productEnquiryMessage } from "../lib/business";
 import { mediaLibrary, mediaIn, provenanceLabel } from "../lib/media-library";
 import AmbientVideo from "../components/AmbientVideo.astro";
+import { byOrder } from "../lib/order";
 
 // Custom Stonecraft: built around Elite Balaji's own finished work
 // (provenance "work" in media-library.ts). The two process photos from the
 // client's forwarded references are labelled "Process reference", never
 // presented as our workshop.
-const services = (await getCollection("services")).sort((a, b) => a.data.order - b.data.order);
+const services = (await getCollection("services")).sort(byOrder);
 const bySlug = (slug: string) => mediaLibrary.find((m) => m.slug === slug)!;
 
 // `video` (optional): real process footage for a step, when the client

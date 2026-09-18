@@ -6,6 +6,7 @@ import { deriveApplicationTags } from "../lib/facets";
 import { waLink } from "../lib/business";
 import { imageBadge } from "../lib/image-badge";
 import SaveButton from "../components/SaveButton.astro";
+import { byOrder } from "../lib/order";
 
 const halls = await getCollection("halls");
 const hallNameOf = (id: string) => halls.find((h) => h.id === id)?.data.name ?? id;
@@ -13,7 +14,7 @@ const hallNameOf = (id: string) => halls.find((h) => h.id === id)?.data.name ?? 
 // Applications: the real catalogue regrouped by where the material goes.
 // Tags are derived from each product's own `applications` field (lib/facets),
 // so nothing is hand-assigned and every future product lands here on its own.
-const products = (await getCollection("products")).sort((a, b) => a.data.order - b.data.order);
+const products = (await getCollection("products")).sort(byOrder);
 
 // Room scenes are generated application concepts (Runway, 2026-09-15) and are
 // always captioned as such; the product grids below them are the real catalogue.

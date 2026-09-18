@@ -3,8 +3,9 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import MaterialField from "../../components/MaterialField.astro";
 import { getCollection } from "astro:content";
 import { imageBadge } from "../../lib/image-badge";
+import { byOrder } from "../../lib/order";
 
-const halls = (await getCollection("halls")).sort((a, b) => a.data.order - b.data.order);
+const halls = (await getCollection("halls")).sort(byOrder);
 ---
 
 <BaseLayout

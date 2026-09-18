@@ -8,6 +8,7 @@ import { deriveColours } from "../../lib/facets";
 import { imageBadge } from "../../lib/image-badge";
 import { metaText, pageTitle } from "../../lib/seo";
 import { sanitarywareCategories } from "../../lib/stone-varieties";
+import { byOrder } from "../../lib/order";
 
 export async function getStaticPaths() {
   const halls = await getCollection("halls");
@@ -19,10 +20,10 @@ const { name, tagline, intro, hasRealContent, heroImage, heroAlt, materialColor,
 
 const products = (await getCollection("products"))
   .filter((p) => p.data.hallId === hall.id)
-  .sort((a, b) => a.data.order - b.data.order);
+  .sort(byOrder);
 const services = (await getCollection("services"))
   .filter((s) => s.data.hallId === hall.id)
-  .sort((a, b) => a.data.order - b.data.order);
+  .sort(byOrder);
 
 // Explore-by-colour: derived from the same real fields as the search index
 // (see src/lib/facets.ts), scoped to this hall's own products only.

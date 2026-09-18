@@ -4,11 +4,12 @@ import PageHero from "../components/PageHero.astro";
 import { getCollection } from "astro:content";
 import { business, waLink, telLink, emailQuoteLink } from "../lib/business";
 import { tileSizes, tileFinishes, stoneCategories, quartzCategories, sanitarywareCategories } from "../lib/stone-varieties";
+import { byOrder } from "../lib/order";
 
 // Resources: buyer reference material built only from content the site
 // already holds -- standard sizes/finishes, the "ask us to source" variety
 // lists, real services, and how enquiries actually work.
-const services = (await getCollection("services")).sort((a, b) => a.data.order - b.data.order);
+const services = (await getCollection("services")).sort(byOrder);
 const sourcing = [...stoneCategories, ...quartzCategories, ...sanitarywareCategories];
 
 const steps = [

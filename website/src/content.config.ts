@@ -15,7 +15,7 @@ const halls = defineCollection({
     materialTexture: z.enum(["stone", "ceramic", "cement", "porcelain"]),
     applications: z.array(z.string()),
     enquiryNote: z.string(),
-  }),
+  }).strict(),
 });
 
 // Canonical product record. One shape for every real product across every
@@ -36,7 +36,9 @@ const products = defineCollection({
     category: z.string().optional(),
     size: z.string().optional(),
     finish: z.string(),
-    order: z.number(),
+    // Optional: sorting falls back to name, so a new record never has to
+    // hunt for a free number and two records can safely share one.
+    order: z.number().default(999),
     applications: z.array(z.string()),
     image: z.string(),
     imageAlt: z.string(),
@@ -54,7 +56,7 @@ const products = defineCollection({
     qtyPerBox: z.string().optional(),
     coverageArea: z.string().optional(),
     weight: z.string().optional(),
-  }),
+  }).strict(),
 });
 
 // Bespoke/made-to-order capabilities (CNC engraving, tile printing, inlay,
@@ -71,8 +73,34 @@ const services = defineCollection({
     category: z.string(),
     description: z.string(),
     capabilities: z.array(z.string()).optional(),
-    order: z.number(),
-  }),
+    order: z.number().default(999),
+  }).strict(),
 });
 
-export const collections = { halls, products, services };
+// Local search landing pages ("Floor Tiles in Coimbatore"). Data, not code:
+// a new page is one JSON file here, validated like every other record. The
+// filename is the URL slug and must end in -coimbatore (see src/pages/[guide].astro).
+const guides = defineCollection({
+  loader: glob({ pattern: "**/*.json", base: "./src/content/guides" }),
+  schema: z.object({
+    h1: z.string(),
+    title: z.string().max(65),
+    description: z.string().min(50).max(160),
+    eyebrow: z.string(),
+    intro: z.array(z.string()).min(1),
+    // Which real products belong on the page. `pattern` is a regular
+    // expression matched against each product's own fields.
+    match: z.object({
+      pattern: z.string(),
+      flags: z.string().default("i"),
+      halls: z.array(z.string()).optional(),
+      kind: z.enum(["tile", "material"]).optional(),
+    }).strict(),
+    choose: z.array(z.object({ title: z.string(), detail: z.string() }).strict()).min(1),
+    faq: z.array(z.object({ q: z.string(), a: z.string() }).strict()).min(1),
+    related: z.array(z.string()),
+    enquiry: z.string(),
+  }).strict(),
+});
+
+export const collections = { halls, products, services, guides };

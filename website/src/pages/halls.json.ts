@@ -1,12 +1,13 @@
 import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
+import { byOrder } from "../lib/order";
 
 // Static structural export of the 8 showroom halls, for any future tooling
 // (Marketing/SEO agents, etc.) that needs to read the site's own content
 // model without scraping HTML. No live query engine — this is a static
 // build artifact, same as sitemap.xml, since the site has no backend.
 export const GET: APIRoute = async () => {
-  const halls = (await getCollection("halls")).sort((a, b) => a.data.order - b.data.order);
+  const halls = (await getCollection("halls")).sort(byOrder);
 
   const payload = {
     business: "Elite Balaji Stones & Ceramics",

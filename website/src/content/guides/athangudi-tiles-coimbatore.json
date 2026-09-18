@@ -1,0 +1,44 @@
+{
+  "h1": "Athangudi & heritage tiles",
+  "title": "Athangudi & Heritage Tiles in Coimbatore | Elite Balaji",
+  "description": "Handmade Athangudi and patterned heritage tiles for verandas, pooja rooms and accent floors, supplied from Elite Balaji, Karamadai, Coimbatore.",
+  "eyebrow": "Tiles · Heritage",
+  "intro": [
+    "Athangudi tiles are made by hand in Chettinad: coloured cement poured over a glass plate, one tile at a time. No two are identical, and that is the point.",
+    "They suit verandas, pooja rooms, courtyards and any floor that should feel made rather than bought. They need a little care: a cement-based tile is softer than vitrified, so it prefers gentle cleaning."
+  ],
+  "match": {
+    "pattern": "athangudi|moroccan|heritage|pattern|kolam",
+    "flags": "i"
+  },
+  "choose": [
+    {
+      "title": "Give them a border",
+      "detail": "A plain border around a patterned field stops the floor looking restless."
+    },
+    {
+      "title": "Expect variation",
+      "detail": "Handmade means shade and edge differences. Mixing boxes while laying spreads the variation evenly."
+    },
+    {
+      "title": "Seal after laying",
+      "detail": "A wax or sealer brings out the colour and keeps stains out of the cement surface."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Are Athangudi tiles suitable for a bathroom?",
+      "a": "We suggest them for dry areas: verandas, pooja rooms, living floors. For wet areas a vitrified anti-skid tile is safer."
+    },
+    {
+      "q": "Can I get a custom pattern?",
+      "a": "Patterns and colour combinations can be made to order with lead time, and we also print custom designs onto vitrified tiles."
+    }
+  ],
+  "related": [
+    "floor-tiles-coimbatore",
+    "custom-printed-tiles-coimbatore",
+    "wall-tiles-coimbatore"
+  ],
+  "enquiry": "Hi Elite Balaji, I'd like Athangudi or heritage tiles for: ___ (area ___ sq ft)."
+}

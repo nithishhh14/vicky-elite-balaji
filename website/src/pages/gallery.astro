@@ -4,6 +4,7 @@ import PageHero from "../components/PageHero.astro";
 import { getCollection } from "astro:content";
 import { mediaLibrary, provenanceLabel } from "../lib/media-library";
 import { waLink } from "../lib/business";
+import { byOrder } from "../lib/order";
 
 // Gallery: real client material first, every image visibly labelled with
 // what it is. Stock (Unsplash) product photos and colour swatches are NOT
@@ -39,7 +40,7 @@ const order: Record<string, number> = { work: 0, stock: 1, supply: 2, idea: 3 };
 // catalogue photo, labelled as such.
 const products = (await getCollection("products"))
   .filter((p) => p.data.hallId === "tiles" || (p.data.hallId === "sanitaryware" && (p.data.images?.length ?? 0) > 0))
-  .sort((a, b) => a.data.order - b.data.order);
+  .sort(byOrder);
 const seen = new Set<string>();
 for (const p of products) {
   const isBasin = p.data.hallId === "sanitaryware";

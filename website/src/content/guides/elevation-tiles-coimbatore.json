@@ -1,0 +1,44 @@
+{
+  "h1": "Elevation tiles & stone cladding",
+  "title": "Elevation Tiles & Stone Cladding in Coimbatore | Elite Balaji",
+  "description": "Exterior elevation tiles and granite cladding for front walls, compound walls and porticos, supplied and fixed from Karamadai, Coimbatore.",
+  "eyebrow": "Exterior · Elevation",
+  "intro": [
+    "The front elevation is the part of the house everybody sees and the part the weather attacks hardest. Sun, monsoon and dust decide how a facade ages, not the showroom lighting.",
+    "We supply weather-resistant elevation tiles and natural granite cladding, and our crews fix both. Granite costs more up front and needs almost nothing afterwards."
+  ],
+  "match": {
+    "pattern": "elevation|cladding|facade|exterior",
+    "flags": "i"
+  },
+  "choose": [
+    {
+      "title": "Darker stone hides weather",
+      "detail": "Rain marks and dust show far less on a dark granite or a textured tile than on a pale gloss face."
+    },
+    {
+      "title": "Fix it properly",
+      "detail": "Exterior cladding needs mechanical fixing or a proper exterior adhesive; interior adhesive fails outdoors."
+    },
+    {
+      "title": "Mind the joints",
+      "detail": "Water gets in at the joints. Sealed, well-planned joints are what make a facade last."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Granite or tiles for the front elevation?",
+      "a": "Granite lasts longer and needs no maintenance; elevation tiles offer more texture and pattern for less money. Many houses use granite at the base and tiles above."
+    },
+    {
+      "q": "Do you fix elevation cladding?",
+      "a": "Yes, our own crews do supply and fixing across Coimbatore and the surrounding areas."
+    }
+  ],
+  "related": [
+    "granite-countertops-coimbatore",
+    "parking-tiles-coimbatore",
+    "wall-tiles-coimbatore"
+  ],
+  "enquiry": "Hi Elite Balaji, I'm planning a front elevation. Area: ___ sq ft, location: ___."
+}

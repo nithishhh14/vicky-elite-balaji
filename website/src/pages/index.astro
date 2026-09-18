@@ -9,6 +9,7 @@ import QuoteForm from "../components/QuoteForm.astro";
 import SaveButton from "../components/SaveButton.astro";
 import AmbientVideo from "../components/AmbientVideo.astro";
 import { videoZones } from "../lib/video-zones";
+import { byOrder } from "../lib/order";
 
 const products = await getCollection("products");
 const bySlug = (slug: string) => mediaLibrary.find((m) => m.slug === slug)!;
@@ -37,7 +38,7 @@ const facts = [
 
 const specimens = products
   .filter((p) => p.data.hallId === "granite-marbles" && /granite|sandstone/i.test(p.data.category ?? ""))
-  .sort((a, b) => a.data.order - b.data.order);
+  .sort(byOrder);
 
 const craft = mediaIn("stonecraft", "work");
 
