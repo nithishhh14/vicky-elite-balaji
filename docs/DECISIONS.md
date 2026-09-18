@@ -7,12 +7,12 @@ reconsidering something that may already have been decided.
 
 ### Decision: Production operating model, Astro 7, self-hosted fonts
 **Date:** 2026-09-17
-**Reason:** Domain `www.elitebalaji.com` bought on Cloudflare; the site is
+**Reason:** Domain `elitebalaji.com` bought on Cloudflare; the site is
 going live and future changes should come from Vicky, not ad-hoc edits.
 
 **Calls made:**
 - **Hosting:** Cloudflare Pages, built from GitHub `main`. Canonical host is
-  `www`; the apex redirects via a Cloudflare Redirect Rule. `SITE_URL`
+  the apex; `www` redirects to it via a Cloudflare Redirect Rule. `SITE_URL`
   overrides the `astro.config.mjs` fallback.
 - **Change flow:** every change (human or Vicky) goes branch → pull request →
   `website-preflight` GitHub Action → Cloudflare preview → owner approval →

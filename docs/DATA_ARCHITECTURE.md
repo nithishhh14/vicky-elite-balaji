@@ -61,7 +61,7 @@ Kota 4 · Adhesive 4 · Kadappa 2 · Laying works 2. Product images in total: 32
   (powers search, the search overlay and Material Match)
 - `/catalogue.json` — card data for rebuilding a shared shortlist from `?ids=`
 - `/halls.json` — hall summary
-- `/robots.txt` — generated from the configured site URL (`https://www.elitebalaji.com`)
+- `/robots.txt` — generated from the configured site URL (`https://elitebalaji.com`)
 - `/.well-known/security.txt` — security contact
 - `/sitemap-index.xml` + `/sitemap-0.xml` — 128 URLs
 - 14 local search landing pages (`src/lib/guides.ts` → `src/pages/[guide].astro`)

@@ -10,7 +10,7 @@ export default defineConfig({
   // environment (Cloudflare Pages ▸ Settings ▸ Environment variables), or
   // replace the fallback below once the real domain is registered.
   // robots.txt and the sitemap are both generated from this value.
-  site: process.env.SITE_URL ?? "https://www.elitebalaji.com",
+  site: process.env.SITE_URL ?? "https://elitebalaji.com",
   integrations: [sitemap(), react()],
   vite: {
     plugins: [tailwindcss()],

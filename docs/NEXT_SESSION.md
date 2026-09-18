@@ -23,7 +23,7 @@ later brief reiterated deployment is out of scope for now).
   Pages setup still need the user's go-ahead (steps in `OPERATIONS_PLAN.md` §7).
 
 ## Earlier (2026-09-17)
-- **Domain bought:** `www.elitebalaji.com` (Cloudflare). Site config points at
+- **Domain bought:** `elitebalaji.com` (Cloudflare). Site config points at
   it. **Not yet pushed or deployed** — the launch steps (who does what) are in
   `docs/OPERATIONS_PLAN.md` §7; pushing needs the user's go-ahead.
 - **Security:** Astro 7.3.3, `npm audit` 0 vulnerabilities, fonts self-hosted,

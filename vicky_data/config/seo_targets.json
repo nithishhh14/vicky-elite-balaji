@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "site": "https://www.elitebalaji.com",
+  "site": "https://elitebalaji.com",
   "note": "Pages the SEO agent tracks every day. 'intent' is the search need the page answers; 'watch' keywords are only for grouping Search Console queries we already rank for — never for inventing claims.",
   "core": [
     { "path": "/", "intent": "brand + showroom", "watch": ["elite balaji", "elite balaji stones", "tiles karamadai"] },

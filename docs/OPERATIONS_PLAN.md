@@ -1,6 +1,6 @@
 # Operations plan — how Elite Balaji's website and Vicky run from here
 
-_Written 2026-09-17, after the domain `www.elitebalaji.com` was bought on
+_Written 2026-09-17, after the domain `elitebalaji.com` was bought on
 Cloudflare. This is the single answer to: where does everything live, how do
 updates happen, what does Vicky do, is an admin needed, and how does this move
 to the client's PC._
@@ -25,7 +25,7 @@ to the client's PC._
                                    OWNER looks at the preview, taps Approve
                                                           │  merge to main
                                                           ▼
-                     Cloudflare Pages publishes to www.elitebalaji.com (~2 minutes)
+                     Cloudflare Pages publishes to elitebalaji.com (~2 minutes)
 ```
 
 Nothing reaches the live site without passing the checks **and** a human
@@ -168,13 +168,13 @@ Windows 10/11, 8 GB RAM or more, always-on internet. Install: **Git**,
 |---|---|---|
 | 1 | Push the repo to GitHub (`main`) — **needs your go-ahead** | You / me |
 | 2 | Cloudflare → Workers & Pages → Create → Pages → Connect to Git → pick the repo | You (client's account) |
-| 3 | Build settings: root `website`, build `npm ci && npm run build`, output `dist`, env `SITE_URL=https://www.elitebalaji.com` | You |
-| 4 | Custom domains: add `www.elitebalaji.com`, then add a **Redirect Rule** `elitebalaji.com/*` → `https://www.elitebalaji.com/$1` (301) | You |
+| 3 | Build settings: root `website`, build `npm ci && npm run build`, output `dist`, env `SITE_URL=https://elitebalaji.com` | You |
+| 4 | Custom domains: add `elitebalaji.com`, then add a **Redirect Rule** `www.elitebalaji.com/*` → `https://elitebalaji.com/$1` (301) | You |
 | 5 | SSL/TLS: Full (strict); "Always Use HTTPS" on | You |
 | 6 | GitHub → Settings → Branches → protect `main`, require the `website-preflight` check | You |
-| 7 | Verify live: open the site on a phone; `npm run qa -- https://www.elitebalaji.com` | Me |
-| 8 | Google Search Console (Domain property, DNS verify in Cloudflare) → submit `https://www.elitebalaji.com/sitemap-index.xml` | You (client's Google) |
-| 9 | Google Business Profile → website link = `https://www.elitebalaji.com` | Client |
+| 7 | Verify live: open the site on a phone; `npm run qa -- https://elitebalaji.com` | Me |
+| 8 | Google Search Console (Domain property, DNS verify in Cloudflare) → submit `https://elitebalaji.com/sitemap-index.xml` | You (client's Google) |
+| 9 | Google Business Profile → website link = `https://elitebalaji.com` | Client |
 | 10 | Bing Webmaster Tools → import from Search Console | You |
 
 Rollback at any time: Cloudflare Pages → Deployments → "Rollback to this deployment".

@@ -41,15 +41,15 @@ Individual pieces: `npm run qa`, `npm run qa:experience`,
 
 ## 3. Deploy (static site, ~15 minutes)
 Prerequisites the client/user must provide:
-- **Domain:** `www.elitebalaji.com` — bought on Cloudflare (2026-09-17). Keep
-  auto-renew ON; apex `elitebalaji.com` redirects to `www` via a Redirect Rule.
+- **Domain:** `elitebalaji.com` — bought on Cloudflare (2026-09-17). Keep
+  auto-renew ON; `www.elitebalaji.com` redirects to the apex via a Redirect Rule.
 - **Host account** — Cloudflare Pages (recommended: free, fast in India,
   free SSL, `_headers` supported) or Netlify.
 - **Explicit go-ahead to deploy.**
 
 Steps:
 1. The domain is already set (`astro.config.mjs` falls back to
-   `https://www.elitebalaji.com`; robots.txt and the sitemap are generated from it).
+   `https://elitebalaji.com`; robots.txt and the sitemap are generated from it).
    Re-run `npm run preflight`.
 2. Push the repo to GitHub (`main`).
 3. Cloudflare Pages → Create project → connect the GitHub repo:
@@ -57,7 +57,7 @@ Steps:
    - Root directory: `website`
    - Build output directory: `dist` (relative to the root directory)
    - Node version: pinned by `website/.node-version` (22.12)
-   - Environment variable: `SITE_URL=https://www.elitebalaji.com`
+   - Environment variable: `SITE_URL=https://elitebalaji.com`
 4. Add the custom domain in Pages → follow the DNS instructions (CNAME, or
    nameservers if the domain is moved to Cloudflare). Wait for SSL to say
    "Active".
