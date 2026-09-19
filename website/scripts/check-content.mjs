@@ -30,6 +30,15 @@ for (const [id, p] of Object.entries(products)) {
   for (const src of [p.image, ...(p.images ?? []).map((i) => i.src)]) {
     if (!fileExists(src)) fail(id, `image file missing: ${src}`);
   }
+  // /granite/ and the home page's specimen rail build a card's thumbnail by
+  // swapping .jpg for -720.jpg. Both select the same set, so a product in it
+  // whose image has no -720 sibling renders a broken card — something the
+  // schema cannot see, because the path is never written down.
+  const onGraniteRails = p.hallId === "granite-marbles" && /granite|sandstone/i.test(p.category ?? "");
+  if (onGraniteRails && p.image.endsWith(".jpg")) {
+    const thumb = p.image.replace(/\.jpg$/, "-720.jpg");
+    if (!fileExists(thumb)) fail(id, `thumbnail missing: ${thumb} (/granite/ and the home rail derive it from image)`);
+  }
   // Concept/reference art is scene illustration, never a product photo.
   if (/\/media\/(concepts|reference)\//.test(p.image)) fail(id, `product image points at concept art: ${p.image}`);
   if (!p.imageAlt?.trim()) fail(id, "imageAlt is empty");

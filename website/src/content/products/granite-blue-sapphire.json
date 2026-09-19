@@ -1,0 +1,18 @@
+{
+  "kind": "material",
+  "hallId": "granite-marbles",
+  "name": "Blue Sapphire Granite",
+  "category": "Natural granite slab",
+  "finish": "Polished",
+  "order": 17,
+  "applications": [
+    "Kitchen countertops",
+    "Flooring",
+    "Staircases",
+    "Wall cladding",
+    "Vanity tops"
+  ],
+  "image": "/media/swatches/granite-blue-sapphire.jpg",
+  "imageAlt": "Blue Sapphire granite indicative colour swatch, blue-grey with a fine mineral speckle",
+  "note": "Colour swatch only, not a photograph of our stock. Blue Sapphire is a blue-grey granite with a fine even speckle, and shade varies by block. Ask us for photos of the slabs currently in the yard."
+}
