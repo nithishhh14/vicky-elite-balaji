@@ -70,7 +70,7 @@ const previews = [
 >
   <div class="header-glass" aria-hidden="true"></div>
 
-  <div class="header-bar mx-auto flex max-w-7xl items-center justify-between gap-3 px-5 lg:px-8">
+  <div class="header-bar flex w-full items-center justify-between gap-8 px-5 lg:px-8 2xl:px-12">
     <a href="/" class="header-brand flex min-w-0 items-center gap-3 leading-none" aria-label="Elite Balaji Stones & Ceramics, home">
       <!-- The client's exact emblem (supplied 2026-09-15), used as-is: only
            cropped, scaled, and the outer teal backdrop made transparent.
@@ -85,14 +85,21 @@ const previews = [
         class="header-logo h-14 w-auto flex-shrink-0 sm:h-[4.4rem] xl:h-[4.1rem]"
       />
       <!-- Wordmark set in engraved metallic gold, after the reference mockup. -->
-      <span class="header-wordmark flex min-w-0 flex-col items-center">
+      <span class="header-wordmark relative flex min-w-0 flex-col items-center">
         <span class="gold-engraved font-display text-[1.6rem] font-semibold leading-[0.95] whitespace-nowrap sm:text-[2.55rem] xl:text-[2.4rem]">Elite Balaji</span>
-        <span class="mt-1 flex items-center gap-2 text-[0.5rem] uppercase tracking-[0.34em] text-[#d6ad5f] whitespace-nowrap sm:text-[0.6rem]">
-          <span class="hidden h-px w-4 bg-gradient-to-r from-transparent to-[#d6ad5f] sm:block" aria-hidden="true"></span>
-          Stones &amp; Ceramics
-          <span class="hidden h-px w-4 bg-gradient-to-l from-transparent to-[#d6ad5f] sm:block" aria-hidden="true"></span>
+        <!-- The taglines hang below the name rather than sitting in flow. The
+             lockup is centred in the bar, so anything in flow under the name
+             pushes it above the menu's line; hanging them keeps "Elite Balaji"
+             on the same optical line as HOME at every breakpoint, with no
+             per-size offsets to maintain. -->
+        <span class="absolute inset-x-0 top-full flex flex-col items-center">
+          <span class="mt-1 flex items-center gap-2 text-[0.5rem] uppercase tracking-[0.34em] text-[#d6ad5f] whitespace-nowrap sm:text-[0.6rem]">
+            <span class="hidden h-px w-4 bg-gradient-to-r from-transparent to-[#d6ad5f] sm:block" aria-hidden="true"></span>
+            Stones &amp; Ceramics
+            <span class="hidden h-px w-4 bg-gradient-to-l from-transparent to-[#d6ad5f] sm:block" aria-hidden="true"></span>
+          </span>
+          <span class="header-subtag mt-0.5 hidden text-[0.46rem] uppercase tracking-[0.36em] text-paper/60 whitespace-nowrap sm:block">{business.subTagline}</span>
         </span>
-        <span class="header-subtag mt-0.5 hidden text-[0.46rem] uppercase tracking-[0.36em] text-paper/60 whitespace-nowrap sm:block">{business.subTagline}</span>
       </span>
     </a>
 
@@ -167,7 +174,7 @@ const previews = [
        folds up into the bar while a brass hairline draws across. -->
   <div class="header-sub hidden lg:grid">
     <div class="header-sub-inner overflow-hidden">
-      <div class="mx-auto flex max-w-7xl items-start justify-end gap-5 px-8">
+      <div class="flex w-full items-start justify-end gap-5 px-8 2xl:px-12">
         {secondary.map((link, i) => (
           <>
             {i > 0 && <span class="sub-sep text-paper/25" aria-hidden="true">|</span>}
