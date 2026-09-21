@@ -52,7 +52,11 @@ so a typo can't silently disappear.
    it on request.
 
 ### Replace an illustrative image with a real photo
-1. Add the real file under `public/media/client/…` (or the supplier folder).
+1. Add the real file under `public/media/client/…` (or the supplier folder),
+   **under a new filename**. Never overwrite an image in place: `/media/*` is
+   served with `max-age=2592000`, so Cloudflare keeps handing visitors the old
+   picture for thirty days even after the deploy succeeds. A new path is a new
+   cache entry and shows up immediately.
 2. Point the product's `image`/`images[]` at it and update `imageAlt`.
 3. Delete the old file from `public/media/illustrative/` if nothing else uses it.
 4. The "Illustrative image" badge disappears on its own — it is derived from
