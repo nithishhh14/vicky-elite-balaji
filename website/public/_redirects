@@ -7,3 +7,6 @@
 #
 # (Cloudflare Pages reads this file. The apex -> www redirect is a Cloudflare
 # Redirect Rule in the dashboard, not here.)
+
+# The client corrected the variety: what we listed as Black Pearl is Blue Sapphire.
+/products/granite-black-pearl/   /products/granite-blue-sapphire/   301
