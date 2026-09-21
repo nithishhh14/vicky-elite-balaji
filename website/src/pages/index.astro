@@ -19,10 +19,10 @@ const bySlug = (slug: string) => mediaLibrary.find((m) => m.slug === slug)!;
 // our own work. Only Bathroom still uses the client-approved concept render,
 // and says so.
 const worlds = [
-  { href: "/granite/", label: "Granite", descriptor: "From our slab yard", image: bySlug("black-galaxy-slabs").thumb, credit: provenanceLabel.stock },
-  { href: "/marble/", label: "Marble", descriptor: "Slabs & marble-look tiles", image: bySlug("white-slab-veined").thumb, credit: provenanceLabel.stock },
-  { href: "/halls/tiles/", label: "Tiles & Ceramics", descriptor: "Floor, wall & large format", image: "/media/tiles/moroccan-collection/lifestyle-9613fl.jpg", credit: "Supplier catalogue" },
-  { href: "/applications/#bathroom", label: "Bath Spaces", descriptor: "Tiles, sanitaryware & fittings", image: "/media/concepts/bathroom-960.jpg", credit: "Application concept" },
+  { href: "/granite/", label: "Granite", descriptor: "From our slab yard", image: "/media/concepts/catalogue/granite-960.jpg", credit: "Concept image" },
+  { href: "/marble/", label: "Marble", descriptor: "Slabs & marble-look tiles", image: "/media/concepts/catalogue/marble-960.jpg", credit: "Concept image" },
+  { href: "/halls/tiles/", label: "Tiles & Ceramics", descriptor: "Floor, wall & large format", image: "/media/concepts/catalogue/tiles-960.jpg", credit: "Concept image" },
+  { href: "/applications/#bathroom", label: "Bath Spaces", descriptor: "Tiles, sanitaryware & fittings", image: "/media/concepts/catalogue/bath-spaces-960.jpg", credit: "Concept image" },
   { href: "/custom/", label: "Custom Stonecraft", descriptor: "Engraving & stone furniture", image: bySlug("tulsi-madam-engraved-black").thumb, credit: provenanceLabel.work },
 ];
 
