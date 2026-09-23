@@ -3,5 +3,8 @@ python-dotenv>=1.0.0
 streamlit>=1.32.0
 gspread>=6.0.0
 google-auth>=2.29.0
+# Search Console API for the SEO agent. Present today only as a transitive
+# dependency, which is not something to rely on — pin it.
+google-api-python-client>=2.120.0
 google-generativeai>=0.8.0
 Pillow>=10.0.0

@@ -3,31 +3,207 @@
   "site": "https://elitebalaji.com",
   "note": "Pages the SEO agent tracks every day. 'intent' is the search need the page answers; 'watch' keywords are only for grouping Search Console queries we already rank for — never for inventing claims.",
   "core": [
-    { "path": "/", "intent": "brand + showroom", "watch": ["elite balaji", "elite balaji stones", "tiles karamadai"] },
-    { "path": "/materials/", "intent": "browse everything", "watch": ["tile showroom coimbatore", "granite showroom coimbatore"] },
-    { "path": "/granite/", "intent": "granite buying", "watch": ["granite coimbatore", "granite price coimbatore"] },
-    { "path": "/marble/", "intent": "marble buying", "watch": ["marble coimbatore", "italian marble coimbatore"] },
-    { "path": "/custom/", "intent": "made-to-order stonecraft", "watch": ["custom stone work coimbatore", "temple stone carving"] },
-    { "path": "/applications/", "intent": "where materials go", "watch": ["kitchen countertop coimbatore", "flooring ideas"] },
-    { "path": "/gallery/", "intent": "proof of work", "watch": ["tile showroom photos"] },
-    { "path": "/about/", "intent": "trust", "watch": ["elite balaji karamadai", "stone dealer mettupalayam"] },
-    { "path": "/contact/", "intent": "visit / call", "watch": ["tile shop near karamadai", "granite shop mettupalayam road"] }
+    {
+      "path": "/",
+      "intent": "brand + showroom",
+      "watch": [
+        "elite balaji",
+        "elite balaji stones",
+        "tiles karamadai"
+      ]
+    },
+    {
+      "path": "/materials/natural-stone/",
+      "intent": "browse natural stone",
+      "watch": [
+        "granite showroom coimbatore",
+        "marble showroom coimbatore"
+      ]
+    },
+    {
+      "path": "/materials/tiles-ceramics/",
+      "intent": "browse tiles",
+      "watch": [
+        "tile showroom coimbatore",
+        "tiles shop coimbatore"
+      ]
+    },
+    {
+      "path": "/materials/surfaces/",
+      "intent": "browse quartz surfaces",
+      "watch": [
+        "quartz countertop coimbatore"
+      ]
+    },
+    {
+      "path": "/granite/",
+      "intent": "granite buying",
+      "watch": [
+        "granite coimbatore",
+        "granite price coimbatore"
+      ]
+    },
+    {
+      "path": "/marble/",
+      "intent": "marble buying",
+      "watch": [
+        "marble coimbatore",
+        "italian marble coimbatore"
+      ]
+    },
+    {
+      "path": "/custom/",
+      "intent": "made-to-order stonecraft",
+      "watch": [
+        "custom stone work coimbatore",
+        "temple stone carving"
+      ]
+    },
+    {
+      "path": "/applications/",
+      "intent": "where materials go",
+      "watch": [
+        "kitchen countertop coimbatore",
+        "flooring ideas"
+      ]
+    },
+    {
+      "path": "/gallery/",
+      "intent": "proof of work",
+      "watch": [
+        "tile showroom photos"
+      ]
+    },
+    {
+      "path": "/about/",
+      "intent": "trust",
+      "watch": [
+        "elite balaji karamadai",
+        "stone dealer mettupalayam"
+      ]
+    },
+    {
+      "path": "/contact/",
+      "intent": "visit / call",
+      "watch": [
+        "tile shop near karamadai",
+        "granite shop mettupalayam road"
+      ]
+    }
   ],
   "landing": [
-    { "path": "/floor-tiles-coimbatore/", "intent": "floor tiles", "watch": ["floor tiles coimbatore", "floor tiles price"] },
-    { "path": "/wall-tiles-coimbatore/", "intent": "wall tiles", "watch": ["wall tiles coimbatore", "bathroom wall tiles"] },
-    { "path": "/bathroom-tiles-coimbatore/", "intent": "bathroom tiles", "watch": ["bathroom tiles coimbatore", "anti skid bathroom tiles"] },
-    { "path": "/vitrified-tiles-coimbatore/", "intent": "vitrified tiles", "watch": ["vitrified tiles coimbatore", "double charged vitrified"] },
-    { "path": "/large-format-tiles-coimbatore/", "intent": "large slabs", "watch": ["large format tiles", "800x1600 tiles coimbatore"] },
-    { "path": "/marble-look-tiles-coimbatore/", "intent": "marble-look porcelain", "watch": ["marble look tiles", "statuario tiles coimbatore"] },
-    { "path": "/athangudi-tiles-coimbatore/", "intent": "handmade Chettinad tiles", "watch": ["athangudi tiles", "athangudi tiles coimbatore"] },
-    { "path": "/parking-tiles-coimbatore/", "intent": "parking tiles", "watch": ["parking tiles coimbatore", "car parking tiles design"] },
-    { "path": "/elevation-tiles-coimbatore/", "intent": "elevation / facade", "watch": ["elevation tiles coimbatore", "wall cladding tiles"] },
-    { "path": "/granite-countertops-coimbatore/", "intent": "kitchen granite", "watch": ["granite countertop coimbatore", "kitchen granite slab"] },
-    { "path": "/wash-basins-coimbatore/", "intent": "basins", "watch": ["wash basin coimbatore", "art basin"] },
-    { "path": "/kitchen-sinks-coimbatore/", "intent": "sinks", "watch": ["kitchen sink coimbatore", "quartz sink coimbatore"] },
-    { "path": "/kota-stone-coimbatore/", "intent": "kota stone", "watch": ["kota stone coimbatore", "kadappa stone price"] },
-    { "path": "/custom-printed-tiles-coimbatore/", "intent": "printed / bespoke tiles", "watch": ["custom printed tiles", "digital printed tiles coimbatore"] }
+    {
+      "path": "/floor-tiles-coimbatore/",
+      "intent": "floor tiles",
+      "watch": [
+        "floor tiles coimbatore",
+        "floor tiles price"
+      ]
+    },
+    {
+      "path": "/wall-tiles-coimbatore/",
+      "intent": "wall tiles",
+      "watch": [
+        "wall tiles coimbatore",
+        "bathroom wall tiles"
+      ]
+    },
+    {
+      "path": "/bathroom-tiles-coimbatore/",
+      "intent": "bathroom tiles",
+      "watch": [
+        "bathroom tiles coimbatore",
+        "anti skid bathroom tiles"
+      ]
+    },
+    {
+      "path": "/vitrified-tiles-coimbatore/",
+      "intent": "vitrified tiles",
+      "watch": [
+        "vitrified tiles coimbatore",
+        "double charged vitrified"
+      ]
+    },
+    {
+      "path": "/large-format-tiles-coimbatore/",
+      "intent": "large slabs",
+      "watch": [
+        "large format tiles",
+        "800x1600 tiles coimbatore"
+      ]
+    },
+    {
+      "path": "/marble-look-tiles-coimbatore/",
+      "intent": "marble-look porcelain",
+      "watch": [
+        "marble look tiles",
+        "statuario tiles coimbatore"
+      ]
+    },
+    {
+      "path": "/athangudi-tiles-coimbatore/",
+      "intent": "handmade Chettinad tiles",
+      "watch": [
+        "athangudi tiles",
+        "athangudi tiles coimbatore"
+      ]
+    },
+    {
+      "path": "/parking-tiles-coimbatore/",
+      "intent": "parking tiles",
+      "watch": [
+        "parking tiles coimbatore",
+        "car parking tiles design"
+      ]
+    },
+    {
+      "path": "/elevation-tiles-coimbatore/",
+      "intent": "elevation / facade",
+      "watch": [
+        "elevation tiles coimbatore",
+        "wall cladding tiles"
+      ]
+    },
+    {
+      "path": "/granite-countertops-coimbatore/",
+      "intent": "kitchen granite",
+      "watch": [
+        "granite countertop coimbatore",
+        "kitchen granite slab"
+      ]
+    },
+    {
+      "path": "/wash-basins-coimbatore/",
+      "intent": "basins",
+      "watch": [
+        "wash basin coimbatore",
+        "art basin"
+      ]
+    },
+    {
+      "path": "/kitchen-sinks-coimbatore/",
+      "intent": "sinks",
+      "watch": [
+        "kitchen sink coimbatore",
+        "quartz sink coimbatore"
+      ]
+    },
+    {
+      "path": "/kota-stone-coimbatore/",
+      "intent": "kota stone",
+      "watch": [
+        "kota stone coimbatore",
+        "kadappa stone price"
+      ]
+    },
+    {
+      "path": "/custom-printed-tiles-coimbatore/",
+      "intent": "printed / bespoke tiles",
+      "watch": [
+        "custom printed tiles",
+        "digital printed tiles coimbatore"
+      ]
+    }
   ],
   "gapsToConfirmWithClient": [
     "wood-look plank tiles",

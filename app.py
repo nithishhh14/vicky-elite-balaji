@@ -330,6 +330,40 @@ def ops_panel() -> None:
                     st.rerun()
 
     with tab_s:
+        # What the SEO agent can currently see, and what it did last. Shown
+        # above the numbers because a chart of stale data looks the same as a
+        # chart of fresh data.
+        try:
+            from agents import seo_agent
+            st.caption(seo_agent.status_line())
+            c1, c2, c3 = st.columns(3)
+            if c1.button("Run daily snapshot", use_container_width=True):
+                st.session_state["seo_result"] = seo_agent.run_daily()
+                st.rerun()
+            if c2.button("Run health check", use_container_width=True):
+                st.session_state["seo_result"] = seo_agent.run_health()
+                st.rerun()
+            if c3.button("Find opportunities", use_container_width=True):
+                st.session_state["seo_result"] = seo_agent.run_weekly()
+                st.rerun()
+            result = st.session_state.get("seo_result")
+            if result:
+                (st.success if result["ok"] else st.error)(result["message"])
+                rep = result["report"]
+                st.caption(
+                    "sources used: " + (", ".join(rep["sourcesUsed"]) or "none")
+                    + (" · unavailable: " + ", ".join(rep["sourcesUnavailable"])
+                       if rep["sourcesUnavailable"] else "")
+                )
+                for f in rep["findings"]:
+                    line = "**{}** — {}  \n`{}`".format(f["title"], f["detail"], f["provenance"])
+                    (st.error if f["severity"] == "critical"
+                     else st.warning if f["severity"] == "warning" else st.info)(line)
+                for e in rep["errors"]:
+                    st.error(e)
+        except Exception as exc:
+            st.caption(f"SEO agent unavailable: {exc}")
+
         history = store.seo_history(30)
         if history:
             rows = {

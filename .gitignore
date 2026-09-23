@@ -37,3 +37,22 @@ vicky_data/outbox/**
 vicky_data/backups/**
 !vicky_data/backups/**/
 !vicky_data/backups/**/.gitkeep
+
+# Credentials. Named files plus the shapes they arrive in, so a new one added
+# next year is ignored by default instead of by someone remembering to.
+google_creds.json
+application_default_credentials.json
+client_secret*.json
+*service-account*.json
+*credentials*.json
+*.pem
+*.p12
+.env.*
+!.env.example
+token.json
+*token*.json
+.claude.json
+.claude.json.bak-*
+
+# Playwright MCP scratch output (page snapshots, console logs) — runtime only.
+.playwright-mcp/
