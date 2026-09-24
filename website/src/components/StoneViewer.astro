@@ -1,0 +1,117 @@
+---
+/**
+ * "Move the light" — our own slabs, lit by the visitor, in real time.
+ *
+ * Every texture here is a photograph of stock in our yard (provenance:
+ * `stock` in media-library.ts), so this is not a generated material demo.
+ * It is the same claim the rest of the site makes, rendered instead of
+ * photographed.
+ *
+ * It degrades in the right order: no JS or reduced motion → the poster image
+ * and the copy still make the point; JS but no WebGL → same.
+ */
+import { bySlug } from "../lib/media-library";
+
+const slabs = [
+  {
+    slug: "black-galaxy-closeup",
+    name: "Black Galaxy",
+    note: "Bronze flecks that only wake up under a raking beam.",
+  },
+  {
+    slug: "blue-pearl-closeup",
+    name: "Blue Pearl",
+    note: "Iridescent feldspar — the blue shifts with the angle.",
+  },
+  {
+    slug: "steel-grey-slab",
+    name: "Steel Grey",
+    note: "Even grain, quiet under any light. The safe one.",
+  },
+];
+
+const data = slabs.map((s) => ({
+  src: bySlug(s.slug).src,
+  name: s.name,
+  note: s.note,
+}));
+const first = slabs[0];
+const poster = bySlug(first.slug).thumb;
+---
+
+<section
+  id="stone-light"
+  class="scroll-mt-24 bg-charcoal-deep py-20 text-paper"
+  data-stone-viewer
+  data-slabs={JSON.stringify(data)}
+>
+  <div class="mx-auto max-w-7xl px-5 lg:px-8">
+    <p class="text-[0.6rem] uppercase tracking-[0.3em] text-brass">Under the light</p>
+    <h2 class="mt-4 max-w-2xl font-display text-4xl sm:text-5xl">
+      Stone changes with the light. Move it.
+    </h2>
+    <p class="mt-4 max-w-xl text-sm text-paper/70">
+      A photograph shows you one moment of lighting. In the yard you would tilt the
+      sample. Drag across the slab to move the beam — these are our own slabs,
+      photographed here.
+    </p>
+
+    <div class="mt-10 grid gap-8 lg:grid-cols-[minmax(0,1fr)_16rem]">
+      <div class="relative overflow-hidden bg-charcoal">
+        <!-- Poster: what everyone sees first, and all that reduced-motion
+             visitors ever see. Same slab, so nothing changes under them. -->
+        <img
+          data-stone-poster
+          src={poster}
+          alt={`${first.name} granite, close up`}
+          width="1280"
+          height="720"
+          class="aspect-video w-full object-cover"
+          loading="lazy"
+        />
+        <canvas
+          data-stone-canvas
+          tabindex="0"
+          role="img"
+          aria-label="Interactive view of the slab. Use the arrow keys to move the light."
+          class="absolute inset-0 h-full w-full cursor-grab touch-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-brass active:cursor-grabbing"
+        ></canvas>
+        <span
+          data-stone-hint
+          hidden
+          class="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 bg-charcoal-deep/80 px-3 py-1.5 text-[0.6rem] uppercase tracking-[0.2em] text-paper/80"
+        >
+          Drag to move the light
+        </span>
+      </div>
+
+      <div>
+        <p data-stone-name class="font-display text-3xl">{first.name}</p>
+        <p data-stone-note class="mt-2 text-sm text-paper/70">{first.note}</p>
+        <p class="mt-3 text-[0.6rem] uppercase tracking-[0.2em] text-paper/45">From our stock</p>
+
+        <ul class="mt-6 flex flex-wrap gap-2 lg:flex-col">
+          {slabs.map((s, i) => (
+            <li>
+              <button
+                type="button"
+                data-stone-pick={i}
+                aria-pressed={i === 0}
+                class="min-h-11 w-full border border-paper/25 px-4 py-2.5 text-left text-xs uppercase tracking-[0.18em] transition-colors hover:border-brass hover:text-brass aria-pressed:border-brass aria-pressed:text-brass"
+              >
+                {s.name}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { initStoneViewer } from "../scripts/stone-viewer";
+  document
+    .querySelectorAll<HTMLElement>("[data-stone-viewer]")
+    .forEach((el) => initStoneViewer(el));
+</script>

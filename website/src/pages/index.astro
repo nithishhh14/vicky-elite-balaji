@@ -8,6 +8,7 @@ import MaterialMatch from "../components/MaterialMatch.astro";
 import QuoteForm from "../components/QuoteForm.astro";
 import SaveButton from "../components/SaveButton.astro";
 import AmbientVideo from "../components/AmbientVideo.astro";
+import StoneViewer from "../components/StoneViewer.astro";
 import { videoZones } from "../lib/video-zones";
 import { byOrder } from "../lib/order";
 
@@ -129,7 +130,7 @@ const localHubs = ["Karamadai", "Coimbatore", "Mettupalayam", "Annur", "Sirumuga
   <section id="materials" class="scroll-mt-24 bg-paper pb-12 pt-8">
     <div data-gsap-stagger class="worlds mx-auto grid max-w-[96rem] grid-cols-2 gap-3 px-4 sm:px-6 lg:grid-cols-5 lg:gap-4 lg:px-8 xl:flex">
       {worlds.map((w, i) => (
-        <a href={w.href} class:list={["material-card group relative isolate block aspect-[4/5] overflow-hidden bg-charcoal-deep lg:aspect-[3/4] xl:aspect-auto xl:h-[min(36rem,66vh)] xl:min-h-[27rem]", i === 4 && "col-span-2 aspect-[16/9] lg:col-span-1"]}>
+        <a href={w.href} data-sheen class:list={["material-card group relative isolate block aspect-[4/5] overflow-hidden bg-charcoal-deep lg:aspect-[3/4] xl:aspect-auto xl:h-[min(36rem,66vh)] xl:min-h-[27rem]", i === 4 && "col-span-2 aspect-[16/9] lg:col-span-1"]}>
           <img src={w.image} alt="" class="world-img absolute inset-0 h-full w-full object-cover" loading="lazy" />
           <div class="absolute inset-0 bg-gradient-to-t from-charcoal-deep/90 via-charcoal-deep/20 to-transparent"></div>
           <span class="absolute left-4 top-4 whitespace-nowrap text-[0.5rem] uppercase tracking-[0.2em] text-paper/60">{w.credit}</span>
@@ -185,7 +186,7 @@ const localHubs = ["Karamadai", "Coimbatore", "Mettupalayam", "Annur", "Sirumuga
         <li data-velocity class="relative w-[68vw] max-w-[18rem] flex-shrink-0 snap-start">
           <div class="absolute right-2 top-2 z-10"><SaveButton product={p} hallName="Granite & Marbles" variant="overlay" /></div>
           <a href={`/products/${p.id}/`} class="group block">
-            <div class="overflow-hidden bg-charcoal-deep">
+            <div data-sheen class="overflow-hidden bg-charcoal-deep">
               <img src={p.data.image.replace(/\.jpg$/, "-720.jpg")} alt={p.data.imageAlt} class="aspect-[3/4] w-full object-cover eb-img" loading="lazy" width="540" height="720" />
             </div>
             <span class="eb-rule mt-3" aria-hidden="true"></span>
@@ -196,6 +197,9 @@ const localHubs = ["Karamadai", "Coimbatore", "Mettupalayam", "Annur", "Sirumuga
       ))}
     </ul>
   </section>
+
+  <!-- 03b — the slab under a light the visitor controls -->
+  <StoneViewer />
 
   <!-- 05 — Custom stonecraft -->
   <section class="bg-charcoal-deep py-20 text-paper">

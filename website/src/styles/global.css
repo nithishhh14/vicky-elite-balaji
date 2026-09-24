@@ -197,11 +197,69 @@
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.4s ease;
-    background: radial-gradient(220px circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(163, 64, 42, 0.16), transparent 70%);
+    /* Warm and tight, so it reads as a gallery lamp grazing the surface
+       rather than a coloured wash sitting on top of it. The old terracotta
+       tint predated the museum direction. */
+    background: radial-gradient(200px circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(212, 175, 110, 0.14), transparent 68%);
   }
 
   [data-gsap-spotlight]:hover::after {
     opacity: 1;
+  }
+
+  /* ── Sheen: the site's one idea, applied to imagery ──────────────────
+     The stone viewer lets you move a light across a slab. This is the same
+     gesture everywhere else: passing the cursor over a photograph of stone
+     lifts a specular band across it, the way a real polished surface answers
+     a light. Driven by the same --spot-x/--spot-y the spotlight uses.
+
+     Hover-capable pointers only. On a phone there is no cursor to follow and
+     a permanently-lit band would just be a smear. */
+  @media (hover: hover) and (pointer: fine) {
+    [data-sheen] {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+    }
+
+    [data-sheen]::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.45s var(--ease-arch, ease);
+      /* `screen` rather than `soft-light`: these are dark slabs, and
+         soft-light on near-black is invisible. Screen lifts the highlight the
+         way a real beam does — bright at the centre, falling off fast. */
+      background:
+        radial-gradient(200px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+          rgba(255, 238, 205, 0.40) 0%,
+          rgba(255, 230, 185, 0.16) 35%,
+          transparent 62%);
+      mix-blend-mode: screen;
+    }
+
+    [data-sheen]:hover::after { opacity: 1; }
+
+    /* The image itself leans very slightly into the light, which is what
+       sells it as illumination rather than an overlay. */
+    [data-sheen] img {
+      transition: filter 0.45s var(--ease-arch, ease), scale 0.9s var(--ease-arch, ease);
+    }
+    [data-sheen]:hover img {
+      filter: brightness(1.12) contrast(1.06) saturate(1.04);
+      scale: 1.02;
+    }
+  }
+
+  /* Over the slab, the pointer IS the light. Say so. */
+  [data-stone-canvas] {
+    cursor: crosshair;
+  }
+  [data-stone-canvas]:active {
+    cursor: none;
   }
 
   [data-gsap-magnetic] {

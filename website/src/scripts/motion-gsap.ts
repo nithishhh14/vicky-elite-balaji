@@ -265,13 +265,36 @@ mm.add(
       });
     });
 
-    // Spotlight cards: a soft glow follows the cursor (CSS custom props).
-    document.querySelectorAll<HTMLElement>("[data-gsap-spotlight]").forEach((card) => {
-      card.addEventListener("mousemove", (e) => {
-        const rect = card.getBoundingClientRect();
-        card.style.setProperty("--spot-x", `${((e.clientX - rect.left) / rect.width) * 100}%`);
-        card.style.setProperty("--spot-y", `${((e.clientY - rect.top) / rect.height) * 100}%`);
-      });
+    // The cursor is a light. Both the spotlight cards and the sheen on
+    // imagery read the same two custom properties, so there is one gesture
+    // across the site rather than two competing ones.
+    //
+    // Writes are coalesced into a frame: mousemove fires far faster than the
+    // screen refreshes, and setting a custom property per event is work the
+    // browser then throws away.
+    const lit = document.querySelectorAll<HTMLElement>("[data-gsap-spotlight], [data-sheen]");
+    lit.forEach((el) => {
+      let queued = false;
+      let px = 0;
+      let py = 0;
+      const paint = () => {
+        queued = false;
+        el.style.setProperty("--spot-x", `${px}%`);
+        el.style.setProperty("--spot-y", `${py}%`);
+      };
+      el.addEventListener(
+        "mousemove",
+        (e) => {
+          const rect = el.getBoundingClientRect();
+          px = ((e.clientX - rect.left) / rect.width) * 100;
+          py = ((e.clientY - rect.top) / rect.height) * 100;
+          if (!queued) {
+            queued = true;
+            requestAnimationFrame(paint);
+          }
+        },
+        { passive: true }
+      );
     });
   }
 );

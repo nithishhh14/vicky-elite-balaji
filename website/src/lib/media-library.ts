@@ -82,5 +82,8 @@ export const mediaLibrary: MediaItem[] = [
   {"slug": "sandstone-granite-slab", "title": "Sandstone Granite", "alt": "Light golden sandstone granite slab with soft horizontal banding under a shed", "src": "/media/client/granite/sandstone-granite-slab.jpg", "thumb": "/media/client/granite/sandstone-granite-slab-720.jpg", "width": 960, "height": 1280, "provenance": "stock", "categories": ["granite"], "productId": "granite-sandstone"},
 ];
 
+/** One media item by slug. Defined here rather than re-declared per page. */
+export const bySlug = (slug: string) => mediaLibrary.find((m) => m.slug === slug)!;
+
 export const mediaIn = (category: string, provenance?: Provenance) =>
   mediaLibrary.filter((m) => m.categories.includes(category) && (!provenance || m.provenance === provenance));
