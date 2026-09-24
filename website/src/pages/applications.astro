@@ -28,10 +28,22 @@ const applications = [
   { tag: "walls", label: "Walls & Cladding", blurb: "Feature walls, cladding and backsplashes." },
   { tag: "commercial", label: "Commercial", blurb: "Lobbies, retail and high-traffic spaces.", scene: "/media/reference/hero-interior", sceneAlt: "Concept: marble showroom reception" },
 ]
-  .map((app) => ({
-    ...app,
-    items: products.filter((p) => deriveApplicationTags(p.data.applications).includes(app.tag)),
-  }))
+  .map((app) => {
+    const items = products.filter((p) => deriveApplicationTags(p.data.applications).includes(app.tag));
+    // Bath Spaces was 27 basins, 4 tiles and a bag of grout in one list, which
+    // reads as a dump rather than a room. Grouping by hall lets someone
+    // specifying a bathroom see the surfaces, the sanitaryware and the
+    // consumables as the separate decisions they actually are.
+    const order = ["tiles", "granite-marbles", "kota-stone", "kadappa", "quartz", "sanitaryware", "adhesive", "laying-works"];
+    const groups = order
+      .map((hallId) => ({
+        hallId,
+        label: hallNameOf(hallId),
+        items: items.filter((p) => p.data.hallId === hallId),
+      }))
+      .filter((g) => g.items.length > 0);
+    return { ...app, items, groups };
+  })
   .filter((app) => app.items.length > 0);
 ---
 
@@ -90,8 +102,16 @@ const applications = [
             </a>
           </div>
         </div>
-        <div data-gsap-stagger class="mt-8 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
-          {app.items.slice(0, 10).map((p) => (
+        {app.groups.map((group) => (
+        <div class="mt-10">
+          <div class="flex items-baseline justify-between gap-4 border-b border-line/50 pb-2">
+            <h3 class="text-xs uppercase tracking-[0.24em] text-ink">{group.label}</h3>
+            <span class="text-[0.6rem] uppercase tracking-[0.18em] text-ink-soft">
+              {group.items.length} item{group.items.length === 1 ? "" : "s"}
+            </span>
+          </div>
+        <div data-gsap-stagger class="mt-5 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
+          {group.items.slice(0, 10).map((p) => (
             <div class="group relative">
               <a href={`/products/${p.id}/`} class="block">
                 <div class="relative aspect-square overflow-hidden bg-charcoal-deep">
@@ -107,6 +127,8 @@ const applications = [
             </div>
           ))}
         </div>
+        </div>
+        ))}
       </div>
     </section>
   ))}

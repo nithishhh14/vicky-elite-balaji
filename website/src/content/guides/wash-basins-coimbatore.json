@@ -9,7 +9,10 @@
   ],
   "match": {
     "pattern": "basin",
-    "flags": "i"
+    "flags": "i",
+    "halls": [
+      "sanitaryware"
+    ]
   },
   "choose": [
     {

@@ -10,7 +10,10 @@
   "match": {
     "pattern": "athangudi|moroccan|pattern|print",
     "flags": "i",
-    "kind": "tile"
+    "kind": "tile",
+    "halls": [
+      "tiles"
+    ]
   },
   "choose": [
     {

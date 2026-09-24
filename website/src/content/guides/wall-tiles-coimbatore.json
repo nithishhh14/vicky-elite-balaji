@@ -9,7 +9,10 @@
   ],
   "match": {
     "pattern": "wall|cladding|backsplash",
-    "flags": "i"
+    "flags": "i",
+    "halls": [
+      "tiles"
+    ]
   },
   "choose": [
     {

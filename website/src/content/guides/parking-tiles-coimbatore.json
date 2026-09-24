@@ -9,7 +9,10 @@
   ],
   "match": {
     "pattern": "parking|anti.?skid|driveway|outdoor|pathway|veranda|courtyard",
-    "flags": "i"
+    "flags": "i",
+    "halls": [
+      "tiles"
+    ]
   },
   "choose": [
     {
