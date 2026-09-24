@@ -103,7 +103,19 @@ is matte charcoal. Used for kitchen platforms, borders and steps.
 recognisable patterns. Use real photos or supplier images for product
 records.
 
-### A8. Generation prompts (for when an image/video API is connected)
+### A8. Generation prompts
+
+> **Before any generated frame ships, check it against
+> `docs/CULTURAL_ACCURACY.md`.** Image models are trained on Western imagery
+> and render culturally specific objects wrongly but beautifully — a candle on
+> a kuthuvilakku, a Ganesha with the wrong arms. A wrong frame costs more
+> trust than a bland one.
+>
+> Client direction, 2026-09-24: luxury comes from **architecture, materials,
+> lighting and composition — not a gold filter**. Cool natural grading, real
+> colour, warm light only where it is physically motivated (a flame, a cove).
+> The gold-wash template below predates that and is kept only for reference.
+
 
 Base template:
 ```

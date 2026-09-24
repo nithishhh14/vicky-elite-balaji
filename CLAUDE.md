@@ -95,6 +95,11 @@ new client feedback conflicts with an existing entry in `docs/DECISIONS.md`:
   run). Never commit it, never zip it into a deliverable.
 - Marketing and Email agents stay blocked until the website is actually
   live and reachable — that gate is intentional, not a bug.
+- Every generated frame containing a culturally specific object (kuthuvilakku,
+  murti, kolam, thoranam, Athangudi tile) is checked against
+  `docs/CULTURAL_ACCURACY.md` before it ships — however good it looks. The
+  models render these wrongly but convincingly, and a wrong frame costs more
+  trust than a bland one.
 - Never present a supplier's catalogue photo, or any photo, as an Elite
   Balaji product shot unless it genuinely is one — see the "Real product
   data rule" in `docs/WEBSITE_ARCHITECTURE.md` §3. Only the Tiles hall
