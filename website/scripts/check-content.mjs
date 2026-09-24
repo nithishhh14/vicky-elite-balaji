@@ -57,6 +57,26 @@ for (const [slug, g] of Object.entries(guides)) {
   try { new RegExp(g.match.pattern, g.match.flags ?? "i"); }
   catch (e) { fail(slug, `match.pattern is not a valid regular expression: ${e.message}`); }
   for (const h of g.match.halls ?? []) if (!halls[h]) fail(slug, `match.halls references unknown hall "${h}"`);
+
+  // A pattern with no hall filter silently reaches every hall. "wall" matches
+  // tile adhesives (they describe the tiles they bond) and granite cladding,
+  // so a page titled "wall tiles" filled up with grout and granite. If the
+  // matches land in more than one hall, the page has to say so on purpose.
+  {
+    const re = new RegExp(g.match.pattern, g.match.flags ?? "i");
+    const hay = (p) => [p.name, p.category, p.series, p.brand, (p.applications ?? []).join(" ")]
+      .filter(Boolean).join(" ");
+    const hit = Object.values(products).filter(
+      (p) => (!g.match.halls || g.match.halls.includes(p.hallId))
+        && (!g.match.kind || g.match.kind === p.kind)
+        && re.test(hay(p))
+    );
+    const spread = [...new Set(hit.map((p) => p.hallId))];
+    if (!g.match.halls && spread.length > 1) {
+      fail(slug, `match has no halls filter and reaches ${spread.length} halls (${spread.join(", ")}) — scope it`);
+    }
+    if (hit.length === 0) fail(slug, "match selects no products at all");
+  }
   for (const r of g.related) if (!guides[r]) fail(slug, `related page "${r}" does not exist`);
   if (g.related.includes(slug)) fail(slug, "related links to itself");
 }

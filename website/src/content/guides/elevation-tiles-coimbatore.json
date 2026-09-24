@@ -9,7 +9,10 @@
   ],
   "match": {
     "pattern": "elevation|cladding|facade|exterior",
-    "flags": "i"
+    "flags": "i",
+    "halls": [
+      "tiles"
+    ]
   },
   "choose": [
     {

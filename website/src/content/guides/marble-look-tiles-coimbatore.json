@@ -9,7 +9,10 @@
   ],
   "match": {
     "pattern": "marble",
-    "flags": "i"
+    "flags": "i",
+    "halls": [
+      "tiles"
+    ]
   },
   "choose": [
     {

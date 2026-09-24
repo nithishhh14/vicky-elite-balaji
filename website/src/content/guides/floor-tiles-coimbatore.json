@@ -9,7 +9,10 @@
   ],
   "match": {
     "pattern": "floor|flooring",
-    "flags": "i"
+    "flags": "i",
+    "halls": [
+      "tiles"
+    ]
   },
   "choose": [
     {

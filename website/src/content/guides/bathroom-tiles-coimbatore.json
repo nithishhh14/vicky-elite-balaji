@@ -8,8 +8,11 @@
     "Wet areas are also where bad laying shows fastest, which is why we prefer to supply the adhesive and grout with the tile."
   ],
   "match": {
-    "pattern": "bath|basin|wash|sanitary",
-    "flags": "i"
+    "pattern": "bathroom|shower|wet area|kitchen & bathroom",
+    "flags": "i",
+    "halls": [
+      "tiles"
+    ]
   },
   "choose": [
     {

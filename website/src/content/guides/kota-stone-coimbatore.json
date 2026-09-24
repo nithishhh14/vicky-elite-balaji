@@ -9,7 +9,10 @@
   ],
   "match": {
     "pattern": "kota|kadappa|limestone",
-    "flags": "i"
+    "flags": "i",
+    "halls": [
+      "kota-stone"
+    ]
   },
   "choose": [
     {

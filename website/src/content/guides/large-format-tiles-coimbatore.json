@@ -9,7 +9,10 @@
   ],
   "match": {
     "pattern": "1200|1600|2400|large format",
-    "flags": "i"
+    "flags": "i",
+    "halls": [
+      "tiles"
+    ]
   },
   "choose": [
     {
