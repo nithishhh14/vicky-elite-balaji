@@ -57,7 +57,21 @@ traditional South Indian brass kuthuvilakku oil lamp: tall turned brass stand,
 wide shallow oil bowl at the top, cotton wicks lying in the oil at the bowl's
 rim, small flat flames at the rim
 ```
-**Negative:** `candle, candlestick, taper, wax, wick on a stick, tealight`
+**Do NOT write the forbidden word in the prompt.** Diffusion models do not
+process negation: "no candles" contains the token *candles*, and frequently
+produces them. Proven here on 2026-09-24 — an otherwise identical pair of
+prompts ending "no candles, no tapers, no wax" gave one frame with pillar
+candles and one without. The negation did nothing; the seed decided.
+
+Two reliable approaches instead:
+1. **Describe only the correct object**, in physical detail, and never name
+   the wrong one. The oil bowl and the wick at the rim are what to specify.
+2. **Use a Space that exposes a real negative-prompt field** (FLUX schnell's
+   `/infer` does not — its parameters are prompt, seed, width, height, steps).
+   Then `candle, taper, wax` belongs there, never in the positive prompt.
+
+If neither works after two attempts, compose the lamp out of focus or out of
+frame. A correct room with no lamp beats a wrong lamp.
 
 Related lamps, if they appear: the **agal vilakku** is a small flat clay or
 brass dish on the floor, not a stand. A **hanging vilakku** hangs by chains.
@@ -152,4 +166,5 @@ wrong.
 
 | Date | Caught by | Error | Fix |
 |---|---|---|---|
-| 2026-09-24 | Client | Candles on a kuthuvilakku in both hero candidates | Oil-bowl-and-wick prompt language; `candle/taper/wax` negatives |
+| 2026-09-24 | Client | Candles on a kuthuvilakku in both hero candidates | Describe the oil bowl and wick precisely; never name the wrong object |
+| 2026-09-24 | Self-check | Writing "no candles" in the positive prompt still produced candles in 1 of 2 frames | Negation does not work in diffusion prompts — see §1 |
