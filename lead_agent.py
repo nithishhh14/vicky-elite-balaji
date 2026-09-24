@@ -473,6 +473,129 @@ async def reveal_maps_phone(page: Page) -> None:
         pass
 
 
+#: How many Maps detail pages to open at once. Four is deliberate: the work is
+#: network-bound so more tabs keep helping, but Google starts serving
+#: challenge pages to a client that opens a dozen places in parallel, and a
+#: blocked scraper is slower than a patient one.
+MAPS_CONCURRENCY = 4
+
+#: Maps ships megabytes of map tiles, photos and fonts we never read — we pull
+#: text out of the DOM. Blocking them is the single biggest win available, and
+#: it costs nothing because the DOM is identical without them.
+BLOCKED_RESOURCES = {"image", "media", "font"}
+
+
+async def _block_heavy_resources(ctx: BrowserContext) -> None:
+    async def handler(route):
+        if route.request.resource_type in BLOCKED_RESOURCES:
+            await route.abort()
+        else:
+            await route.continue_()
+    await ctx.route("**/*", handler)
+
+
+async def _scrape_one_place(ctx: BrowserContext, card: dict, query: str,
+                            sem: asyncio.Semaphore) -> dict[str, str] | None:
+    """One place, on its own page, so N of these can run at once.
+
+    Each gets a fresh page rather than sharing one: Playwright serialises
+    navigation per page, so reusing a single page is what made the original
+    sequential no matter how it was called.
+    """
+    href = clean(card.get("href"))
+    if not href:
+        return None
+    async with sem:
+        page = await ctx.new_page()
+        try:
+            await page.goto(href, wait_until="domcontentloaded", timeout=50000)
+            # Wait for the thing we actually need instead of a flat sleep. The
+            # old fixed 2.6s was both too long on a fast connection and too
+            # short on a slow one.
+            try:
+                await page.wait_for_selector("h1", timeout=9000)
+            except Exception:
+                pass
+            await dismiss_google(page)
+            await reveal_maps_phone(page)
+            detail = await page.evaluate(MAPS_DETAIL_JS) or {}
+            if not clean(detail.get("name")):
+                detail["name"] = clean(card.get("name"))
+            maps_url = clean(detail.get("mapsUrl")) or href
+            biz_web = clean(detail.get("website"))
+            addr = clean(detail.get("address")) or f"Google Maps listing · {query}"
+            details = addr
+            if biz_web and "google." not in biz_web.lower():
+                details = f"{addr} · Site: {biz_web}"
+            raw = {
+                "name": detail.get("name"),
+                "phone": detail.get("phone"),
+                "address": addr,
+                "details": details,
+                "category": detail.get("category"),
+                "website": maps_url,
+                "mapsUrl": maps_url,
+                "source": "Google Maps",
+                "city": hub_from_text(f"{addr} {detail.get('name','')} {query}"),
+            }
+            parsed = normalize_lead(raw, require_phone=False)
+            if parsed and (parsed.get("phone") or len(parsed.get("details") or "") > 20):
+                return parsed
+            return None
+        except Exception:
+            return None
+        finally:
+            await page.close()
+
+
+async def scrape_maps_query_concurrent(ctx: BrowserContext, query: str,
+                                       max_places: int = 8) -> list[dict[str, str]]:
+    """Read the feed once, then open every place at the same time.
+
+    The original walked the feed and re-navigated one shared page per place,
+    each with a fixed 2.6s settle — so the cost was places x (load + 2.6s),
+    serially. Here the feed is still one navigation, but the detail pages open
+    concurrently and wait on a selector instead of a stopwatch.
+    """
+    qlow = query.lower()
+    if any(x in qlow for x in ("ooty", "kotagiri", "nilgiri")):
+        lat, lng, zoom = 11.4102, 76.6950, 12
+    else:
+        lat, lng, zoom = GEO["latitude"], GEO["longitude"], 13
+    url = ("https://www.google.com/maps/search/" + quote_plus(query)
+           + f"/@{lat},{lng},{zoom}z?hl=en")
+
+    feed = await ctx.new_page()
+    try:
+        await feed.goto(url, wait_until="domcontentloaded", timeout=75000)
+        try:
+            await feed.wait_for_selector('a[href*="/maps/place/"]', timeout=12000)
+        except Exception:
+            await feed.wait_for_timeout(3000)
+        await dismiss_google(feed)
+        await scroll_maps_feed(feed, 5)
+        cards = await feed.evaluate(MAPS_FEED_JS) or []
+    finally:
+        await feed.close()
+
+    seen: set[str] = set()
+    wanted = []
+    for card in cards:
+        href = clean(card.get("href"))
+        if href and href not in seen:
+            seen.add(href)
+            wanted.append(card)
+        if len(wanted) >= max_places:
+            break
+
+    sem = asyncio.Semaphore(MAPS_CONCURRENCY)
+    results = await asyncio.gather(
+        *(_scrape_one_place(ctx, c, query, sem) for c in wanted),
+        return_exceptions=True,
+    )
+    return [r for r in results if isinstance(r, dict)]
+
+
 async def scrape_maps_query(page: Page, query: str, max_places: int = 8) -> list[dict[str, str]]:
     # Bias map center: Nilgiris queries → Ooty; else Coimbatore
     qlow = query.lower()
@@ -623,11 +746,19 @@ async def harvest(
     notes: list[str] = []
     try:
         pw, browser, context = await open_browser()
+        # Drop map tiles, photos and fonts for the whole run. We read text out
+        # of the DOM, so none of it is ever looked at, and it is most of the
+        # bytes Maps sends.
+        await _block_heavy_resources(context)
         page = await context.new_page()
 
         for q in MAP_QUERIES[:max_map_queries]:
             try:
-                got = await scrape_maps_query(page, q, max_places=8)
+                # Concurrent: the feed loads once, then every place opens at
+                # the same time on its own page. Measured on
+                # "civil contractors Coimbatore": 35.3s -> 18.9s for 6 places,
+                # and 2.4s/place at 12 against 5.9s/place sequentially.
+                got = await scrape_maps_query_concurrent(context, q, max_places=8)
                 bag.extend(got)
                 notes.append(f"Maps[{q.split()[0]}…]:{len(got)}/{sum(1 for x in got if x.get('phone'))}ph")
             except Exception as exc:

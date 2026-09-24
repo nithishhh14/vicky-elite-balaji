@@ -8,3 +8,7 @@ google-auth>=2.29.0
 google-api-python-client>=2.120.0
 google-generativeai>=0.8.0
 Pillow>=10.0.0
+
+# Typed-decision model, used only where the rule-based classifiers abstain.
+# See agents/classify.py for why it is a fallback and not a replacement.
+laya>=0.3.20
