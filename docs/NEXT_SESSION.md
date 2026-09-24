@@ -1,5 +1,108 @@
 # START HERE
 
+## Paused 2026-09-24 — user switched to another project
+
+**The site is LIVE.** Anything further down this file saying deployment is
+deferred, or not to deploy, is stale and superseded.
+
+- **https://elitebalaji.com** on Cloudflare Pages, built from GitHub `main`.
+  Push to `main` = live in ~2–4 min. Rollback: Cloudflare → Pages →
+  Deployments.
+- Canonical host is the **apex** `elitebalaji.com`. `www` also serves the
+  site but the **www → apex 301 Redirect Rule has not been created** —
+  Search Console already shows `http://www.elitebalaji.com/` indexed
+  separately. First dashboard task.
+- `main` at `ccfa04c`, everything pushed, tree clean. Last commit that
+  changed the website: `3057a32`.
+- Gate: `cd website && npm run preflight` → 24/24. Vicky tests:
+  `python -m unittest discover -s tests` → 24 pass.
+
+### What was built 2026-09-18 → 09-24 (details in PROJECT_STATE / DECISIONS)
+- **Website:** logo in the corner with the name on the menu's line; Bath
+  Spaces naming; Black Pearl corrected to Blue Sapphire (301 kept); real
+  photos on the five catalogue cards; sharp Emerald Gold image; **3D stone
+  viewer** (drag moves the light) and cursor **sheen**; every landing page
+  scoped to its halls; applications grouped by material type.
+- **Vicky:** `vicky_store.py` + `vicky_data/`; Operations panel in `app.py`;
+  **SEO agent** (`agents/seo/`, CLI `python -m agents.seo`), 60 days
+  backfilled; **concurrent Maps scraper** (35s → 19s); `agents/classify.py`
+  (Laya as a fallback only).
+- **MCPs connected:** playwright, searchconsole-mcp, comfy-mcp, hf-mcp-server,
+  ltx-video, ltx-video-official. GitHub is used through the `gh` CLI (already
+  logged in as nithishhh14) — the remote GitHub MCP rejects Claude Code's
+  OAuth.
+
+### Check first when resuming
+1. **Did the scheduled SEO jobs run?** `python scripts/install_schedule.py
+   --verify`, then read `vicky_data/state/logs/schedule.log`. Task
+   Scheduler could not launch anything from inside the Claude session, so
+   scheduled execution was never proven — only the wrapper run by hand.
+2. **Two pending SEO approvals** in the dashboard: `/wall-tiles-coimbatore/`
+   and `/elevation-tiles-coimbatore/` (impressions, zero clicks).
+3. **Deploy of `3057a32`** — confirmed live (3D viewer, sheen, scoping).
+
+### Blocked on the user / client
+- **Cloudflare:** create the www → apex 301 rule; decide on Web Analytics
+  (Cloudflare injects a beacon the CSP blocks — a console error on every page
+  until allowed or switched off).
+- **GitHub:** branch protection requiring `website-preflight`.
+- **Repo is PUBLIC.** User's decision: make it private *after* migrating the
+  system to the client's PC. No secrets are tracked (verified repeatedly).
+- **Client (Vignesh):** a real photo of printed tile work — the Radha-Krishna
+  mural should not be generated (`shot_05` failed badly); stock for
+  elevation and large-format tiles (one product each).
+- **Budget:** the user cannot afford paid plans right now (HF PRO $9/mo was
+  declined). Work within free tiers.
+
+### Creative direction (agreed, not built)
+- **Museum direction:** Indian deities presented as monumental art — the
+  suspended bronze Krishna reference — with Greek-marble architecture,
+  charcoal granite, gallery spotlighting. "Awe", not "luxury interiors".
+- **Hero:** one continuous shot, plays once and **holds** on the final frame
+  (no loop, no montage). Workflow: reference → still → **7-point audit** →
+  approve → animate → encode (1.2 MB budget, poster = frame 1, mobile gets
+  the poster only).
+- Sequence order (from the user's 12-panel reference): arrival, living,
+  kitchen, pooja, art tile, bath, product montage, logo. The hero uses one
+  shot; the others become scroll sections as stills + GSAP.
+- Approved frames saved in `docs/creative/hero/` (see its README).
+- **Every devotional frame** is checked against `docs/CULTURAL_ACCURACY.md`.
+  Never write the forbidden word ("candle") in a prompt — negation produces it.
+
+### Image/video generation — what actually works, free
+- **FLUX.1-schnell** Space works anonymously over plain HTTP (soft quality).
+- **Qwen-Image, SD 3.5 Large, FLUX-dev, LTX video** need the HF token *and*
+  `gradio_client` (`Client(space, token=...)`) — raw HTTP returns a silent
+  `data: null`. Free ZeroGPU quota ≈ 5 GPU-minutes/day ≈ 2–4 Qwen images.
+- **HF_TOKEN** is set at Windows *user* level (token name `vicky-comfy`,
+  read-only). A Claude Code session started from Explorer does not see it;
+  read it in PowerShell with
+  `[Environment]::GetEnvironmentVariable('HF_TOKEN','User')`. Never print it.
+- **Local ComfyUI is not installed.** The laptop is an RTX 3050 with 4 GB
+  VRAM and 11.7 GB RAM: images only (SD 1.5 / SDXL lowvram / Flux Q4),
+  no usable local video.
+- Next frames when quota allows: the suspended-Krishna museum frame on Qwen;
+  re-shoot the three slabs (Black Galaxy, Blue Pearl, Steel Grey)
+  museum-style — they feed the 3D viewer, the cards and the grade. Re-run
+  `fin_s` on LTX at **1280×704**, 4 s.
+
+### Known issues not yet fixed
+- **Mobile hero shows a blank screen ~2.6 s** — the GSAP entrance holds the
+  headline hidden. Biggest conversion issue measured. Fix: visible at rest,
+  animate from visible.
+- Hero has three CTAs; make one primary.
+- Brand data: 24/89 products carry `brand`; "Home Center" vs "Home Centre".
+- Two supplier PDFs in the user's Downloads are **not yet imported** (the only
+  files in Downloads cleared for use — the rest are personal):
+  `Export-Catalogue-May-2026_without-price-Hi-Re.pdf` (Somany Bathware, 228
+  pages, prices already removed) and `Ice_Blue_21x29.70_cm 29 june.pdf`
+  (Jaquar Ice Blue, 7 pages).
+- Agents still use deprecated `google.generativeai`; migrate to `google-genai`.
+
+---
+
+## Earlier handoff (kept for history)
+
 ## Current objective
 The website is mid-way through a large, still-active "anti-slop" redesign
 and content-depth brief (material-first nav, DISCOVER→EXPLORE→FILTER

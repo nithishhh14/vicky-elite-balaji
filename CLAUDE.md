@@ -23,11 +23,18 @@ website is the public virtual showroom.
 - `agents/` — one file per council member:
   - `vicky_executive.py` — intent router + default chat via Gemini
   - `scraper_agent.py` — wraps `lead_agent.run_harvest()`
-  - `seo_agent.py` — live, writes to `SEO_Audits` sheet
-  - `marketing_agent.py` — **stub**, blocked until website ships
+  - `seo_agent.py` — facade over `agents/seo/` (Search Console snapshots,
+    health check, evidence-backed opportunities → approvals only). CLI:
+    `python -m agents.seo`. Scheduled via `scripts/install_schedule.py`.
+  - `marketing_agent.py` — **stub**; the website is now live, so this is
+    unblocked and is the next agent to build
   - `email_agent.py` — **stub**, blocked until Marketing is live; drafts only,
     never auto-sends
-- `website/` — the virtual showroom: **Astro 5 + TypeScript + Tailwind CSS v4**
+- `agents/classify.py` — rule classifiers first, Laya typed-decision model
+  only where they abstain (measured: the rules are as accurate and ~1000x
+  faster on known cases).
+- `website/` — the virtual showroom, **live at https://elitebalaji.com**
+  (Cloudflare Pages from `main`): **Astro 7 + TypeScript + Tailwind CSS v4**
   (rebuilt from the original static HTML/CSS shell). Content-driven via two
   content collections (`halls`, `tileProducts`) instead of hand-written markup
   per page. See `docs/WEBSITE_ARCHITECTURE.md` for the full architecture,

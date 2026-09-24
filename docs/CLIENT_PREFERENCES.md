@@ -8,6 +8,35 @@ where a working assumption was made by Claude without client sign-off, it is
 labeled as a **working assumption**, not a preference, and lives in
 `docs/DECISIONS.md` instead._
 
+
+## 2026-09-18 → 09-24: feedback relayed by the user (all implemented unless noted)
+- **"Bath Spaces"**, not "Bathroom", as the category name everywhere it shows.
+  URLs and ids still say `bathroom`.
+- **Blue Sapphire, not Black Pearl** — the stone photographed in the yard and
+  listed as Black Pearl is Blue Sapphire.
+- **Real stock photos on the catalogue cards.** Generated images are only for
+  what has no photo (Emerald Gold Marble). The generated images are
+  aspirational: "these can be replicated even better in real life".
+- **No yellow wash.** Luxury, but with colour and life — not bland, not
+  sepia. Cool grade; warm accents only where real.
+- **Awe.** Direction: temple and divine presence — Indian deities with Greek
+  marble architecture and granite backgrounds, museum-style lighting on all
+  artwork. Reference: a suspended bronze Krishna in a gallery, a Nataraja
+  against raw rock, the Trevi Fountain. *(Direction agreed; not yet built.)*
+- **Vilakku is an oil lamp**, never a candle. Caught by the client in the
+  first generated frame.
+- **Logo in the corner**, keeping all three lines of the lockup, header edge
+  to edge.
+- **Hero video at least 720p**, and **short** — "nobody watches a hero card
+  for 20 seconds"; conversion and reducing friction matter more.
+- Wants **3D elements**, **cursor interaction**, cinematic feel — "be
+  deliberate with art"; a little page weight is acceptable. *(3D viewer and
+  sheen built; museum lighting on the source images pending.)*
+- Catalogue organisation: adhesives must not appear among tiles; Bath Spaces
+  must not be one mixed list of sinks and adhesives.
+- The showroom is **under renovation for 1–2 months**; generated interiors
+  stand in until real photos exist, and are labelled as concepts.
+
 ## 2026-09-16 (evening): free site measurement + premium floating CTA
 - **Client offer (confirmed by the user):** a **free site measurement**. Now
   bookable from the floating actions, a homepage band, the contact page

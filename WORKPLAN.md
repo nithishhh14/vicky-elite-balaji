@@ -4,6 +4,16 @@ Locked build order (from `.cursor/rules/vicky-council.mdc`): ship working
 agents + shared memory first, then the website, then marketing/SEO, then
 executive personality, then the final interface. Do not skip ahead.
 
+
+## CURRENT POSITION (2026-09-24) — paused, user on another project
+- Website: **live** at elitebalaji.com. Next: www→apex redirect, fix the 2.6 s
+  mobile hero blank, museum-direction hero (still → audit → animate).
+- SEO agent: **built and scheduled** (execution unverified — check first).
+- Marketing agent: **unblocked** (the site is live) — next agent to build.
+- Email agent: still waits on Marketing.
+- Website agent (PRs + approvals): designed in OPERATIONS_PLAN, not built.
+- Full handoff: `docs/NEXT_SESSION.md` → "Paused 2026-09-24".
+
 ## PENDING CLIENT/PLANNING — expanded cross-device vision (2026-09-11)
 User wants Vicky to eventually run as a JARVIS-style assistant across their
 own devices with an auto-updating preference/context "brain" in the backend.

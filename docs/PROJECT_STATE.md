@@ -1,6 +1,52 @@
 # Vicky / Elite Balaji — Current Project State
 
-_Last updated: 2026-09-13 — homepage/Tiles-hero rebuilt away from Athangudi, honest sourcing layer extended to Quartz/Sanitaryware, real React Bits component integration, Athangudi catalogue depth expansion (product image galleries + spec fields), SEO structured-data gap closed on hall/material pages. See `docs/DECISIONS.md` for each._
+_Last updated: 2026-09-24 — site live on elitebalaji.com, SEO agent, 3D viewer; paused for another project. Previous: 2026-09-13 — homepage/Tiles-hero rebuilt away from Athangudi, honest sourcing layer extended to Quartz/Sanitaryware, real React Bits component integration, Athangudi catalogue depth expansion (product image galleries + spec fields), SEO structured-data gap closed on hall/material pages. See `docs/DECISIONS.md` for each._
+
+
+## 2026-09-24 — LIVE; SEO agent running; paused for another project
+
+**Live:** https://elitebalaji.com (Cloudflare Pages from `main`). Canonical =
+apex. Search Console verified as `sc-domain:elitebalaji.com`, sitemap read
+2026-09-22 with 0 errors. First real traffic: 41 impressions / 4 clicks on
+09-20, 25 / 1 on 09-21; homepage averages position 2.5. Product snippets
+report "invalid" by design — no prices are published, so Product rich
+results cannot validate; not a penalty.
+
+**Verified numbers:** 129 pages, 89 products, 14 landing pages, preflight
+24/24, Vicky tests 24/24. Live-measured vs The Tile Bros on a phone: 4.9 s vs
+19.2 s load, 1.5 MB vs 11.6 MB.
+
+**Website, this period**
+- Header: edge to edge, emblem in the corner, taglines hang below the name so
+  "Elite Balaji" sits on the menu's line at every width. qa.mjs now renders
+  1920 and fails on any brand/nav overlap.
+- Catalogue: Bath Spaces naming; Blue Sapphire (was Black Pearl; 301 kept);
+  real photos on all five cards; Emerald Gold replaced as
+  `marble-emerald-gold-slab.jpg`.
+- `StoneViewer` — three.js, our own slab photos, the visitor drags the light.
+  181 KB gz, lazy-loaded, skipped under reduced motion.
+- `data-sheen` cursor highlight on stone imagery; spotlight retuned warm.
+- Landing pages all scoped by hall; check-content enforces it and fails
+  pages that select nothing. Checks also added for `-720` thumbnails.
+- Applications grouped by material type.
+
+**Vicky, this period**
+- `vicky_store.py` + `vicky_data/` (config tracked, state gitignored);
+  Operations panel in the dashboard.
+- `agents/seo/` — daily snapshot, health check, weekly opportunities with
+  evidence chains and provenance; approvals only. CLI
+  `python -m agents.seo`. 60 days backfilled. Tasks registered in Task
+  Scheduler (`\Vicky\seo-daily` 07:30, `seo-health` 07:40,
+  `seo-opportunities` Mon 08:00) — **execution unverified**.
+- `lead_agent.py` Maps scraping is concurrent (4 pages) with images, media
+  and fonts blocked.
+- `agents/classify.py` — rule classifiers first, Laya only where they abstain.
+- MCP servers: playwright, searchconsole-mcp (service account
+  `vicky-agent@vicky-agent-508408.iam.gserviceaccount.com`, Restricted in
+  GSC), comfy-mcp (absolute exe path), hf-mcp-server (anonymous),
+  ltx-video, ltx-video-official.
+
+**Not done / blocked** — see NEXT_SESSION "Blocked" and "Known issues".
 
 ## 2026-09-17 — ready to launch on elitebalaji.com
 

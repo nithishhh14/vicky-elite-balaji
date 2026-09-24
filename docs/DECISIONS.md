@@ -5,6 +5,73 @@ reconsidering something that may already have been decided.
 
 ---
 
+### Decisions: 2026-09-18 → 2026-09-24 (live site, SEO agent, creative direction)
+**Date:** 2026-09-24
+
+**Hosting and address**
+- **Canonical host is the apex `elitebalaji.com`**, not `www` — user
+  preference, made before anything was indexed. **Supersedes** the `www`
+  canonical in the 2026-09-17 entry below. `www` should 301 to the apex
+  (Cloudflare Redirect Rule, not yet created).
+- Stay on **Cloudflare Pages**. Vercel adds a second account for nothing;
+  Supabase is a backend, not a host, and is only warranted when approvals must
+  work with the PC off or the site must store visitor data
+  (`docs/DAILY_OPS_AND_DASHBOARD.md` §7).
+
+**Imagery (client feedback — see CLIENT_PREFERENCES)**
+- **Real photographs win wherever one exists.** Generated art only where no
+  photo does — currently only Emerald Gold Marble. **Supersedes** the brief
+  moment (commit `25ae006`) when all four catalogue covers were generated.
+- **Luxury comes from architecture, material and light — never a gold or
+  yellow filter.** Cool grade; warm light only where physically motivated.
+  **Supersedes** the gold-on-emerald template in ART_DIRECTION §A8.
+- **Museum direction** for future generated work: deities as monumental art,
+  Greek-marble architecture, charcoal granite, gallery light.
+- **Cultural accuracy is a publishing gate** (`docs/CULTURAL_ACCURACY.md`).
+- **Never overwrite an image in place** — `/media/*` is cached 30 days, so a
+  replacement at the same path does not reach visitors. New filename instead.
+
+**Hero**
+- **One continuous shot, played once, held on its final frame.** Not a
+  montage (cuts read as advertising) and not a loop (a push-in cannot loop).
+- Still first → 7-point audit → approve → animate → encode. No animation on an
+  unapproved frame.
+
+**Website structure**
+- **Every landing page declares `match.halls`.** Unscoped patterns reached the
+  whole catalogue; tile adhesives match every tile word. Enforced by
+  `check-content.mjs`.
+- Application sections are **grouped by hall**, not one flat list.
+- **3D viewer: dragging moves the light, not the camera** — the buyer's
+  question is how the surface catches light. three.js is lazy-loaded and never
+  loaded under reduced motion.
+- **Cursor effects share one gesture** (`--spot-x/--spot-y`) across the
+  spotlight cards and the image sheen.
+
+**Vicky**
+- **Data lives in files** (`vicky_data/` via `vicky_store.py`), not a
+  database — one operator, one PC. `schemaVersion` on every record makes a
+  later move to Postgres a migration, not a rewrite.
+- **SEO agent:** every finding carries provenance (google_confirmed /
+  crawl_observed / inferred); every opportunity carries its evidence chain;
+  below 10 impressions it declines rather than recommends. Output channel is
+  the approvals queue only — asserted by a test.
+- **Scheduling via Windows Task Scheduler**, registered through PowerShell
+  and run through `scripts/run_job.cmd`. schtasks bakes quotes into Execute
+  and the task silently does nothing.
+- **Scraper: concurrency + resource blocking, no new library.** Maps needs a
+  real browser; Crawl4AI/Firecrawl are Playwright wrappers. Four concurrent
+  pages — more invites Google challenge pages.
+- **Laya is a fallback, not a replacement** for the rule classifiers.
+  Measured: 3-way choice 4/9, binary 5/5 at ~1000 ms; the regex 5/5 in
+  0.8 ms total. It answers only where the rules abstain, and returns
+  "undecided" below 0.55.
+- **GitHub via the `gh` CLI**, not an MCP — the remote GitHub MCP does not
+  support Claude Code's dynamic client registration.
+
+---
+
+
 ### Decision: Production operating model, Astro 7, self-hosted fonts
 **Date:** 2026-09-17
 **Reason:** Domain `elitebalaji.com` bought on Cloudflare; the site is
