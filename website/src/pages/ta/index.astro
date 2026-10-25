@@ -1,0 +1,105 @@
+---
+// Tamil home (/ta/). The landing page for searches typed in Tamil script —
+// "கிரானைட் கடை காரமடை", "டைல்ஸ் கடை கோவை". It is not a translation of the
+// English homepage (that one is a cinematic showcase); it is the plain, fast
+// answer a Tamil searcher wants: what we sell, where we are, how to reach us.
+import "@fontsource/noto-sans-tamil/tamil-400.css";
+import "@fontsource/noto-sans-tamil/tamil-600.css";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import VisitStrip from "../../components/VisitStrip.astro";
+import { getCollection } from "astro:content";
+import { business, telLink, waLink } from "../../lib/business";
+import { businessTa } from "../../lib/business-ta";
+
+const halls = (await getCollection("halls"))
+  .filter((h) => h.data.ta)
+  .sort((a, b) => a.data.order - b.data.order);
+
+const hello = "வணக்கம் எலைட் பாலாஜி, எனக்கு ஒரு தேவை உள்ளது.";
+---
+
+<BaseLayout
+  title="கிரானைட், மார்பிள், டைல்ஸ் கடை காரமடை | எலைட் பாலாஜி"
+  description="2012 முதல் காரமடையில் கிரானைட், மார்பிள், டைல்ஸ், கடப்பா கல், கோட்டா கல், சானிட்டரி வேர் மற்றும் பதிக்கும் வேலை. மேட்டுப்பாளையம் மெயின் ரோடு, கோவை."
+  lang="ta"
+  alternate="/"
+  enquiryMessage={hello}
+  enquiry={{ label: "வாட்ஸ்அப்பில் கேளுங்கள்", shortLabel: "வாட்ஸ்அப்" }}
+>
+  <section class="relative isolate overflow-hidden bg-charcoal-deep text-paper">
+    <img src="/media/client/granite/black-galaxy-slabs.jpg" alt="எங்கள் யார்டில் உள்ள பிளாக் கேலக்ஸி கிரானைட் ஸ்லாப்கள்" class="absolute inset-0 h-full w-full object-cover opacity-40" fetchpriority="high" />
+    <div class="absolute inset-0 bg-gradient-to-r from-charcoal-deep via-charcoal-deep/80 to-transparent" aria-hidden="true"></div>
+    <div class="relative mx-auto max-w-6xl px-5 pb-16 pt-36 lg:px-8 lg:pt-44">
+      <p class="text-base text-mustard">{businessTa.sinceLine}</p>
+      <h1 class="mt-3 max-w-3xl font-display text-4xl font-semibold leading-tight sm:text-6xl">
+        கிரானைட், மார்பிள், டைல்ஸ்: <span class="text-brass">ஒரே இடத்தில்</span>
+      </h1>
+      <p class="mt-5 max-w-2xl text-lg text-paper/85">
+        {businessTa.name}. காரமடையில் உள்ள எங்கள் யார்டில் இருந்து கிரானைட் ஸ்லாப்கள், மார்பிள், டைல்ஸ், வாஷ் பேசின்கள் மற்றும் கஸ்டம் கல் வேலைகள், கோவை முழுவதும் உள்ள வீடுகளுக்கும் பில்டர்களுக்கும்.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href={waLink(hello)} target="_blank" rel="noopener" class="inline-flex min-h-12 items-center bg-whatsapp px-7 text-base text-paper hover:opacity-90">வாட்ஸ்அப்பில் கேளுங்கள்</a>
+        <a href={telLink()} class="inline-flex min-h-12 items-center border border-paper/40 px-7 text-base hover:border-brass">{business.phoneDisplay}</a>
+      </div>
+      <p class="mt-6 text-sm text-paper/55">புகைப்படம்: எங்கள் யார்டில் உள்ள பிளாக் கேலக்ஸி கிரானைட்.</p>
+    </div>
+  </section>
+
+  <VisitStrip lang="ta" message={hello} />
+
+  <section class="bg-paper">
+    <div class="mx-auto max-w-6xl px-5 py-16 lg:px-8">
+      <h2 class="text-3xl font-semibold">எங்களிடம் உள்ளவை</h2>
+      <ul class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {halls.map((h) => (
+          <li>
+            <a href={`/ta/halls/${h.id}/`} class="eb-card group flex h-full flex-col border border-line bg-card p-5 hover:border-brass">
+              <span class="text-xl font-semibold group-hover:text-mustard-dark">{h.data.ta!.name}</span>
+              <span class="mt-1 text-sm text-ink-soft" lang="en">{h.data.name}</span>
+              <span class="mt-3 text-ink-soft">{h.data.ta!.tagline}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="border-t border-line bg-card">
+    <div class="mx-auto max-w-6xl px-5 py-16 lg:px-8">
+      <h2 class="text-3xl font-semibold">ஏன் எலைட் பாலாஜி</h2>
+      <dl class="mt-8 grid gap-8 sm:grid-cols-2">
+        {businessTa.usps.map((u) => (
+          <div class="border-t border-line pt-5">
+            <dt class="text-xl font-semibold">{u.title}</dt>
+            <dd class="mt-2 text-ink-soft">{u.detail}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <section class="border-t border-line bg-paper">
+    <div class="mx-auto grid max-w-6xl gap-10 px-5 py-16 lg:grid-cols-2 lg:px-8">
+      <div>
+        <h2 class="text-3xl font-semibold">எங்கள் ஷோரூம்</h2>
+        <p class="mt-5 text-lg text-ink">{businessTa.address}</p>
+        <p class="mt-3 text-ink-soft"><a href={telLink()} class="text-ink hover:text-mustard-dark">{business.phoneDisplay}</a> · {business.contactPerson}</p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href={business.mapLink} target="_blank" rel="noopener" class="inline-flex min-h-12 items-center border border-line px-6 hover:border-brass">வழிகாட்டி</a>
+          <a href={waLink(hello)} target="_blank" rel="noopener" class="inline-flex min-h-12 items-center bg-whatsapp px-6 text-paper hover:opacity-90">வாட்ஸ்அப்</a>
+        </div>
+      </div>
+      <div>
+        <h2 class="text-3xl font-semibold">நாங்கள் சேவை செய்யும் பகுதிகள்</h2>
+        <ul class="mt-5 flex flex-wrap gap-2">
+          {businessTa.serviceHubs.map((place) => (
+            <li class="border border-line px-3 py-1.5 text-ink-soft">{place}</li>
+          ))}
+        </ul>
+        <p class="mt-6 text-ink-soft">
+          முழு கேட்டலாக் ஆங்கிலத்தில்: <a href="/" lang="en" class="text-ink underline hover:text-mustard-dark">English site</a>
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

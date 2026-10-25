@@ -7,7 +7,7 @@ from typing import Any, Callable
 import google.generativeai as genai
 
 import shared_memory as mem
-from agents import email_agent, marketing_agent, scraper_agent, seo_agent
+from agents import marketing_agent, scraper_agent, seo_agent
 
 
 def speakable(text: str) -> str:
@@ -27,8 +27,6 @@ def _intent(command: str) -> str:
         return "seo"
     if any(x in c for x in ("marketing", "campaign", "instagram", "caption", "pitch")):
         return "marketing"
-    if any(x in c for x in ("email", "mail draft", "write email")):
-        return "email"
     if any(x in c for x in ("status", "who is online", "agents", "council")):
         return "status"
     return "chat"
@@ -81,16 +79,13 @@ def handle_command(
     if intent == "marketing":
         return marketing_agent.run_marketing(q)
 
-    if intent == "email":
-        return email_agent.run_email(q)
-
     # Default: executive chat from shared memory
     mem.configure_gemini()
     model = genai.GenerativeModel(mem.GEMINI_MODEL)
     response = model.generate_content(
         "You are Vicky, Executive Agent for Elite Balaji Stones and Ceramics "
         f"(trusted since {mem.ESTABLISHED_SINCE}, Karamadai). "
-        "You orchestrate Scraper, SEO, Marketing, and Email agents. "
+        "You orchestrate the Scraper, SEO and Marketing agents. "
         "Use shared council memory only. Coimbatore / Nilgiris hubs only. "
         "Never invent contractor phones. Be concise and actionable.\n\n"
         f"SHARED MEMORY:\n{mem.rules_text()}\n\n"

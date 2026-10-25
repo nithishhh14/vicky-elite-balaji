@@ -20,6 +20,18 @@ const halls = defineCollection({
     // title is used whole (no brand suffix is added), so it carries its own.
     seoTitle: z.string().max(65).optional(),
     seoDescription: z.string().min(50).max(160).optional(),
+    // Tamil version of this hall's page (/ta/halls/<id>/). A translation of
+    // the English fields above, never new claims. Product names stay in
+    // English on purpose: that is how they are printed on boxes and bills.
+    ta: z.object({
+      name: z.string(),
+      tagline: z.string(),
+      intro: z.string(),
+      applications: z.array(z.string()),
+      enquiryNote: z.string(),
+      seoTitle: z.string().max(65),
+      seoDescription: z.string().min(50).max(160),
+    }).strict().optional(),
   }).strict(),
 });
 

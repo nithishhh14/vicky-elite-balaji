@@ -723,3 +723,26 @@ repairs a bad week. Network failures are retried 3× before giving up; tasks
 run in a hidden window; exit codes reach Task Scheduler. SEO proposals carry a
 stable `key` (rule + query/URL) so the weekly job never files the same
 subject twice while one is pending or approved.
+
+## 2026-10-25 — Tamil pages for Tamil-script searches
+
+Owner request: "even if people search in Tamil, it should show up in Tamil."
+Google matches a Tamil-script query to Tamil-language pages; English pages
+with the same meaning rarely rank for it. So: a Tamil home (`/ta/`) and a
+Tamil page per hall, each paired with its English page by hreflang, rather
+than a full translation of every page. Halls are where "near me" material
+searches land; product pages stay English (product names are English on the
+box). Tamil text is translation only, stored next to the English it
+translates (`ta` block in each hall JSON) so the two cannot drift silently.
+
+## 2026-10-25 — Removed the Email agent and the Laya classifier
+
+Owner asked to remove what isn't needed for the goal (more customers for the
+showroom). Email agent: cold email to scraped addresses gets low response,
+risks the Gmail account and needs consent under India's DPDP Act; leads are a
+phone call list instead. `agents/classify.py`: nothing called it, and
+measured slower than the existing rules with no accuracy gain. Paused but
+not removed: hero video generation (credits, low conversion value) and the
+cross-device "JARVIS" vision (docs only). Kept: website, SEO agent, scraper,
+dashboard, 3D viewer.
+

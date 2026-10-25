@@ -424,7 +424,7 @@ def main() -> None:
             {
                 "role": "assistant",
                 "content": (
-                    "Vicky online. I run the council — Scraper, SEO, Marketing, Email — "
+                    "Vicky online. I run the council — Scraper, SEO, Marketing — "
                     "from shared memory. Try: “run hunter”, “optimize sheet”, “seo granite tiles”, "
                     "or ask anything about Elite Balaji."
                 ),
@@ -517,8 +517,8 @@ def main() -> None:
     else:
         st.info("Lead ledger empty. Tell Vicky: “run hunter”.")
 
-    with st.expander("Specialist stubs (SEO / Marketing / Email)"):
-        st.caption("SEO can run lightly now. Marketing + Email wait for the company website.")
+    with st.expander("Specialist stubs (SEO / Marketing)"):
+        st.caption("SEO runs on its schedule; see Operations. Marketing is the next agent to build.")
         kw = st.text_input("SEO keyword", placeholder="granite tiles Coimbatore")
         if st.button("Run SEO Agent") and kw:
             push_message("user", f"seo {kw}")
@@ -527,10 +527,6 @@ def main() -> None:
         if st.button("Ask Marketing Agent"):
             push_message("user", "marketing status")
             run_vicky("marketing status")
-            st.rerun()
-        if st.button("Ask Email Agent"):
-            push_message("user", "email status")
-            run_vicky("email status")
             st.rerun()
 
 

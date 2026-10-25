@@ -6,10 +6,20 @@ interface Props {
   description: string;
   path: string;
   image?: string;
+  lang?: "en" | "ta";
+  alternate?: string;
 }
 
-const { title, description, path, image = "/media/brand/business-card.jpg" } = Astro.props;
+const { title, description, path, image = "/media/brand/business-card.jpg", lang = "en", alternate } = Astro.props;
 const canonical = new URL(path, Astro.site).toString();
+// Each language version is its own canonical; hreflang links the pair.
+// x-default is the English page, since most of the site exists only in English.
+const other = alternate ? new URL(alternate, Astro.site).toString() : undefined;
+const hreflang = other
+  ? lang === "ta"
+    ? { en: other, ta: canonical }
+    : { en: canonical, ta: other }
+  : undefined;
 const imageUrl = new URL(image, Astro.site).toString();
 
 const localBusinessLd = {
@@ -37,13 +47,20 @@ const localBusinessLd = {
 <title>{title}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
+{hreflang && (
+  <>
+    <link rel="alternate" hreflang="en-IN" href={hreflang.en} />
+    <link rel="alternate" hreflang="ta-IN" href={hreflang.ta} />
+    <link rel="alternate" hreflang="x-default" href={hreflang.en} />
+  </>
+)}
 
 <meta property="og:type" content="website" />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonical} />
 <meta property="og:image" content={imageUrl} />
-<meta property="og:locale" content="en_IN" />
+<meta property="og:locale" content={lang === "ta" ? "ta_IN" : "en_IN"} />
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={title} />

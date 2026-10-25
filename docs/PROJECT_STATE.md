@@ -3,6 +3,19 @@
 _Last updated: 2026-10-25 — health check after a month away; SEO scheduler made robust (timeouts, retries, hidden launch, exit codes, self-repairing history, no repeat proposals). Previous: 2026-09-24 — site live, SEO agent, 3D viewer. See `docs/DECISIONS.md`._
 
 
+## 2026-10-25 (later) — search-driven website pass, Tamil pages, cleanup (LIVE)
+
+- Phone hero visible at once; hero down to 2 buttons; `seoTitle` /
+  `seoDescription` on halls + products written from real queries; contact
+  page retitled; Athangudi page states the tiles are BEJ's ceramic series;
+  showroom strip (directions/call/WhatsApp) on hall + landing pages.
+- Tamil: `/ta/` + `/ta/halls/<id>/` ×8, hreflang pairs, header switch,
+  self-hosted Noto Sans Tamil on Tamil pages only. 138 pages built.
+- Removed Email agent and Laya classifier (`docs/DECISIONS.md`).
+- Verified: preflight 24/24 (Playwright on every page incl. Tamil, at
+  1920/1366/375), Vicky tests 31/31, checked in the browser at phone and
+  desktop widths.
+
 ## 2026-10-25 — health check; scheduler made robust
 
 - Verified: live site, preflight 24/24, Vicky tests 31/31, Search Console

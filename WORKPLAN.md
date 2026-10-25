@@ -11,7 +11,7 @@ executive personality, then the final interface. Do not skip ahead.
 - SEO agent: **built, scheduled, and hardened** (2026-10-25: timeouts, retries,
   hidden launch, self-repairing history, no repeat proposals). 7 approvals pending.
 - Marketing agent: **unblocked** (the site is live) — next agent to build.
-- Email agent: still waits on Marketing.
+- Email agent: **removed** 2026-10-25 (no cold email; leads are a call list).
 - Website agent (PRs + approvals): designed in OPERATIONS_PLAN, not built.
 - Full handoff: `docs/NEXT_SESSION.md` → "Resumed 2026-10-25".
 

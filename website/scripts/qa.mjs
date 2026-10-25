@@ -68,7 +68,9 @@ for (const vp of viewports) {
         .filter((img) => img.getBoundingClientRect().width >= 80 || img.closest("[hidden]"))
         .filter((img) => {
           const frame = img.closest("a, article, figure, div.relative") ?? img.parentElement;
-          return !/illustrative/i.test(frame?.textContent ?? "") && !/illustrative/i.test(frame?.parentElement?.textContent ?? "");
+          // English label, or its Tamil translation on the /ta/ pages.
+          const label = /illustrative|மாதிரிப் படம்/i;
+          return !label.test(frame?.textContent ?? "") && !label.test(frame?.parentElement?.textContent ?? "");
         })
         .map((img) => img.getAttribute("src"));
       // The wordmark is nowrap inside a shrinkable flex item, so when it

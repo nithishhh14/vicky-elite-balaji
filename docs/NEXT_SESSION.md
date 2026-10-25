@@ -39,7 +39,7 @@
 - **Untracked:** `AGENTS.md` (Codex copy of CLAUDE.md — will drift) and
   `.codex/` (MCP mirror, no secrets). Left as-is.
 
-### Website pass from search data (branch `seo-ux-2026-10`, NOT live yet)
+### Website pass from search data (merged to `main`, LIVE 2026-10-25)
 Commit `2a39162`, preflight 24/24, checked at phone and desktop widths.
 - Phone hero visible at once (was blank ~2.6 s); hero down to 2 buttons.
 - `seoTitle`/`seoDescription` (optional) on halls + products; 8 halls,
@@ -49,14 +49,21 @@ Commit `2a39162`, preflight 24/24, checked at phone and desktop widths.
   not handmade cement tiles.
 - `VisitStrip.astro`: directions / call / WhatsApp under the header of
   every hall and landing page.
-- Go live: merge `seo-ux-2026-10` into `main` and push (it also carries
-  the scheduler commit `15515d3`). The Cloudflare branch preview address did
-  not resolve, so branch previews are probably off.
+- Tamil pages: `/ta/` + 8 hall pages, hreflang-paired with English,
+  தமிழ் / English switch in the header. **Ask the client (or any native
+  reader) to read the Tamil copy once.** Then watch Search Console for
+  Tamil-script queries; they appear under Queries like any other.
+- Removed: Email agent, `agents/classify.py` (Laya), `laya` from
+  requirements. `pip uninstall laya torch` would free disk space; not done.
+- The Cloudflare branch preview address did not resolve, so branch previews
+  are probably off.
 - Not changed on purpose: floor/wall/bathroom tile landing pages rank 20–50,
   where the problem is position, not the title. Their 5 approvals stay
   pending.
 - Questions for the client: do they also sell handmade Athangudi? "Home
-  Center" or "Home Centre"? MRP for Somany SEF-666 (people search its price)?
+  Center" or "Home Centre"? (Prices stay off the site — client rule, and
+  preflight enforces it — so "somany 666 price" searchers get "WhatsApp for
+  today's rate".)
   The Google Maps share link of the listing, so Directions opens the listing
   instead of an address search.
 

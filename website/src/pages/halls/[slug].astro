@@ -101,6 +101,7 @@ const breadcrumbJsonLd = {
 <BaseLayout
   title={seoTitle ?? pageTitle(`${name} in Coimbatore`)}
   description={seoDescription ?? metaText(intro)}
+  alternate={hall.data.ta ? `/ta/halls/${hall.id}/` : undefined}
   enquiryMessage={productEnquiryMessage(name)}
   enquiry={{ label: "Ask for trade rate", category: name }}
 >

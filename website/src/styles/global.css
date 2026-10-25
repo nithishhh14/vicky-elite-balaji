@@ -938,3 +938,23 @@
     height: 1.75rem;
   }
 }
+
+/* ── Tamil pages ───────────────────────────────────────────────────────
+   Unlayered on purpose, so it outranks Tailwind's utility layer.
+   Latin text keeps the brand faces; Tamil glyphs fall through to Noto Sans
+   Tamil (self-hosted, imported only by the /ta/ pages), then to the
+   system's own Tamil font. */
+:root:lang(ta) {
+  --font-ui: "Outfit", "Noto Sans Tamil", "Nirmala UI", "Tamil Sangam MN", system-ui, sans-serif;
+  --font-display: "Cormorant Garamond", "Noto Sans Tamil", "Nirmala UI", "Tamil Sangam MN", serif;
+}
+/* Letter-spacing pulls Tamil vowel signs away from their consonants, and
+   uppercase does nothing for Tamil — so the eyebrow style is reset. */
+:lang(ta) [class*="tracking-"] {
+  letter-spacing: normal;
+}
+/* Tamil runs longer and sits taller than Latin; give it room to breathe. */
+:lang(ta) p,
+:lang(ta) li {
+  line-height: 1.8;
+}

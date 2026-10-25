@@ -1,0 +1,168 @@
+---
+// Tamil version of a hall page (/ta/halls/<id>/).
+//
+// Exists so a search typed in Tamil script ("கடப்பா கல் காரமடை") has a page
+// written in Tamil to land on. Only halls with a `ta` block get one. The
+// text is a translation of the English hall; product names, sizes and finishes
+// stay in English because that is how they are printed on boxes and bills,
+// and how the product pages they link to are titled.
+import "@fontsource/noto-sans-tamil/tamil-400.css";
+import "@fontsource/noto-sans-tamil/tamil-600.css";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import MaterialField from "../../../components/MaterialField.astro";
+import VisitStrip from "../../../components/VisitStrip.astro";
+import { getCollection } from "astro:content";
+import { telLink, waLink } from "../../../lib/business";
+import { businessTa, imageBadgeTa, productEnquiryMessageTa } from "../../../lib/business-ta";
+import { imageBadge } from "../../../lib/image-badge";
+import { byOrder } from "../../../lib/order";
+
+export async function getStaticPaths() {
+  const halls = await getCollection("halls");
+  return halls.filter((h) => h.data.ta).map((hall) => ({ params: { slug: hall.id }, props: { hall } }));
+}
+
+const { hall } = Astro.props;
+const { name, heroImage, heroAlt, hasRealContent, materialColor, materialTexture } = hall.data;
+const ta = hall.data.ta!;
+
+const products = (await getCollection("products"))
+  .filter((p) => p.data.hallId === hall.id)
+  .sort(byOrder);
+
+const otherHalls = (await getCollection("halls"))
+  .filter((h) => h.id !== hall.id && h.data.ta)
+  .sort((a, b) => a.data.order - b.data.order);
+
+const badge = (src: string) => {
+  const b = imageBadge(src);
+  return b ? imageBadgeTa[b] ?? b : null;
+};
+
+const hallUrl = new URL(`/ta/halls/${hall.id}/`, Astro.site).toString();
+const collectionJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: ta.name,
+  description: ta.intro,
+  inLanguage: "ta-IN",
+  url: hallUrl,
+  mainEntity: {
+    "@type": "ItemList",
+    itemListElement: products.map((p, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      url: new URL(`/products/${p.id}/`, Astro.site).toString(),
+      name: p.data.name,
+    })),
+  },
+};
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "முகப்பு", item: new URL("/ta/", Astro.site).toString() },
+    { "@type": "ListItem", position: 2, name: ta.name },
+  ],
+};
+---
+
+<BaseLayout
+  title={ta.seoTitle}
+  description={ta.seoDescription}
+  lang="ta"
+  alternate={`/halls/${hall.id}/`}
+  enquiryMessage={productEnquiryMessageTa(ta.name)}
+  enquiry={{ label: "விலை கேளுங்கள்", shortLabel: "விலை கேளுங்கள்", category: name }}
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(collectionJsonLd)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
+
+  <section class="relative isolate flex h-[48vh] min-h-[340px] items-end overflow-hidden">
+    {heroImage ? (
+      <img src={heroImage} alt={heroAlt} class="absolute inset-0 h-full w-full object-cover" fetchpriority="high" />
+    ) : (
+      <div class="absolute inset-0 h-full w-full">
+        <MaterialField color={materialColor} texture={materialTexture} label="" class="h-full w-full" />
+      </div>
+    )}
+    <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/45 to-transparent" aria-hidden="true"></div>
+    <div class="relative mx-auto w-full max-w-6xl px-5 pb-10 text-paper">
+      <nav aria-label="பாதை" class="text-sm text-paper/70">
+        <a href="/ta/" class="hover:text-mustard">முகப்பு</a>
+        <span aria-hidden="true"> / </span>
+        <span>{ta.name}</span>
+      </nav>
+      <h1 class="mt-3 font-display text-4xl font-semibold leading-tight sm:text-5xl">{ta.name}</h1>
+      <p class="mt-2 text-base text-paper/80"><span lang="en">{name}</span> · {ta.tagline}</p>
+      {heroImage && !hasRealContent && (
+        <p class="mt-3 text-sm italic text-paper/55">{badge(heroImage) ?? "குறிப்புப் புகைப்படம்"}, எங்கள் ஸ்டாக் அல்ல. தற்போதைய ஸ்டாக் புகைப்படங்களை எங்களிடம் கேளுங்கள்.</p>
+      )}
+    </div>
+  </section>
+
+  <VisitStrip lang="ta" message={productEnquiryMessageTa(ta.name)} />
+
+  <section class="bg-paper">
+    <div class="mx-auto grid max-w-6xl gap-10 px-5 py-14 lg:grid-cols-[1.4fr_1fr]">
+      <div>
+        <p class="max-w-2xl text-lg text-ink">{ta.intro}</p>
+        <p class="mt-6 text-ink-soft">{ta.enquiryNote}</p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href={waLink(productEnquiryMessageTa(ta.name))} target="_blank" rel="noopener" class="inline-flex min-h-12 items-center bg-whatsapp px-6 text-base text-paper hover:opacity-90">வாட்ஸ்அப்பில் கேளுங்கள்</a>
+          <a href={telLink()} class="inline-flex min-h-12 items-center border border-line px-6 text-base hover:border-brass">அழைக்க</a>
+        </div>
+      </div>
+      <div>
+        <h2 class="text-xl font-semibold">பயன்பாடுகள்</h2>
+        <ul class="mt-4 divide-y divide-line border-y border-line">
+          {ta.applications.map((a) => <li class="py-3 text-ink">{a}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  {products.length > 0 && (
+    <section class="border-t border-line bg-card">
+      <div class="mx-auto max-w-6xl px-5 py-14">
+        <h2 class="text-2xl font-semibold">{ta.name}: எங்கள் வகைகள்</h2>
+        <p class="mt-2 text-ink-soft">பொருளின் பெயர், அளவு, ஃபினிஷ் பெட்டியில் உள்ளபடியே ஆங்கிலத்தில் தரப்பட்டுள்ளன.</p>
+        <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {products.map((p) => (
+            <article class="eb-card group relative overflow-hidden rounded-sm border border-line bg-paper shadow-card">
+              <a href={`/products/${p.id}/`} class="relative block">
+                <div class="aspect-[4/3] overflow-hidden">
+                  <img src={p.data.image} alt={p.data.imageAlt} class="h-full w-full object-cover eb-img" loading="lazy" width="600" height="450" />
+                </div>
+                {badge(p.data.image) && (
+                  <span class="absolute bottom-2 left-2 bg-charcoal-deep/75 px-2.5 py-1 text-xs text-paper backdrop-blur">{badge(p.data.image)}</span>
+                )}
+              </a>
+              <div class="p-5" lang="en">
+                {(p.data.brand ?? p.data.category) && <p class="text-xs uppercase tracking-[0.15em] text-mustard-dark">{p.data.brand ?? p.data.category}</p>}
+                <h3 class="mt-1 text-lg"><a href={`/products/${p.id}/`} class="hover:text-mustard-dark">{p.data.name}</a></h3>
+                <p class="mt-2 text-sm text-ink-soft">{[p.data.size, p.data.finish].filter(Boolean).join(" · ")}</p>
+              </div>
+              <div class="flex flex-wrap gap-x-4 px-5 pb-5">
+                <a href={`/products/${p.id}/`} class="text-sm font-semibold text-ink hover:text-mustard-dark">விவரங்கள் &rarr;</a>
+                <a href={waLink(productEnquiryMessageTa(p.data.name))} target="_blank" rel="noopener" class="text-sm font-semibold text-mustard-dark hover:underline">விலை கேளுங்கள்</a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="border-t border-line bg-paper">
+    <div class="mx-auto max-w-6xl px-5 py-12">
+      <h2 class="text-xl font-semibold">மற்ற பிரிவுகள்</h2>
+      <ul class="mt-5 flex flex-wrap gap-3">
+        {otherHalls.map((h) => (
+          <li><a href={`/ta/halls/${h.id}/`} class="inline-flex min-h-11 items-center border border-line px-4 text-ink hover:border-brass">{h.data.ta!.name}</a></li>
+        ))}
+      </ul>
+      <p class="mt-8 text-sm text-ink-soft">{businessTa.name}, {businessTa.address}</p>
+    </div>
+  </section>
+</BaseLayout>

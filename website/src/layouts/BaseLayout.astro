@@ -22,25 +22,31 @@ interface Props {
   enquiry?: { label?: string; shortLabel?: string; product?: string; category?: string; intent?: string };
   // Homepage: header floats transparent over the full-bleed hero.
   overlayHeader?: boolean;
+  // Page language. Tamil pages exist so Tamil-script searches have a page
+  // written in the searcher's own language to land on.
+  lang?: "en" | "ta";
+  // Path of the same page in the other language, if there is one. Emitted
+  // as hreflang so Google pairs the two instead of treating them as rivals.
+  alternate?: string;
 }
 
-const { title, description, enquiryMessage, enquiry = {}, overlayHeader = false } = Astro.props;
+const { title, description, enquiryMessage, enquiry = {}, overlayHeader = false, lang = "en", alternate } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en-IN">
+<html lang={lang === "ta" ? "ta-IN" : "en-IN"}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="/favicon-48.png" type="image/png" sizes="48x48" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <Seo title={title} description={description} path={Astro.url.pathname} />
+    <Seo title={title} description={description} path={Astro.url.pathname} lang={lang} alternate={alternate} />
   </head>
   <body class="min-h-screen">
     <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-ink focus:px-4 focus:py-2 focus:text-paper">
       Skip to content
     </a>
-    <SiteHeader overlay={overlayHeader} />
+    <SiteHeader overlay={overlayHeader} lang={lang} alternate={alternate} />
     <main id="main">
       <slot />
     </main>

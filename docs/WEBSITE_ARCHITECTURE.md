@@ -173,6 +173,20 @@ for the correct pattern.
 - `public/robots.txt` points at it. **TODO:** the sitemap/robots hostname is
   a placeholder (`elitebalaji.example.in`) until a real domain is chosen —
   update `astro.config.mjs` `site` and `public/robots.txt` together.
+- **Search snippets from real queries (2026-10-25):** halls and products take
+  optional `seoTitle` / `seoDescription`, used whole in place of the generated
+  "Name in Coimbatore". Write them from Search Console queries, not guesses.
+- **Tamil pages (2026-10-25):** `/ta/` (Tamil home) and `/ta/halls/<id>/` for
+  every hall with a `ta` block in its JSON (`name, tagline, intro,
+  applications, enquiryNote, seoTitle, seoDescription`). The Tamil text is a
+  translation of the English fields — never a new claim. Product names, sizes
+  and finishes stay English (that is how they are printed). Each pair is linked
+  by `hreflang` (en-IN / ta-IN / x-default=en) via BaseLayout's `lang` and
+  `alternate` props; the header shows தமிழ் / English. Tamil facts live in
+  `src/lib/business-ta.ts`. Noto Sans Tamil (Fontsource, self-hosted) is
+  imported only by the `/ta/` pages. Letter-spacing is reset under
+  `:lang(ta)` because tracking splits Tamil vowel signs from consonants.
+  **Have a native Tamil reader check the copy** before relying on it.
 - Local SEO: service hubs list from `.cursorrules` `STRICT_TARGET_LOCATIONS`
   appears naturally in the homepage service-area section, the footer, and
   `areaServed` in the JSON-LD — not stuffed into hidden text anywhere.

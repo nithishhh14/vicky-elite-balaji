@@ -28,16 +28,17 @@ website is the public virtual showroom.
     `python -m agents.seo`. Scheduled via `scripts/install_schedule.py`.
   - `marketing_agent.py` — **stub**; the website is now live, so this is
     unblocked and is the next agent to build
-  - `email_agent.py` — **stub**, blocked until Marketing is live; drafts only,
-    never auto-sends
-- `agents/classify.py` — rule classifiers first, Laya typed-decision model
-  only where they abstain (measured: the rules are as accurate and ~1000x
-  faster on known cases).
+- **Removed 2026-10-25** (see `docs/DECISIONS.md`): the Email agent (cold
+  email to scraped contacts — low yield, spam/DPDP risk; the scraper's
+  output is a phone call list instead) and `agents/classify.py` (Laya model:
+  never called, slower than the rules and no more accurate). Both are in git
+  history if a reason ever appears.
 - `website/` — the virtual showroom, **live at https://elitebalaji.com**
   (Cloudflare Pages from `main`): **Astro 7 + TypeScript + Tailwind CSS v4**
   (rebuilt from the original static HTML/CSS shell). Content-driven via two
   content collections (`halls`, `tileProducts`) instead of hand-written markup
-  per page. See `docs/WEBSITE_ARCHITECTURE.md` for the full architecture,
+  per page. Tamil pages at `/ta/` (home + every hall), linked to their English
+  twins by hreflang. See `docs/WEBSITE_ARCHITECTURE.md` for the full architecture,
   content model, and how to add hall photos or tile series. Requires Node.js
   (installed via winget during the rebuild) — `cd website && npm run dev`.
 
@@ -100,8 +101,8 @@ new client feedback conflicts with an existing entry in `docs/DECISIONS.md`:
   suggest committing them, even "temporarily."
 - `chrome_profile/` is runtime-only browser session data (regenerated on
   run). Never commit it, never zip it into a deliverable.
-- Marketing and Email agents stay blocked until the website is actually
-  live and reachable — that gate is intentional, not a bug.
+- No cold email. Outreach is by phone and WhatsApp, to people who asked or
+  whom the client calls personally.
 - Every generated frame containing a culturally specific object (kuthuvilakku,
   murti, kolam, thoranam, Athangudi tile) is checked against
   `docs/CULTURAL_ACCURACY.md` before it ships — however good it looks. The

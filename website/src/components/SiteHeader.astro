@@ -10,8 +10,16 @@ interface Props {
   // Homepage only: header floats transparent over the hero and gains its
   // glass bar once the page scrolls (reference mockup layout).
   overlay?: boolean;
+  lang?: "en" | "ta";
+  alternate?: string;
 }
-const { overlay = false } = Astro.props;
+const { overlay = false, lang = "en", alternate } = Astro.props;
+
+// Language switch. English pages without a Tamil twin point at the Tamil
+// home, so a Tamil reader can always reach Tamil from anywhere.
+const langSwitch = lang === "ta"
+  ? { href: alternate ?? "/", label: "English", hreflang: "en", textLang: "en" }
+  : { href: alternate ?? "/ta/", label: "தமிழ்", hreflang: "ta", textLang: "ta" };
 
 const { pathname } = Astro.url;
 const halls = await getCollection("halls");
@@ -129,6 +137,14 @@ const previews = [
     </nav>
 
     <div class="flex flex-shrink-0 items-center gap-1 sm:gap-3">
+      <a
+        href={langSwitch.href}
+        hreflang={langSwitch.hreflang}
+        lang={langSwitch.textLang}
+        class="hidden min-h-10 items-center px-2 text-sm text-paper/85 hover:text-brass sm:inline-flex"
+      >
+        {langSwitch.label}
+      </a>
       <a
         href="/contact/"
         class="quote-cta hidden min-h-10 items-center border border-brass/70 px-4 text-[0.62rem] uppercase tracking-[0.18em] text-brass hover:bg-brass hover:text-charcoal-deep 2xl:inline-flex"
@@ -265,6 +281,7 @@ const previews = [
         <li class="drawer-item"><a href="/custom/" class="drawer-link text-sm uppercase tracking-[0.16em] text-brass">Custom Stonecraft</a></li>
         <li class="drawer-item"><a href="/custom/#tile-printing" class="drawer-link text-sm uppercase tracking-[0.16em] text-brass">Custom tile printing</a></li>
         <li class="drawer-item"><a href="/search/" class="drawer-link text-sm uppercase tracking-[0.16em] text-paper/85">Full catalogue</a></li>
+        <li class="drawer-item"><a href={langSwitch.href} hreflang={langSwitch.hreflang} lang={langSwitch.textLang} class="drawer-link text-base text-paper/85">{langSwitch.label}</a></li>
         <li class="drawer-item"><a href="/shortlist/" class="drawer-link text-sm uppercase tracking-[0.16em] text-paper/85">My Materials <span data-shortlist-count hidden class="ml-1 rounded-full bg-brass px-1.5 text-[0.6rem] text-charcoal-deep">0</span></a></li>
       </ul>
       {materialGroups.map((group) => (
