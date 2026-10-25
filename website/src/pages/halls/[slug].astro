@@ -2,6 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import MaterialField from "../../components/MaterialField.astro";
 import SaveButton from "../../components/SaveButton.astro";
+import VisitStrip from "../../components/VisitStrip.astro";
 import { getCollection } from "astro:content";
 import { waLink, telLink, emailQuoteLink, productEnquiryMessage } from "../../lib/business";
 import { deriveColours } from "../../lib/facets";
@@ -16,7 +17,7 @@ export async function getStaticPaths() {
 }
 
 const { hall } = Astro.props;
-const { name, tagline, intro, hasRealContent, heroImage, heroAlt, materialColor, materialTexture, applications, enquiryNote } = hall.data;
+const { name, tagline, intro, hasRealContent, heroImage, heroAlt, materialColor, materialTexture, applications, enquiryNote, seoTitle, seoDescription } = hall.data;
 
 const products = (await getCollection("products"))
   .filter((p) => p.data.hallId === hall.id)
@@ -98,8 +99,8 @@ const breadcrumbJsonLd = {
 ---
 
 <BaseLayout
-  title={pageTitle(`${name} in Coimbatore`)}
-  description={metaText(intro)}
+  title={seoTitle ?? pageTitle(`${name} in Coimbatore`)}
+  description={seoDescription ?? metaText(intro)}
   enquiryMessage={productEnquiryMessage(name)}
   enquiry={{ label: "Ask for trade rate", category: name }}
 >
@@ -129,6 +130,8 @@ const breadcrumbJsonLd = {
       )}
     </div>
   </section>
+
+  <VisitStrip message={productEnquiryMessage(name)} />
 
   {hall.id === "granite-marbles" && (
     <section class="border-b border-line bg-charcoal-deep text-paper">

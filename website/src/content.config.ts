@@ -15,6 +15,11 @@ const halls = defineCollection({
     materialTexture: z.enum(["stone", "ceramic", "cement", "porcelain"]),
     applications: z.array(z.string()),
     enquiryNote: z.string(),
+    // Optional search-result copy, written from real Search Console queries
+    // when the generated "Name in Coimbatore" isn't what people type. The
+    // title is used whole (no brand suffix is added), so it carries its own.
+    seoTitle: z.string().max(65).optional(),
+    seoDescription: z.string().min(50).max(160).optional(),
   }).strict(),
 });
 
@@ -56,6 +61,11 @@ const products = defineCollection({
     qtyPerBox: z.string().optional(),
     coverageArea: z.string().optional(),
     weight: z.string().optional(),
+    // Optional search-result copy, written from real Search Console queries
+    // when the generated "Name in Coimbatore" isn't what people type. The
+    // title is used whole (no brand suffix is added), so it carries its own.
+    seoTitle: z.string().max(65).optional(),
+    seoDescription: z.string().min(50).max(160).optional(),
   }).strict(),
 });
 

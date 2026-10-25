@@ -15,6 +15,16 @@ export async function getStaticPaths() {
 const { product } = Astro.props;
 const { name, image, imageAlt, hallId } = product.data;
 
+// Search snippet. The local hook goes before the uses list, not after it:
+// the old order put "Karamadai showroom" last, where the 150-character cut
+// removed it from most products — and "near me" searchers need it most.
+const spec = [product.data.category, product.data.size, product.data.finish].filter(Boolean).join(", ");
+const local = "At our Karamadai showroom, Mettupalayam Road. WhatsApp for today's rate.";
+const withUses = `${name}: ${spec}. ${local} For ${product.data.applications.join(", ").toLowerCase()}.`;
+const withSpec = `${name}: ${spec}. ${local}`;
+const metaDescription =
+  withUses.length <= 158 ? withUses : withSpec.length <= 158 ? withSpec : metaText(`${name}. ${local}`, 158);
+
 // Most products still have exactly one verified photo -- fall back to it as
 // a single-item gallery so the thumbnail strip only appears when there's
 // genuinely more than one real image to show.
@@ -74,8 +84,8 @@ const breadcrumbJsonLd = {
 ---
 
 <BaseLayout
-  title={pageTitle(name)}
-  description={metaText(`${name}: ${[product.data.category, product.data.size, product.data.finish].filter(Boolean).join(", ")}. ${product.data.applications.join(", ")}. Ask us for current availability and the trade rate from our Karamadai showroom.`)}
+  title={product.data.seoTitle ?? pageTitle(name)}
+  description={product.data.seoDescription ?? metaDescription}
   enquiryMessage={productEnquiryMessage(name, product.data.category)}
   enquiry={{ label: "Ask about this material", shortLabel: "Ask about this", product: name, category: product.data.category ?? hallName }}
 >

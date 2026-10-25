@@ -1,0 +1,29 @@
+---
+// Where the showroom is, right under the page header.
+//
+// Most of the searches that find these pages end in "near me" ("kadappa
+// stone near me", "kota stone shop near me"). That visitor's first question
+// is "how far, and how do I get there", and until now the answer lived in
+// the footer. One quiet line answers it before they scroll.
+import { business, telLink, waLink } from "../lib/business";
+
+interface Props {
+  /** Prefilled WhatsApp text, so the enquiry already names what they looked at. */
+  message?: string;
+}
+const { message = "Hi Elite Balaji, I'd like to visit the showroom." } = Astro.props;
+---
+
+<aside aria-label="Showroom location" class="border-b border-line bg-card">
+  <div class="mx-auto flex max-w-7xl flex-wrap items-center gap-x-6 gap-y-2 px-5 py-3 lg:px-8">
+    <p class="flex w-full min-w-0 items-start gap-2 text-sm text-ink-soft sm:w-auto sm:flex-1">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="mt-0.5 shrink-0 text-mustard-dark" aria-hidden="true"><path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21Z" stroke-linejoin="round"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+      <span><span class="text-ink">Showroom:</span> Mettupalayam Main Road, Karamadai, Coimbatore</span>
+    </p>
+    <nav aria-label="Reach the showroom" class="flex flex-wrap gap-x-5 gap-y-1 text-xs uppercase tracking-[0.18em]">
+      <a href={business.mapLink} target="_blank" rel="noopener" class="inline-flex min-h-11 items-center text-ink hover:text-mustard-dark">Directions</a>
+      <a href={telLink()} class="inline-flex min-h-11 items-center text-ink hover:text-mustard-dark">Call</a>
+      <a href={waLink(message)} target="_blank" rel="noopener" class="inline-flex min-h-11 items-center text-ink hover:text-mustard-dark">WhatsApp</a>
+    </nav>
+  </div>
+</aside>

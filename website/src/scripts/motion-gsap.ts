@@ -113,6 +113,14 @@ mm.add(
       const rule = q("[data-hero-rule]");
       const s = speed;
 
+      // Phones: the words and the buttons are already visible (see the
+      // min-width guard in global.css). Only the photo settles, from fully
+      // visible, so there is never a frame without something to read.
+      if (phone) {
+        if (image) gsap.fromTo(image, { scale: 1.05 }, { scale: 1, duration: 1.6, ease: "power2.out" });
+        return;
+      }
+
       const tl = gsap.timeline({ defaults: { ease: EASE } });
       if (line) tl.fromTo(line, { scaleX: 0, opacity: 1 }, { scaleX: 1, duration: 0.9 * s, ease: "power2.inOut" }).to(line, { opacity: 0, duration: 0.6 * s }, ">-0.05");
       if (image) tl.fromTo(image, { opacity: 0, scale: 1.08, filter: "brightness(0.55)" }, { opacity: 1, scale: 1, filter: "brightness(1)", duration: 2 * s, ease: "power2.out" }, 0.5 * s);

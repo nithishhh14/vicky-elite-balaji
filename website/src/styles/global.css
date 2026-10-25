@@ -122,9 +122,15 @@
      motion is allowed (see the js-motion-ready inline script). Content stays
      visible by default so a failed/slow script never leaves it stuck. */
   .js-motion-ready [data-gsap-hero] > *,
-  .js-motion-ready [data-gsap-stagger] > *,
-  .js-motion-ready [data-intro-image] {
+  .js-motion-ready [data-gsap-stagger] > * {
     opacity: 0;
+  }
+  /* The homepage photo only fades in on desktop; phones show it at rest
+     (motion-gsap.ts returns early for them). */
+  @media (min-width: 768px) {
+    .js-motion-ready [data-intro-image] {
+      opacity: 0;
+    }
   }
   /* Decorative intro rule: invisible unless GSAP draws it. */
   [data-intro-line] {
@@ -861,13 +867,18 @@
   .line-mask > span {
     display: inline-block;
   }
-  .js-motion-ready [data-hero-seq] {
-    opacity: 0;
-  }
-  /* Opacity only: GSAP places the line below its mask and reveals it (a CSS
-     transform here would be read back as a fixed pixel offset). */
-  .js-motion-ready [data-hero-line] {
-    opacity: 0;
+  /* Desktop only. On a phone the hero was blank for ~2.6 s while this waited
+     for GSAP to load and play — the worst conversion leak measured. Phones
+     get the hero at rest; the entrance is a desktop luxury. */
+  @media (min-width: 768px) {
+    .js-motion-ready [data-hero-seq] {
+      opacity: 0;
+    }
+    /* Opacity only: GSAP places the line below its mask and reveals it (a CSS
+       transform here would be read back as a fixed pixel offset). */
+    .js-motion-ready [data-hero-line] {
+      opacity: 0;
+    }
   }
 
   /* Granite stage crossfade */
