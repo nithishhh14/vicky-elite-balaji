@@ -6,7 +6,6 @@ import sys
 
 import lead_agent as hunter
 import shared_memory as mem
-from agents import scraper_agent
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 

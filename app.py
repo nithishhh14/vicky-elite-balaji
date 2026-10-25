@@ -450,7 +450,7 @@ def main() -> None:
     cards = []
     for a in mem.AGENT_ROSTER:
         klass = "agent-card"
-        if "WAIT" in a["status"]:
+        if "WAIT" in a["status"] or "NOT BUILT" in a["status"]:
             klass += " waiting"
         elif a["status"] == "STUB":
             klass += " stub"
@@ -517,7 +517,7 @@ def main() -> None:
     else:
         st.info("Lead ledger empty. Tell Vicky: “run hunter”.")
 
-    with st.expander("Specialist stubs (SEO / Marketing)"):
+    with st.expander("Specialists (SEO / Marketing)"):
         st.caption("SEO runs on its schedule; see Operations. Marketing is the next agent to build.")
         kw = st.text_input("SEO keyword", placeholder="granite tiles Coimbatore")
         if st.button("Run SEO Agent") and kw:

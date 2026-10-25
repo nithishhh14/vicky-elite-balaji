@@ -12,7 +12,6 @@ between filler and data, and neither can the owner reading the result.
 """
 from __future__ import annotations
 
-import json
 import re
 import ssl
 import urllib.error

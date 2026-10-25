@@ -26,7 +26,7 @@ os.environ["VICKY_DATA_DIR"] = _TMP
 
 import vicky_store as store  # noqa: E402
 from agents.seo import analysis, jobs, model  # noqa: E402
-from agents.seo.model import Confidence, Provenance, Severity  # noqa: E402
+from agents.seo.model import Confidence, Provenance  # noqa: E402
 from agents.seo.sources import SourceUnavailable, WebsiteCrawlSource, _safe_error  # noqa: E402
 
 
@@ -146,6 +146,8 @@ class TestApprovalCannotBeBypassed(unittest.TestCase):
                 _row("bathroom tiles coimbatore", impressions=90, clicks=0, position=6.0),
             ]),
             create_approvals=True)
+        self.assertTrue(report.ok)
+        self.assertTrue(report.approvals_created)
         after = store.list_approvals("pending", limit=500)
         self.assertGreater(len(after), before)
         for approval in after:

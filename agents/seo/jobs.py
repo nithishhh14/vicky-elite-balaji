@@ -14,7 +14,7 @@ from typing import Any
 import vicky_store as store
 
 from .analysis import MIN_IMPRESSIONS, analyse
-from .model import Confidence, Finding, Opportunity, Provenance, RunReport, Severity
+from .model import Finding, Provenance, RunReport, Severity
 from .sources import (
     SearchConsoleSource,
     SourceUnavailable,

@@ -67,16 +67,33 @@ Commit `2a39162`, preflight 24/24, checked at phone and desktop widths.
   The Google Maps share link of the listing, so Directions opens the listing
   instead of an address search.
 
+### Cleanup pass (LIVE 2026-10-25, late)
+- **www → apex is now done in code:** `website/functions/_middleware.js`
+  301s `www.elitebalaji.com` and `elitebalaji.pages.dev` to elitebalaji.com
+  (branch previews untouched). No Cloudflare dashboard rule needed.
+- Gallery images carry real width/height (read at build by
+  `src/lib/image-dims.ts`), so the masonry no longer jumps while loading.
+- `scripts/audit.mjs` (ids, alt, accessible names, anchors, headings,
+  tel/WhatsApp links, template leaks, JSON-LD) is now preflight check 25.
+- Filler copy rewritten plainly (hero support line, renovation notices,
+  "curated selection", "Bespoke"); client mockup wording kept.
+- Python side (owner doesn't use the Streamlit dashboard; no further work
+  planned on it): `.env` is now loaded in `shared_memory.py` (the dashboard
+  crashed on start without it), Gemini moved to `google-genai`, the
+  permission hint names the real service account. **The lead Google Sheet
+  is not shared with the current service account** (`vicky-agent@…`), so
+  anything using the Sheet fails until it is shared or dropped.
+
 ### Ceramic section (LIVE 2026-10-25)
 Six illustrative ceramic categories + `/ceramic-tiles-coimbatore/`. When the
 showroom can be photographed, swap each `/media/illustrative/ceramic-*.jpg`
 for a real photo under a new filename and drop the "Illustrative image" note.
 
 ### Still blocked on the user
-- **www → apex 301 rule in Cloudflare** — now urgent: Google is indexing
-  `https://www.elitebalaji.com/products/somany-ezy-fix-sef-666/` as a
-  separate URL.
-- Review the 7 SEO approvals in the dashboard.
+- ~~www → apex 301~~ done in code (`website/functions/_middleware.js`).
+- Share the lead Google Sheet with the current service account, or retire
+  the Sheet if the scraper isn't used.
+- Real photos of the ceramic stock to replace the illustrative images.
 
 ## Paused 2026-09-24 — user switched to another project
 
@@ -120,7 +137,7 @@ deferred, or not to deploy, is stale and superseded.
 3. **Deploy of `3057a32`** — confirmed live (3D viewer, sheen, scoping).
 
 ### Blocked on the user / client
-- **Cloudflare:** create the www → apex 301 rule; decide on Web Analytics
+- **Cloudflare:** ~~create the www → apex 301 rule~~ (done in code 2026-10-25); decide on Web Analytics
   (Cloudflare injects a beacon the CSP blocks — a console error on every page
   until allowed or switched off).
 - **GitHub:** branch protection requiring `website-preflight`.

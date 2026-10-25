@@ -125,6 +125,7 @@ try {
   const csp = res.headers.get("content-security-policy") ?? "";
   ok("security headers served", csp.includes("default-src 'self'") && !!res.headers.get("strict-transport-security"), csp.slice(0, 40) + "…");
   const qa = run("node", ["scripts/qa.mjs", `http://127.0.0.1:${PORT}`], "playwright: all pages, 2 viewports, CSP on");
+  run("node", ["scripts/audit.mjs", `http://127.0.0.1:${PORT}`], "markup audit: ids, alt, names, anchors, headings, links");
   const exp = run("node", ["scripts/experience.mjs", `http://127.0.0.1:${PORT}`, "preflight"], "playwright: interaction pass");
   const errs = [...exp.matchAll(/errors=(\d+)/g)].reduce((n, m) => n + Number(m[1]), 0);
   ok("no console errors during interactions", errs === 0, `${errs} errors`);

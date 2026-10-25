@@ -5,6 +5,7 @@ import { getCollection } from "astro:content";
 import { mediaLibrary, provenanceLabel } from "../lib/media-library";
 import { waLink } from "../lib/business";
 import { byOrder } from "../lib/order";
+import { imageDims } from "../lib/image-dims";
 
 // Gallery: real client material first, every image visibly labelled with
 // what it is. Stock (Unsplash) product photos and colour swatches are NOT
@@ -130,7 +131,7 @@ const groups = [
           const Tag = t.href ? "a" : "figure";
           return (
             <Tag href={t.href} data-groups={t.groups.join(" ")} data-reveal-img class="group relative mb-3 block break-inside-avoid overflow-hidden bg-charcoal-deep">
-              <img src={t.src} alt={t.alt} class="w-full eb-img" loading="lazy" />
+              <img src={t.src} alt={t.alt} class="h-auto w-full eb-img" loading="lazy" {...imageDims(t.src)} />
               <span class="absolute inset-x-0 bottom-0 flex flex-col gap-0.5 bg-gradient-to-t from-charcoal-deep/90 via-charcoal-deep/50 to-transparent p-3 pt-10">
                 <span class="text-xs text-paper">{t.title}</span>
                 <span class:list={["text-[0.55rem] uppercase tracking-[0.18em]", t.tone === "idea" ? "text-paper/55" : "text-brass"]}>{t.label}</span>
@@ -148,7 +149,7 @@ const groups = [
       <p class="mt-6 max-w-2xl text-xs text-ink-soft/80">
         “Our work” and “From our stock” are Elite Balaji's own photographs. “Application idea”,
         “Process reference” and “Illustrative render” images show possibilities and are not our projects.
-        Our Karamadai showroom is being transformed.
+        Our Karamadai showroom is being renovated.
       </p>
     </div>
   </section>

@@ -98,7 +98,7 @@ const localHubs = ["Karamadai", "Coimbatore", "Mettupalayam", "Annur", "Sirumuga
         <span class="line-mask"><span data-hero-line class="text-paper">Ceramics</span></span>
       </h1>
       <p data-hero-seq="support" class="mt-6 max-w-xl font-display text-2xl leading-snug text-paper/90 sm:text-3xl">
-        Natural stone. Architectural surfaces. Built to last.
+        Granite slabs, marble, tiles, and the crews to lay them.
       </p>
       <div data-hero-seq="cta" class="mt-9 flex flex-wrap items-center gap-3">
         <div id="hero-cta">
@@ -124,12 +124,13 @@ const localHubs = ["Karamadai", "Coimbatore", "Mettupalayam", "Annur", "Sirumuga
     </div>
 
     <p data-hero-seq="caption" class="absolute bottom-3 left-5 z-10 text-[0.55rem] uppercase tracking-[0.15em] text-paper/35 lg:left-8">
-      {videoZones.hero ? videoZones.hero.label : "Illustrative showroom concept · our Karamadai showroom is being transformed"}
+      {videoZones.hero ? videoZones.hero.label : "Illustrative showroom concept · our Karamadai showroom is being renovated"}
     </p>
   </section>
 
   <!-- 02 — Material worlds + verified trust bar -->
   <section id="materials" class="scroll-mt-24 bg-paper pb-12 pt-8">
+    <h2 class="sr-only">Our materials</h2>
     <div data-gsap-stagger class="worlds mx-auto grid max-w-[96rem] grid-cols-2 gap-3 px-4 sm:px-6 lg:grid-cols-5 lg:gap-4 lg:px-8 xl:flex">
       {worlds.map((w, i) => (
         <a href={w.href} data-sheen class:list={["material-card group relative isolate block aspect-[4/5] overflow-hidden bg-charcoal-deep lg:aspect-[3/4] xl:aspect-auto xl:h-[min(36rem,66vh)] xl:min-h-[27rem]", i === 4 && "col-span-2 aspect-[16/9] lg:col-span-1"]}>
@@ -390,9 +391,9 @@ const localHubs = ["Karamadai", "Coimbatore", "Mettupalayam", "Annur", "Sirumuga
     )}
     <div class="absolute inset-0 bg-gradient-to-r from-charcoal-deep via-charcoal-deep/80 to-charcoal-deep/30" aria-hidden="true"></div>
     <div class="relative mx-auto max-w-7xl px-5 lg:px-8">
-      <p class="text-xs uppercase tracking-[0.3em] text-brass">Our showroom is being transformed</p>
-      <h2 class="mt-4 max-w-2xl font-display text-4xl sm:text-5xl">A new material experience is taking shape in Karamadai.</h2>
-      <p class="mt-5 max-w-xl text-paper/75 leading-relaxed">While the new showroom takes shape, explore our collection online or speak directly with our team. We're happy to share photos and videos of current stock.</p>
+      <p class="text-xs uppercase tracking-[0.3em] text-brass">Showroom renovation</p>
+      <h2 class="mt-4 max-w-2xl font-display text-4xl sm:text-5xl">We're rebuilding the Karamadai showroom.</h2>
+      <p class="mt-5 max-w-xl text-paper/75 leading-relaxed">While the work goes on, browse the catalogue here or message us, and we'll send photos and videos of what's in stock.</p>
       <div class="mt-8 flex flex-wrap gap-3">
         <a href="/gallery/" class="inline-flex min-h-12 items-center border border-brass px-7 py-3.5 text-xs uppercase tracking-[0.2em] hover:bg-brass hover:text-charcoal-deep transition-colors">Explore the gallery</a>
         <a href={waLink("Hi Elite Balaji, could you share photos of your current stock?")} target="_blank" rel="noopener" class="inline-flex min-h-12 items-center px-5 text-xs uppercase tracking-[0.2em] underline decoration-brass underline-offset-8 hover:text-brass">Ask for stock photos</a>
@@ -407,7 +408,7 @@ const localHubs = ["Karamadai", "Coimbatore", "Mettupalayam", "Annur", "Sirumuga
       <div>
         <div class="flex items-center gap-4"><span data-gsap-line class="block h-px w-12 bg-brass" aria-hidden="true"></span><p class="text-xs uppercase tracking-[0.3em] text-brass">Request a quote</p></div>
         <h2 class="mt-4 font-display text-4xl sm:text-5xl">Can't find your material?</h2>
-        <p class="mt-5 text-paper/75 leading-relaxed">What you see here is a curated selection. Send us any of these and our team will help find the right option:</p>
+        <p class="mt-5 text-paper/75 leading-relaxed">This site shows part of what we stock and can source. Send us any of these and we'll find the right option:</p>
         <ul class="mt-5 grid grid-cols-2 gap-2 text-sm text-paper/80">
           {["A photo", "A product name", "A screenshot", "A catalogue page", "Colour & size", "Where it will go"].map((x) => (
             <li class="flex items-center gap-2"><span class="h-px w-4 bg-brass" aria-hidden="true"></span>{x}</li>

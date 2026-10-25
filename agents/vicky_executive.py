@@ -2,9 +2,7 @@
 from __future__ import annotations
 
 import re
-from typing import Any, Callable
-
-import google.generativeai as genai
+from typing import Any
 
 import shared_memory as mem
 from agents import marketing_agent, scraper_agent, seo_agent
@@ -80,10 +78,10 @@ def handle_command(
         return marketing_agent.run_marketing(q)
 
     # Default: executive chat from shared memory
-    mem.configure_gemini()
-    model = genai.GenerativeModel(mem.GEMINI_MODEL)
-    response = model.generate_content(
-        "You are Vicky, Executive Agent for Elite Balaji Stones and Ceramics "
+    client = mem.configure_gemini()
+    response = client.models.generate_content(
+        model=mem.GEMINI_MODEL,
+        contents="You are Vicky, Executive Agent for Elite Balaji Stones and Ceramics "
         f"(trusted since {mem.ESTABLISHED_SINCE}, Karamadai). "
         "You orchestrate the Scraper, SEO and Marketing agents. "
         "Use shared council memory only. Coimbatore / Nilgiris hubs only. "
