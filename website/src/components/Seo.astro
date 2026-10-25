@@ -39,6 +39,8 @@ const localBusinessLd = {
     addressRegion: "Tamil Nadu",
     addressCountry: "IN",
   },
+  geo: { "@type": "GeoCoordinates", latitude: business.geo.lat, longitude: business.geo.lng },
+  hasMap: business.mapListing,
   areaServed: business.serviceHubs,
   url: Astro.site?.toString(),
 };

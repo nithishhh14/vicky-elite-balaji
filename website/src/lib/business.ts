@@ -12,13 +12,22 @@ export const business = {
   phoneWa: "919159056767",
   email: "elitebalajistonesandceramics@gmail.com",
   address: "12-B, Gandhi Nagar, Mettupalayam Main Road, Karamadai, Coimbatore (Dist - 641104)",
-  // Address-only query, deliberately without the business name: a name-based
-  // Maps search can resolve to an unrelated, similarly-named business near
-  // Karamadai. An address-only pin is slightly less precise but never wrong.
+  // The verified Google Business listing, checked 2026-10-25: Maps resolves
+  // "Elite Balaji Stones and Ceramics" to 12-B, Mettupalayam Main Rd, Gandhi
+  // Nagar, Karamadai 641104 at these coordinates. (Before the listing existed,
+  // a name search could land on a similarly-named business, so the old embed
+  // searched the address instead — which showed a wide map full of other
+  // shops with no clear pin.)
+  geo: { lat: 11.269576, lng: 76.9504572 },
+  // Close-in map pinned on the listing itself. The listing's full address is
+  // needed in the query: with only "name, Karamadai" the embed showed the
+  // street but no pin (checked in the browser 2026-10-25).
   mapEmbedSrc:
-    "https://www.google.com/maps?q=12-B+Gandhi+Nagar,+Mettupalayam+Main+Road,+Karamadai,+Coimbatore+641104&output=embed",
-  mapLink:
-    "https://www.google.com/maps/search/?api=1&query=12-B+Gandhi+Nagar+Mettupalayam+Main+Road+Karamadai+Coimbatore+641104",
+    "https://www.google.com/maps?q=Elite+Balaji+Stones+and+Ceramics,+12-B,+Mettupalayam+Main+Rd,+Gandhi+Nagar,+Karamadai,+Tamil+Nadu+641104&z=17&output=embed",
+  // "Directions": opens turn-by-turn straight to the showroom pin.
+  mapLink: "https://www.google.com/maps/dir/?api=1&destination=11.269576,76.9504572",
+  // The Google listing itself (reviews, hours, photos).
+  mapListing: "https://maps.google.com/?cid=14503407691811989555",
   serviceHubs: [
     "Coimbatore",
     "Mettupalayam",

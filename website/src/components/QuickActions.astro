@@ -13,7 +13,6 @@ interface Props {
   shortLabel?: string;
   product?: string;
   category?: string;
-  intent?: string;
 }
 
 const {
@@ -22,7 +21,6 @@ const {
   shortLabel = "Talk to us",
   product,
   category,
-  intent = "Ask price & availability",
 } = Astro.props;
 
 const lookingAt = product ? ` I'm looking at ${product}.` : "";
@@ -49,9 +47,6 @@ const measureMessage = `Hi Elite Balaji, I'd like to book a free site measuremen
         rel="noopener"
         role="menuitem"
         style="--i:0"
-        data-enquire="Book a free site measurement"
-        data-product={product}
-        data-category={category}
         class="quick-item group relative flex items-start gap-3.5 px-5 py-4"
       >
         <span class="quick-accent" aria-hidden="true"></span>
@@ -73,9 +68,6 @@ const measureMessage = `Hi Elite Balaji, I'd like to book a free site measuremen
         rel="noopener"
         role="menuitem"
         style="--i:1"
-        data-enquire={intent}
-        data-product={product}
-        data-category={category}
         class="quick-item group flex items-start gap-3.5 px-5 py-4"
       >
         <svg class="mt-0.5 flex-shrink-0 text-brass" width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

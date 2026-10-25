@@ -8,13 +8,30 @@ import { business, telLink, waLink } from "../lib/business";
 <BaseLayout
   title="Elite Balaji, Karamadai: Address, Phone & Directions"
   description="Elite Balaji Stones & Ceramics, 12-B Gandhi Nagar, Mettupalayam Main Road, Karamadai. Call +91 91590 56767, WhatsApp us, or get directions to the showroom."
-  enquiry={{ label: "Talk to Elite Balaji", shortLabel: "Talk to us", intent: "Send my project requirement" }}
+  enquiry={{ label: "Talk to Elite Balaji", shortLabel: "Talk to us" }}
 >
   <PageHero
     eyebrow="Contact"
     title="Request a quote"
-    intro="Tell us what you're building. We reply with what's available and a current rate, usually fastest on WhatsApp."
+    intro="Message, call or visit. We reply with what's in stock and today's rate, fastest on WhatsApp."
   />
+
+  <!-- The quickest routes first. Most people who reach this page already know
+       what they want to ask; a form between them and WhatsApp only loses some. -->
+  <section aria-label="Contact Elite Balaji" class="border-b border-line bg-paper">
+    <div class="mx-auto grid max-w-7xl gap-3 px-5 py-6 sm:grid-cols-3 lg:px-8">
+      <a href={waLink("Hi Elite Balaji, ")} target="_blank" rel="noopener" class="flex min-h-14 items-center justify-center gap-3 bg-whatsapp px-6 text-sm font-medium uppercase tracking-[0.16em] text-paper hover:opacity-90">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.2.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3Z"/></svg>
+        WhatsApp us
+      </a>
+      <a href={telLink()} class="flex min-h-14 items-center justify-center gap-3 border border-ink px-6 text-sm font-medium uppercase tracking-[0.16em] text-ink hover:border-brass hover:text-mustard-dark">
+        Call {business.phoneDisplay}
+      </a>
+      <a href={business.mapLink} target="_blank" rel="noopener" class="flex min-h-14 items-center justify-center gap-3 border border-line px-6 text-sm font-medium uppercase tracking-[0.16em] text-ink hover:border-brass hover:text-mustard-dark">
+        Directions to the showroom
+      </a>
+    </div>
+  </section>
 
   <!-- Free site measurement: the client's standing offer, bookable here. -->
   <section id="measure" class="scroll-mt-24 border-b border-line bg-card py-14">
@@ -35,8 +52,6 @@ import { business, telLink, waLink } from "../lib/business";
         href={waLink("Hi Elite Balaji, I'd like to book a free site measurement. Location: ___, rooms/areas: ___, preferred day: ___.")}
         target="_blank"
         rel="noopener"
-        data-enquire="Book a free site measurement"
-        data-heading="Book a free site measurement"
         class="btn-arrow inline-flex min-h-12 flex-shrink-0 items-center gap-3 bg-gradient-to-r from-brass to-mustard-dark px-8 text-xs uppercase tracking-[0.2em] text-paper hover:brightness-110"
       >
         Book my measurement
@@ -76,6 +91,7 @@ import { business, telLink, waLink } from "../lib/business";
         <div class="mt-8 overflow-hidden border border-line">
           <iframe src={business.mapEmbedSrc} title="Elite Balaji Stones & Ceramics location on Google Maps" class="h-64 w-full" style="border:0" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
+        <a href={business.mapListing} target="_blank" rel="noopener" class="mt-3 inline-flex min-h-11 items-center text-sm text-ink-soft underline decoration-brass underline-offset-4 hover:text-ink">See our Google listing</a>
         <div class="mt-8 border-t border-line pt-6">
           <p class="text-[0.65rem] uppercase tracking-[0.2em] text-mustard-dark">Showroom renovation</p>
           <p class="mt-2 text-sm text-ink-soft leading-relaxed">While the work goes on, browse the catalogue online or talk to our team. We're happy to send photos of current stock.</p>

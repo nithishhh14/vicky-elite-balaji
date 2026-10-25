@@ -79,7 +79,7 @@ const breadcrumbJsonLd = {
   title={data.title}
   description={metaText(data.description)}
   enquiryMessage={data.enquiry}
-  enquiry={{ label: "Ask about this", category: data.eyebrow.split("·").pop()?.trim(), intent: "Ask price & availability" }}
+  enquiry={{ label: "Ask about this", category: data.eyebrow.split("·").pop()?.trim() }}
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
@@ -104,8 +104,6 @@ const breadcrumbJsonLd = {
             href={waLink(data.enquiry)}
             target="_blank"
             rel="noopener"
-            data-enquire="Ask price & availability"
-            data-category={data.eyebrow.split("·").pop()?.trim()}
             class="btn-arrow inline-flex min-h-12 items-center gap-3 bg-gradient-to-r from-brass to-mustard-dark px-7 text-xs uppercase tracking-[0.2em] text-paper hover:brightness-110"
           >
             Ask for availability &amp; rate
@@ -232,7 +230,7 @@ const breadcrumbJsonLd = {
       <h2 class="font-display text-4xl sm:text-5xl">Tell us the room and the size</h2>
       <p class="mt-4 text-paper/75">We'll reply with what's in the showroom this week and a current rate. Fastest on WhatsApp.</p>
       <div class="mt-8 flex flex-wrap justify-center gap-3">
-        <a href={waLink(data.enquiry)} target="_blank" rel="noopener" data-enquire="Ask price & availability" class="inline-flex min-h-12 items-center bg-gradient-to-r from-brass to-mustard-dark px-8 text-xs uppercase tracking-[0.2em] hover:brightness-110">Send your requirement</a>
+        <a href={waLink(data.enquiry)} target="_blank" rel="noopener" class="inline-flex min-h-12 items-center bg-gradient-to-r from-brass to-mustard-dark px-8 text-xs uppercase tracking-[0.2em] hover:brightness-110">Send your requirement</a>
         <a href="/contact/" class="inline-flex min-h-12 items-center border border-paper/40 px-8 text-xs uppercase tracking-[0.2em] hover:border-brass">Visit the showroom</a>
       </div>
     </div>

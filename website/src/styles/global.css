@@ -819,7 +819,7 @@
     translate: 0 14px;
   }
 
-  /* Dialog language (search, enquiry): fade + translate. */
+  /* Dialog language (search overlay): fade + translate. */
   .eb-dialog {
     opacity: 0;
     transition: opacity 0.4s var(--ease-arch);
@@ -832,17 +832,6 @@
     transition: transform 0.55s var(--ease-settle);
   }
   .eb-dialog[data-state="open"] .eb-dialog-panel {
-    transform: none;
-  }
-  .eb-drawer .eb-dialog-panel {
-    transform: translateX(28px);
-  }
-  @media (max-width: 639px) {
-    .eb-drawer .eb-dialog-panel {
-      transform: translateY(28px);
-    }
-  }
-  .eb-drawer[data-state="open"] .eb-dialog-panel {
     transform: none;
   }
   .eb-stagger > * {

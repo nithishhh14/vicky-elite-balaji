@@ -67,6 +67,16 @@ Commit `2a39162`, preflight 24/24, checked at phone and desktop widths.
   The Google Maps share link of the listing, so Directions opens the listing
   instead of an address search.
 
+### Dashboard removed; enquiry made one-tap (LIVE 2026-10-25, night)
+- Streamlit dashboard and its chat router/stubs deleted (owner never used
+  it). SEO schedule + scraper unaffected. SEO proposals still land in
+  `vicky_data/state/approvals/` with no viewer.
+- Enquiry: drawer removed — every "Ask"/WhatsApp button opens WhatsApp
+  directly with the product named. Quote form: no required fields, extras
+  folded under "More details". Contact page leads with WhatsApp / Call /
+  Directions. Map pinned on the Google listing at street zoom; Directions
+  buttons route straight to the pin (`business.geo`, `mapListing`).
+
 ### Cleanup pass (LIVE 2026-10-25, late)
 - **www → apex is now done in code:** `website/functions/_middleware.js`
   301s `www.elitebalaji.com` and `elitebalaji.pages.dev` to elitebalaji.com

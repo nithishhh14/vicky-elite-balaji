@@ -14,16 +14,13 @@ import lead_agent as hunter
 BASE_DIR = Path(__file__).resolve().parent
 
 # Load .env before anything below reads the environment (SHEET_ID does, at
-# import). Nothing loaded it before 2026-10-25, so the dashboard died on
-# start with "GEMINI_API_KEY is not set" unless the key was set system-wide.
-# Real environment variables still win over the file.
+# import). Real environment variables still win over the file.
 from dotenv import load_dotenv  # noqa: E402
 
 load_dotenv(BASE_DIR / ".env", override=False)
 
 RULES_PATH = BASE_DIR / ".cursorrules"
 CREDS_PATH = BASE_DIR / "google_creds.json"
-MARBLE_PATH = BASE_DIR / "assets" / "black_gold_marble.jpg"
 
 # Overridable via .env — lets the sheet (and the service account behind
 # CREDS_PATH) be swapped to the verified Elite Balaji Google Business account
@@ -50,34 +47,6 @@ LEAD_HEADERS = [
 SEO_HEADERS = ["timestamp", "keyword", "analysis"]
 CONTENT_HEADERS = ["timestamp", "format", "copy"]
 COUNCIL_HEADERS = ["timestamp", "agent", "action", "summary"]
-
-def _service_account_email() -> str:
-    """The account the Sheet must be shared with — read, not hardcoded.
-
-    The message used to name a fixed address. When google_creds.json was
-    replaced in September for Search Console, it went on naming the old
-    account, so following its advice could never fix the error.
-    """
-    try:
-        import json
-
-        return json.loads(CREDS_PATH.read_text(encoding="utf-8")).get("client_email", "")
-    except Exception:
-        return ""
-
-
-PERM_MSG = (
-    "Permission Error: share the Google Sheet as Editor with "
-    + (_service_account_email() or "the client_email inside google_creds.json")
-)
-
-AGENT_ROSTER = [
-    {"id": "vicky", "name": "Vicky", "role": "Executive", "status": "ONLINE"},
-    {"id": "scraper", "name": "Scraper", "role": "Lead harvest", "status": "READY"},
-    {"id": "seo", "name": "SEO", "role": "Search Console", "status": "SCHEDULED"},
-    {"id": "marketing", "name": "Marketing", "role": "Campaigns", "status": "NOT BUILT"},
-]
-
 
 def clean(v: Any) -> str:
     return hunter.clean(v)
@@ -311,6 +280,8 @@ _gemini_client = None
 
 def configure_gemini():
     """The Gemini client, built once from GEMINI_API_KEY in .env.
+
+    No caller today; kept for the Marketing agent, which drafts copy with it.
 
     Uses google-genai; Google ended support for google-generativeai.
     Raises if the key is missing, on purpose: there is no fallback key.

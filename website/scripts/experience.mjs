@@ -108,26 +108,16 @@ const browser = await chromium.launch();
   await shot(p2, "d08-save-flight");
   await p2.waitForTimeout(900);
   note(`saved pressed=${await save.getAttribute("aria-pressed")} count=${await p2.locator("#site-header [data-shortlist-count]").first().textContent()}`);
-  const ask = p2.locator("[data-enquire]").first();
-  if (await ask.count()) {
-    await ask.click();
-    await p2.waitForTimeout(800);
-    await shot(p2, "d09-enquiry-drawer");
-    note(`enquiry drawer open=${await p2.locator("#enquiry-drawer").isVisible()} product=${await p2.locator("#enquiry-drawer [name=product]").inputValue()}`);
-    await p2.keyboard.press("Escape");
-    await p2.waitForTimeout(500);
-    note(`enquiry drawer after Esc=${await p2.locator("#enquiry-drawer").isVisible()}`);
-  } else {
-    note("no [data-enquire] triggers on product page");
-  }
+  // Enquiry is one tap: the first WhatsApp link on a product page must open
+  // WhatsApp directly with the product already named in the message.
+  const askHref = await p2.locator('main a[href*="wa.me/"]').first().getAttribute("href");
+  note(`product WhatsApp names product=${decodeURIComponent(askHref ?? "").includes("Black Galaxy")}`);
   note(`floating CTA label="${(await p2.locator(".quick-pill").innerText()).trim()}"`);
   await p2.locator("#quick-toggle").click();
   await p2.waitForTimeout(600);
   note(`quick menu open=${await p2.locator("#quick-menu").isVisible()} items=${await p2.locator("#quick-menu [role=menuitem]").count()}`);
-  await p2.locator('[data-enquire="Book a free site measurement"]').first().click();
-  await p2.waitForTimeout(800);
-  await shot(p2, "d09b-measure-booking");
-  note(`measure booking fields=${await p2.locator("[data-measure-only]").isVisible()} cta="${(await p2.locator("[data-enquiry-wa-label]").textContent())?.trim()}"`);
+  const measureHref = await p2.locator('#quick-menu a[href*="wa.me/"]').first().getAttribute("href");
+  note(`measure booking goes to WhatsApp=${decodeURIComponent(measureHref ?? "").includes("site measurement")}`);
   await p2.keyboard.press("Escape");
   await p2.waitForTimeout(500);
   await p2.evaluate(() => window.scrollTo(0, 400));
@@ -259,14 +249,9 @@ const browser = await chromium.launch();
 
   const p2 = await newPage(context);
   await p2.goto(BASE + "/products/sanitary-quartz-sink-single/", { waitUntil: "networkidle" });
-  const ask = p2.locator("main [data-enquire]").first();
-  if (await ask.count()) {
-    await ask.tap();
-    await p2.waitForTimeout(900);
-    await shot(p2, "m04-enquiry");
-    const box = await p2.locator("#enquiry-drawer .eb-dialog-panel").boundingBox();
-    note(`phone enquiry panel y=${box?.y?.toFixed(0)} h=${box?.height?.toFixed(0)}`);
-  }
+  const wa = p2.locator('main a[href*="wa.me/"]').first();
+  const waBox = await wa.boundingBox();
+  note(`phone WhatsApp tap target h=${waBox?.height?.toFixed(0)}`);
   note(`phone product errors=${p2.errors.length}`);
 
   const p3 = await newPage(context);

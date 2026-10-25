@@ -1,18 +1,16 @@
 # Vicky — Elite Balaji Stones & Ceramics automation
 
-Multi-agent business system for Elite Balaji Stones & Ceramics (Karamadai,
-Coimbatore, since 2012). Executive agent routes commands across a council of
-specialist agents; a Streamlit dashboard is the control surface; a static
-website is the public virtual showroom.
+Business system for Elite Balaji Stones & Ceramics (Karamadai, Coimbatore,
+since 2012). The public website is the main product; behind it, a scheduled
+SEO agent and a lead scraper. There is no dashboard (removed 2026-10-25 —
+the owner never used it).
 
 ## Architecture (what's actually wired together)
 
-- `app.py` — Streamlit dashboard, entry point. Loads env, configures Gemini,
-  routes voice/text through `agents/vicky_executive.py`.
 - `vicky_store.py` — the local data layer over `vicky_data/`: approvals,
   daily SEO snapshots, campaigns, run logs. Standard library only, atomic
-  JSON writes. Every agent and the dashboard go through it — nothing reads
-  or writes `vicky_data/` directly.
+  JSON writes. Every agent goes through it — nothing reads or writes
+  `vicky_data/` directly.
 - `shared_memory.py` — the shared state layer: Google Sheet I/O (leads,
   council log, SEO audits), lead cleaning/dedup rules, `.cursorrules` loader.
   This is the closest thing to "shared memory" right now — it's a live
@@ -20,15 +18,16 @@ website is the public virtual showroom.
 - `lead_agent.py` — the real scraper (Google Maps + Search harvesting,
   lead normalization, filtering). This is what `agents/scraper_agent.py`
   actually calls.
-- `agents/` — one file per council member:
-  - `vicky_executive.py` — intent router + default chat via Gemini
+- `agents/`:
+  - `seo/` — Search Console snapshots, health check, evidence-backed
+    opportunities → approvals only (files in `vicky_data/state/approvals/`).
+    CLI: `python -m agents.seo`. Scheduled via `scripts/install_schedule.py`.
   - `scraper_agent.py` — wraps `lead_agent.run_harvest()`
-  - `seo_agent.py` — facade over `agents/seo/` (Search Console snapshots,
-    health check, evidence-backed opportunities → approvals only). CLI:
-    `python -m agents.seo`. Scheduled via `scripts/install_schedule.py`.
-  - `marketing_agent.py` — **stub**; the website is now live, so this is
-    unblocked and is the next agent to build
-- **Removed 2026-10-25** (see `docs/DECISIONS.md`): the Email agent (cold
+  - Marketing agent: not built; next in the build order.
+- **Removed 2026-10-25** (see `docs/DECISIONS.md`): the Streamlit dashboard
+  (`app.py`, `run_vicky.bat`) with the chat router and stubs only it used
+  (`vicky_executive.py`, `marketing_agent.py`, `seo_agent.py` facade); the
+  Email agent (cold
   email to scraped contacts — low yield, spam/DPDP risk; the scraper's
   output is a phone call list instead) and `agents/classify.py` (Laya model:
   never called, slower than the rules and no more accurate). Both are in git
@@ -58,8 +57,9 @@ significant changes, read in this order:
    (branch → preflight → preview → approval → live), the agent build order,
    roles, and the client-PC migration
 8. `docs/DAILY_OPS_AND_DASHBOARD.md` — the daily rhythm (SEO, campaigns),
-   the `vicky_data/` directory, the admin dashboard, and when a database
-   would finally be warranted
+   the `vicky_data/` directory, and when a database would finally be
+   warranted (its admin-dashboard sections are historical; the dashboard
+   was removed 2026-10-25)
 9. `docs/COMPETITOR_ANALYSIS.md` — who we're up against (Lakshmi Ceramics,
    The Tile Bros, Kandhaas, Kurinji, Karamadai/Mettupalayam shops) and the
    goal: dominate them online, on truth and stone specialism

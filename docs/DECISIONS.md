@@ -746,3 +746,21 @@ not removed: hero video generation (credits, low conversion value) and the
 cross-device "JARVIS" vision (docs only). Kept: website, SEO agent, scraper,
 dashboard, 3D viewer.
 
+## 2026-10-25 — Removed the Streamlit dashboard; enquiry is one tap
+
+**Dashboard:** owner: "We don't even use that." Removed `app.py`,
+`run_vicky.bat`, and what only it used (`agents/vicky_executive.py`,
+`agents/marketing_agent.py` stub, `agents/seo_agent.py` facade, the
+dashboard background image). The SEO schedule and scraper are unaffected.
+SEO proposals still land as JSON in `vicky_data/state/approvals/`; there is
+no viewer for them now. Supersedes the "combined admin dashboard" entries
+above.
+
+**Enquiry friction:** the enquiry drawer intercepted every "Ask price" /
+WhatsApp button and showed a 7-field form before WhatsApp opened. Removed:
+those links now open WhatsApp directly with the product already named. The
+quote form has no required fields (WhatsApp already shows the sender's name
+and number); name/phone/timeline sit under "More details (optional)". The
+contact page leads with WhatsApp / Call / Directions. The map is pinned on
+the verified Google listing at street zoom instead of a wide address search.
+

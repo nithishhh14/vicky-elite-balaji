@@ -51,10 +51,10 @@ const hallNameOf = (id: string) => halls.find((h) => h.id === id)?.data.name ?? 
 
 const what = product.data.category ? `${name} (${product.data.category})` : name;
 const intents = [
-  { label: "Do you have this in stock?", intent: "Ask price & availability", message: `Hi Elite Balaji, do you have ${what} in stock right now?` },
-  { label: "Can I see a sample or photos?", intent: "Request a sample or photos", message: `Hi Elite Balaji, can I see a sample or current photos of ${what}?` },
-  { label: "Suggest an alternative", intent: "Suggest an alternative", message: `Hi Elite Balaji, I'm interested in ${what}. Can you suggest alternatives in a similar look or budget?` },
-  { label: "I need this for my project", intent: "Send my project requirement", message: `Hi Elite Balaji, I need ${what} for my project. Location: ___, area/quantity: ___, timeline: ___.` },
+  { label: "Do you have this in stock?", message: `Hi Elite Balaji, do you have ${what} in stock right now?` },
+  { label: "Can I see a sample or photos?", message: `Hi Elite Balaji, can I see a sample or current photos of ${what}?` },
+  { label: "Suggest an alternative", message: `Hi Elite Balaji, I'm interested in ${what}. Can you suggest alternatives in a similar look or budget?` },
+  { label: "I need this for my project", message: `Hi Elite Balaji, I need ${what} for my project. Location: ___, area/quantity: ___, timeline: ___.` },
 ];
 
 // No "offers" block: this site never publishes prices (trade rates are
@@ -196,9 +196,6 @@ const breadcrumbJsonLd = {
         rel="noopener"
         aria-label={`Ask price and availability for ${name}`}
         data-gsap-magnetic
-        data-enquire="Ask price & availability"
-        data-product={name}
-        data-category={product.data.category ?? hallName}
         class="btn-arrow inline-flex min-h-12 items-center gap-3 bg-gradient-to-r from-brass to-mustard-dark px-6 py-3 text-xs font-medium uppercase tracking-[0.18em] text-paper hover:brightness-110"
       >
         Ask price &amp; availability
@@ -215,7 +212,7 @@ const breadcrumbJsonLd = {
       <ul class="mt-4 grid gap-2 text-left sm:grid-cols-2">
         {intents.map((intent) => (
           <li>
-            <a href={waLink(intent.message)} target="_blank" rel="noopener" data-enquire={intent.intent} data-product={name} data-category={product.data.category ?? hallName} class="group flex min-h-12 items-center justify-between gap-3 border border-line bg-card px-4 py-3 text-sm hover:border-brass">
+            <a href={waLink(intent.message)} target="_blank" rel="noopener" class="group flex min-h-12 items-center justify-between gap-3 border border-line bg-card px-4 py-3 text-sm hover:border-brass">
               <span>{intent.label}</span>
               <span aria-hidden="true" class="arrow text-brass">&rarr;</span>
             </a>

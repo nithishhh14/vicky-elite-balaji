@@ -36,7 +36,7 @@ const hero = bySlug("tulsi-madam-engraved-black");
   title="Custom Stonecraft & Granite Engraving | Elite Balaji"
   description="Engraved name plates and signs, tulsi madams, pooja units, granite tables and benches, plus custom printed tiles, made to order in Karamadai."
   enquiryMessage="Hi Elite Balaji, I have an idea for a custom stone piece. Here are the details:"
-  enquiry={{ label: "Discuss custom work", shortLabel: "Custom work", category: "Custom stonecraft", intent: "Discuss custom work" }}
+  enquiry={{ label: "Discuss custom work", shortLabel: "Custom work", category: "Custom stonecraft" }}
 >
   <section class="relative isolate overflow-hidden bg-charcoal-deep text-paper">
     <div class="mx-auto grid max-w-7xl gap-10 px-5 pb-16 pt-32 lg:grid-cols-[1.1fr_0.9fr] lg:items-end lg:px-8 lg:pt-40">
@@ -49,7 +49,7 @@ const hero = bySlug("tulsi-madam-engraved-black");
           across India.
         </p>
         <div class="mt-9 flex flex-wrap gap-3">
-          <a href={waLink("Hi Elite Balaji, I have an idea for a custom stone piece (photo/sketch attached):")} target="_blank" rel="noopener" data-enquire="Discuss custom work" data-category="Custom stonecraft" data-heading="Share your idea" class="bg-gradient-to-r from-brass to-mustard-dark px-7 py-3.5 text-xs uppercase tracking-[0.2em] hover:brightness-110">Share your idea</a>
+          <a href={waLink("Hi Elite Balaji, I have an idea for a custom stone piece (photo/sketch attached):")} target="_blank" rel="noopener" class="bg-gradient-to-r from-brass to-mustard-dark px-7 py-3.5 text-xs uppercase tracking-[0.2em] hover:brightness-110">Share your idea</a>
           <a href="#work" class="border border-paper/40 px-7 py-3.5 text-xs uppercase tracking-[0.2em] hover:border-brass">See our work</a>
           <a href="#tile-printing" class="border border-paper/40 px-7 py-3.5 text-xs uppercase tracking-[0.2em] hover:border-brass">Custom tile printing</a>
         </div>
@@ -195,9 +195,6 @@ const hero = bySlug("tulsi-madam-engraved-black");
             href={waLink(`Hi Elite Balaji, I'm interested in ${c.title.toLowerCase()}. Here's what I have in mind:`)}
             target="_blank"
             rel="noopener"
-            data-enquire="Discuss custom work"
-            data-product={c.title}
-            data-category="Custom stonecraft"
             class:list={["mt-8 inline-flex min-h-11 items-center gap-2 border-b text-xs uppercase tracking-[0.2em]", i % 2 === 1 ? "border-brass text-paper hover:text-brass" : "border-mustard-dark hover:text-mustard-dark"]}
           >
             Ask about {c.title.toLowerCase()} <span class="arrow" aria-hidden="true">&rarr;</span>
@@ -228,7 +225,7 @@ const hero = bySlug("tulsi-madam-engraved-black");
     <h2 class="font-display text-4xl sm:text-5xl">Have a drawing or a photo?</h2>
     <p class="mx-auto mt-4 max-w-xl text-paper/75">Send it on WhatsApp with the size and where it will go. We'll tell you what's possible in stone and what it will take.</p>
     <div class="mt-8 flex flex-wrap justify-center gap-3">
-      <a href={waLink("Hi Elite Balaji, here's my custom stone idea (photo/sketch, size, location):")} target="_blank" rel="noopener" data-enquire="Discuss custom work" data-category="Custom stonecraft" data-heading="Share your idea" class="bg-gradient-to-r from-brass to-mustard-dark px-8 py-4 text-xs uppercase tracking-[0.2em] hover:brightness-110">Send your idea</a>
+      <a href={waLink("Hi Elite Balaji, here's my custom stone idea (photo/sketch, size, location):")} target="_blank" rel="noopener" class="bg-gradient-to-r from-brass to-mustard-dark px-8 py-4 text-xs uppercase tracking-[0.2em] hover:brightness-110">Send your idea</a>
       <a href={telLink()} class="border border-paper/40 px-8 py-4 text-xs uppercase tracking-[0.2em] hover:border-brass">Call us</a>
     </div>
   </section>
