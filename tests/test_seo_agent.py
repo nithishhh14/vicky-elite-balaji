@@ -293,6 +293,90 @@ class TestDailySnapshot(unittest.TestCase):
         self.assertGreater(len(store.recent_runs(limit=200)), before)
 
 
+class TestSchedulerResilience(unittest.TestCase):
+    """October's lesson: runs fired before Wi-Fi was up, and early zeros stuck."""
+
+    def setUp(self):
+        from agents.seo import __main__ as cli
+        self.cli = cli
+        _seed_targets()
+        for f in store.SEO_DIR.glob("*.json"):
+            f.unlink()
+
+    def _report(self, ok, errors=()):
+        r = model.RunReport(job="seo-daily", started=store.now())
+        r.ok = ok
+        r.errors.extend(errors)
+        return r
+
+    def test_network_failure_is_retried_until_it_works(self):
+        results = [self._report(False, ["Search Console query failed: TransportError: "
+                                        "Unable to find the server at oauth2.googleapis.com"]),
+                   self._report(True)]
+        waits = []
+        out = self.cli._with_retry(lambda: results.pop(0), sleep=waits.append)
+        self.assertTrue(out.ok)
+        self.assertEqual(len(waits), 1)
+
+    def test_a_real_failure_is_not_retried(self):
+        waits = []
+        out = self.cli._with_retry(
+            lambda: self._report(False, ["Search Console unavailable: authentication failed"]),
+            sleep=waits.append)
+        self.assertFalse(out.ok)
+        self.assertEqual(waits, [])
+
+    def test_retries_stop_at_the_limit(self):
+        waits = []
+        self.cli._with_retry(lambda: self._report(False, ["TimeoutError: [WinError 10060]"]),
+                             sleep=waits.append)
+        self.assertEqual(len(waits), self.cli.RETRIES - 1)
+
+    def test_resync_refetches_empty_days_and_keeps_complete_ones(self):
+        end = date.today() - timedelta(days=2)
+        old_full = end - timedelta(days=6)
+        old_empty = end - timedelta(days=7)
+        store.save_seo_day(old_full, {"totals": {"impressions": 40, "clicks": 1}})
+        store.save_seo_day(old_empty, {"totals": {"impressions": 0, "clicks": 0}})
+        gsc = FakeGSC(totals=_row(impressions=25), queries=[_row(query="kota stone", impressions=25)])
+        written, skipped, empty, failed = self.cli._resync(gsc, days=10, settling=3)
+        self.assertEqual(skipped, 1)       # only the complete, settled day
+        self.assertEqual(written, 9)       # the stale zero included
+        self.assertEqual(failed, 0)
+        self.assertEqual(store.read_json(store.SEO_DIR / f"{old_empty}.json")["totals"]["impressions"], 25)
+        self.assertEqual(store.read_json(store.SEO_DIR / f"{old_full}.json")["totals"]["impressions"], 40)
+
+    def test_settling_days_are_refreshed_even_with_data(self):
+        end = date.today() - timedelta(days=2)
+        store.save_seo_day(end, {"totals": {"impressions": 5, "clicks": 0}})
+        gsc = FakeGSC(totals=_row(impressions=30), queries=[_row(query="granite", impressions=30)])
+        self.cli._resync(gsc, days=1, settling=1)
+        self.assertEqual(store.read_json(store.SEO_DIR / f"{end}.json")["totals"]["impressions"], 30)
+
+    def test_refetching_an_old_day_raises_no_false_drop(self):
+        newest = date.today() - timedelta(days=2)
+        store.save_seo_day(newest, {"totals": {"impressions": 300, "clicks": 9}})
+        report = jobs.daily_snapshot(day=newest - timedelta(days=5), compare=False,
+                                     gsc=FakeGSC(totals=_row(impressions=40),
+                                                 queries=[_row(query="tiles", impressions=40)]))
+        self.assertFalse([f for f in report.findings if f.code == "seo.flag"])
+
+
+class TestNoRepeatProposals(unittest.TestCase):
+    def test_second_weekly_run_files_nothing_new(self):
+        _seed_targets()
+        for f in store.APPROVALS_DIR.glob("apr-*.json"):
+            f.unlink()
+        rows = [_row(query="granite countertop coimbatore", impressions=120, clicks=0, position=9.0)]
+        pages = [_row(page="https://elitebalaji.com/granite-countertops-coimbatore/",
+                      impressions=120, clicks=0, position=9.0)]
+        first = jobs.weekly_opportunities(gsc=FakeGSC(queries=rows, pages=pages))
+        self.assertTrue(first.approvals_created)
+        second = jobs.weekly_opportunities(gsc=FakeGSC(queries=rows, pages=pages))
+        self.assertEqual(second.approvals_created, [])
+        self.assertTrue([f for f in second.findings if f.code == "seo.already_proposed"])
+
+
 class TestCrawlParsing(unittest.TestCase):
     HTML = ('<html><head><title>Granite in Karamadai | Elite Balaji</title>'
             '<meta name="description" content="Granite, marble and tiles from our own yard in Karamadai.">'

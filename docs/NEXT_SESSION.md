@@ -1,5 +1,50 @@
 # START HERE
 
+## Resumed 2026-10-25 — health check after a month away
+
+**Verdict: website healthy; the SEO scheduler was broken in four ways, now fixed.**
+
+- **Website:** live, `/`, sitemap, robots, 301s, security headers all fine.
+  Preflight 24/24. No website code changed today.
+- **Search Console (real data, 2026-09-20 → 10-23):** 52 clicks, 1,549
+  impressions, avg position ~13.5, weekly impressions climbing 41 → ~340.
+  Strongest: `/athangudi-tiles-coimbatore/` (pos ~9), kota stone, kondagattu
+  granite, kadappa "near me" queries — all sitting just off page one.
+- **Scheduler — what was wrong, all fixed and tested (31 tests):**
+  1. Network calls had **no timeout** (httplib2 default) → runs at wake hung
+     forever. Now 60 s (`sources.REQUEST_TIMEOUT`).
+  2. Runs fired **before Wi-Fi** was up → TransportError. Now retried 3×,
+     2 min apart (`__main__._with_retry`).
+  3. **Visible console window** got closed → 12 of 27 runs killed mid-way.
+     Tasks now launch through hidden PowerShell (re-registered).
+  4. `run_job.cmd` **swallowed the exit code** → Task Scheduler showed 0 for
+     failures. Now `exit /b %RC%`.
+  5. **Weekly job had never finished**: cp1252 stdout crashed on "→" when
+     redirected to the log. stdout is now UTF-8.
+  6. Early snapshots stored **zeros that stayed wrong**. `daily` now repairs
+     the last 10 days (missing/empty days, plus the 3 still settling).
+  7. Weekly job **re-filed the same proposals** every run. Now keyed by
+     subject (`Opportunity.key`); pending/approved never re-filed, rejected
+     ones can return after 28 days.
+- **History recovered:** 34 days with data, none missing since the site first
+  appeared in Google.
+- **Approvals:** 7 pending SEO proposals (kadappa hall page 139 impressions
+  / 0 clicks, floor/kitchen-sink/bathroom/wall/elevation tile pages,
+  "athangudi tiles in coimbatore" at 8.8). 5 duplicates from a crashed run
+  were closed as rejected with a note.
+- **MCPs:** all connected in the desktop app, including **comfy-mcp** (the
+  CLI's `claude mcp list` reports a -32022 protocol error for it, but the
+  server answers fine inside sessions — cosmetic CLI probe issue). ComfyUI
+  itself is not running (RTX 3050, 4 GB VRAM).
+- **Untracked:** `AGENTS.md` (Codex copy of CLAUDE.md — will drift) and
+  `.codex/` (MCP mirror, no secrets). Left as-is.
+
+### Still blocked on the user
+- **www → apex 301 rule in Cloudflare** — now urgent: Google is indexing
+  `https://www.elitebalaji.com/products/somany-ezy-fix-sef-666/` as a
+  separate URL.
+- Review the 7 SEO approvals in the dashboard.
+
 ## Paused 2026-09-24 — user switched to another project
 
 **The site is LIVE.** Anything further down this file saying deployment is

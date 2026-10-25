@@ -24,6 +24,9 @@ from typing import Any, Protocol
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 CREDS_PATH = BASE_DIR / "google_creds.json"
 GSC_SCOPES = ["https://www.googleapis.com/auth/webmasters.readonly"]
+#: Seconds before a Search Console call gives up. Generous for a slow link,
+#: finite so a dead one fails loudly instead of hanging the scheduled job.
+REQUEST_TIMEOUT = 60
 USER_AGENT = "VickySEOAgent/1.0 (+https://elitebalaji.com)"
 
 
@@ -68,14 +71,20 @@ class SearchConsoleSource:
         if self._service is not None:
             return self._service
         try:
+            import httplib2
             from google.oauth2 import service_account
+            from google_auth_httplib2 import AuthorizedHttp
             from googleapiclient.discovery import build
         except ImportError as exc:  # pragma: no cover - dependency is pinned
             raise SourceUnavailable(f"google client libraries missing: {exc}") from exc
         creds = service_account.Credentials.from_service_account_file(
             str(self.creds_path), scopes=GSC_SCOPES
         )
-        self._service = build("searchconsole", "v1", credentials=creds, cache_discovery=False)
+        # httplib2's default is no timeout at all. A laptop waking with Wi-Fi
+        # half up then holds the socket open forever, and the scheduled job
+        # never writes another line — that was most of October's missing days.
+        http = AuthorizedHttp(creds, http=httplib2.Http(timeout=REQUEST_TIMEOUT))
+        self._service = build("searchconsole", "v1", http=http, cache_discovery=False)
         return self._service
 
     def list_properties(self) -> list[dict[str, str]]:

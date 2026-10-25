@@ -1,7 +1,21 @@
 # Vicky / Elite Balaji — Current Project State
 
-_Last updated: 2026-09-24 — site live on elitebalaji.com, SEO agent, 3D viewer; paused for another project. Previous: 2026-09-13 — homepage/Tiles-hero rebuilt away from Athangudi, honest sourcing layer extended to Quartz/Sanitaryware, real React Bits component integration, Athangudi catalogue depth expansion (product image galleries + spec fields), SEO structured-data gap closed on hall/material pages. See `docs/DECISIONS.md` for each._
+_Last updated: 2026-10-25 — health check after a month away; SEO scheduler made robust (timeouts, retries, hidden launch, exit codes, self-repairing history, no repeat proposals). Previous: 2026-09-24 — site live, SEO agent, 3D viewer. See `docs/DECISIONS.md`._
 
+
+## 2026-10-25 — health check; scheduler made robust
+
+- Verified: live site, preflight 24/24, Vicky tests 31/31, Search Console
+  reachable, history 2026-09-20 → 10-23 complete (34 days with data).
+- Fixed in `agents/seo/`: 60 s request timeout; transient-network retry
+  (3×, 120 s); `daily` repairs the last 10 days; stdout forced to UTF-8
+  (weekly job had never completed); proposals deduplicated across runs.
+- `scripts/run_job.cmd` passes the exit code through; tasks launch via hidden
+  PowerShell (`scripts/install_schedule.py`, re-registered 2026-10-25).
+  Verified end-to-end with the exact scheduled command line.
+- Not verified: an actual Task Scheduler trigger firing (Task Scheduler
+  cannot launch from inside the Claude session) — check
+  `vicky_data/state/logs/schedule.log` after the next 07:30.
 
 ## 2026-09-24 — LIVE; SEO agent running; paused for another project
 

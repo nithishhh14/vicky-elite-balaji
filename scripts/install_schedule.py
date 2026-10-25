@@ -75,9 +75,17 @@ def register(job_id: str, arg: str, trigger: str) -> tuple[bool, str]:
     annoying possible failure. Register-ScheduledTask takes Execute, Argument
     and WorkingDirectory as separate values and quotes them correctly.
     """
+    # Launched through a hidden PowerShell, not the .cmd directly. A visible
+    # console at 07:30 is a window someone closes, and closing it killed the
+    # job mid-run — twelve of the first twenty-seven runs never finished.
+    # `conhost --headless` also hides it but drops the exit code; this keeps it.
+    launch = (
+        "-NoProfile -NonInteractive -WindowStyle Hidden -ExecutionPolicy Bypass "
+        f"-Command \"& '{WRAPPER}' {arg}; exit $LASTEXITCODE\""
+    ).replace("'", "''")
     script = (
-        f"$act = New-ScheduledTaskAction -Execute '{WRAPPER}' "
-        f"-Argument '{arg}' -WorkingDirectory '{BASE}'; "
+        f"$act = New-ScheduledTaskAction -Execute 'powershell.exe' "
+        f"-Argument '{launch}' -WorkingDirectory '{BASE}'; "
         f"$trg = {trigger}; "
         "$set = New-ScheduledTaskSettingsSet -StartWhenAvailable "
         "-AllowStartIfOnBatteries -DontStopIfGoingOnBatteries "

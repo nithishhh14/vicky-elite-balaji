@@ -131,8 +131,18 @@ class Opportunity:
         """False when we are declining to recommend rather than recommending."""
         return self.confidence is not Confidence.INSUFFICIENT_EVIDENCE
 
+    @property
+    def key(self) -> str:
+        """What this is *about*, independent of this week's numbers.
+
+        The title changes as impressions grow; the subject does not. Used to
+        avoid filing the same proposal twice, here and across weekly runs.
+        """
+        return f"{self.code}|{self.evidence.query or self.affected_url or self.evidence.page}"
+
     def to_dict(self) -> dict[str, Any]:
         return {
+            "key": self.key,
             "code": self.code,
             "title": self.title,
             "whatToChange": self.what_to_change,

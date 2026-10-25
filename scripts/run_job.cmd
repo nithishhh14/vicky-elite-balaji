@@ -16,5 +16,8 @@ set "LOG=%ROOT%\vicky_data\state\logs\schedule.log"
 cd /d "%ROOT%"
 echo [%date% %time%] --- %* --- >> "%LOG%" 2>&1
 "%PY%" -m agents.seo %* >> "%LOG%" 2>&1
-echo [%date% %time%] exit=%errorlevel% >> "%LOG%" 2>&1
-endlocal
+set "RC=%errorlevel%"
+echo [%date% %time%] exit=%RC% >> "%LOG%" 2>&1
+REM Hand python's exit code to Task Scheduler. Without this the task
+REM reported 0 every morning, including the ones that failed.
+endlocal & exit /b %RC%

@@ -233,7 +233,11 @@ Operations panel in the dashboard.
 5. **Executive** — routes "add this product", "what's ranking", "post the
    offer", and surfaces the approvals queue in chat.
 
-A scheduler is deliberately not built yet: `schedule.json` is the specification,
-and until the agents exist there is nothing to schedule. When they do, Windows
-Task Scheduler running one `python -m vicky_jobs <job-id>` per row is enough —
-no new service, and it survives a reboot.
+The SEO jobs run from Windows Task Scheduler (`\Vicky\seo-daily` 07:30,
+`seo-health` 07:40, `seo-opportunities` Mon 08:00), registered by
+`python scripts/install_schedule.py` and checked with `--verify`. Each task
+runs `scripts/run_job.cmd` through a hidden PowerShell; output goes to
+`vicky_data/state/logs/schedule.log` with an `exit=` line per run. A missed
+morning is harmless: the next successful `daily` re-fetches the last 10 days.
+Only jobs whose agent exists are registered; the rest of `schedule.json`
+waits for its agent.

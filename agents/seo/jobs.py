@@ -53,11 +53,15 @@ def _finish(report: RunReport, detail: str = "") -> RunReport:
 # ─────────────────────────── 1. daily snapshot ───────────────────────────
 
 def daily_snapshot(day: date | None = None, window_days: int = 1,
-                   gsc: SearchConsoleSource | None = None) -> RunReport:
+                   gsc: SearchConsoleSource | None = None,
+                   compare: bool = True) -> RunReport:
     """One Search Console snapshot per day, stored forever.
 
     Search Console keeps 16 months. We keep everything, because a trend we can
     compute ourselves is the only trend we can be sure of.
+
+    `compare=False` for re-fetching an older day: measuring it against the
+    newest snapshot would flag a "drop" that is just two different days.
     """
     report = RunReport(job="seo-daily", started=store.now())
     gsc = gsc or SearchConsoleSource()
@@ -106,7 +110,7 @@ def daily_snapshot(day: date | None = None, window_days: int = 1,
 
     # A drop is only meaningful against our own stored history.
     previous = store.latest_seo()
-    if previous and previous.get("date") != target_day.isoformat():
+    if compare and previous and previous.get("date") != target_day.isoformat():
         before = (previous.get("totals") or {}).get("impressions", 0)
         after = record["totals"]["impressions"]
         if before >= 20 and after < before * 0.6:
@@ -116,11 +120,12 @@ def daily_snapshot(day: date | None = None, window_days: int = 1,
 
     if not queries and not pages:
         record["flags"].append(
-            "Search Console returned no rows for this window. Normal for a new property."
+            "Search Console returned no rows for this window."
         )
         report.findings.append(Finding(
             code="seo.no_data", title="No Search Console rows yet",
-            detail=f"No data for {start} to {target_day}. The property is new; this is expected.",
+            detail=f"No data for {start} to {target_day}. Google often posts a day late; "
+                   "the daily job re-fetches empty days, so this fills itself in.",
             provenance=Provenance.GOOGLE_CONFIRMED, severity=Severity.INFO,
         ))
 
@@ -308,6 +313,31 @@ def _looks_like_a_price(html: str) -> bool:
 
 # ───────────────────── 3. weekly opportunity analysis ─────────────────────
 
+#: A rejected proposal stays quiet this long before the evidence may raise it
+#: again. Pending and approved ones are never re-filed.
+REPROPOSE_AFTER_DAYS = 28
+
+
+def _proposed_keys() -> set[str]:
+    """Subjects already waiting for a decision, approved, or recently turned down.
+
+    Without this a weekly run files the same "kadappa page gets no clicks"
+    proposal every Monday until someone acts, and the queue becomes noise.
+    """
+    cutoff = (date.today() - timedelta(days=REPROPOSE_AFTER_DAYS)).isoformat()
+    keys = set()
+    for a in store.list_approvals(status=None, limit=10_000):
+        if a.get("kind") != "seo":
+            continue
+        p = a.get("payload") or {}
+        ev = p.get("evidence") or {}
+        key = p.get("key") or f"{p.get('code')}|{ev.get('query') or p.get('affectedUrl') or ev.get('page')}"
+        status = a.get("status")
+        if status in ("pending", "approved") or (a.get("decidedAt") or "")[:10] >= cutoff:
+            keys.add(key)
+    return keys
+
+
 def weekly_opportunities(window_days: int = 28, gsc: SearchConsoleSource | None = None,
                          create_approvals: bool = True, max_approvals: int = 5) -> RunReport:
     """Real queries in, evidence-backed proposals out — or an honest nothing.
@@ -361,7 +391,17 @@ def weekly_opportunities(window_days: int = 28, gsc: SearchConsoleSource | None 
     ))
 
     if create_approvals:
-        for opp in actionable[:max_approvals]:
+        already = _proposed_keys()
+        fresh = [o for o in actionable if o.key not in already]
+        if len(fresh) < len(actionable):
+            report.findings.append(Finding(
+                code="seo.already_proposed",
+                title=f"{len(actionable) - len(fresh)} already in the approvals queue",
+                detail="Not filed again. A rejected proposal can return after "
+                       f"{REPROPOSE_AFTER_DAYS} days if the evidence is still there.",
+                provenance=Provenance.INFERRED,
+            ))
+        for opp in fresh[:max_approvals]:
             approval = store.create_approval(
                 kind="seo",
                 title=opp.title,

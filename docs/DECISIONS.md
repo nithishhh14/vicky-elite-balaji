@@ -712,3 +712,14 @@ Console access from here).
 **Alternatives considered:** Populate `products` directly with the client's list as if confirmed (rejected — direct fabrication risk to a real business); leave categories empty until real photography arrives (rejected — doesn't address the actual "feels empty" complaint, which is legitimate).
 **Also addressed in this pass:** the client separately said "be light on the Athangudi theme" — the homepage's full-viewport Athangudi hero section (previously the second thing every visitor saw) was reduced to a compact one-line mention further down the page; hero subcopy broadened from tile-specific to the full material range.
 **Current status:** Implemented, build-verified, browser-QA'd. If the client confirms any specific named variety is genuinely current stock, move it into the `products` collection with a real photo — do not just relabel it in the reference list.
+
+## 2026-10-25 — Scheduled jobs heal themselves instead of trusting each run
+
+A month of Task Scheduler runs showed that individual runs fail for boring
+reasons (laptop waking before Wi-Fi, a console window closed, a hung socket).
+Rather than making each run perfect, every successful `daily` run re-fetches
+the last 10 days that are missing, empty, or still settling. One good morning
+repairs a bad week. Network failures are retried 3× before giving up; tasks
+run in a hidden window; exit codes reach Task Scheduler. SEO proposals carry a
+stable `key` (rule + query/URL) so the weekly job never files the same
+subject twice while one is pending or approved.
