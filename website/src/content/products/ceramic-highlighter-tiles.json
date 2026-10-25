@@ -1,0 +1,15 @@
+{
+  "kind": "tile",
+  "hallId": "tiles",
+  "name": "Ceramic Highlighter Tiles",
+  "category": "Ceramic wall tile, highlighter / décor",
+  "finish": "Raised relief, glossy & matt (as shown)",
+  "order": 0.54,
+  "applications": [
+    "Feature walls",
+    "Bathroom & kitchen accent bands"
+  ],
+  "image": "/media/illustrative/ceramic-highlighter-tiles.jpg",
+  "imageAlt": "Teal and white ceramic highlighter wall tiles with a raised geometric relief in side light",
+  "note": "Illustrative image, not a photo of our stock. We carry ceramic highlighter and décor tiles in the showroom; ask us for photos of the current designs, sizes and finishes."
+}

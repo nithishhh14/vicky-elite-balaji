@@ -122,6 +122,9 @@ const guides = defineCollection({
     faq: z.array(z.object({ q: z.string(), a: z.string() }).strict()).min(1),
     related: z.array(z.string()),
     enquiry: z.string(),
+    // Product whose image heads the page. Optional: by default the first
+    // matched product with a real photo is used.
+    heroProduct: z.string().optional(),
   }).strict(),
 });
 

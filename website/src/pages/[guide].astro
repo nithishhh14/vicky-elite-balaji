@@ -47,7 +47,10 @@ const related = data.related.map((slug) => allGuides.find((g) => g.id === slug))
 
 // Hero image: the first real (non-illustrative) product photo on this page,
 // so each landing page opens with material we actually hold.
-const heroProduct = matches.find((p) => !imageBadge(p.data.image)) ?? matches[0];
+const heroProduct =
+  (data.heroProduct ? matches.find((p) => p.id === data.heroProduct) : undefined) ??
+  matches.find((p) => !imageBadge(p.data.image)) ??
+  matches[0];
 const heroCredit = heroProduct
   ? imageBadge(heroProduct.data.image) ?? (heroProduct.data.sourceCatalogue ? "Supplier catalogue" : "From our stock")
   : undefined;

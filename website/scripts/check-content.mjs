@@ -78,6 +78,7 @@ for (const [slug, g] of Object.entries(guides)) {
     if (hit.length === 0) fail(slug, "match selects no products at all");
   }
   for (const r of g.related) if (!guides[r]) fail(slug, `related page "${r}" does not exist`);
+  if (g.heroProduct && !products[g.heroProduct]) fail(slug, `heroProduct "${g.heroProduct}" does not exist`);
   if (g.related.includes(slug)) fail(slug, "related links to itself");
 }
 

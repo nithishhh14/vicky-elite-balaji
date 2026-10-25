@@ -1,0 +1,15 @@
+{
+  "kind": "tile",
+  "hallId": "tiles",
+  "name": "Ceramic Kitchen Wall Tiles",
+  "category": "Ceramic wall tile",
+  "finish": "Glossy, marble-look (as shown)",
+  "order": 0.53,
+  "applications": [
+    "Kitchen backsplash & dado",
+    "Utility walls"
+  ],
+  "image": "/media/illustrative/ceramic-kitchen-wall.jpg",
+  "imageAlt": "Cream marble-look glossy ceramic wall tiles behind a black granite kitchen counter and steel sink",
+  "note": "Illustrative image, not a photo of our stock. We carry ceramic kitchen wall tiles in the showroom; ask us for photos of the current designs, sizes and finishes."
+}

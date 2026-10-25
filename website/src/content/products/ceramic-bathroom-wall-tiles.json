@@ -1,0 +1,15 @@
+{
+  "kind": "tile",
+  "hallId": "tiles",
+  "name": "Ceramic Bathroom Wall Tiles",
+  "category": "Ceramic wall tile",
+  "finish": "Glossy, with highlighter band (as shown)",
+  "order": 0.52,
+  "applications": [
+    "Bathroom walls",
+    "Shower areas"
+  ],
+  "image": "/media/illustrative/ceramic-bathroom-wall.jpg",
+  "imageAlt": "Bathroom wall in glossy white ceramic wall tiles with a blue mosaic highlighter band above a wall-hung basin",
+  "note": "Illustrative image, not a photo of our stock. We carry ceramic bathroom wall tiles in the showroom; ask us for photos of the current designs, sizes and finishes."
+}

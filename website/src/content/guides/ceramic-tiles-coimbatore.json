@@ -1,0 +1,57 @@
+{
+  "h1": "Ceramic tiles in Coimbatore",
+  "title": "Ceramic Tiles in Coimbatore: Floor & Wall | Karamadai",
+  "description": "Ceramic floor tiles, anti-skid bathroom tiles, bathroom and kitchen wall tiles, highlighters and elevation tiles at our Karamadai showroom. Ask on WhatsApp.",
+  "eyebrow": "Tiles · Ceramic",
+  "intro": [
+    "Ceramic tiles are fired clay with a glazed face. They are lighter and usually more affordable than vitrified tiles, easy to cut on site, and the glaze takes almost any colour or print. That is why most bathroom and kitchen walls are ceramic.",
+    "We keep ceramic floor and wall tiles in the showroom. The pictures on this page illustrate each kind; message us on WhatsApp and we will send photos of the designs we have this week."
+  ],
+  "match": {
+    "pattern": "ceramic (floor|wall|elevation) tile|red body",
+    "flags": "i",
+    "halls": [
+      "tiles"
+    ],
+    "kind": "tile"
+  },
+  "choose": [
+    {
+      "title": "Wall tile or floor tile",
+      "detail": "Ceramic wall tiles are thinner and made for walls only. For floors, use a ceramic floor tile, or vitrified where foot traffic is heavy."
+    },
+    {
+      "title": "Anti-skid for wet floors",
+      "detail": "Bathrooms, wash areas and balconies need a matt, textured anti-skid tile. A glossy tile is slippery when wet."
+    },
+    {
+      "title": "Ceramic or vitrified",
+      "detail": "Ceramic absorbs more water and is softer than vitrified. It is ideal for walls and light-traffic rooms; for busy floors and large sizes, vitrified lasts longer."
+    },
+    {
+      "title": "Buy from one batch",
+      "detail": "Shade varies between production batches, so buy the whole area in one lot, with a little extra for cutting and breakage."
+    }
+  ],
+  "faq": [
+    {
+      "q": "What is the difference between ceramic and vitrified tiles?",
+      "a": "Both are fired clay. Vitrified tiles are fired hotter with more silica, so they are denser, absorb less than 0.5% water and wear harder. Ceramic tiles are lighter, easier to cut and cost less, which makes them the usual choice for walls."
+    },
+    {
+      "q": "Can I use ceramic tiles on a bathroom floor?",
+      "a": "Yes, if it is a ceramic floor tile with a matt, anti-skid surface. Glossy wall tiles do not belong on a floor."
+    },
+    {
+      "q": "Do you lay the tiles too?",
+      "a": "Yes. We start with a free site measurement and our own crews lay and finish the tiles, so the material and the workmanship answer to one team."
+    }
+  ],
+  "related": [
+    "wall-tiles-coimbatore",
+    "bathroom-tiles-coimbatore",
+    "floor-tiles-coimbatore"
+  ],
+  "enquiry": "Hi Elite Balaji, I'm looking for ceramic tiles. Floor or wall: ___, room: ___, area: ___ sq.ft.",
+  "heroProduct": "ceramic-floor-tiles"
+}

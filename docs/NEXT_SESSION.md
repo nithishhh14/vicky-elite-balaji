@@ -67,6 +67,11 @@ Commit `2a39162`, preflight 24/24, checked at phone and desktop widths.
   The Google Maps share link of the listing, so Directions opens the listing
   instead of an address search.
 
+### Ceramic section (LIVE 2026-10-25)
+Six illustrative ceramic categories + `/ceramic-tiles-coimbatore/`. When the
+showroom can be photographed, swap each `/media/illustrative/ceramic-*.jpg`
+for a real photo under a new filename and drop the "Illustrative image" note.
+
 ### Still blocked on the user
 - **www → apex 301 rule in Cloudflare** — now urgent: Google is indexing
   `https://www.elitebalaji.com/products/somany-ezy-fix-sef-666/` as a

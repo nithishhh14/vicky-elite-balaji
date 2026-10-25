@@ -1,0 +1,16 @@
+{
+  "kind": "tile",
+  "hallId": "tiles",
+  "name": "Ceramic Floor Tiles",
+  "category": "Ceramic floor tile",
+  "finish": "Glossy (as shown)",
+  "order": 0.5,
+  "applications": [
+    "Living & dining floors",
+    "Bedrooms",
+    "Shops & offices"
+  ],
+  "image": "/media/illustrative/ceramic-floor-tiles.jpg",
+  "imageAlt": "Living room floor laid with glossy light-beige ceramic floor tiles reflecting window light",
+  "note": "Illustrative image, not a photo of our stock. We carry ceramic floor tiles in the showroom; ask us for photos of the current designs, sizes and finishes."
+}

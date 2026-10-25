@@ -1,0 +1,16 @@
+{
+  "kind": "tile",
+  "hallId": "tiles",
+  "name": "Ceramic Elevation Tiles",
+  "category": "Ceramic elevation tile",
+  "finish": "Stone-look texture (as shown)",
+  "order": 0.55,
+  "applications": [
+    "Front walls & facades",
+    "Compound walls",
+    "Porticos"
+  ],
+  "image": "/media/illustrative/ceramic-elevation-tiles.jpg",
+  "imageAlt": "Front wall of a modern house clad in stone-look ceramic elevation tiles",
+  "note": "Illustrative image, not a photo of our stock. We carry ceramic elevation tiles in the showroom; ask us for photos of the current designs, sizes and finishes."
+}

@@ -96,9 +96,28 @@ const TERM_SYNONYMS: Record<string, string[]> = {
   teakwood: ["teak", "wood"],
   sandstone: ["sandstone"],
   stone: ["stone", "granite", "kota", "kadappa", "marble", "limestone"],
+  ceramic: ["ceramic"],
   // Tamil / Tanglish: seeded conservatively; extend as confirmed.
   tharai: ["floor", "flooring"],
   kal: ["stone", "granite", "kota", "kadappa"],
+  // Tamil script. The catalogue itself is in English, so each Tamil word
+  // maps onto the English words the products are described with.
+  "டைல்ஸ்": ["tile", "vitrified", "ceramic"],
+  "டைல்": ["tile", "vitrified", "ceramic"],
+  "செராமிக்": ["ceramic"],
+  "கிரானைட்": ["granite"],
+  "மார்பிள்": ["marble"],
+  "கடப்பா": ["kadappa", "cuddapah"],
+  "கோட்டா": ["kota"],
+  "கல்": ["stone", "granite", "kota", "kadappa"],
+  "தரை": ["floor", "flooring"],
+  "சுவர்": ["wall", "cladding", "backsplash"],
+  "குளியலறை": ["bathroom", "washroom", "bath"],
+  "சமையலறை": ["kitchen", "countertop", "counter"],
+  "பேசின்": ["basin", "wash basin"],
+  "சிங்க்": ["sink"],
+  "குவார்ட்ஸ்": ["quartz", "engineered"],
+  "அட்ஹெசிவ்": ["adhesive"],
 };
 
 // Also mood words ("luxury bathroom", "beautiful floor"): they describe taste,
@@ -110,11 +129,15 @@ export function expandQuery(raw: string): string[][] {
   for (const [re, rep] of PHRASES) q = q.replace(re, rep);
   return q
     .split(/\s+/)
-    .map((t) => t.replace(/[^\p{L}\p{N}x.-]/gu, ""))
+    // \p{M}: Tamil vowel signs and the pulli are combining marks; without
+    // them "டைல்ஸ்" was cut down to a string that matched nothing.
+    .map((t) => t.replace(/[^\p{L}\p{M}\p{N}x.-]/gu, ""))
     .filter((t) => t && !STOPWORDS.has(t))
     .map((t) => {
-      const base = TERM_SYNONYMS[t] ?? TERM_SYNONYMS[t.replace(/s$/, "")];
-      const alts = new Set<string>([t, ...(base ?? [])]);
+      // Plurals: "ceramics" must find "ceramic". Only ever widens a match.
+      const singular = t.length > 3 && /[^s]s$/.test(t) ? t.slice(0, -1) : t;
+      const base = TERM_SYNONYMS[t] ?? TERM_SYNONYMS[singular];
+      const alts = new Set<string>([t, singular, ...(base ?? [])]);
       // "600x1200" should also match "600 x 1200" and "600 × 1200" in data.
       const size = t.match(/^(\d{3,4})x(\d{3,4})$/);
       if (size) {

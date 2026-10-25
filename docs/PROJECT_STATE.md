@@ -3,6 +3,22 @@
 _Last updated: 2026-10-25 — health check after a month away; SEO scheduler made robust (timeouts, retries, hidden launch, exit codes, self-repairing history, no repeat proposals). Previous: 2026-09-24 — site live, SEO agent, 3D viewer. See `docs/DECISIONS.md`._
 
 
+## 2026-10-25 (evening) — ceramic tiles section (LIVE)
+
+- Owner: ceramic is in stock but can't be photographed yet; the site had no
+  ceramic category at all and searching "ceramics" returned 0.
+- Six category records in the Tiles hall (`ceramic-*.json`): floor,
+  anti-skid floor, bathroom wall, kitchen wall, highlighter/décor, elevation.
+  No sizes or brands claimed. Images are AI-generated (FLUX.1-Krea-dev on HF
+  ZeroGPU; Qwen-Image Space was broken) in `/media/illustrative/`, so every
+  card shows "Illustrative image". **Replace with real showroom photos as
+  soon as they can be taken** (new filenames — /media is cached 30 days).
+- `/ceramic-tiles-coimbatore/` landing page (guides can now name a
+  `heroProduct`), linked from the floor, wall and bathroom tile pages.
+- Search: plurals match ("ceramics" → 35 results); Tamil vowel signs no
+  longer stripped; Tamil words mapped (டைல்ஸ் → 54 results).
+- Preflight 24/24 on 145 pages.
+
 ## 2026-10-25 (later) — search-driven website pass, Tamil pages, cleanup (LIVE)
 
 - Phone hero visible at once; hero down to 2 buttons; `seoTitle` /
