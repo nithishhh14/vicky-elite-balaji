@@ -39,6 +39,27 @@
 - **Untracked:** `AGENTS.md` (Codex copy of CLAUDE.md — will drift) and
   `.codex/` (MCP mirror, no secrets). Left as-is.
 
+### Website pass from search data (branch `seo-ux-2026-10`, NOT live yet)
+Commit `2a39162`, preflight 24/24, checked at phone and desktop widths.
+- Phone hero visible at once (was blank ~2.6 s); hero down to 2 buttons.
+- `seoTitle`/`seoDescription` (optional) on halls + products; 8 halls,
+  Kondagattu and Somany SEF-666 written for the real queries. Contact page
+  retitled. Product snippets keep "Karamadai showroom" inside 160 chars.
+- Athangudi page now says the tiles are BEJ's ceramic Athangudi Series,
+  not handmade cement tiles.
+- `VisitStrip.astro`: directions / call / WhatsApp under the header of
+  every hall and landing page.
+- Go live: merge `seo-ux-2026-10` into `main` and push (it also carries
+  the scheduler commit `15515d3`). The Cloudflare branch preview address did
+  not resolve, so branch previews are probably off.
+- Not changed on purpose: floor/wall/bathroom tile landing pages rank 20–50,
+  where the problem is position, not the title. Their 5 approvals stay
+  pending.
+- Questions for the client: do they also sell handmade Athangudi? "Home
+  Center" or "Home Centre"? MRP for Somany SEF-666 (people search its price)?
+  The Google Maps share link of the listing, so Directions opens the listing
+  instead of an address search.
+
 ### Still blocked on the user
 - **www → apex 301 rule in Cloudflare** — now urgent: Google is indexing
   `https://www.elitebalaji.com/products/somany-ezy-fix-sef-666/` as a
