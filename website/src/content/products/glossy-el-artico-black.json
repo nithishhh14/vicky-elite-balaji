@@ -1,0 +1,30 @@
+{
+  "kind": "tile",
+  "hallId": "tiles",
+  "name": "EL Artico Black",
+  "series": "Glossy Collection 600 x 1200",
+  "category": "Gold & coloured vein marble look, 600 x 1200 mm",
+  "size": "600 x 1200mm (2 x 4 ft)",
+  "finish": "Glossy",
+  "order": 0.6106,
+  "applications": [
+    "Living & dining floors",
+    "Bedrooms",
+    "Feature walls"
+  ],
+  "image": "/media/tiles/glossy-collection/el-artico-black.jpg",
+  "imageAlt": "EL Artico Black 600 x 1200 mm glossy tile, full face",
+  "images": [
+    {
+      "src": "/media/tiles/glossy-collection/el-artico-black.jpg",
+      "alt": "EL Artico Black 600 x 1200 mm glossy tile, full face"
+    },
+    {
+      "src": "/media/tiles/glossy-collection/el-artico-black-room.jpg",
+      "alt": "EL Artico Black tiles laid on a living room floor, catalogue render"
+    }
+  ],
+  "sourceCatalogue": "Elite Balaji Glossy Series catalogue",
+  "note": "Digital full-body tile. One face design, for a uniform look. Images are from the catalogue. Ask us for current stock and box quantity.",
+  "thickness": "9mm"
+}

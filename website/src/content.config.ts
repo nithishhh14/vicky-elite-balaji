@@ -125,6 +125,9 @@ const guides = defineCollection({
     // Product whose image heads the page. Optional: by default the first
     // matched product with a real photo is used.
     heroProduct: z.string().optional(),
+    // How many matched products the page lists (default 12). A whole
+    // collection page sets it high enough to show every design.
+    limit: z.number().int().positive().optional(),
   }).strict(),
 });
 

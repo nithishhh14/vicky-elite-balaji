@@ -41,7 +41,7 @@ const matches = all.filter((p) => {
   if (data.match.kind && p.data.kind !== data.match.kind) return false;
   return matcher.test(haystack(p));
 });
-const shown = matches.slice(0, 12);
+const shown = matches.slice(0, data.limit ?? 12);
 const byHall = [...new Set(matches.map((p) => p.data.hallId))].map((id) => ({ id, name: hallName(id), count: matches.filter((p) => p.data.hallId === id).length }));
 const related = data.related.map((slug) => allGuides.find((g) => g.id === slug)).filter(Boolean) as Guide[];
 

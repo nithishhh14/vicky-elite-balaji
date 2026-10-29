@@ -1,0 +1,24 @@
+{
+  "kind": "tile",
+  "hallId": "tiles",
+  "name": "Egyptian Stag Brown",
+  "series": "Glossy Collection 600 x 1200",
+  "category": "Wood look, 600 x 1200 mm",
+  "size": "600 x 1200mm (2 x 4 ft)",
+  "finish": "Matt",
+  "order": 0.6962,
+  "applications": [
+    "Living & bedroom floors",
+    "Feature walls"
+  ],
+  "image": "/media/tiles/glossy-collection/egyptian-stag-brown.jpg",
+  "imageAlt": "Egyptian Stag Brown 600 x 1200 mm glossy tile, full face",
+  "images": [
+    {
+      "src": "/media/tiles/glossy-collection/egyptian-stag-brown.jpg",
+      "alt": "Egyptian Stag Brown 600 x 1200 mm glossy tile, full face"
+    }
+  ],
+  "sourceCatalogue": "Elite Balaji Glossy Tile Collection catalogue",
+  "note": "2 face designs that vary at random, so the floor doesn't repeat. Images are from the catalogue. Ask us for current stock and box quantity."
+}
